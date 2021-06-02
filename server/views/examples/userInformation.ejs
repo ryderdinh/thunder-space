@@ -1,90 +1,9 @@
 
-<!DOCTYPE html>
-<html>
-
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="Start your development with a Dashboard for Bootstrap 4.">
-  <meta name="author" content="Creative Tim">
-  <title>Report</title>
-  <!-- Favicon -->
-  <link rel="icon" href="../assets/img/brand/logo-white.svg" type="image/png">
-  <!-- Fonts -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
-  <!-- Icons -->
-  <link rel="stylesheet" href="../assets/vendor/nucleo/css/nucleo.css" type="text/css">
-  <link rel="stylesheet" href="../assets/vendor/@fortawesome/fontawesome-free/css/all.min.css" type="text/css">
-  <!-- Argon CSS -->
-  <link rel="stylesheet" href="../assets/css/argon.css?v=1.2.0" type="text/css">
-</head>
+<%- include("../includes/head.ejs") -%>
 
 <body>
   <!-- Sidenav -->
-  <nav class="sidenav navbar navbar-vertical  fixed-left  navbar-expand-xs navbar-light bg-white" id="sidenav-main">
-    <div class="scrollbar-inner">
-      <!-- Brand -->
-      <div class="sidenav-header  align-items-center">
-        <a class="navbar-brand" href="javascript:void(0)">
-          <img src="../assets/img/brand/logo.svg" class="navbar-brand-img" alt="..."><span class="admin-hrm">Admin HRM</span>
-        </a>
-      </div>
-      <div class="navbar-inner">
-        <!-- Collapse -->
-        <div class="collapse navbar-collapse" id="sidenav-collapse-main">
-          <!-- Nav items -->
-          <ul class="navbar-nav">
-            <li class="nav-item">
-              <a class="nav-link" href="/admin/user-information">
-                <i class="ni ni-bullet-list-67 text-default"></i>
-                <span class="nav-link-text">User information</span>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/admin/report-information">
-                <i class="ni ni-collection text-default"></i>
-                <span class="nav-link-text">Report information</span>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/admin/event-information">
-                <i class="ni ni-calendar-grid-58 text-default"></i>
-                <span class="nav-link-text">Event</span>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/admin/createUser">
-                <i class="ni ni-single-02 text-yellow"></i>
-                <span class="nav-link-text">Create user</span>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/admin/createEvent">
-                <i class="ni ni-compass-04 text-primary"></i>
-                <span class="nav-link-text">Create event</span>
-              </a>
-            </li>
-            <!-- <li class="nav-item">
-              <a class="nav-link" href="/admin/updateUser">
-                <i class="ni ni-tv-2 text-primary"></i>
-                <span class="nav-link-text">Update user</span>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/admin/updateEvent">
-                <i class="ni ni-tv-2 text-primary"></i>
-                <span class="nav-link-text">Update event</span>
-              </a>
-            </li> -->
-          </ul>
-          <!-- Divider -->
-          <hr class="my-3">
-          <!-- Navigation -->
-    
-        </div>
-      </div>
-    </div>
-  </nav>
+  <%-  include("../includes/sideBar.ejs")  -%>
   <!-- Main content -->
   <div class="main-content" id="panel">
     <!-- Topnav -->
@@ -92,13 +11,13 @@
       <div class="container-fluid">
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <!-- Search form -->
-          <form class="navbar-search navbar-search-light form-inline mr-sm-3" id="navbar-search-main">
+          <form action="/admin/searchMember" class="navbar-search navbar-search-light form-inline mr-sm-3" id="navbar-search-main">
             <div class="form-group mb-0">
               <div class="input-group input-group-alternative input-group-merge">
                 <div class="input-group-prepend">
-                  <span class="input-group-text"><i class="fas fa-search"></i></span>
+                  <span class="input-group-text" type><i class="fas fa-search"></i></span>
                 </div>
-                <input class="form-control" placeholder="Search" type="text">
+                <input class="form-control" name="search" placeholder="Search" type="text" >
               </div>
             </div>
             <button type="button" class="close" data-action="search-close" data-target="#navbar-search-main" aria-label="Close">
@@ -156,8 +75,7 @@
       <div class="container-fluid">
         <div class="header-body">
           <div class="row align-items-center py-4">
-            
-            <div class="col-lg-12 col-5 text-right">
+                <div class="col-lg-12 col-5 text-right">
               <a href="/admin/createUser" class="btn btn-sm btn-neutral">New</a>
               <a href="#" class="btn btn-sm btn-neutral">Filters</a>
             </div>
@@ -172,62 +90,81 @@
           <div class="card">
             <!-- Card header -->
             <div class="card-header border-0">
-              <h3 class="mb-0">Report</h3>
+              <h3 class="mb-0">User information</h3>
             </div>
+            <!-- <form action="/users/search" class="search-form">
+              <input type="text" name="name" placeholder="name">
+              <input type="submit">
+            </form> -->
             <div class="table-responsive">
               <table class="table align-items-center table-flush">
                 <thead class="thead-light">
                   <tr>
-                    <th scope="col" class="sort" data-sort="id">Id</th>
-                    <th scope="col" class="sort" data-sort="email">Type report</th>
-                    <th scope="col" class="sort" data-sort="name">Date start</th>
-                    <th scope="col" class="sort" data-sort="birthday">Date end</th>
-                    <th scope="col" class="sort" data-sort="position">content</th>
+                    <th scope="col" class="sort" data-sort="email">Email</th>
+                    <th scope="col" class="sort" data-sort="name">Name</th>
+                    <th scope="col" class="sort" data-sort="birthday">Birthday</th>
+                    <th scope="col" class="sort" data-sort="position">Position</th>
+                    <th scope="col" class="sort" data-sort="department">department</th>
+                    <th scope="col" class="sort" data-sort="phonenumber">Phonenumber</th>
+                    <th scope="col" class="sort" data-sort="phonenumber"></th>
                   </tr>
                 </thead>
 
-                <% reportLists.forEach((reportList) => { %>
-                <% for (let i = 0; i < reportList.reportDetails.length; i++) { %>
-
-
+                <% userList.forEach((user) => { %>
                 <tbody class="list">
                   <tr>
-                    <th scope="row">
-                      <div class="media align-items-center">
-                        <div class="media-body">
-                          <span name="id" class="name mb-0 text-sm"><%= reportList.reportDetails[i]._id %></span>
+    
+                    <td>
+                      <span class="badge badge-dot mr-4">
+                        <span class="email"><%= user.email %></span>
+                      </span>
+                    </td>
+                    <td>
+                      <span class="badge badge-dot mr-4">
+                        <span class="name"><%= user.name %></span>
+                      </span>
+                    </td>
+                    <td>
+                      <span class="badge badge-dot mr-4">
+                        <span class="birthday"><%= user.birthday %></span>
+                      </span>
+                    </td>
+                    <td>
+                      <span class="badge badge-dot mr-4">
+                        <span class="position"><%= user.position %></span>
+                      </span>
+                    </td>
+                    <td>
+                      <span class="badge badge-dot mr-4">
+                        <span class="department"><%= user.department %></span>
+                      </span>
+                    </td>
+                    <td>
+                      <span class="badge badge-dot mr-4">
+                        <span class="phonenumber"><%= user.phonenumber %></span>
+                      </span>
+                    </td>
+                    <td class="text-right">
+                      <div class="dropdown">
+                        <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          <i class="fas fa-ellipsis-v"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                          <form action="/admin/update" class="search-form">
+                            <input type="text" name="searchId" placeholder="search" value="<%= user.id %>" style="display: none;">
+                            <button type="submit" class="dropdown-item">Update</button>
+                          </form>
                         </div>
                       </div>
-                    </th>
-                    <td>
-                      <span class="badge badge-dot mr-4">
-                        <span class="email"><%= reportList.reportDetails[i].typeReport %></span>
-                      </span>
                     </td>
-                    <td>
-                      <span class="badge badge-dot mr-4">
-                        <span class="email"><%= reportList.reportDetails[i].date.dateStart %></span>
-                      </span>
-                    </td>
-                    <td>
-                      <span class="badge badge-dot mr-4">
-                        <span class="email"><%= reportList.reportDetails[i].date.dateEnd %></span>
-                      </span>
-                    </td>
-                    <td>
-                      <span class="badge badge-dot mr-4">
-                        <span class="email"><%= reportList.reportDetails[i].content %></span>
-                      </span>
-                    </td>
-
                   </tr>
-                  <% } %>
                   <% }) %>
                 </tbody>
               </table>
             </div>
               </table>
             </div>
+
             <!-- Card footer -->
             <div class="card-footer py-4">
               <nav aria-label="...">
@@ -261,9 +198,9 @@
         
       </div>
       <!-- Footer -->
-      
     </div>
   </div>
+    
   <!-- Argon Scripts -->
   <!-- Core -->
   <script src="../assets/vendor/jquery/dist/jquery.min.js"></script>
@@ -273,24 +210,6 @@
   <script src="../assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js"></script>
   <!-- Argon JS -->
   <script src="../assets/js/argon.js?v=1.2.0"></script>
-  <script>
-    function renderProduct(product) {
-    html = '';
-    const content = product.map((item, index) => {
-        if (index >= start && index < end) {
-            html += '<div class="content__product__item">';
-            html += '<a>';
-            html += '<img src=' + item.image + '>';
-            html += '</a>';
-            html += '<h3>' + item.title + '</h3>';
-            html += '</div>';
-            return html;
-        }
-    });
-    document.getElementById('product').innerHTML = html;
-    highlightText();
-  }
-  </script>
 </body>
 
 </html>

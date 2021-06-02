@@ -55,6 +55,7 @@ const admins = [
 //Controller
 
 // const loginAdmin = require("./app/controller/loginAdmin")
+const dashBoard = require("./app/controller/dashBoard")
 const home = require("./app/controller/loginAdminControl");
 const create = require("./app/controller/createUser");
 const storeUser = require("./app/controller/storeUser");
@@ -112,6 +113,7 @@ app.post("/admin/storeEvent", storeEvent)
 // app.post("/admin/endStatus", endStatus)
 app.get("/admin/updateUser", updateUserControl)
 app.get("/admin/storeUpdateUser", storeUpdateUser)
+app.get("/admin/dashboard", dashBoard)
 
 //Api
 app.post("/loginToken", loginToken);
