@@ -7,7 +7,7 @@
   <!-- Main content -->
   <div class="main-content" id="panel">
     <!-- Topnav -->
-    <nav class="navbar navbar-top navbar-expand navbar-dark bg-default border-bottom">
+    <nav class="navbar navbar-top navbar-expand navbar-dark bg-gradient-primary border-bottom">
       <div class="container-fluid">
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <!-- Search form -->
@@ -87,17 +87,9 @@
               </div>
             </div>
             <div class="card-body">
-              <form action="/admin/updateUser" method="POST">
+              <form action="/admin/updateUser/<%= id %>" method="POST">
                 <h6 class="heading-small text-muted mb-4">Update information</h6>
                 <div class="pl-lg-4">
-                  <div class="row">
-                    <div class="col-lg-6" style="display: none;">
-                      <div class="form-group">
-                        <label class="form-control-label" for="input-id">ID</label>
-                        <input name="id" required type="text" id="input-id" class="form-control" placeholder="Id" value="<%= userInfo %>">
-                      </div>
-                    </div>
-                  </div>
                   <div class="row">
                     <div class="col-lg-6">
                       <div class="form-group">

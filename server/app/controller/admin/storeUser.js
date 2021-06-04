@@ -1,10 +1,10 @@
 
-const StaffInformation = require ("../models/staffInformation")
-const Status = require( "../models/status" )
-const TableOfWork = require ("../models/tableOfWork")
-const Report = require("../models/report") 
+const StaffInformation = require ("../../models/staffInformation")
+const Status = require( "../../models/status" )
+const TableOfWork = require ("../../models/tableOfWork")
+const Report = require("../../models/report") 
 const bcrypt = require("bcrypt")
-const { authSchema } = require("../../middleware/checkFormRegister")
+const { authSchema } = require("../../../middleware/checkFormRegister")
 
 const flash = require('express-flash')
 
@@ -20,6 +20,7 @@ module.exports = async (req, res, next) => {
           res.redirect("/admin/createUser").end()
      }
      //Create new user
+  
      const newStaff = new StaffInformation(result)
      const saveStaff = await newStaff.save()
 

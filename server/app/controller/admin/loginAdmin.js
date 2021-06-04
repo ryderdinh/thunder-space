@@ -4,7 +4,7 @@ module.exports = (req, res) => {
     const pass = req.body.psw;
 
     if(name === "admin" && pass ==="admin") {
-        res.redirect("/admin/createUser")
+        res.redirect("/admin/dashboard")
     }  else {
         res.redirect("/admin/login")
     }

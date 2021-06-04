@@ -1,6 +1,6 @@
 function checkNotAuthenticated (req, res, next) {
     if (req.isAuthenticated()) {
-        return res.redirect("/admin/createUser")
+        return res.redirect("/admin/dashboard")
     }
     next()
 }

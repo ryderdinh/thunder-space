@@ -52,31 +52,37 @@ const admins = [
   },
 ];
 
+const { convert } = require("./app/utils/dateFormat")
+
 //Controller
 
 // const loginAdmin = require("./app/controller/loginAdmin")
-const dashBoard = require("./app/controller/dashBoard")
-const home = require("./app/controller/loginAdminControl");
-const create = require("./app/controller/createUser");
-const storeUser = require("./app/controller/storeUser");
+const dashBoard = require("./app/controller/admin/dashBoard")
+const home = require("./app/controller/admin/loginAdminControl");
+const create = require("./app/controller/admin/createUser");
+const storeUser = require("./app/controller/admin/storeUser");
 const checkAuthenticated = require("./middleware/checkAuthenticated");
 const checkNotAuthenticated = require("./middleware/checkNotAuthenticated");
 const authenticateToken = require("./middleware/authenticateToken");
-const logoutAdmin = require("./app/controller/logoutAdmin");
+const logoutAdmin = require("./app/controller/admin/logoutAdmin");
 const loginUser = require("./app/api/loginUser")
 const loginToken = require("./app/api/loginToken")
 const location = require("./app/api/location")
 const userInfo = require("./app/api/userInfo")
 const storeTimeLine = require("./app/api/storeTimeLine")
-const createEvent1 = require("./app/controller/createEvent")
+const createEvent1 = require("./app/controller/admin/createEvent")
 const aptiEvent = require("./app/api/event")
 const userTable = require("./app/api/table")
-const storeEvent = require("./app/controller/storeEvent")
-const updateUserControl = require("./app/controller/updateUser")
-const storeUpdateUser = require("./app/controller/storeUpdateUser")
+const storeEvent = require("./app/controller/admin/storeEvent")
+// const updateUserControl = require("./app/controller/admin/updateUser")
+// const storeUpdateUser = require("./app/controller/admin/storeUpdateUser")
 const storeReport = require("./app/api/storeReport")
 const userReport = require("./app/api/report")
 const changePassword = require("./app/api/changePassword")
+const getUpdateUser = require("./app/controller/admin/renderUpdateUser")
+const getUpdateEvent = require("./app/controller/admin/renderUpdateEvent")
+const postUpdateUser = require("./app/controller/admin/updateUser")
+const postUpdateEvent = require("./app/controller/admin/updateEvent")
 //Model
 
 app.use(cors())
@@ -101,7 +107,7 @@ app.post(
   "/admin/login",
   checkNotAuthenticated,
   passport.authenticate("local", {
-    successRedirect: "/admin/createUser",
+    successRedirect: "/admin/dashboard",
     failureRedirect: "/admin/login",
     failureFlash: true,
   })
@@ -111,9 +117,15 @@ app.get("/admin/logout", logoutAdmin);
 app.get("/admin/createEvent", checkAuthenticated, createEvent1)
 app.post("/admin/storeEvent", storeEvent)
 // app.post("/admin/endStatus", endStatus)
-app.get("/admin/updateUser", updateUserControl)
-app.get("/admin/storeUpdateUser", storeUpdateUser)
+// app.get("/admin/updateUser", updateUserControl)
+// app.get("/admin/storeUpdateUser", storeUpdateUser)
 app.get("/admin/dashboard", dashBoard)
+
+app.get("/admin/updateUser", checkAuthenticated, getUpdateUser)
+app.get("/admin/updateEvent", checkAuthenticated , getUpdateEvent)
+app.use("/admin/updateUser", checkAuthenticated , postUpdateUser)
+app.use("/admin/updateEvent", checkAuthenticated , postUpdateEvent)
+
 
 //Api
 app.post("/loginToken", loginToken);
@@ -138,65 +150,70 @@ app.use("/user/changePassword", authenticateToken, changePassword)
 // # │ │ │ │ │ │
 // # │ │ │ │ │ │
 // # * * * * * *
-const cron = require("node-cron")
-const shell = require("shelljs");
-const Status = require("./app/models/status")
-const Table = require("./app/models/tableOfWork")
-cron.schedule("* */22 * * *", function () {
-  Status.find({}, (err, status) => {
-    status.forEach(element => {
-      Table.findByIdAndUpdate(element._id, {
-        $push: {
-          "dateDetails": {
-            timeStart: element.timeStart,
-            timeEnd: element.timeEnd,
-            statusDay: element.statusDay,
-            date: Date.now()
+// const cron = require("node-cron")
+// const shell = require("shelljs");
+// const Status = require("./app/models/status")
+// const Table = require("./app/models/tableOfWork")
+// cron.schedule("* */22 * * *", function () {
+//   Status.find({}, (err, status) => {
+//     status.forEach(element => {
+//       Table.findByIdAndUpdate(element._id, {
+//         $push: {
+//           "dateDetails": {
+//             timeStart: element.timeStart,
+//             timeEnd: element.timeEnd,
+//             statusDay: element.statusDay,
+//             date: Date.now()
 
-          }
-        }
-      },
-        { safe: true, upsert: true, new: true },
-        (err, table) => {
+//           }
+//         }
+//       },
+//         { safe: true, upsert: true, new: true },
+//         (err, table) => {
 
-        })
-    });
-  })
-})
+//         })
+//     });
+//   })
+// })
 
-cron.schedule("* */23 * * *", function () {
-  Status.updateMany({
-    statusDay : "1",
-    timeStart : "",
-    timeEnd : "",
-    timeLine : []
-  }, (err, status) => {
+// cron.schedule("* */23 * * *", function () {
+//   Status.updateMany({
+//     statusDay : "1",
+//     timeStart : "",
+//     timeEnd : "",
+//     timeLine : []
+//   }, (err, status) => {
       
-  })
-})
+//   })
+// })
 
 
 // Nhat add
+
 const Report = require('./app/models/report')
 const Events = require('./app/models/event')
 const StaffInformation = require('./app/models/staffInformation')
 
-const createEvent = require("./app/controller-Nhat/createEvent")
-// const event = require("./app/controller-Nhat/event");
-const updateUser = require("./app/controller-Nhat/updateUser");
-const updateEvent = require("./app/controller-Nhat/updateEvent");
-const renderCreateEvent = require("./app/controller-Nhat/renderCreateEvent");
-const renderUpdateUser = require("./app/controller-Nhat/renderUpdateUser");
-const renderUpdateEvent = require("./app/controller-Nhat/renderUpdateEvent");
-app.get("/admin/updateUser", checkAuthenticated, renderUpdateUser);
-app.get("/admin/createEvent", checkAuthenticated, renderCreateEvent);
-app.post("/admin/updateUser", checkAuthenticated, updateUser);
-app.post("/admin/updateEvent", checkAuthenticated, updateEvent);
+// const createEvent = require("./app/controller/admin/createEvent")
+// // const event = require("./app/controller-Nhat/event");
+// const updateUser = require("./app/controller/admin/updateUser");
+// const updateEvent = require("./app/controller/admin/updateEvent");
+// const renderCreateEvent = require("./app/controller/admin/renderCreateEvent");
+// const renderUpdateUser = require("./app/controller/admin/renderUpdateUser");
+// const renderUpdateEvent = require("./app/controller/admin/renderUpdateEvent");
+// app.get("/admin/updateUser", checkAuthenticated, renderUpdateUser);
+// app.get("/admin/createEvent", checkAuthenticated, renderCreateEvent);
+// app.post("/admin/updateUser", checkAuthenticated, updateUser);
+// app.post("/admin/updateEvent", checkAuthenticated, updateEvent);
 // app.post("/admin/createEvent", createEvent);
 app.get("/admin/user-information", checkAuthenticated,(req,res) => {
   StaffInformation.find({}, function (err,user) {
+    user.forEach(e => {
+      e.birthday = convert(e.birthday)
+    })
     res.render("userInformation", {
       userList: user,
+      path : '/admin/user-information'
     })
   })
 })
@@ -204,61 +221,69 @@ app.get("/admin/report-information", checkAuthenticated, (req,res) => {
   Report.find({}, function (err,report) {
     res.render("reportInformation", {
       reportLists: report,
+      path : "/admin/report-information"
     })
   })
 })
 app.get("/admin/event-information", checkAuthenticated, (req,res) => {
   Events.find({}, function (err,event) {
+   event.forEach(e => {
+    e.date =  convert(e.date)
+    })
     res.render("event", {
       eventList: event,
+      path : "/admin/event-information"
     })
   })
 })
-app.get("/admin/update", checkAuthenticated, (req,res) => {
-  let idSearch = req.query.searchId;
-  console.log(idSearch);
-  res.render('updateUser', {
-    userInfo: idSearch
-  });
-})
-app.get("/admin/updateEventElement", checkAuthenticated, (req,res) => {
-  let idSearch = req.query.searchId;
-  console.log(idSearch);
-  res.render('updateEvent', {
-    eventInfor: idSearch
-  });
-})
-app.get('/admin/searchMember', checkAuthenticated, function(req, res){
-  var id = req.query.search;
-  StaffInformation.findById(id, (err,member) => {
-    res.render('user', {
-      user: member
-    });
-  })
-})
+// app.get("/admin/update", checkAuthenticated, (req,res) => {
+//   let idSearch = req.query.searchId;
+//   console.log(idSearch);
+//   res.render('updateUser', {
+//     userInfo: idSearch,
+//       path : '/admin/user-information'
+//   });
+// })
+// app.get("/admin/updateEventElement", checkAuthenticated, (req,res) => {
+//   let idSearch = req.query.searchId;
+//   console.log(idSearch);
+//   res.render('updateEvent', {
+//     eventInfor: idSearch,
+//     path : "/admin/event-information"
 
-app.get('/admin/searchMember', checkAuthenticated, function(req, res){
-  var email = req.query.search;
-  StaffInformation.find((err,members) => {
-    if (err){
-      console.log("Lỗi tìm kiếm, đối tượng tìm kiếm không tồn tại!");
-      res.render("userInformation");
-    }
-    var data = members.filter(function(item){
-      return item.email === email
-    });
-    let id = data[0].id;
-    StaffInformation.findById(id, (err,member) => {
-      if (err){
-        console.log("Lỗi tìm kiếm, đối tượng tìm kiếm không tồn tại!");
-        res.render("userInformation");
-      }
-      res.render('user', {
-        user: member
-      });
-    })
-  })
-})
+//   });
+// })
+// app.get('/admin/searchMember', checkAuthenticated, function(req, res){
+//   var id = req.query.search;
+//   StaffInformation.findById(id, (err,member) => {
+//     res.render('user', {
+//       user: member
+//     });
+//   })
+// })
+
+// app.get('/admin/searchMember', checkAuthenticated, function(req, res){
+//   var email = req.query.search;
+//   StaffInformation.find((err,members) => {
+//     if (err){
+//       console.log("Lỗi tìm kiếm, đối tượng tìm kiếm không tồn tại!");
+//       res.render("userInformation");
+//     }
+//     var data = members.filter(function(item){
+//       return item.email === email
+//     });
+//     let id = data[0].id;
+//     StaffInformation.findById(id, (err,member) => {
+//       if (err){
+//         console.log("Lỗi tìm kiếm, đối tượng tìm kiếm không tồn tại!");
+//         res.render("userInformation");
+//       }
+//       res.render('user', {
+//         user: member
+//       });
+//     })
+//   })
+// })
 
 
 

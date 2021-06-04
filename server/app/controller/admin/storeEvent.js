@@ -1,7 +1,7 @@
 const mongoose = require("mongoose")
-const Event = require("../models/event")
+const Event = require("../../models/event")
 const flash = require("express-flash")
-const { authSchema } = require("../../middleware/checkFormEvent")
+const { authSchema } = require("../../../middleware/checkFormEvent")
 
 
 module.exports =async (req, res, next) => {

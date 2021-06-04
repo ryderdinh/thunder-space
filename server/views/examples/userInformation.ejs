@@ -7,7 +7,7 @@
   <!-- Main content -->
   <div class="main-content" id="panel">
     <!-- Topnav -->
-    <nav class="navbar navbar-top navbar-expand navbar-dark bg-primary border-bottom">
+    <nav class="navbar navbar-top navbar-expand navbar-dark bg-gradient-primary border-bottom">
       <div class="container-fluid">
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <!-- Search form -->
@@ -71,13 +71,14 @@
     </nav>
     <!-- Header -->
     <!-- Header -->
-    <div class="header bg-primary pb-6">
+    <div class="header bg-gradient-primary pb-6">
       <div class="container-fluid">
         <div class="header-body">
           <div class="row align-items-center py-4">
                 <div class="col-lg-12 col-5 text-right">
               <a href="/admin/createUser" class="btn btn-sm btn-neutral">New</a>
               <a href="#" class="btn btn-sm btn-neutral">Filters</a>
+              <a href="#" class="btn btn-sm btn-neutral">Show all</a>
             </div>
           </div>
         </div>
@@ -150,9 +151,14 @@
                           <i class="fas fa-ellipsis-v"></i>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                          <form action="/admin/update" class="search-form">
+                          <form action="/admin/updateUser" class="search-form">
                             <input type="text" name="searchId" placeholder="search" value="<%= user.id %>" style="display: none;">
                             <button type="submit" class="dropdown-item">Update</button>
+                          </form>
+                          <form action="" class="search-form">
+                            <input type="text" name="searchId" placeholder="search" value="<%= user.id %>" style="display: none;">
+                            <input type="password" class="dropdown-item" name="verifyPassword"   placeholder="Enter your password"  style="display: block;outline: 0;border: none;">
+                            <button type="submit"  class="dropdown-item" name="btnDel">Delete</button>
                           </form>
                         </div>
                       </div>
@@ -210,6 +216,8 @@
   <script src="../assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js"></script>
   <!-- Argon JS -->
   <script src="../assets/js/argon.js?v=1.2.0"></script>
+  <script src="../assets/js/verifyAdmin.js"></script>
+
 </body>
 
 </html>
