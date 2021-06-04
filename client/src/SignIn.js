@@ -4,7 +4,7 @@ import "./fonts/BeVietnam-Italic.ttf";
 import "./fonts/BeVietnam-LightItalic.ttf";
 import "./fonts/BeVietnam-Medium.ttf";
 import "../public/images/sapiens.svg";
-import "./Signin.min.css";
+import "./Signin.css";
 import { connect } from "react-redux";
 import { actSignIn } from "./actions";
 
