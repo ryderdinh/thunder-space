@@ -11,7 +11,7 @@ const session = require("express-session");
 const passport = require("passport");
 const methodOverride = require("method-override");
 const initializePassport = require("./passport-config");
-const cors = require("cors")
+const cors = require("cors");
 initializePassport(
   passport,
   (uname) => admins.find((admin) => admin.uname === uname),
@@ -32,7 +32,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(flash());
 app.use(
   session({
-    secret: '98c00efe44d70207991595b328a8809a9ff45e04459f644b4a0442dcde979f97b20a86365da4fd213e87807138a44296aaeeb0a7b6ec8c9baca3cf181ee31478',
+    secret:
+      "98c00efe44d70207991595b328a8809a9ff45e04459f644b4a0442dcde979f97b20a86365da4fd213e87807138a44296aaeeb0a7b6ec8c9baca3cf181ee31478",
     resave: false,
     saveUninitialized: false,
   })
@@ -53,12 +54,12 @@ const admins = [
   },
 ];
 
-const { convert } = require("./app/utils/dateFormat")
+const { convert } = require("./app/utils/dateFormat");
 
 //Controller
 
 // const loginAdmin = require("./app/controller/loginAdmin")
-const dashBoard = require("./app/controller/admin/dashBoard")
+const dashBoard = require("./app/controller/admin/dashBoard");
 const home = require("./app/controller/admin/loginAdminControl");
 const create = require("./app/controller/admin/createUser");
 const storeUser = require("./app/controller/admin/storeUser");
@@ -66,28 +67,28 @@ const checkAuthenticated = require("./middleware/checkAuthenticated");
 const checkNotAuthenticated = require("./middleware/checkNotAuthenticated");
 const authenticateToken = require("./middleware/authenticateToken");
 const logoutAdmin = require("./app/controller/admin/logoutAdmin");
-const loginUser = require("./app/api/loginUser")
-const loginToken = require("./app/api/loginToken")
-const location = require("./app/api/location")
-const userInfo = require("./app/api/userInfo")
-const storeTimeLine = require("./app/api/storeTimeLine")
-const createEvent1 = require("./app/controller/admin/createEvent")
-const aptiEvent = require("./app/api/event")
-const userTable = require("./app/api/table")
-const storeEvent = require("./app/controller/admin/storeEvent")
+const loginUser = require("./app/api/loginUser");
+const loginToken = require("./app/api/loginToken");
+const location = require("./app/api/location");
+const userInfo = require("./app/api/userInfo");
+const storeTimeLine = require("./app/api/storeTimeLine");
+const createEvent1 = require("./app/controller/admin/createEvent");
+const aptiEvent = require("./app/api/event");
+const userTable = require("./app/api/table");
+const storeEvent = require("./app/controller/admin/storeEvent");
 // const updateUserControl = require("./app/controller/admin/updateUser")
 // const storeUpdateUser = require("./app/controller/admin/storeUpdateUser")
-const storeReport = require("./app/api/storeReport")
-const userReport = require("./app/api/report")
-const changePassword = require("./app/api/changePassword")
-const getUpdateUser = require("./app/controller/admin/renderUpdateUser")
-const getUpdateEvent = require("./app/controller/admin/renderUpdateEvent")
-const postUpdateUser = require("./app/controller/admin/updateUser")
-const postUpdateEvent = require("./app/controller/admin/updateEvent")
-const postDeleteUser = require("./app/controller/admin/deleteUser")
+const storeReport = require("./app/api/storeReport");
+const userReport = require("./app/api/report");
+const changePassword = require("./app/api/changePassword");
+const getUpdateUser = require("./app/controller/admin/renderUpdateUser");
+const getUpdateEvent = require("./app/controller/admin/renderUpdateEvent");
+const postUpdateUser = require("./app/controller/admin/updateUser");
+const postUpdateEvent = require("./app/controller/admin/updateEvent");
+const postDeleteUser = require("./app/controller/admin/deleteUser");
 //Model
 
-app.use(cors())
+app.use(cors());
 app.use((req, res, next) => {
   // res.header("Access-Control-Allow-Origin", "https://hrmapplication.herokuapp.com/");
   // res.header("Access-Control-Allow-Credentials", "true")
@@ -114,32 +115,32 @@ app.post(
     failureFlash: true,
   })
 );
-app.post("/admin/storeUser", checkAuthenticated ,storeUser);
+app.post("/admin/storeUser", checkAuthenticated, storeUser);
 app.get("/admin/logout", logoutAdmin);
-app.get("/admin/createEvent", checkAuthenticated, createEvent1)
-app.post("/admin/storeEvent", checkAuthenticated , storeEvent)
+app.get("/admin/createEvent", checkAuthenticated, createEvent1);
+app.post("/admin/storeEvent", checkAuthenticated, storeEvent);
 // app.post("/admin/endStatus", endStatus)
 // app.get("/admin/updateUser", updateUserControl)
 // app.get("/admin/storeUpdateUser", storeUpdateUser)
-app.get("/admin/dashboard", checkAuthenticated, dashBoard)
+app.get("/admin/dashboard", checkAuthenticated, dashBoard);
 
-app.get("/admin/updateUser", checkAuthenticated, getUpdateUser)
-app.get("/admin/updateEvent", checkAuthenticated , getUpdateEvent)
-app.use("/admin/updateUser", checkAuthenticated , postUpdateUser)
-app.use("/admin/updateEvent", checkAuthenticated , postUpdateEvent)
-app.use("/admin/deleteUser", checkAuthenticated, postDeleteUser)
+app.get("/admin/updateUser", checkAuthenticated, getUpdateUser);
+app.get("/admin/updateEvent", checkAuthenticated, getUpdateEvent);
+app.use("/admin/updateUser", checkAuthenticated, postUpdateUser);
+app.use("/admin/updateEvent", checkAuthenticated, postUpdateEvent);
+app.use("/admin/deleteUser", checkAuthenticated, postDeleteUser);
 
 //Api
 app.post("/loginToken", loginToken);
-app.use("/location", authenticateToken, location)
-app.use("/storeTimeLine", authenticateToken, storeTimeLine)
-app.use("/userInfo", authenticateToken, userInfo)
-app.get("/user/login", authenticateToken, loginUser)
-app.get("/event", authenticateToken, aptiEvent)
-app.use("/table", authenticateToken, userTable)
-app.use("/user/report", authenticateToken, userReport)
-app.use("/user/storeReport", authenticateToken, storeReport)
-app.use("/user/changePassword", authenticateToken, changePassword)
+app.use("/location", authenticateToken, location);
+app.use("/storeTimeLine", authenticateToken, storeTimeLine);
+app.use("/userInfo", authenticateToken, userInfo);
+app.get("/user/login", authenticateToken, loginUser);
+app.get("/event", authenticateToken, aptiEvent);
+app.use("/table", authenticateToken, userTable);
+app.use("/user/report", authenticateToken, userReport);
+app.use("/user/storeReport", authenticateToken, storeReport);
+app.use("/user/changePassword", authenticateToken, changePassword);
 
 // Cron tab
 
@@ -185,18 +186,17 @@ app.use("/user/changePassword", authenticateToken, changePassword)
 //     timeEnd : "",
 //     timeLine : []
 //   }, (err, status) => {
-      
+
 //   })
 // })
 
-
 // Nhat add
 
-const Report = require('./app/models/report')
-const Events = require('./app/models/event')
+const Report = require("./app/models/report");
+const Events = require("./app/models/event");
 // const Table = require('./app/models/tableOfWork')
 // const Status = require('./app/models/status')
-const StaffInformation = require('./app/models/staffInformation');
+const StaffInformation = require("./app/models/staffInformation");
 
 // const createEvent = require("./app/controller/admin/createEvent")
 // // const event = require("./app/controller-Nhat/event");
@@ -210,36 +210,36 @@ const StaffInformation = require('./app/models/staffInformation');
 // app.post("/admin/updateUser", checkAuthenticated, updateUser);
 // app.post("/admin/updateEvent", checkAuthenticated, updateEvent);
 // app.post("/admin/createEvent", createEvent);
-app.get("/admin/user-information", checkAuthenticated,(req,res) => {
-  StaffInformation.find({}, function (err,user) {
-    user.forEach(e => {
-      e.birthday = convert(e.birthday)
-    })
+app.get("/admin/user-information", checkAuthenticated, (req, res) => {
+  StaffInformation.find({}, function (err, user) {
+    user.forEach((e) => {
+      e.birthday = convert(e.birthday);
+    });
     res.render("userInformation", {
       userList: user,
-      path : '/admin/user-information'
-    })
-  })
-})
-app.get("/admin/report-information", checkAuthenticated, (req,res) => {
-  Report.find({}, function (err,report) {
+      path: "/admin/user-information",
+    });
+  });
+});
+app.get("/admin/report-information", checkAuthenticated, (req, res) => {
+  Report.find({}, function (err, report) {
     res.render("reportInformation", {
       reportLists: report,
-      path : "/admin/report-information"
-    })
-  })
-})
-app.get("/admin/event-information", checkAuthenticated, (req,res) => {
-  Events.find({}, function (err,event) {
-   event.forEach(e => {
-    e.date =  convert(e.date)
-    })
+      path: "/admin/report-information",
+    });
+  });
+});
+app.get("/admin/event-information", checkAuthenticated, (req, res) => {
+  Events.find({}, function (err, event) {
+    event.forEach((e) => {
+      e.date = convert(e.date);
+    });
     res.render("event", {
       eventList: event,
-      path : "/admin/event-information"
-    })
-  })
-})
+      path: "/admin/event-information",
+    });
+  });
+});
 
 // const axios = require('axios')
 
@@ -261,7 +261,6 @@ app.get("/admin/event-information", checkAuthenticated, (req,res) => {
 //   }
 // }
 
-
 // console.log(getUser());
 // app.post("/test",(req, res, next) => {
 //     getUser().then(data => {
@@ -270,13 +269,13 @@ app.get("/admin/event-information", checkAuthenticated, (req,res) => {
 //         console.log(err);
 //       })
 //     })
-   
+
 //   res.redirect("/")
 // })
 
 app.use((req, res, next) => {
-  res.render("404")
-})
+  res.render("404");
+});
 // app.get("/admin/update", checkAuthenticated, (req,res) => {
 //   let idSearch = req.query.searchId;
 //   console.log(idSearch);
@@ -325,10 +324,6 @@ app.use((req, res, next) => {
 //     })
 //   })
 // })
-
-
-
-
 
 //App listen
 const port = process.env.PORT || 3000;

@@ -5,7 +5,6 @@
 }
 
 body {
-  font-family: "Source Sans Pro", sans-serif;
   font-size: 14px;
   color: #bebebe;
   display: flex;
@@ -20,7 +19,7 @@ body {
 h1 {
   font-size: 2.5em;
   color: #131125;
-  font-weight: 700;
+  font-family: Be-b;
   margin: 0;
 }
 @keyframes fadeIn {

@@ -1,13 +1,34 @@
+@font-face {
+  font-family: Be-i;
+  src: local("Be-i"), url(./fonts/BeVietnam-Italic.ttf) format("truetype");
+}
+@font-face {
+  font-family: Be-m;
+  src: local("Be-m"), url(./fonts/BeVietnam-Medium.ttf) format("truetype");
+}
+@font-face {
+  font-family: Be-l;
+  src: local("Be-l"), url(./fonts/BeVietnam-Light.ttf) format("truetype");
+}
+@font-face {
+  font-family: Be-li;
+  src: local("Be-li"), url(./fonts/BeVietnam-LightItalic.ttf) format("truetype");
+}
+@font-face {
+  font-family: Be-b;
+  src: local("Be-b"), url(./fonts/BeVietnam-Bold.ttf) format("truetype");
+}
+@font-face {
+  font-family: Be-bi;
+  src: local("Be-bi"), url(./fonts/BeVietnam-BoldItalic.ttf) format("truetype");
+}
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: Be-l;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+/* code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
-}
+} */

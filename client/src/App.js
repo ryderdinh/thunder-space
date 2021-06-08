@@ -10,10 +10,10 @@ import SidebarMobileMain from "components/Sidebar/SidebarMain-Mobile/SidebarMobi
 import { Popup } from "components/Main/Popup";
 import NotFound from "components/404";
 import "animate.css";
-import "fonts/BeVietnam-Bold.ttf";
-import "fonts/BeVietnam-Italic.ttf";
-import "fonts/BeVietnam-LightItalic.ttf";
-import "fonts/BeVietnam-Medium.ttf";
+// import "fonts/BeVietnam-Bold.ttf";
+// import "fonts/BeVietnam-Italic.ttf";
+// import "fonts/BeVietnam-LightItalic.ttf";
+// import "fonts/BeVietnam-Medium.ttf";
 
 class App extends React.Component {
   componentDidMount() {

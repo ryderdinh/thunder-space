@@ -1,39 +1,14 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import EventItem from "./EventItem";
-import { actFetchEvents } from "actions";
+// import { actFetchEvents } from "actions";
 
 export class Event extends Component {
-  state = {
-    listEvent: [],
-  };
-  async componentDidMount() {
-    await this.props.actFetchEvents();
-    let eventsProps = this.props.events;
-    console.log(eventsProps);
-    if (eventsProps !== undefined) {
-      let listEvent = [];
-      let i = 0;
-      while (i <= eventsProps.length - 1) {
-        let arrR = [eventsProps[i]];
-        let j = i + 1;
-        while (j < eventsProps.length) {
-          if (eventsProps[i].date === eventsProps[j].date) {
-            arrR = [...arrR, eventsProps[j]];
-            eventsProps.splice(j, 1);
-          } else ++j;
-        }
-        listEvent = [...listEvent, arrR];
-        ++i;
-      }
-      this.setState({ listEvent });
-    }
-  }
-
   render() {
+    const { events } = this.props;
     return (
       <div className="view_item event animate__animated animate__slideInUp">
-        {this.state.listEvent.map((value, index) => (
+        {events.map((value) => (
           <EventItem key={value[0].date} dataEvent={value} />
         ))}
       </div>
@@ -45,4 +20,4 @@ const mapStateToProps = (state) => ({
   events: state._events._events,
 });
 
-export default connect(mapStateToProps, { actFetchEvents })(Event);
+export default connect(mapStateToProps, null)(Event);

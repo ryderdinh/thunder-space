@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import "./404.css";
 
 export default function NotFound() {
+  // eslint-disable-next-line no-unused-vars
   const [state, setState] = React.useState([
     4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
     4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { fetchMenus } from "actions";
-import { SideMobileItem } from "./SideMobileItem";
+import SideMobileItem from "./SideMobileItem";
 export class SidebarMoblieMenu extends Component {
   state = {
     icon: [

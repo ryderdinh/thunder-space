@@ -11,12 +11,15 @@ export default function EventPopup({ dataPopup }) {
           <div className="popup__event-popup__label">Tên sự kiện:</div>
           <div className="popup__event-popup__content">{dataPopup.name}</div>
         </div>
-        <div className="popup__event-popup__item">
-          <div className="popup__event-popup__label">Thời gian diễn ra:</div>
-          <div className="popup__event-popup__content">{`${dataPopup.event_detail.hours} - ${dataPopup.date}`}</div>
+        <div className="popup__event-popup__item e-date">
+          <div className="popup__event-popup__label">Thời gian:</div>
+          <div className="popup__event-popup__content">
+            <p className="content-hour">{dataPopup.event_detail.hours}</p>
+            <p className="content-date">{dataPopup.date}</p>
+          </div>
         </div>
         <div className="popup__event-popup__item">
-          <div className="popup__event-popup__label">Địa điểm tổ chức:</div>
+          <div className="popup__event-popup__label">Địa điểm:</div>
           <div className="popup__event-popup__content">
             {dataPopup.event_detail.position}
           </div>

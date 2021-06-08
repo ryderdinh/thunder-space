@@ -7,17 +7,24 @@ export const actSignIn = (dataUser) => {
   loadingToast("Đang đăng nhập");
   return async (dispatch) => {
     const res = await callAPI("loginToken", "POST", dataUser, null);
-    const res_1 = await callAPI("user/login", "GET", null, {
-      authorization: `Bearer ${res.accessToken}`,
-    });
-    removeToast();
-    if (res_1 !== undefined) {
-      if (res_1.data.status === "Login succesfully") {
-        setCookie(res_1.data.id, res.accessToken);
-        successToast("Đăng nhập thành công");
-        setTimeout(() => {
-          dispatch(setCheckLogin(true));
-        }, 1500);
+    if (res !== undefined) {
+      const res_1 = await callAPI("user/login", "GET", null, {
+        authorization: `Bearer ${res.accessToken}`,
+      });
+      removeToast();
+      if (res_1 !== undefined) {
+        if (res_1.data.status === "Login succesfully") {
+          setCookie(res_1.data.id, res.accessToken);
+          successToast("Đăng nhập thành công");
+          dispatch(actFetchEvents());
+          setTimeout(() => {
+            dispatch(setCheckLogin(true));
+          }, 1500);
+        } else {
+          errorToast(
+            "Đăng nhập thất bại, kiểm tra lại tên đăng nhập hoặc mật khẩu của bạn"
+          );
+        }
       } else {
         errorToast(
           "Đăng nhập thất bại, kiểm tra lại tên đăng nhập hoặc mật khẩu của bạn"
@@ -141,8 +148,9 @@ export const actRefreshPage = () => {
       removeToast();
       if (res_1 !== undefined) {
         if (res_1.data.status === "Login succesfully") {
-          setCookie(res_1.data.id, token);
+          dispatch(actFetchEvents());
           dispatch(setCheckLogin(true));
+          setCookie(res_1.data.id, token);
           successToast("Chào mừng quay trở lại");
         } else {
           errorToast("Bạn cần đăng nhập lại");
@@ -154,7 +162,7 @@ export const actRefreshPage = () => {
   }
 };
 export const actChangePassword = (data) => {
-  loadingToast("Đang xử lí yêu cầu của bạn");
+  loadingToast("Đang xử lí yêu cầu");
   const { id, token } = getAllCookie();
   return async () => {
     const res = await callAPI(`user/changePassword/${id}`, "POST", data, {
