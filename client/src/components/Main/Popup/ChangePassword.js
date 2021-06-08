@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import toast from "react-hot-toast";
-import { connect } from "react-redux";
-import { closePopup, actChangePassword } from "../../../actions/index";
+import { useDispatch } from "react-redux";
+import { closePopup, actChangePassword } from "actions";
 
-export const ChangePassword = (props) => {
+export function ChangePassword(props) {
   const [state, setState] = useState({ newPassword: "", currentPassword: "" });
-
+  const dispatch = useDispatch();
   return (
     <div className="popup__change-password">
       <div className="popup__change-password__title">Đổi mật khẩu</div>
@@ -48,7 +48,7 @@ export const ChangePassword = (props) => {
               }
 
               if (checkOut) {
-                props.actChangePassword(state);
+                dispatch(actChangePassword(state));
               }
             }}
           >
@@ -57,7 +57,7 @@ export const ChangePassword = (props) => {
           <div
             className="change-password__btn"
             onClick={() => {
-              props.closePopup();
+              dispatch(closePopup());
             }}
           >
             Huỷ
@@ -66,6 +66,6 @@ export const ChangePassword = (props) => {
       </form>
     </div>
   );
-};
+}
 
-export default connect(null, { closePopup, actChangePassword })(ChangePassword);
+// export default connect(null, { closePopup, actChangePassword })(ChangePassword);

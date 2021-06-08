@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { actFetchStaffInfomation } from "../../../actions";
+import { actFetchStaffInfomation } from "actions";
 
 export class AccountInfo extends Component {
   componentDidMount() {

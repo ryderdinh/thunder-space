@@ -1,7 +1,7 @@
 //* IMPORT =============================================
 import callAPI from "../api/callAPI";
 import { getAllCookie, removeCookie, setCookie } from "../units/cookieWeb";
-import toast, { dispatch } from "react-hot-toast";
+import toast from "react-hot-toast";
 //? CALL API============================================
 export const actSignIn = (dataUser) => {
   loadingToast("Đang đăng nhập");
@@ -11,10 +11,18 @@ export const actSignIn = (dataUser) => {
       authorization: `Bearer ${res.accessToken}`,
     });
     removeToast();
-    if (res_1.data.status === "Login succesfully") {
-      setCookie(res_1.data.id, res.accessToken);
-      successToast("Đăng nhập thành công");
-      dispatch(setCheckLogin(true));
+    if (res_1 !== undefined) {
+      if (res_1.data.status === "Login succesfully") {
+        setCookie(res_1.data.id, res.accessToken);
+        successToast("Đăng nhập thành công");
+        setTimeout(() => {
+          dispatch(setCheckLogin(true));
+        }, 1500);
+      } else {
+        errorToast(
+          "Đăng nhập thất bại, kiểm tra lại tên đăng nhập hoặc mật khẩu của bạn"
+        );
+      }
     } else {
       errorToast(
         "Đăng nhập thất bại, kiểm tra lại tên đăng nhập hoặc mật khẩu của bạn"
@@ -131,10 +139,14 @@ export const actRefreshPage = () => {
         authorization: `Bearer ${token}`,
       });
       removeToast();
-      if (res_1.data.status === "Login succesfully") {
-        setCookie(res_1.data.id, token);
-        dispatch(setCheckLogin(true));
-        successToast("Chào mừng quay trở lại");
+      if (res_1 !== undefined) {
+        if (res_1.data.status === "Login succesfully") {
+          setCookie(res_1.data.id, token);
+          dispatch(setCheckLogin(true));
+          successToast("Chào mừng quay trở lại");
+        } else {
+          errorToast("Bạn cần đăng nhập lại");
+        }
       } else {
         errorToast("Bạn cần đăng nhập lại");
       }
@@ -165,21 +177,17 @@ export const actChangePassword = (data) => {
     }
   };
 };
-// ?TOAST
+//? TOAST
 const errorToast = toast.error;
 const successToast = toast.success;
 const loadingToast = (content) => {
-  var loadingTST = toast.loading(content);
+  toast.loading(content);
 };
 const removeToast = () => toast.remove(loadingToast());
 //TODO: TYPE AND PAYLOAD OF ACTION ================================
-export const fetchMenus = () => async (dispatch) => {
-  const data = [];
-  dispatch({
-    type: "FETCH_MENUS",
-    payload: data,
-  });
-};
+export const fetchMenus = () => ({
+  type: "FETCH_MENUS",
+});
 export const setActiveSideBar = (payload) => ({
   type: "SET_ACTIVE_SIDEBAR",
   payload,

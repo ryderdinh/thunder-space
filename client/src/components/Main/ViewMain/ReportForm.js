@@ -1,7 +1,8 @@
 import React from "react";
 import moment from "moment";
 import { connect } from "react-redux";
-import { actSendReport } from "../../../actions";
+import { actSendReport } from "actions";
+import toast from "react-hot-toast";
 
 export class ReportForm extends React.Component {
   constructor(props) {
@@ -156,23 +157,27 @@ export class ReportForm extends React.Component {
             <div
               className="btn btn-submit-report"
               onClick={() => {
-                if (this.state.act1 === "") {
-                  this.props.actSendReport({
-                    typeReport: "true",
-                    date: {
-                      dateStart: this.state.start,
-                      dateEnd: this.state.end,
-                    },
-                    content: this.state.reportContent,
-                  });
+                if (this.state.reportContent === "") {
+                  toast.error("Không được để trống!")
                 } else {
-                  this.props.actSendReport({
-                    typeReport: "false",
-                    date: {
-                      dateStart: this.state.date,
-                    },
-                    content: this.state.reportContent,
-                  });
+                  if (this.state.act1 === "") {
+                    this.props.actSendReport({
+                      typeReport: "true",
+                      date: {
+                        dateStart: this.state.start,
+                        dateEnd: this.state.end,
+                      },
+                      content: this.state.reportContent,
+                    });
+                  } else {
+                    this.props.actSendReport({
+                      typeReport: "false",
+                      date: {
+                        dateStart: this.state.date,
+                      },
+                      content: this.state.reportContent,
+                    });
+                  }
                 }
               }}
             >

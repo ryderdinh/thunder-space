@@ -1,11 +1,11 @@
 import React from "react";
 import SideItem from "./SideItem";
 import { connect } from "react-redux";
-import { fetchMenus } from "../../../actions/index";
+import { fetchMenus } from "actions";
 
 class SidebarMenu extends React.Component {
   state = {
-    linkSide: ["/home", "/table-of-work", "/report"],
+    linkSide: ["/", "/table-of-work", "/report"],
   };
   componentDidMount() {
     this.props.fetchMenus();

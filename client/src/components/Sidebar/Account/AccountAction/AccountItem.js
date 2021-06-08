@@ -1,15 +1,25 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { changeNameContainer } from "../../../../actions";
-import { removeCookie } from "../../../../units/cookieWeb";
+import { removeCookie } from "units/cookieWeb";
+import { changeNameContainer } from "actions";
 export class AccountItem extends React.Component {
   checkOut = (value) => {
-    if (value === 1) {
-      removeCookie(true, true);
-      window.location.href = "https://zelios-sea.netlify.app/";
-    } else {
-      this.props.changeNameContainer("Thông tin cá nhân");
+    switch (value) {
+      case 0: {
+        this.props.changeNameContainer("Thông tin cá nhân");
+        break;
+      }
+      case 1: {
+        break;
+      }
+      case 2: {
+        removeCookie(true, true);
+        window.location.href = "https://zelios-sea.netlify.app/";
+        break;
+      }
+      default:
+        break;
     }
   };
   render() {

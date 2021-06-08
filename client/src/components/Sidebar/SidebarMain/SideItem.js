@@ -1,8 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { setActiveSideBar, changeNameContainer } from "../../../actions/index";
-// import Cookies from "js-cookie";
+import { setActiveSideBar, changeNameContainer } from "actions";
 class SideItem extends React.Component {
   render() {
     const { to, name, index } = this.props;

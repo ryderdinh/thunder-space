@@ -8,7 +8,7 @@ export default class Main extends React.Component {
       <main>
         <div className="view-container">
           <HeaderContainer />
-          <ViewMain />
+          <ViewMain pathName={this.props.pathName} />
         </div>
       </main>
     );

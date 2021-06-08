@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import ListTimeKeepingItem from "./ListTimeKeepingItem";
-import { actFetchTimeKeeping } from "../../../actions";
+import { actFetchTimeKeeping } from "actions";
 export class ListTimeKeeping extends React.Component {
   componentDidMount() {
     this.props.actFetchTimeKeeping();

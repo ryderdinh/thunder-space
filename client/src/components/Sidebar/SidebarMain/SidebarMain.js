@@ -1,11 +1,12 @@
-import { useEffect } from "react";
-import { connect } from "react-redux";
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { useLocation } from "react-router";
-import { setActiveSideBar } from "../../../actions/index";
+import { setActiveSideBar } from "actions/index";
 import SidebarLogo from "./SidebarLogo";
 import SidebarMenu from "./SidebarMenu";
 
-export function SidebarMain({ setActiveSideBar }) {
+export function SidebarMain() {
+  const dispatch = useDispatch();
   let location = useLocation();
   let pathname = location.pathname;
   useEffect(() => {
@@ -15,12 +16,13 @@ export function SidebarMain({ setActiveSideBar }) {
     );
 
     let menuPage = {
-      home: 0,
+      "": 0,
       "table-of-work": 1,
       report: 2,
-      "info-account": 3,
+      "account": 3,
     };
-    setActiveSideBar(menuPage[mainPath]);
+    // setActiveSideBar(menuPage[mainPath]);
+    dispatch(setActiveSideBar(menuPage[mainPath]));
   });
   return (
     <div className="sidebar_main">
@@ -29,4 +31,4 @@ export function SidebarMain({ setActiveSideBar }) {
     </div>
   );
 }
-export default connect(null, { setActiveSideBar })(SidebarMain);
+// export default connect(null, { setActiveSideBar })(SidebarMain);
