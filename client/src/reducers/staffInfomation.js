@@ -1,14 +1,19 @@
 const initState = {
-  _staffInfomation: [],
+  _staffInfomation: {
+    name: ".",
+    birthday: ".",
+    phonenumber: ".",
+    position: ".",
+    department: ".",
+    email: ".",
+  },
 };
 export default function staffInfomation(state = initState, action) {
   switch (action.type) {
     case "SET_STAFF_INFOMATION": {
-      let array = action.payload;
-
       return {
         ...state,
-        _staffInfomation: array,
+        _staffInfomation: action.payload,
       };
     }
     default:

@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
-import { actSendLocationToServer } from "../../../actions";
+import { actSendLocationToServer } from "actions";
+import toast from "react-hot-toast";
 export class BtnTimeKeeping extends React.Component {
   constructor(props) {
     super(props);
@@ -10,16 +11,14 @@ export class BtnTimeKeeping extends React.Component {
   }
   async getLocation() {
     if (navigator.geolocation) {
-      await navigator.geolocation.getCurrentPosition(
-        (position) => {
-          this.setState({
-            location: [position.coords.latitude, position.coords.longitude],
-          });
-          this.props.actSendLocationToServer(this.state.location);
-        }
-      );
+      await navigator.geolocation.getCurrentPosition((position) => {
+        this.setState({
+          location: [position.coords.latitude, position.coords.longitude],
+        });   
+        this.props.actSendLocationToServer(this.state.location);
+      });
     } else {
-      console.log("Geolocation is not supported by this browser.");
+      toast.error("Geolocation is not supported by this browser.");
     }
   }
   render() {

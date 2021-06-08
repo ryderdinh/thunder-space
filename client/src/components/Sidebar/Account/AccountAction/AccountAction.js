@@ -3,8 +3,8 @@ import AccountItem from "./AccountItem";
 
 export default class AccountAction extends React.Component {
   state = {
-    nameItem: ["Thông tin cá nhân", "Đăng xuất"],
-    linkCpn: ["/info-account", "#"],
+    nameItem: ["Thông báo", "Thông tin cá nhân", "Đăng xuất"],
+    linkCpn: ["#", "/account", "#"],
   };
   render() {
     return (

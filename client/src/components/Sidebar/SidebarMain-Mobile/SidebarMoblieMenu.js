@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import SideMobileItem from "./SideMobileItem";
-import { fetchMenus } from "../../../actions/index";
+import { fetchMenus } from "actions";
+import { SideMobileItem } from "./SideMobileItem";
 export class SidebarMoblieMenu extends Component {
   state = {
     icon: [
@@ -11,7 +11,7 @@ export class SidebarMoblieMenu extends Component {
       "fas fa-user",
     ],
     title: ["Trang chủ", "Bảng công", "Báo cáo", "Thông tin cá nhân"],
-    to: ["/home", "/table-of-work", "/report", "/info-account"],
+    to: ["/", "/table-of-work", "/report", "/account"],
   };
   componentDidMount() {
     this.props.fetchMenus();

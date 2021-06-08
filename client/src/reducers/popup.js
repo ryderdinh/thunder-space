@@ -12,7 +12,6 @@ export default function popup(state = initState, action) {
         typePopup: action.payload.typePopup,
       };
     case "CLOSE_POPUP": {
-      console.log("hello");
       return {
         ...state,
         isShow: false,

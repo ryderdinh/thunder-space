@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { setActiveSideBar, changeNameContainer } from "../../../actions";
+import { setActiveSideBar, changeNameContainer } from "actions";
 
 export class SideMobileItem extends Component {
   render() {

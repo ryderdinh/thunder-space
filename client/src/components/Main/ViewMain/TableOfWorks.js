@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { actFetchDataTableOfWork } from "../../../actions";
+import { actFetchDataTableOfWork } from "actions";
 import DayItem from "./DayItem";
 
 export class TableOfWork extends React.Component {
@@ -65,9 +65,10 @@ export class TableOfWork extends React.Component {
   }
 
   render() {
+    let { month, year } = this.state;
     return (
-      <div className="table-of-work animate__animated animate__fadeInLeft">
-        <h2>{`Tháng ${this.state.month} ${this.state.year}`}</h2>
+      <div className="table-of-work animate__animated animate__fadeIn">
+        <h2>{`Tháng ${month} ${year}`}</h2>
         <form action="#">
           <label className="weekday">Mo</label>
           <label className="weekday">Tu</label>

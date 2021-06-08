@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import ChangePassword from "./ChangePassword";
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
+import { ChangePassword } from "./ChangePassword";
 
-export const Popup = ({ popup }) => {
+export const Popup = () => {
   const [state, setState] = useState("popup-container");
+  const popup = useSelector((state) => state._popup);
   let { typePopup, isShow } = popup;
   useEffect(() => {
     if (isShow) setState("popup-container active");
@@ -22,8 +23,4 @@ export const Popup = ({ popup }) => {
   }
 };
 
-const mapStateToProps = (state) => ({
-  popup: state._popup,
-});
 
-export default connect(mapStateToProps, null)(Popup);

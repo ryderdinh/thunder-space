@@ -13,10 +13,10 @@ export default function HeaderContainer() {
     );
 
     let menuPage = {
+      "": "Trang chủ",
       "table-of-work": "Bảng công",
       report: "Báo cáo",
-      home: "Trang chủ",
-      "info-account": "Thông tin cá nhân",
+      account: "Thông tin cá nhân",
     };
     setState(menuPage[mainPath]);
   }, [pathname]);

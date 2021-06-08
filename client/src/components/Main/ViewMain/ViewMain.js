@@ -8,7 +8,7 @@ export default class ViewMain extends React.Component {
           <img src="./images/ellips5.svg" alt="" />
         </div>
         <div className="row">
-          <ViewBox />
+          <ViewBox pathName={this.props.pathName} />
         </div>
       </div>
     );

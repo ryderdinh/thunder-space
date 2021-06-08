@@ -673,6 +673,7 @@ main {
   -moz-border-radius: 10px;
   -ms-border-radius: 10px;
   -o-border-radius: 10px;
+  cursor: pointer;
 }
 .view-container
   .view_main
@@ -699,7 +700,7 @@ main {
   border-radius: 10px;
   font-weight: bold;
   font-size: 14px;
-  width: 200px;
+  width: 300px;
   padding: 6px;
   margin-right: 6px;
   -webkit-border-radius: 10px;

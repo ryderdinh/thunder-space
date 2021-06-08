@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
-import { actFetchStaffInfomation } from "../../../actions";
-import AccountButton from "../Button/AccountButton";
+import { actFetchStaffInfomation } from "actions";
+import { AccountButton } from "../Button/AccountButton";
 class AccountContainer extends React.Component {
   componentDidMount() {
     this.props.actFetchStaffInfomation();
@@ -75,6 +75,7 @@ class AccountContainer extends React.Component {
   }
 }
 const mapStateToProps = (state) => {
+  console.log(state._staffInfomation._staffInfomation);
   return {
     user: state._staffInfomation._staffInfomation,
   };

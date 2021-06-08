@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import EventItem from "./EventItem";
-import { actFetchEvents } from "../../../actions";
+import { actFetchEvents } from "actions";
 
 export class Event extends Component {
   state = {
@@ -9,15 +9,15 @@ export class Event extends Component {
   };
   async componentDidMount() {
     await this.props.actFetchEvents();
-    console.log(this.props);
     let eventsProps = this.props.events;
+
     let listEvent = [];
     let i = 0;
     while (i < eventsProps.length - 1) {
       let arrR = [eventsProps[i]];
       let j = i + 1;
       while (j < eventsProps.length) {
-        if (eventsProps[i] === eventsProps[j]) {
+        if (eventsProps[i].date === eventsProps[j].date) {
           arrR = [...arrR, eventsProps[j]];
         }
         ++j;
@@ -29,7 +29,6 @@ export class Event extends Component {
   }
 
   render() {
-    console.log(this.state);
     return (
       <div className="view_item event animate__animated animate__slideInUp">
         {this.state.listEvent.map((value, index) => (

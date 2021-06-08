@@ -1,9 +1,10 @@
 import React from "react";
-import { removeCookie } from "../../../units/cookieWeb";
-import { connect } from "react-redux";
-import { setPopup } from "../../../actions/index";
+import { removeCookie } from "units/cookieWeb";
+import { useDispatch } from "react-redux";
+import { setPopup } from "actions";
 
-export const AccountButton = ({ content, type, setPopup }) => {
+export const AccountButton = ({ content, type }) => {
+  const dispatch = useDispatch();
   return (
     <div
       className={`account__btn ${type}`}
@@ -13,7 +14,7 @@ export const AccountButton = ({ content, type, setPopup }) => {
           window.location.href = "https://zelios-sea.netlify.app/";
         }
         if (type === "change-password") {
-          setPopup({ typePopup: "change-password", isShow: true });
+          dispatch(setPopup({ typePopup: "change-password", isShow: true }));
         }
       }}
     >
@@ -22,4 +23,4 @@ export const AccountButton = ({ content, type, setPopup }) => {
   );
 };
 
-export default connect(null, { setPopup })(AccountButton);
+// export default connect(null, { setPopup })(AccountButton);
