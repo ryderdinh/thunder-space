@@ -75,7 +75,7 @@
         <div class="header-body">
           <div class="row align-items-center py-4">
             
-            <div class="col-lg-12 col-5 text-right">
+            <div class="col-lg-12 col-12 text-right">
               <a href="#" class="btn btn-sm btn-neutral">Filters</a>
               <a href="#" class="btn btn-sm btn-neutral">Show all</a>
             </div>
@@ -96,22 +96,28 @@
               <table class="table align-items-center table-flush">
                 <thead class="thead-light">
                   <tr>
-                    <th scope="col" class="sort" data-sort="email">Type report</th>
+                    <th scope="col" class="sort" data-sort="email">Name</th>
                     <th scope="col" class="sort" data-sort="name">Date start</th>
                     <th scope="col" class="sort" data-sort="birthday">Date end</th>
-                    <th scope="col" class="sort" data-sort="position">content</th>
+                    <th scope="col" class="sort" data-sort="position">Type</th>
                   </tr>
                 </thead>
-
+                
                 <% reportLists.forEach((reportList) => { %>
-                <% for (let i = 0; i < reportList.reportDetails.length; i++) { %>
-
-
-                <tbody class="list">
+                  <% for (let i = 0; i < reportList.reportDetails.length; i++) { %>
+                    
+                    
+                    <tbody class="list" data-toggle="modal" data-target="#modal-default">
+                  
                   <tr>
+                    <td style="display: none;" >
+                      <span class="badge badge-dot mr-4">
+                        <span class="email"><%= reportList.reportDetails[i].content %></span>
+                      </span>
+                    </td>
                     <td>
                       <span class="badge badge-dot mr-4">
-                        <span class="email"><%= reportList.reportDetails[i].typeReport %></span>
+                        <span class="email"><%= reportList.userName %></span>
                       </span>
                     </td>
                     <td>
@@ -126,10 +132,9 @@
                     </td>
                     <td>
                       <span class="badge badge-dot mr-4">
-                        <span class="email"><%= reportList.reportDetails[i].content %></span>
+                        <span class="email"><%= reportList.reportDetails[i].typeReport %></span>
                       </span>
                     </td>
-
                   </tr>
                   <% } %>
                   <% }) %>
@@ -138,6 +143,7 @@
             </div>
               </table>
             </div>
+            
             <!-- Card footer -->
             <div class="card-footer py-4">
               <nav aria-label="...">
@@ -163,6 +169,32 @@
                   </li>
                 </ul>
               </nav>
+            </div>
+            <div class="row">
+              <div class="col-md-4">
+                  <div class="modal fade" id="modal-default" tabindex="-1" role="dialog" aria-labelledby="modal-default" aria-hidden="true">
+                <div class="modal-dialog modal- modal-dialog-centered modal-" role="document">
+                    <div class="modal-content">
+                      
+                        <div class="modal-header">
+                            <h6 class="modal-title" id="modal-title-default">Content</h6>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        
+                        <div class="modal-body">
+                          
+                            <p id="contentRp"></p>
+                            
+                        </div>
+                        
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-link  ml-auto" data-dismiss="modal">Close</button>
+                        </div>
+                        
+                    </div>
+                </div>
             </div>
           </div>
         </div>
@@ -201,6 +233,7 @@
     highlightText();
   }
   </script>
+  <script src="../assets//js/viewContentRp.js"></script>
 </body>
 
 </html>

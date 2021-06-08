@@ -87,6 +87,7 @@
               </div>
             </div>
             <div class="card-body">
+             <% if (info) { %>
               <form action="/admin/updateUser/<%= id %>" method="POST">
                 <h6 class="heading-small text-muted mb-4">Update information</h6>
                 <div class="pl-lg-4">
@@ -94,13 +95,13 @@
                     <div class="col-lg-6">
                       <div class="form-group">
                         <label class="form-control-label" for="input-new-username">Name</label>
-                        <input name="newName" type="text" id="input-new-username" class="form-control" placeholder="Username">
+                        <input name="newName" type="text" id="input-new-username" class="form-control" value="<%= info.name%>">
                       </div>
                     </div>
                     <div class="col-lg-6">
                       <div class="form-group">
                         <label class="form-control-label" for="input-new-email">Email address</label>
-                        <input name="newEmail" type="email" id="input-new-email" class="form-control" placeholder="abc@gmail.com">
+                        <input name="newEmail" type="email" id="input-new-email" class="form-control" value="<%= info.email%>" >
                       </div>
                     </div>
                   </div>
@@ -108,13 +109,13 @@
                     <div class="col-lg-6">
                       <div class="form-group">
                         <label class="form-control-label" for="input-new-position">Position</label>
-                        <input name="newPosition" type="text" id="input-new-position" class="form-control" placeholder="Marketing manager etc.." >
+                        <input name="newPosition" type="text" id="input-new-position" class="form-control" value="<%= info.position%>"  >
                       </div>
                     </div>
                     <div class="col-lg-6">
                       <div class="form-group">
                         <label class="form-control-label" for="input-new-department">Department</label>
-                        <input name="newDepartment" type="text" id="input-new-department" class="form-control" placeholder="Marketing etc..">
+                        <input name="newDepartment" type="text" id="input-new-department" class="form-control"value="<%= info.department%>" >
                       </div>
                     </div>
                   </div>
@@ -130,19 +131,19 @@
                     <div class="col-lg-4">
                       <div class="form-group">
                         <label class="form-control-label" for="input-new-birthday">Birthday</label>
-                        <input name="newBirthday" type="date" id="input-new-birthday" class="form-control" placeholder="City" value="New York">
+                        <input name="newBirthday" type="date" id="input-new-birthday" class="form-control" value="<%= info. birthday%>">
                       </div>
                     </div>
                     <div class="col-lg-4">
                       <div class="form-group">
                         <label class="form-control-label" for="input-new-phonenumber">Phone number</label>
-                        <input name="newPhonenumber" type="text" id="input-new-phonenumber" class="form-control" placeholder="+84">
+                        <input name="newPhonenumber" type="text" id="input-new-phonenumber" class="form-control" value="<%= info.phonenumber%>" >
                       </div>
                     </div>
                     <div class="col-lg-4">
                       <div class="form-group">
                         <label class="form-control-label" for="input-new-password">Password</label>
-                        <input name="newPassword" type="text" id="input-new-password" class="form-control" placeholder="******">
+                        <input name="newPassword" type="text" id="input-new-password" class="form-control" >
                       </div>
                     </div>
                   </div>
@@ -152,6 +153,7 @@
                   <button type="submit" class="btn btn-sm btn-primary">Update</button>
                 </div>
               </form>
+              <% } %>
             </div>
           </div>
         </div>

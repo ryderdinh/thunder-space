@@ -1,175 +1,251 @@
-
 <%- include("../includes/head.ejs") -%>
 
-<body>
-  <!-- Sidenav -->
-  <%-  include("../includes/sideBar.ejs")  -%>
-  <!-- Main content -->
-  <div class="main-content" id="panel">
-    <!-- Topnav -->
-    <nav class="navbar navbar-top navbar-expand navbar-dark bg-gradient-primary border-bottom">
-      <div class="container-fluid">
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <!-- Search form -->
-          <form action="/admin/searchMember" class="navbar-search navbar-search-light form-inline mr-sm-3" id="navbar-search-main">
-            <div class="form-group mb-0">
-              <div class="input-group input-group-alternative input-group-merge">
-                <div class="input-group-prepend">
-                  <span class="input-group-text" type><i class="fas fa-search"></i></span>
-                </div>
-                <input class="form-control" name="search" placeholder="Search" type="text" >
-              </div>
-            </div>
-            <button type="button" class="close" data-action="search-close" data-target="#navbar-search-main" aria-label="Close">
-              <span aria-hidden="true">×</span>
-            </button>
-          </form>
-          <!-- Navbar links -->
-          <ul class="navbar-nav align-items-center  ml-md-auto ">
-            <li class="nav-item d-xl-none">
-              <!-- Sidenav toggler -->
-              <div class="pr-3 sidenav-toggler sidenav-toggler-dark" data-action="sidenav-pin" data-target="#sidenav-main">
-                <div class="sidenav-toggler-inner">
-                  <i class="sidenav-toggler-line"></i>
-                  <i class="sidenav-toggler-line"></i>
-                  <i class="sidenav-toggler-line"></i>
-                </div>
-              </div>
-            </li>
-            <li class="nav-item d-sm-none">
-              <a class="nav-link" href="#" data-action="search-show" data-target="#navbar-search-main">
-                <i class="ni ni-zoom-split-in"></i>
-              </a>
-            </li>
-          </ul>
-          <ul class="navbar-nav align-items-center  ml-auto ml-md-0 ">
-            <li class="nav-item dropdown">
-              <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <div class="media align-items-center">
-                  <span class="avatar avatar-sm rounded-circle">
-                    <img alt="Image placeholder" src="../assets/img/brand/admin.png">
-                  </span>
-                  <div class="media-body  ml-2  d-none d-lg-block">
-                    <span class="mb-0 text-sm  font-weight-bold">Admin</span>
+  <body>
+    <!-- Sidenav -->
+    <%- include("../includes/sideBar.ejs") -%>
+      <!-- Main content -->
+      <div class="main-content" id="panel">
+        <!-- Topnav -->
+        <nav class="navbar navbar-top navbar-expand navbar-dark bg-gradient-primary border-bottom">
+          <div class="container-fluid">
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <!-- Search form -->
+              <form action="/admin/searchMember" class="navbar-search navbar-search-light form-inline mr-sm-3"
+                id="navbar-search-main">
+                <div class="form-group mb-0">
+                  <div class="input-group input-group-alternative input-group-merge">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" type><i class="fas fa-search"></i></span>
+                    </div>
+                    <input class="form-control" name="search" placeholder="Search" type="text">
                   </div>
                 </div>
-              </a>
-              <div class="dropdown-menu  dropdown-menu-right ">
-                <div class="dropdown-header noti-title">
-                  <h6 class="text-overflow m-0">Welcome!</h6>
+                <button type="button" class="close" data-action="search-close" data-target="#navbar-search-main"
+                  aria-label="Close">
+                  <span aria-hidden="true">×</span>
+                </button>
+              </form>
+              <!-- Navbar links -->
+              <ul class="navbar-nav align-items-center  ml-md-auto ">
+                <li class="nav-item d-xl-none">
+                  <!-- Sidenav toggler -->
+                  <div class="pr-3 sidenav-toggler sidenav-toggler-dark" data-action="sidenav-pin"
+                    data-target="#sidenav-main">
+                    <div class="sidenav-toggler-inner">
+                      <i class="sidenav-toggler-line"></i>
+                      <i class="sidenav-toggler-line"></i>
+                      <i class="sidenav-toggler-line"></i>
+                    </div>
+                  </div>
+                </li>
+                <li class="nav-item d-sm-none">
+                  <a class="nav-link" href="#" data-action="search-show" data-target="#navbar-search-main">
+                    <i class="ni ni-zoom-split-in"></i>
+                  </a>
+                </li>
+              </ul>
+              <ul class="navbar-nav align-items-center  ml-auto ml-md-0 ">
+                <li class="nav-item dropdown">
+                  <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
+                    aria-expanded="false">
+                    <div class="media align-items-center">
+                      <span class="avatar avatar-sm rounded-circle">
+                        <img alt="Image placeholder" src="../assets/img/brand/admin.png">
+                      </span>
+                      <div class="media-body  ml-2  d-none d-lg-block">
+                        <span class="mb-0 text-sm  font-weight-bold">Admin</span>
+                      </div>
+                    </div>
+                  </a>
+                  <div class="dropdown-menu  dropdown-menu-right ">
+                    <div class="dropdown-header noti-title">
+                      <h6 class="text-overflow m-0">Welcome!</h6>
+                    </div>
+                    <div class="dropdown-divider"></div>
+                    <a href="/admin/logout" class="dropdown-item">
+                      <i class="ni ni-user-run"></i>
+                      <span>Logout</span>
+                    </a>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+        <!-- Header -->
+        <!-- Header -->
+        <div class="header bg-gradient-primary pb-6">
+          <div class="container-fluid">
+            <div class="header-body">
+              <div class="row align-items-center py-4">
+                <div class="col-lg-12 col-12 text-right">
+                  <a href="/admin/createUser" class="btn btn-sm btn-neutral">New</a>
+                  <a href="#" class="btn btn-sm btn-neutral">Filters</a>
+                  <a href="#" class="btn btn-sm btn-neutral">Show all</a>
                 </div>
-                <div class="dropdown-divider"></div>
-                <a href="/admin/logout" class="dropdown-item">
-                  <i class="ni ni-user-run"></i>
-                  <span>Logout</span>
-                </a>
               </div>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
-    <!-- Header -->
-    <!-- Header -->
-    <div class="header bg-gradient-primary pb-6">
-      <div class="container-fluid">
-        <div class="header-body">
-          <div class="row align-items-center py-4">
-                <div class="col-lg-12 col-5 text-right">
-              <a href="/admin/createUser" class="btn btn-sm btn-neutral">New</a>
-              <a href="#" class="btn btn-sm btn-neutral">Filters</a>
-              <a href="#" class="btn btn-sm btn-neutral">Show all</a>
             </div>
           </div>
         </div>
-      </div>
-    </div>
-    <!-- Page content -->
-    <div class="container-fluid mt--6">
-      <div class="row">
-        <div class="col">
-          <div class="card">
-            <!-- Card header -->
-            <div class="card-header border-0">
-              <h3 class="mb-0">User information</h3>
-            </div>
-            <!-- <form action="/users/search" class="search-form">
+        <!-- Page content -->
+    
+        <div class="container-fluid mt--6">
+          <div class="row">
+            <div class="col">
+              <div class="card">
+                <!-- Card header -->
+                <div class="card-header border-0">
+                  <h3 class="mb-0">User information</h3>
+                </div>
+                <% if (messages.success) { %>
+                  <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <span class="alert-icon"><i class="ni ni-like-2"></i></span>
+                    <%= messages.success %>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+              <% } %>
+                <% if (messages.err) { %>
+                  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <span class="alert-icon"><i class="ni ni-like-2"></i></span>
+                    <%= messages.err %>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+              <% } %>
+                <!-- <form action="/users/search" class="search-form">
               <input type="text" name="name" placeholder="name">
               <input type="submit">
             </form> -->
-            <div class="table-responsive">
-              <table class="table align-items-center table-flush">
-                <thead class="thead-light">
-                  <tr>
-                    <th scope="col" class="sort" data-sort="email">Email</th>
-                    <th scope="col" class="sort" data-sort="name">Name</th>
-                    <th scope="col" class="sort" data-sort="birthday">Birthday</th>
-                    <th scope="col" class="sort" data-sort="position">Position</th>
-                    <th scope="col" class="sort" data-sort="department">department</th>
-                    <th scope="col" class="sort" data-sort="phonenumber">Phonenumber</th>
-                    <th scope="col" class="sort" data-sort="phonenumber"></th>
-                  </tr>
-                </thead>
+                <div class="table-responsive">
+                  <table class="table align-items-center table-flush">
+                    <thead class="thead-light">
+                      <tr>
+                        <th scope="col" class="sort" data-sort="email">Email</th>
+                        <th scope="col" class="sort" data-sort="name">Name</th>
+                        <th scope="col" class="sort" data-sort="birthday">Birthday</th>
+                        <th scope="col" class="sort" data-sort="position">Position</th>
+                        <th scope="col" class="sort" data-sort="department">department</th>
+                        <th scope="col" class="sort" data-sort="phonenumber">Phonenumber</th>
+                        <th scope="col" class="sort" data-sort="phonenumber"></th>
+                      </tr>
+                    </thead>
 
-                <% userList.forEach((user) => { %>
-                <tbody class="list">
-                  <tr>
-    
-                    <td>
-                      <span class="badge badge-dot mr-4">
-                        <span class="email"><%= user.email %></span>
-                      </span>
-                    </td>
-                    <td>
-                      <span class="badge badge-dot mr-4">
-                        <span class="name"><%= user.name %></span>
-                      </span>
-                    </td>
-                    <td>
-                      <span class="badge badge-dot mr-4">
-                        <span class="birthday"><%= user.birthday %></span>
-                      </span>
-                    </td>
-                    <td>
-                      <span class="badge badge-dot mr-4">
-                        <span class="position"><%= user.position %></span>
-                      </span>
-                    </td>
-                    <td>
-                      <span class="badge badge-dot mr-4">
-                        <span class="department"><%= user.department %></span>
-                      </span>
-                    </td>
-                    <td>
-                      <span class="badge badge-dot mr-4">
-                        <span class="phonenumber"><%= user.phonenumber %></span>
-                      </span>
-                    </td>
-                    <td class="text-right">
-                      <div class="dropdown">
-                        <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          <i class="fas fa-ellipsis-v"></i>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                          <form action="/admin/updateUser" class="search-form">
-                            <input type="text" name="searchId" placeholder="search" value="<%= user.id %>" style="display: none;">
-                            <button type="submit" class="dropdown-item">Update</button>
-                          </form>
-                          <form action="" class="search-form">
-                            <input type="text" name="searchId" placeholder="search" value="<%= user.id %>" style="display: none;">
-                            <input type="password" class="dropdown-item" name="verifyPassword"   placeholder="Enter your password"  style="display: block;outline: 0;border: none;">
-                            <button type="submit"  class="dropdown-item" name="btnDel">Delete</button>
-                          </form>
+                    <% userList.forEach((user)=> { %>
+                      <tbody class="list">
+                        <tr>
+
+                          <td>
+                            <span class="badge badge-dot mr-4">
+                              <span class="email">
+                                <%= user.email %>
+                              </span>
+                            </span>
+                          </td>
+                          <td>
+                            <span class="badge badge-dot mr-4">
+                              <span class="name">
+                                <%= user.name %>
+                              </span>
+                            </span>
+                          </td>
+                          <td>
+                            <span class="badge badge-dot mr-4">
+                              <span class="birthday">
+                                <%= user.birthday %>
+                              </span>
+                            </span>
+                          </td>
+                          <td>
+                            <span class="badge badge-dot mr-4">
+                              <span class="position">
+                                <%= user.position %>
+                              </span>
+                            </span>
+                          </td>
+                          <td>
+                            <span class="badge badge-dot mr-4">
+                              <span class="department">
+                                <%= user.department %>
+                              </span>
+                            </span>
+                          </td>
+                          <td>
+                            <span class="badge badge-dot mr-4">
+                              <span class="phonenumber">
+                                <%= user.phonenumber %>
+                              </span>
+                            </span>
+                          </td>
+                          <td class="text-right">
+                            <div class="dropdown">
+                              <a class="btn btn-sm btn-icon-only text-light" href="#" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-ellipsis-v"></i>
+                              </a>
+                              <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                                <form action="/admin/updateUser" class="">
+                                  <input type="text" name="searchId" placeholder="search" value="<%= user.id %>"
+                                    style="display: none;">
+                                  <button type="submit" class="dropdown-item">Update</button>
+                                </form>
+                                <form  >
+                                  <input type="text"  name="searchId" placeholder="search" value="<%= user.id %>"
+                                    style="display: none;">
+                                  <!-- <input type="password" name="password" placeholder="Your password is required" class="dropdown-item" style="display: none;"> -->
+                                  <!-- <button type="button" class="dropdown-item" data-toggle="modal" 
+                                    data-target="#modal-notification">fasdfad</button>  -->
+                                    <button name="delBtn"  type="button" class ="dropdown-item" data-toggle="modal" 
+                                    data-target="#modal-notification">Delete</button>
+                              </form>
+                            </div> 
+                </div>
+                </td>
+                </tr>
+                <% }) %>
+                  </tbody>
+                  </table>
+              </div>
+              </table>
+              </div>
+          <div class="col-md-4">
+              <div class="modal fade" id="modal-notification" tabindex="-1" role="dialog" aria-labelledby="modal-notification" aria-hidden="true">
+            <div class="modal-dialog modal-danger modal-dialog-centered modal-" role="document">
+                <div class="modal-content bg-gradient-danger">
+                  
+                    <div class="modal-header">
+                        <h6 class="modal-title" id="modal-title-notification">Your attention is required</h6>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    
+                    <div class="modal-body">
+                      
+                        <form id="myForm" action="/admin/deleteUser" method="POST">
+                          <div class="py-3 text-center">
+                            <i class="ni ni-satisfied ni-3x"></i>
+                            <h4 class="heading mt-4">Are you sure to delete this user ?</h4>
+                            <!-- <p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p> -->
+                            <input type="password" name="password" placeholder="Enter your password" class="form-control" >
+                            <input style="display: none;" type="text" name="userId" id="userId" >
                         </div>
-                      </div>
-                    </td>
-                  </tr>
-                  <% }) %>
-                </tbody>
-              </table>
+                        </form>
+                        
+                    </div>
+                    
+                    <div class="modal-footer">
+                        <button type="submit" form="myForm" class="btn btn-white">Ok, Got it</button>
+                        <button type="button" class="btn btn-link text-white ml-auto" data-dismiss="modal">Close</button>
+                    </div>
+                    
+                </div>
             </div>
-              </table>
+        </div> 
             </div>
+          
 
             <!-- Card footer -->
             <div class="card-footer py-4">
@@ -197,27 +273,32 @@
                 </ul>
               </nav>
             </div>
+
+
           </div>
+
+
         </div>
       </div>
+      </div>
       <div>
-        
+
       </div>
       <!-- Footer -->
-    </div>
-  </div>
-    
-  <!-- Argon Scripts -->
-  <!-- Core -->
-  <script src="../assets/vendor/jquery/dist/jquery.min.js"></script>
-  <script src="../assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="../assets/vendor/js-cookie/js.cookie.js"></script>
-  <script src="../assets/vendor/jquery.scrollbar/jquery.scrollbar.min.js"></script>
-  <script src="../assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js"></script>
-  <!-- Argon JS -->
-  <script src="../assets/js/argon.js?v=1.2.0"></script>
-  <script src="../assets/js/verifyAdmin.js"></script>
+      </div>
+      </div>
 
-</body>
+      <!-- Argon Scripts -->
+      <!-- Core -->
+      <script src="../assets/vendor/jquery/dist/jquery.min.js"></script>
+      <script src="../assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+      <script src="../assets/vendor/js-cookie/js.cookie.js"></script>
+      <script src="../assets/vendor/jquery.scrollbar/jquery.scrollbar.min.js"></script>
+      <script src="../assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js"></script>
+      <!-- Argon JS -->
+      <script src="../assets/js/argon.js?v=1.2.0"></script>
+      <script src="../assets/js/verifyAdmin.js"></script>
 
-</html>
+  </body>
+
+  </html>

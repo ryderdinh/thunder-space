@@ -5,7 +5,7 @@ module.exports = (req, res, next) => {
           if(err) {
             return next(err);
           } else {
-            return res.redirect('/admin/login');
+            return res.redirect('/');
           }
         });
       }

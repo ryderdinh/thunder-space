@@ -87,7 +87,7 @@
               
               </div>
             </div>
-            <div class="card-body">
+           <div class="card-body">
               <% if (messages.create) { %>
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
                   <span class="alert-icon"><i class="ni ni-like-2"></i></span>
@@ -119,23 +119,29 @@
                 <h6 class="heading-small text-muted mb-4">Event information</h6>
                 <div class="pl-lg-4">
                   <div class="row">
-                    <div class="col-lg-6">
+                    <div class="col-lg-4">
                       <div class="form-group">
                         <label class="form-control-label" for="input-username">Name Event</label>
-                        <input name="name" required type="text" id="input-name-event" class="form-control" placeholder="event">
+                        <input name="name" required type="text" id="input-name-event" class="form-control">
                       </div>
                     </div>
-                    <div class="col-lg-6">
+                    <div class="col-lg-4">
                       <div class="form-group">
                         <label class="form-control-label" for="input-email">Time</label>
-                        <input name="date" required type="date" id="input-email" class="form-control">
+                        <input name="date" required type="datetime-local" id="input-email" class="form-control">
                       </div>
                     </div>
+                    <div class="col-lg-4">
+                      <div class="form-group">
+                        <label for="position">Position</label>
+                        <input name="position" type="text" class="form-control"  required>
+                      </div>
+                  </div>
                   </div>
                   <div class="form-group">
-                    <label for="position">Position</label>
+                    <label for="position">Content</label>
                     <!-- <textarea name="position" class="form-control" id="exampleFormControlTextarea1" rows="3" required></textarea> -->
-                    <input name="position" type="text" class="form-control" placeholder="address" required>
+                    <textarea name="content" class="form-control" required  cols="30" rows="10"></textarea>
                   </div>
 
                 <div class="col-12 text-right">
