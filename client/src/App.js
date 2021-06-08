@@ -19,11 +19,6 @@ class App extends React.Component {
   componentDidMount() {
     this.props.actRefreshPage();
   }
-  componentDidUpdate(prevProps) {
-    if (this.props.location.pathname !== prevProps.location.pathname) {
-      window.scrollTo(0, 0);
-    }
-  }
   checkAndRenderCPN = (checkId, path) =>
     checkId ? (
       <div className="container animate__animated animate__fadeIn">
