@@ -1,6 +1,7 @@
 let initState = {
   isShow: false,
   typePopup: "",
+  dataPopup: "",
 };
 
 export default function popup(state = initState, action) {
@@ -10,6 +11,7 @@ export default function popup(state = initState, action) {
         ...state,
         isShow: action.payload.isShow,
         typePopup: action.payload.typePopup,
+        dataPopup: action.payload.dataPopup,
       };
     case "CLOSE_POPUP": {
       return {

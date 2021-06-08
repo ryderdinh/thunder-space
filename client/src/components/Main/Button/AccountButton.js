@@ -14,7 +14,13 @@ export const AccountButton = ({ content, type }) => {
           window.location.href = "https://zelios-sea.netlify.app/";
         }
         if (type === "change-password") {
-          dispatch(setPopup({ typePopup: "change-password", isShow: true }));
+          dispatch(
+            setPopup({
+              typePopup: "change-password",
+              isShow: true,
+              dataPopup: "",
+            })
+          );
         }
       }}
     >

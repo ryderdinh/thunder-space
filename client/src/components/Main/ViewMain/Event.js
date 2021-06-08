@@ -10,17 +10,17 @@ export class Event extends Component {
   async componentDidMount() {
     await this.props.actFetchEvents();
     let eventsProps = this.props.events;
-
+    console.log(eventsProps);
     let listEvent = [];
     let i = 0;
-    while (i < eventsProps.length - 1) {
+    while (i <= eventsProps.length - 1) {
       let arrR = [eventsProps[i]];
       let j = i + 1;
       while (j < eventsProps.length) {
         if (eventsProps[i].date === eventsProps[j].date) {
           arrR = [...arrR, eventsProps[j]];
-        }
-        ++j;
+          eventsProps.splice(j, 1);
+        } else ++j;
       }
       listEvent = [...listEvent, arrR];
       ++i;
