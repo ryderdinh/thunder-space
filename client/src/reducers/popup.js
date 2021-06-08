@@ -7,6 +7,7 @@ let initState = {
 export default function popup(state = initState, action) {
   switch (action.type) {
     case "SET_POPUP":
+      console.log(action);
       return {
         ...state,
         isShow: action.payload.isShow,

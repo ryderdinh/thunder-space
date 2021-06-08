@@ -29,4 +29,3 @@ export const AccountButton = ({ content, type }) => {
   );
 };
 
-// export default connect(null, { setPopup })(AccountButton);
