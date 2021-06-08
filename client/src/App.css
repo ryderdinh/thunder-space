@@ -613,11 +613,13 @@ main {
   flex-flow: row;
   align-items: center;
   padding: 7px;
-  margin-bottom: 14px;
   -webkit-border-radius: 10px;
   -moz-border-radius: 10px;
   -ms-border-radius: 10px;
   -o-border-radius: 10px;
+}
+.view-container .view_main .view_item.event .event_item + .event_item {
+  margin-top: 14px;
 }
 .view-container .view_main .view_item.event .event_item .event-time {
   display: flex;
