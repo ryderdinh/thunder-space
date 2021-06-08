@@ -4,7 +4,12 @@ const moment = require("moment")
  const authSchema = Joi.object({
         name : Joi.string().min(2).required(), 
         date : Joi.date().min("now"),
-        position : Joi.string().min(2),
+        event_detail : {
+            hours : Joi.string(),
+            position : Joi.string(),
+            content :Joi.string()
+        }
     })
+    
 
 module.exports = { authSchema }

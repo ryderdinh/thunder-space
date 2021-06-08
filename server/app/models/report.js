@@ -3,6 +3,7 @@ const mongoose = require("mongoose")
 const Schema = mongoose.Schema
 
 const Report = new Schema ({
+    userName : { type :String, require: "true" },
     reportDetails : [
         {
             typeReport : {type : String, require:"true"},

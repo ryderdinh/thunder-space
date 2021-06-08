@@ -22,7 +22,8 @@ initializePassport(
 // const ejs = require("ejs
 app.set("view engine", "ejs");
 app.set("views", "views/examples");
-app.use(express.static("views"));
+app.use(express.static(__dirname + "/views"));
+// app.use(express.static(path.join(__dirname, 'public')))
 //Parser
 app.use(express.urlencoded({ extended: false }));
 // app.use(bodyParser.json())
@@ -83,6 +84,7 @@ const getUpdateUser = require("./app/controller/admin/renderUpdateUser")
 const getUpdateEvent = require("./app/controller/admin/renderUpdateEvent")
 const postUpdateUser = require("./app/controller/admin/updateUser")
 const postUpdateEvent = require("./app/controller/admin/updateEvent")
+const postDeleteUser = require("./app/controller/admin/deleteUser")
 //Model
 
 app.use(cors())
@@ -101,31 +103,31 @@ app.use((req, res, next) => {
   );
   next();
 });
-app.get("/admin/login", checkNotAuthenticated, home);
+app.get("/", checkNotAuthenticated, home);
 app.get("/admin/createUser", checkAuthenticated, create);
 app.post(
   "/admin/login",
   checkNotAuthenticated,
   passport.authenticate("local", {
     successRedirect: "/admin/dashboard",
-    failureRedirect: "/admin/login",
+    failureRedirect: "/",
     failureFlash: true,
   })
 );
-app.post("/admin/storeUser", storeUser);
+app.post("/admin/storeUser", checkAuthenticated ,storeUser);
 app.get("/admin/logout", logoutAdmin);
 app.get("/admin/createEvent", checkAuthenticated, createEvent1)
-app.post("/admin/storeEvent", storeEvent)
+app.post("/admin/storeEvent", checkAuthenticated , storeEvent)
 // app.post("/admin/endStatus", endStatus)
 // app.get("/admin/updateUser", updateUserControl)
 // app.get("/admin/storeUpdateUser", storeUpdateUser)
-app.get("/admin/dashboard", dashBoard)
+app.get("/admin/dashboard", checkAuthenticated, dashBoard)
 
 app.get("/admin/updateUser", checkAuthenticated, getUpdateUser)
 app.get("/admin/updateEvent", checkAuthenticated , getUpdateEvent)
 app.use("/admin/updateUser", checkAuthenticated , postUpdateUser)
 app.use("/admin/updateEvent", checkAuthenticated , postUpdateEvent)
-
+app.use("/admin/deleteUser", checkAuthenticated, postDeleteUser)
 
 //Api
 app.post("/loginToken", loginToken);
@@ -192,7 +194,9 @@ app.use("/user/changePassword", authenticateToken, changePassword)
 
 const Report = require('./app/models/report')
 const Events = require('./app/models/event')
-const StaffInformation = require('./app/models/staffInformation')
+// const Table = require('./app/models/tableOfWork')
+// const Status = require('./app/models/status')
+const StaffInformation = require('./app/models/staffInformation');
 
 // const createEvent = require("./app/controller/admin/createEvent")
 // // const event = require("./app/controller-Nhat/event");
@@ -235,6 +239,43 @@ app.get("/admin/event-information", checkAuthenticated, (req,res) => {
       path : "/admin/event-information"
     })
   })
+})
+
+// const axios = require('axios')
+
+// async function getUser() {
+//   try {
+//     const response = await axios.get('https://jsonplaceholder.typicode.com/users');
+//     const map = await response.data.map(e => e = {
+//       name : e.name,
+//       email : e.email,
+//       password : "123456",
+//       birthday : "14/05/2001",
+//       position : "fffff",
+//      department : "fffff",
+//      phonenumber : "1111111111"
+//     })
+//     return map
+//   } catch (error) {
+//     // console.error(error);
+//   }
+// }
+
+
+// console.log(getUser());
+// app.post("/test",(req, res, next) => {
+//     getUser().then(data => {
+//       StaffInformation.insertMany(data,{
+//       },(err, staff) => {
+//         console.log(err);
+//       })
+//     })
+   
+//   res.redirect("/")
+// })
+
+app.use((req, res, next) => {
+  res.render("404")
 })
 // app.get("/admin/update", checkAuthenticated, (req,res) => {
 //   let idSearch = req.query.searchId;

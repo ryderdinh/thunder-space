@@ -1,18 +1,10 @@
-function convertDate(isoDate) {
-    const date = new Date(isoDate)
-    year = date.getFullYear();
-    month = date.getMonth()+1;
-    dt = date.getDate();
+function formatDate (input) {
+    var datePart = input.match(/\d+/g),
+    year = datePart[0].substring(2), // get only two digits
+    month = datePart[1], day = datePart[2];
+  
+    return day+'/'+month+'/'+year;
+  }
+  
 
-    if (dt < 10) {
-    dt = '0' + dt;
-    }
-    if (month < 10) {
-    month = '0' + month;
-    }
-    const  final = dt+'-' + month + '-'+year
-    return final
-}
-
-
-module.exports =  convertDate 
+module.exports =  formatDate

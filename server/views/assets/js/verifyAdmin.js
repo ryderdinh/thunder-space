@@ -1,6 +1,10 @@
-const verifyPassword = document.getElementsByName("verifyPassword")
 const delBtn = document.getElementsByName("delBtn")
-
-delBtn.onclick(( ) => {
-    console.log("thang dep trai")
-})
+const userId = document.getElementById("userId")
+Array.from(delBtn).forEach(function(element) {
+    element.addEventListener('click', () => {
+        userId.value = element.parentNode.firstElementChild.value
+        // if( element.parentNode.firstElementChild.value !== "" ){
+        //     eleme
+        // }
+    })
+  });

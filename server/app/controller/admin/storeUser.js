@@ -42,6 +42,7 @@ module.exports = async (req, res, next) => {
 //Create report
        Report.create({
           _id : saveStaff._id,
+          userName : saveStaff.name
        }, (err, report) => {
             console.log(err, report);
        })

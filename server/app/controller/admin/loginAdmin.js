@@ -6,6 +6,6 @@ module.exports = (req, res) => {
     if(name === "admin" && pass ==="admin") {
         res.redirect("/admin/dashboard")
     }  else {
-        res.redirect("/admin/login")
+        res.redirect("/")
     }
 }
