@@ -4,7 +4,12 @@ sidebar_position: 3
 
 # Bảng công
 
-Bao gồm chi tiết các `Trạng thái` `Thời gian chấm công lần đầu` `Thời gian chấm công lần cuối cùng` `Tổng số giờ làm` `Ngày công` của từng ngày.
+Bao gồm chi tiết của từng ngày:
+- `Trạng thái` 
+- `Thời gian chấm công lần đầu` 
+- `Thời gian chấm công lần cuối cùng` 
+- `Tổng số giờ làm` 
+- `Ngày công`
 
 ## Trạng thái 
 

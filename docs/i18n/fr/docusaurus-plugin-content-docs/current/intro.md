@@ -2,34 +2,17 @@
 sidebar_position: 1
 ---
 
-# Tutorial Intro
+# Getting started
 
-cháo **Docusaurus in less than 5 minutes**.
+**HRM Zelios Sea** là website hỗ trợ quản lí nhân sự.
 
-## Getting Started
+**HRM Admin Hub** là website quản lí toàn bộ thông tin của trang **HRM Zelios Sea**
 
-Get started by **creating a new site**.
+## Chức năng nổi bật
 
-Or **try Docusaurus immediately** with **[new.docusaurus.io](https://new.docusaurus.io)**.
+ **HRM Zelios Sea:**
 
-## Generate a new site
+- `Chấm công online`
+- `Quản lí bảng công`
+- `Quản lí công việc`
 
-Generate a new Docusaurus site using the **classic template**:
-
-```shell
-npx @docusaurus/init@latest init my-website classic
-```
-
-## Start your site
-
-Run the development server:
-
-```shell
-cd my-website
-
-npx docusaurus start
-```
-
-Your site starts at `http://localhost:3000`.
-
-Open `docs/intro.md` and edit some lines: the site **reloads automatically** and display your changes.
