@@ -11,10 +11,11 @@ Method **`GET`**
 ```shell
 https://hrmapplication.herokuapp.com/loginUser
 ```
+
 ### Header
 
-| Trường dữ liệu 	| Kiểu   	| Chú thích           	|
-|----------------	|--------	|---------------------|
-| `Authorization`  	| string 	| access token    	|
+| Trường dữ liệu  | Kiểu   | Chú thích    |
+| --------------- | ------ | ------------ |
+| `Authorization` | string | access token |
 
-Tìm hiểu về [`Access token`](token.md)
+Tìm hiểu về cách lấy [`Access token`](token.md)

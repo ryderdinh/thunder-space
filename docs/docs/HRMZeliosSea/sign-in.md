@@ -8,7 +8,7 @@ sidebar_position: 1
 
 ## Trạng thái
 
-- `Đăng nhập thành công`
-- `Đăng nhập thất bại, kiểm tra lại tên đăng nhập hoặc mật khẩu của bạn` : 
-     Tài khoản/ mật khẩu không chính xác hoặc không tồn tại. 
-     Nếu bạn quên tài khoản/ mật khẩu hãy báo admin để lấy lại tài khoản/ mật khẩu.
+| Tên trạng thái                                                         | Chú thích                                                                                                                                |
+| ---------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| `Đăng nhập thành công`                                                 | access token                                                                                                                             |
+| `Đăng nhập thất bại, kiểm tra lại tên đăng nhập hoặc mật khẩu của bạn` | - Tài khoản/ mật khẩu không chính xác hoặc không tồn tại. Nếu bạn quên tài khoản/ mật khẩu hãy báo admin để lấy lại tài khoản/ mật khẩu. |
