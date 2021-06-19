@@ -6,6 +6,7 @@ import Event from "./Event";
 import TableOfWork from "./TableOfWorks";
 import ReportForm from "./ReportForm";
 import AccountContainer from "./AccountContainer";
+import ProjectContainer from "./ProjectContainer";
 export default class ViewBox extends React.Component {
   renderComponent = (type) => {
     switch (type) {
@@ -18,6 +19,8 @@ export default class ViewBox extends React.Component {
             <ReportForm />
           </>
         );
+      case "project":
+        return <ProjectContainer />;
       case "account":
         return <AccountContainer />;
       default:

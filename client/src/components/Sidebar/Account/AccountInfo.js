@@ -12,7 +12,10 @@ export class AccountInfo extends Component {
     return (
       <div className="account_info">
         <div className="account_info-avatar">
-          <img src="./images/icons/user.svg" alt="avatar" />
+          <img
+            src={require("assets/images/icons/user.svg").default}
+            alt="avatar"
+          />
         </div>
         <p className="account_info-fullname">{name}</p>
       </div>

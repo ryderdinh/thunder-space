@@ -5,7 +5,7 @@ export default class SidebarLogo extends React.Component {
     return (
       <div className="sidebar_logo">
         <Link to="/">
-          <img src="./images/icons/logo.svg" alt="" />
+          <img src={require("assets/images/icons/logo.svg").default} alt="" />
           <p>
             HRM
             <br />

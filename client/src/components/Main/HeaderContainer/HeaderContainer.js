@@ -16,6 +16,7 @@ export default function HeaderContainer() {
       "": "Trang chủ",
       "table-of-work": "Bảng công",
       report: "Báo cáo",
+      workflow: "Quản lí công việc",
       account: "Thông tin cá nhân",
     };
     setState(menuPage[mainPath]);

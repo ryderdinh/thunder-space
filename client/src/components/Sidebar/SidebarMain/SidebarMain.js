@@ -19,9 +19,9 @@ export function SidebarMain() {
       "": 0,
       "table-of-work": 1,
       report: 2,
-      "account": 3,
+      workflow: 3,
+      account: 4,
     };
-    // setActiveSideBar(menuPage[mainPath]);
     dispatch(setActiveSideBar(menuPage[mainPath]));
   });
   return (
@@ -31,4 +31,3 @@ export function SidebarMain() {
     </div>
   );
 }
-// export default connect(null, { setActiveSideBar })(SidebarMain);

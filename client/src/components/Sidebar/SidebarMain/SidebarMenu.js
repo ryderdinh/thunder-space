@@ -5,7 +5,7 @@ import { fetchMenus } from "actions";
 
 class SidebarMenu extends React.Component {
   state = {
-    linkSide: ["/", "/table-of-work", "/report"],
+    linkSide: ["/", "/table-of-work", "/report","/workflow"],
   };
   componentDidMount() {
     this.props.fetchMenus();
