@@ -7,7 +7,6 @@ export const Popup = () => {
   const [state, setState] = useState("popup-container");
   const popup = useSelector((state) => state._popup);
   let { typePopup, isShow, dataPopup } = popup;
-  console.log(popup);
   useEffect(() => {
     if (isShow) setState("popup-container active");
     if (!isShow) setState("popup-container");

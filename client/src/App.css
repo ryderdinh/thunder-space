@@ -88,10 +88,12 @@ body::-webkit-scrollbar {
   min-height: 100vh;
   display: flex;
   flex-flow: row;
-  justify-content: flex-end;
+  /* justify-content: flex-end; */
   background: #1d1d42;
   position: relative;
+  overflow-x: hidden;
 }
+/* 
 .container .sidebar {
   width: 300px;
   min-width: 300px;
@@ -180,7 +182,7 @@ body::-webkit-scrollbar {
 }
 .sidebar .sidebar_main .side .side_link i {
   margin-right: 10px;
-}
+} */
 
 /* ==== */
 .account_main {
@@ -276,12 +278,22 @@ body::-webkit-scrollbar {
 
 /* =========================================== */
 main {
-  width: calc(100% - 300px);
+  position: relative;
+  left: 260px;
+  width: calc(100% - 260px);
   height: max-content;
   background-color: transparent;
-  padding: 50px 1% 20px;
+  padding: 0 1% 20px;
+  transition: all 0.5s ease;
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -ms-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
 }
-
+.sidebar.close ~ main {
+  left: 78px;
+  width: calc(100% - 78px);
+}
 .view-container {
   width: 100%;
   height: 100%;
@@ -291,18 +303,30 @@ main {
   color: #fff;
   font-weight: 800;
   font-size: 35px;
-  height: 9%;
+  height: 60px;
   display: flex;
   align-items: center;
-  padding-bottom: 20px;
+  margin-bottom: 30px;
+}
+.view-container .view_name .bx-menu {
+  margin: 0 15px 0 -4px;
+  cursor: pointer;
+}
+.view-container .view_name .name {
+  color: #fff;
+  font-weight: 700;
+  position: relative;
+  top: -4px;
+  font-size: 30px;
 }
 .view-container .view_main {
   position: relative;
   width: 95%;
   height: max-content;
+  min-height: 83vh;
   background: #141432;
   border-radius: 10px;
-  padding: 53px;
+  padding: 20px 53px;
   overflow-y: scroll;
   -webkit-border-radius: 10px;
   -moz-border-radius: 10px;
@@ -362,7 +386,7 @@ main {
 .view-container .view_main .time-keeping {
   align-items: center;
   width: 20%;
-  max-width: 300px;
+  max-width: 200px;
   min-width: 200px;
   background: linear-gradient(
     211.3deg,
@@ -1445,7 +1469,7 @@ main {
 /* ===============MOBILE================ */
 /* ===================================== */
 
-.navigation {
+/* .navigation {
   position: fixed;
   bottom: 11px;
   left: 50%;
@@ -1460,8 +1484,8 @@ main {
   -moz-transform: translate(-50%, 0);
   -ms-transform: translate(-50%, 0);
   -o-transform: translate(-50%, 0);
-}
-
+} */
+/* 
 .navigation ul {
   position: absolute;
   top: 0;
@@ -1623,7 +1647,7 @@ main {
 
 .navigation ul li.active ~ .indicator::before {
   background-color: #00ab5e;
-}
+} */
 
 /* ================================== */
 @media only screen and (max-width: 1440px) {
@@ -1708,15 +1732,19 @@ main {
   }
 }
 @media only screen and (max-width: 768px) {
-  .container .sidebar {
+  /* .container .sidebar {
     display: none;
-  }
-  .navigation {
+  } */
+  /* .navigation {
     display: block;
-  }
+  } */
   main {
-    padding: 20px 1%;
+    padding: 0 1%;
     width: 100%;
+  }
+  .sidebar.close ~ main {
+    left: 0;
+    width: calc(100%);
   }
   .view-container {
     width: 90%;
@@ -1813,7 +1841,7 @@ main {
 @media only screen and (max-width: 320px) {
   main {
     width: 100%;
-    padding: 25px 1% 85px;
+    padding: 0 1% 85px;
   }
   .view-container .view_main {
     width: 100%;

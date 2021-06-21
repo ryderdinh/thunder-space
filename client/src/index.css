@@ -32,3 +32,11 @@ body {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 } */
+
+li {
+  list-style: none !important;
+}
+a {
+  color: #fff;
+  text-decoration: none;
+}

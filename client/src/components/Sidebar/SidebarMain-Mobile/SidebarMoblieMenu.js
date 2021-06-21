@@ -20,7 +20,7 @@ export class SidebarMoblieMenu extends Component {
   render() {
     const { tagIndex } = this.props;
     return (
-      <ul className="menu-mobile-list  animate__animated animate__fadeInUp">
+      <ul className="menu-mobile-list animate__animated animate__fadeInUp">
         {this.state.title.map((el, index) => (
           <SideMobileItem
             key={index}

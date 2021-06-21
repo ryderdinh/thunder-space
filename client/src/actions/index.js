@@ -15,8 +15,12 @@ export const actSignIn = (dataUser) => {
       if (res_1 !== undefined) {
         if (res_1.data.status === "Login succesfully") {
           setCookie(res_1.data.id, res.accessToken);
-          successToast("Đăng nhập thành công");
           dispatch(actFetchEvents());
+          dispatch(actFetchStaffInfomation());
+          dispatch(actFetchDataTableOfWork());
+          dispatch(actFetchTimeKeeping());
+          successToast("Đăng nhập thành công");
+
           setTimeout(() => {
             dispatch(setCheckLogin(true));
           }, 1500);
@@ -149,6 +153,9 @@ export const actRefreshPage = () => {
       if (res_1 !== undefined) {
         if (res_1.data.status === "Login succesfully") {
           dispatch(actFetchEvents());
+          dispatch(actFetchStaffInfomation());
+          dispatch(actFetchDataTableOfWork());
+          dispatch(actFetchTimeKeeping());
           dispatch(setCheckLogin(true));
           setCookie(res_1.data.id, token);
           successToast("Chào mừng quay trở lại");

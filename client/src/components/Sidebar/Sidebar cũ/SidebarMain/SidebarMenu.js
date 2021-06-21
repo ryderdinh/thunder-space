@@ -5,7 +5,18 @@ import { fetchMenus } from "actions";
 
 class SidebarMenu extends React.Component {
   state = {
-    linkSide: ["/", "/table-of-work", "/report","/workflow"],
+    linkSide: [
+      { path: "/", itemPath: [] },
+      { path: "/table-of-work", itemPath: [] },
+      { path: "/report", itemPath: [] },
+      {
+        path: "/workflow",
+        itemPath: [
+          { path: "/work", name: "Công việc", itemPath: [] },
+          { path: "/project", name: "Dự án", itemPath: [] },
+        ],
+      },
+    ],
   };
   componentDidMount() {
     this.props.fetchMenus();
@@ -19,7 +30,7 @@ class SidebarMenu extends React.Component {
           {sideItemName.map((name, index) => (
             <SideItem
               key={index}
-              to={this.state.linkSide[index]}
+              dataLink={this.state.linkSide[index]}
               name={name}
               index={index}
               activeClass={

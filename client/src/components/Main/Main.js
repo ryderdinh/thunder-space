@@ -7,7 +7,10 @@ export default class Main extends React.Component {
     return (
       <main>
         <div className="view-container">
-          <HeaderContainer />
+          <HeaderContainer
+            pathName={this.props.pathName}
+            activeSidebar={this.props.activeSidebar}
+          />
           <ViewMain pathName={this.props.pathName} />
         </div>
       </main>

@@ -38,7 +38,7 @@ export const SignIn = () => {
           <p>Phát triển tiềm năng và nâng cao giá trị bản thân</p>
           <form>
             <div>
-              <label> Tên đăng nhập</label>
+              <label>Email</label>
               <input
                 type="email"
                 name="email"
