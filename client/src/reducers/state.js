@@ -9,6 +9,7 @@ import staffInfomation from "./staffInfomation";
 import events from "./events";
 import setActiveSidebar from "./activeSidebar";
 import popup from "./popup";
+import loading from "./loading";
 
 export default combineReducers({
   side_item_name: menuReducer,
@@ -22,4 +23,5 @@ export default combineReducers({
   _events: events,
   _report: "",
   _popup: popup,
+  loading: loading,
 });

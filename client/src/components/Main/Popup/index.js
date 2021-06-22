@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { ChangePassword } from "./ChangePassword";
 import EventPopup from "./EventPopup";
 
-export const Popup = () => {
+export const Popup = (props) => {
   const [state, setState] = useState("popup-container");
   const popup = useSelector((state) => state._popup);
   let { typePopup, isShow, dataPopup } = popup;
@@ -13,18 +13,22 @@ export const Popup = () => {
   }, [isShow]);
 
   switch (typePopup) {
-    case "change-password":
+    case "change-password": {
       return (
         <div className={state}>
           <ChangePassword />
         </div>
       );
-    case "event-popup":
+    }
+
+    case "event-popup": {
       return (
         <div className={state}>
           <EventPopup dataPopup={dataPopup} />
         </div>
       );
+    }
+
     default:
       return <div className={state}></div>;
   }

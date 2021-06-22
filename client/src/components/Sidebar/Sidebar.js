@@ -2,11 +2,37 @@ import React, { Component } from "react";
 import Account from "./Account";
 import SidebarItem from "./SidebarItem";
 import SidebarItemSubMenu from "./SidebarItemSubMenu";
-import "./style.css";
+import "./Sidebar.css";
+
 export class Sidebar extends Component {
+  constructor(props) {
+    super(props);
+    this.wrapperRef = React.createRef();
+  }
+
+  // componentDidMount() {
+  //   document.addEventListener("click", this.handleClick);
+  // }
+
+  // componentWillUnmount() {
+  //   // important
+  //   document.removeEventListener("click", this.handleClick);
+  // }
+  // handleClick = (event) => {
+  //   const { target } = event;
+  //   console.log(this.props);
+  //   if (!this.wrapperRef.current.contains(target) && this.props.sidebar) {
+  //     // this.setState({ sidebar: false });
+  //     this.props.activeSidebar();
+  //   }
+  // };
+
   render() {
     return (
-      <div className={this.props.sidebar ? "sidebar" : "sidebar close"}>
+      <div
+        className={this.props.sidebar ? "sidebar" : "sidebar close"}
+        ref={this.wrapperRef}
+      >
         <div className="logo-details">
           <div className="logo">
             <img
@@ -22,18 +48,21 @@ export class Sidebar extends Component {
             title="Trang chủ"
             type="sub-menu blank"
             icon="bx bx-grid-alt"
+            activeSidebar={this.props.activeSidebar}
           />
           <SidebarItem
             path="/table-of-work"
             title="Bảng công"
             type="sub-menu blank"
             icon="bx bx-line-chart"
+            activeSidebar={this.props.activeSidebar}
           />
           <SidebarItem
             path="/report"
             title="Báo cáo"
             type="sub-menu blank"
             icon="bx bx-pie-chart-alt-2"
+            activeSidebar={this.props.activeSidebar}
           />
           <SidebarItemSubMenu
             title="Quản lý"
@@ -43,23 +72,9 @@ export class Sidebar extends Component {
               { path: "/work", name: "Công việc" },
               { path: "/project", name: "Dự án" },
             ]}
+            activeSidebar={this.props.activeSidebar}
           />
-          {/* <li>
-            <div className="profile-details">
-              <div className="profile-content">
-                <img
-                  src="https://www.centraltest.com/sites/default/files/inline-images/matching-predictif-hp.png"
-                  alt="profile"
-                />
-              </div>
-              <div className="name-job">
-                <div className="profile_name">quanganhth2440</div>
-                <div className="job">Web Desginer</div>
-              </div>
-              <i className="bx bx-log-out"></i>
-            </div>
-          </li> */}
-          <Account />
+          <Account activeSidebar={this.props.activeSidebar} />
         </ul>
       </div>
     );

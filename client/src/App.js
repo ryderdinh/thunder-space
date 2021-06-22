@@ -1,9 +1,5 @@
 import React from "react";
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch,
-} from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import { connect } from "react-redux";
 import { actRefreshPage } from "actions";
@@ -13,24 +9,34 @@ import { Popup } from "components/Main/Popup";
 import NotFound from "components/404";
 import "animate.css";
 import Sidebar from "components/Sidebar/Sidebar";
+import ProgressBarLoading from "components/Loading/ProgressBarLoading";
 
 class App extends React.Component {
   state = {
     sidebar: false,
   };
+
   componentDidMount() {
     this.props.actRefreshPage();
   }
-  activeSidebar = () => {
-    this.setState({ sidebar: !this.state.sidebar });
+
+  activeSidebar = (value) => {
+    value === undefined
+      ? this.setState({ sidebar: !this.state.sidebar })
+      : this.setState({ sidebar: Boolean(value) });
   };
+
   checkAndRenderCPN = (checkId, path) =>
     checkId ? (
       <div className="container animate__animated animate__fadeIn">
-        <Sidebar sidebar={this.state.sidebar} />
+        <Sidebar
+          sidebar={this.state.sidebar}
+          activeSidebar={this.activeSidebar}
+        />
         <Main pathName={path} activeSidebar={this.activeSidebar} />
         <Toaster position="top-right" reverseOrder={true} />
         <Popup />
+        <ProgressBarLoading />
       </div>
     ) : (
       <>
@@ -38,6 +44,7 @@ class App extends React.Component {
         <Toaster position="top-right" reverseOrder={true} />
       </>
     );
+
   render() {
     const { checkId } = this.props;
     return (
@@ -67,9 +74,11 @@ class App extends React.Component {
     );
   }
 }
+
 const mapStateToProps = (state) => {
   return {
     checkId: state._checkLogin._checkLogin,
   };
 };
+
 export default connect(mapStateToProps, { actRefreshPage })(App);

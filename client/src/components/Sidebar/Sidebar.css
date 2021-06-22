@@ -212,6 +212,8 @@
 }
 .sidebar .profile-details .name-job {
   max-width: 104px;
+  flex-flow: column;
+  align-items: initial;
 }
 .sidebar .profile-details .profile_name,
 .sidebar .profile-details .job {

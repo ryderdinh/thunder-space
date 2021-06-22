@@ -79,7 +79,6 @@ class AccountContainer extends React.Component {
   }
 }
 const mapStateToProps = (state) => {
-  console.log(state._staffInfomation._staffInfomation);
   return {
     user: state._staffInfomation._staffInfomation,
   };

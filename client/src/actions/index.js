@@ -250,3 +250,10 @@ export const setPopup = (payload) => ({
 export const closePopup = () => ({
   type: "CLOSE_POPUP",
 });
+export const setLoading = (payload) => ({
+  type: "SET_LOADING",
+  payload,
+});
+export const finishLoading = () => ({
+  type: "FINISH_LOADING",
+});
