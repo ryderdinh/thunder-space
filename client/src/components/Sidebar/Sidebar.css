@@ -248,4 +248,7 @@
     left: -78px;
     width: 78px;
   }
+  .sidebar.close .nav-links li:hover .sub-menu {
+    display: none;
+  }
 }
