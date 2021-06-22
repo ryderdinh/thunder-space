@@ -288,7 +288,7 @@ main {
   height: max-content;
   background-color: transparent;
   padding: 0 1% 20px;
-  overflow-y: auto;
+  /* overflow-y: auto; */
   transition: all 0.5s ease;
   -webkit-transition: all 0.5s ease;
   -moz-transition: all 0.5s ease;
@@ -301,8 +301,9 @@ main.onblur {
   -moz-filter: blur(20px);
   -o-filter: blur(20px);
   -ms-filter: blur(20px);
-  height: 100vh;
-  overflow-y: hidden;
+  /* height: 100vh;
+  overflow-y: hidden; */
+  position: "sticky";
 }
 .sidebar.close ~ main {
   left: 78px;
