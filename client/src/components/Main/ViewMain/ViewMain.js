@@ -5,7 +5,7 @@ export default class ViewMain extends React.Component {
     return (
       <div className="view_main">
         <div className="background-texture">
-          <img src="./images/ellips5.svg" alt="" />
+          <img src={require("assets/images/ellips5.svg").default} alt="" />
         </div>
         <div className="row">
           <ViewBox pathName={this.props.pathName} />

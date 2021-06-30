@@ -9,12 +9,16 @@ class AccountContainer extends React.Component {
 
   render() {
     const { user } = this.props;
+    // let HOST = process.env.REACT_APP_HOST || "http://localhost:3000/";
     return (
       <div className="account-container animate__animated animate__fadeIn">
         <div className="row">
           <div className="col">
             <div className="account_avatar">
-              <img src="./images/icons/user.svg" alt="" />
+              <img
+                src={require("assets/images/icons/user.svg").default}
+                alt=""
+              />
             </div>
           </div>
           <div className="col">
@@ -75,7 +79,6 @@ class AccountContainer extends React.Component {
   }
 }
 const mapStateToProps = (state) => {
-  console.log(state._staffInfomation._staffInfomation);
   return {
     user: state._staffInfomation._staffInfomation,
   };

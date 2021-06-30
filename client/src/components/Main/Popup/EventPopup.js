@@ -2,7 +2,6 @@ import React from "react";
 import { closePopup } from "actions";
 import { useDispatch } from "react-redux";
 export default function EventPopup({ dataPopup }) {
-  console.log(dataPopup);
   const dispatch = useDispatch();
   return (
     <div className="popup__event-popup">

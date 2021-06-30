@@ -68,4 +68,3 @@ export function ChangePassword(props) {
   );
 }
 
-// export default connect(null, { closePopup, actChangePassword })(ChangePassword);

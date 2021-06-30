@@ -4,29 +4,39 @@ import { Toaster } from "react-hot-toast";
 import { connect } from "react-redux";
 import { actRefreshPage } from "actions";
 import { SignIn } from "components/SignIn";
-import Sidebar from "components/Sidebar/Sidebar";
 import Main from "components/Main/Main";
-import SidebarMobileMain from "components/Sidebar/SidebarMain-Mobile/SidebarMobileMain";
 import { Popup } from "components/Main/Popup";
 import NotFound from "components/404";
 import "animate.css";
-// import "fonts/BeVietnam-Bold.ttf";
-// import "fonts/BeVietnam-Italic.ttf";
-// import "fonts/BeVietnam-LightItalic.ttf";
-// import "fonts/BeVietnam-Medium.ttf";
+import Sidebar from "components/Sidebar/Sidebar";
+import ProgressBarLoading from "components/Loading/ProgressBarLoading";
 
 class App extends React.Component {
+  state = {
+    sidebar: false,
+  };
+
   componentDidMount() {
     this.props.actRefreshPage();
   }
+
+  activeSidebar = (value) => {
+    value === undefined
+      ? this.setState({ sidebar: !this.state.sidebar })
+      : this.setState({ sidebar: Boolean(value) });
+  };
+
   checkAndRenderCPN = (checkId, path) =>
     checkId ? (
       <div className="container animate__animated animate__fadeIn">
-        <Sidebar />
-        <Main pathName={path} />
-        <SidebarMobileMain />
+        <Sidebar
+          sidebar={this.state.sidebar}
+          activeSidebar={this.activeSidebar}
+        />
+        <Main pathName={path} activeSidebar={this.activeSidebar} />
         <Toaster position="top-right" reverseOrder={true} />
         <Popup />
+        <ProgressBarLoading />
       </div>
     ) : (
       <>
@@ -34,6 +44,7 @@ class App extends React.Component {
         <Toaster position="top-right" reverseOrder={true} />
       </>
     );
+
   render() {
     const { checkId } = this.props;
     return (
@@ -42,13 +53,19 @@ class App extends React.Component {
           <Route exact path="/">
             {this.checkAndRenderCPN(checkId, "home")}
           </Route>
-          <Route path="/table-of-work">
+          <Route exact path="/table-of-work">
             {this.checkAndRenderCPN(checkId, "table-of-work")}
           </Route>
-          <Route path="/report">
+          <Route exact path="/report">
             {this.checkAndRenderCPN(checkId, "report")}
           </Route>
-          <Route path="/account">
+          <Route exact path="/works">
+            {this.checkAndRenderCPN(checkId, "works")}
+          </Route>
+          <Route exact path="/project">
+            {this.checkAndRenderCPN(checkId, "project")}
+          </Route>
+          <Route exact path="/account">
             {this.checkAndRenderCPN(checkId, "account")}
           </Route>
           <Route component={NotFound} />
@@ -57,9 +74,11 @@ class App extends React.Component {
     );
   }
 }
+
 const mapStateToProps = (state) => {
   return {
     checkId: state._checkLogin._checkLogin,
   };
 };
+
 export default connect(mapStateToProps, { actRefreshPage })(App);

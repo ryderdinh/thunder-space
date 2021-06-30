@@ -23,7 +23,8 @@ module.exports = {
           position: "left",
           label: "Documentation",
         },
-        { to: "/blog", label: "Developer", position: "left" },
+        { to: "/blog", label: "Blog", position: "left" },
+        { to: "/developer", label: "Developer", position: "left" },
         {
           href: "https://github.com/dinhquanganh/HRM_ZeliosSea",
           label: "GitHub",
@@ -41,7 +42,7 @@ module.exports = {
           title: "Docs",
           items: [
             {
-              label: "Tài liệu",
+              label: "Documentation",
               to: "/docs/intro",
             },
           ],
@@ -67,7 +68,7 @@ module.exports = {
           title: "More",
           items: [
             {
-              label: "Nhà phát triển",
+              label: "Blog",
               to: "/blog",
             },
             {

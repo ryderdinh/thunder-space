@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { actSendLocationToServer } from "actions";
+import { actSendLocationToServer, setLoading } from "actions";
 import toast from "react-hot-toast";
 export class BtnTimeKeeping extends React.Component {
   constructor(props) {
@@ -14,7 +14,7 @@ export class BtnTimeKeeping extends React.Component {
       await navigator.geolocation.getCurrentPosition((position) => {
         this.setState({
           location: [position.coords.latitude, position.coords.longitude],
-        });   
+        });
         this.props.actSendLocationToServer(this.state.location);
       });
     } else {
@@ -24,11 +24,18 @@ export class BtnTimeKeeping extends React.Component {
   render() {
     const { className, content } = this.props;
     return (
-      <div className={className} onClick={() => this.getLocation()}>
+      <div
+        className={className}
+        onClick={() => {
+          this.getLocation();
+        }}
+      >
         {content}
       </div>
     );
   }
 }
 
-export default connect(null, { actSendLocationToServer })(BtnTimeKeeping);
+export default connect(null, { actSendLocationToServer, setLoading })(
+  BtnTimeKeeping
+);
