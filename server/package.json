@@ -16,27 +16,26 @@
     "ip2location-nodejs": "^8.4.0",
     "joi": "^17.4.0",
     "jsonwebtoken": "^8.5.1",
-    "jwt-redis": "^6.0.0",
     "method-override": "^3.0.0",
     "moment": "^2.29.1",
-    "momment": "0.0.1",
+    "moment-timezone": "^0.5.33",
     "mongoose": "^5.11.15",
     "node-cron": "^3.0.0",
     "node-schedule": "^2.0.0",
     "nodemon": "^2.0.7",
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
-    "redis": "^3.1.2",
     "shelljs": "^0.8.4",
-    "socket.io": "^3.0.5"
+    "socket.io": "^3.0.5",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "dotenv": "^8.2.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js",
-    "start:dev": "nodemon index.js"
+    "start": "SET NODE_ENV=product && node index.js",
+    "start:dev": "SET NODE_ENV=dev && nodemon index.js"
   },
   "author": "Thang",
   "license": "ISC"

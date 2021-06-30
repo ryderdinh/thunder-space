@@ -4,9 +4,14 @@ const bcrypt = require("bcrypt")
 const router = express.Router()
 const jwt = require("jsonwebtoken")
 const e = require("cors")
+const { convert } = require("../utils/dateFormat")
+const moment = require("moment-timezone")
 router.post("/:id", (req, res) => {
     // const authHeader = req.headers["authorization"];
     // const token = authHeader && authHeader.split(" ")[1];
+
+    var time = moment.tz("Asia/Ho_Chi_Minh").format("hh:mm:ss")
+    var date = convert(Date.now())
     let id = req.params.id
     const data = JSON.parse(Object.keys(req.body)[0])
     const newPassword = data.newPassword.trim()
@@ -23,7 +28,12 @@ router.post("/:id", (req, res) => {
             if (same) {
                 bcrypt.hash(newPassword, 10, (err, hash) => {
                         if (!err) {
-                        staffInfo.findByIdAndUpdate(id, { password: hash, token : "" }, (err, staff) => {})
+                        staffInfo.findByIdAndUpdate(id, { password: hash, token : "", 
+                        $push : { activity_log: {
+                          uid : id,
+                          status : `Change password at ${time} in ${date}`
+                        }}
+                      }, (err, staff) => {})
                           return  res.json({ data: { status: "Change password successfully" } })
                         }
                 })

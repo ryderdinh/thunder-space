@@ -17,8 +17,7 @@ function authenticateToken(req, res, next) {
         next();
       });
     }else{
-      req.user = "";
-      next()
+      return res.json({ data: { status: "Login failed" } });
     }
   })
  

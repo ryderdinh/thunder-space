@@ -13,12 +13,12 @@
           <ul class="navbar-nav">
             <li class="nav-item">
                 <a class="<%= path === '/admin/dashboard' ? 'nav-link active' : 'nav-link' %>"   href="/admin/dashboard">
-                  <i class="ni ni-tv-2 text-primary"></i>
+                  <i class="ni ni-tv-2 text-default"></i>
                   <span class="nav-link-text">Dashboard</span>
                 </a>
               </li>
             <li class="nav-item">
-              <a class="<%= path === '/admin/user-information' ? 'nav-link active' : 'nav-link' %>" href="/admin/user-information">
+              <a class="<%= path === '/admin/user-information' ? 'nav-link active' : 'nav-link' %>" href="/admin/userInfo?page=1">
                 <i class="ni ni-bullet-list-67 text-default"></i>
                 <span class="nav-link-text">User</span>
               </a>
@@ -30,7 +30,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="<%= path === '/admin/event-information' ? 'nav-link active' : 'nav-link' %>" href="/admin/event-information">
+              <a class="<%= path === '/admin/event-information' ? 'nav-link active' : 'nav-link' %>" href="/admin/event-information?page=1">
                 <i class="ni ni-calendar-grid-58 text-default"></i>
                 <span class="nav-link-text">Event</span>
               </a>

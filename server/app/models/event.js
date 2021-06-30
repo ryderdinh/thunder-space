@@ -1,6 +1,8 @@
+const { string } = require("joi")
 const mongoose = require("mongoose")
 const Schema = mongoose.Schema
 const Event = new Schema({ 
+    eid : { type: String, require : "true" },
     name : {type: String, require:"true", default:"Mai tang thang quang anh"},
     date : { type: String, require:"true" },
     event_detail : {  

@@ -10,10 +10,17 @@ module.exports = (req, res) => {
         if(err) {
             res.json({data : {status : "Cannot access event"}})
         }
-        for( let i= 0; i< event.length; i++) {
-            event[i].date = convert(event[i].date)
-        }
-        res.json({ event })
+         event = event.map(e => 
+            e = {
+                eid : e.eid,
+                name : e.name,
+                date : convert(e.date),
+                event_detail : e.event_detail
+            }
+        )
+        res.json({ 
+            event
+         })
     })
 }
 
