@@ -2,6 +2,7 @@
  <!-- Page plugins -->
  <link rel="stylesheet" href="../../assets/vendor/select2/dist/css/select2.min.css">
  <link rel="stylesheet" href="../../assets/vendor/quill/dist/quill.core.css">
+ <link rel="stylesheet" href="../../assets/vendor/sweetalert2/dist/sweetalert2.min.css">
  <head>
 <body>
   <%- include("../includes/sidebar.ejs") -%>
@@ -280,13 +281,11 @@
             </div>
                       <!---Alerts-->
     <% if (messages.success) { %>
-      <div class="alert alert-success alert-dismissible fade show" role="alert">
-        <span class="alert-icon"><i class="ni ni-like-2"></i></span>
-        <%= messages.success %>
-          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-      </div>
+      Swal.fire(
+        'Deleted!',
+        'This user has been deleted.',
+        'success'
+    )
       <% } %>
         <% if (messages.err) { %>
           <div class="alert alert-warning alert-dismissible fade show" role="alert">
@@ -307,7 +306,7 @@
         </div>
           <% } %>
             <div class="table-responsive py-4">
-              <table class="table table-flush" id="datatable-basic">
+              <table class="table table-flush" id="datatable-buttons">
                 <thead class="thead-light">
                   <tr>
                     <th>Name</th>
@@ -346,12 +345,19 @@
                               <i class="fas fa-ellipsis-v"></i>
                             </a>
                              <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                              <form action="/admin/userInfo/update" class="">
+                              <form action="/admin/userInfo/update" method="GET">
                                 <input type="text" name="searchId" placeholder="search" value="<%= user.id %>"
                                   style="display: none;">
                                   <input type="text" name="mode" value="edit" style="display: none;">
                                 <button type="submit" class="dropdown-item">Edit</button>
                               </form>
+                              <form action="/admin/userInfo/delete"  method="POST">
+                                <input type="text" name="searchId" placeholder="search" value="<%= user.id %>"
+                                  style="display: none;">
+                                  <input type="text" name="mode" value="delete" style="display: none;">
+                                <button type="button"  class="dropdown-item delete">Delete</button>
+                              </form>
+                             
                             </div>
                           </div>
                         </td>
@@ -449,11 +455,15 @@
   <script src="../../assets/vendor/datatables.net-buttons/js/buttons.flash.min.js"></script>
   <script src="../../assets/vendor/datatables.net-buttons/js/buttons.print.min.js"></script>
   <script src="../../assets/vendor/datatables.net-select/js/dataTables.select.min.js"></script>
-  <script src="/assets/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+  <script src="../../assets/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+  <script src="../../assets/vendor/sweetalert2/dist/sweetalert2.min.js"></script>
+
   <!-- Argon JS -->
   <script src="../../assets/js/argon.js?v=1.1.0"></script>
   <!-- Demo JS - remove this in your project -->
   <script src="../../assets/js/demo.min.js"></script>
+
+  <script src="../../assets/js/sweetAlert.js"></script>
 </body>
 
 </html>

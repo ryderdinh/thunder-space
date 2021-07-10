@@ -305,28 +305,32 @@
                 <div class="modal-body">
                   <form class="new-event--form" action="/admin/createEvent" method="POST" id="formEvent">
                     <div class="form-group">
-                      <label class="form-control-label" for="name">Event title</label>
-                      <input name="name"  type="text" class="form-control form-control-alternative new-event--title" placeholder="Event Title">
+                      <label class="form-control-label" for="name">Name</label>
+                      <input id="eventName"  type="text" class="form-control form-control-alternative new-event--title"required >
+                    </div>
+                    <div class="form-group">
+                      <label class="form-control-label" for="position">Position</label>
+                      <input id="eventPosition"  type="text" class="form-control form-control-alternative new-position--position" required>
                     </div>
                     <div class="form-group mb-0">
                       <label class="form-control-label d-block mb-3">Status color</label>
                       <div class="btn-group btn-group-toggle btn-group-colors event-tag" data-toggle="buttons">
-                        <label class="btn bg-info active"><input type="radio" name="event-tag" value="bg-info" autocomplete="off" checked></label>
-                        <label class="btn bg-warning"><input type="radio" name="event-tag" value="bg-warning" autocomplete="off"></label>
-                        <label class="btn bg-danger"><input type="radio" name="event-tag" value="bg-danger" autocomplete="off"></label>
-                        <label class="btn bg-success"><input type="radio" name="event-tag" value="bg-success" autocomplete="off"></label>
-                        <label class="btn bg-default"><input type="radio" name="event-tag" value="bg-default" autocomplete="off"></label>
-                        <label class="btn bg-primary"><input type="radio" name="event-tag" value="bg-primary" autocomplete="off"></label>
+                        <label class="btn bg-info active"><input type="radio" name="tag" value="bg-info" autocomplete="off" checked></label>
+                        <label class="btn bg-warning"><input type="radio" name="tag" value="bg-warning" autocomplete="off"></label>
+                        <label class="btn bg-danger"><input type="radio" name=tag" value="bg-danger" autocomplete="off"></label>
+                        <label class="btn bg-success"><input type="radio" name=tag" value="bg-success" autocomplete="off"></label>
+                        <label class="btn bg-default"><input type="radio" name=tag" value="bg-default" autocomplete="off"></label>
+                        <label class="btn bg-primary"><input type="radio" name=tag" value="bg-primary" autocomplete="off"></label>
                       </div>
                     </div>
-                    <input name="name" type="hidden"  />
+                    <input id="handleEvent" name="name" type="hidden" />
                     <input name="start" type="hidden" class="new-event--start" />
                     <input name="end" type="hidden" class="new-event--end"  />
                   </form>
                 </div>
                 <!-- Modal footer -->
                 <div class="modal-footer">
-                  <button type="submit" form="formEvent" class="btn btn-primary new-event--add">Add event</button>
+                  <button id="btnSubmitEvent" type="submit" form="formEvent" class="btn btn-primary new-event--add">Add event</button>
                   <button type="button" class="btn btn-link ml-auto" data-dismiss="modal">Close</button>
                 </div>
               </div>
@@ -341,34 +345,30 @@
               <div class="modal-content">
                 <!-- Modal body -->
                 <div class="modal-body">
-                  <form class="edit-event--form">
+                  <form class="edit-event--form" >
                     <div class="form-group">
-                      <label class="form-control-label">Event title</label>
-                      <input type="text" class="form-control form-control-alternative edit-event--title" placeholder="Event Title">
+                      <label class="form-control-label">Name</label>
+                      <input type="text" class="form-control form-control-alternative edit-event--title" required >
+                    </div>
+                    <div class="form-group">
+                      <label class="form-control-label">Position</label>
+                      <input type="text" class="form-control form-control-alternative edit-event--position" required >
                     </div>
                     <div class="form-group">
                       <label class="form-control-label d-block mb-3">Status color</label>
                       <div class="btn-group btn-group-toggle btn-group-colors event-tag mb-0" data-toggle="buttons">
-                        <label class="btn bg-info active"><input type="radio" name="event-tag" value="bg-info" autocomplete="off" checked></label>
-                        <label class="btn bg-warning"><input type="radio" name="event-tag" value="bg-warning" autocomplete="off"></label>
-                        <label class="btn bg-danger"><input type="radio" name="event-tag" value="bg-danger" autocomplete="off"></label>
-                        <label class="btn bg-success"><input type="radio" name="event-tag" value="bg-success" autocomplete="off"></label>
-                        <label class="btn bg-default"><input type="radio" name="event-tag" value="bg-default" autocomplete="off"></label>
-                        <label class="btn bg-primary"><input type="radio" name="event-tag" value="bg-primary" autocomplete="off"></label>
+                        <label class="btn bg-info active"><input type="radio" name="tag" value="bg-info" autocomplete="off" checked></label>
+                        <label class="btn bg-warning"><input type="radio" name="tag" value="bg-warning" autocomplete="off"></label>
+                        <label class="btn bg-danger"><input type="radio" name="tag" value="bg-danger" autocomplete="off"></label>
+                        <label class="btn bg-success"><input type="radio" name="tag" value="bg-success" autocomplete="off"></label>
+                        <label class="btn bg-default"><input type="radio" name="tag" value="bg-default" autocomplete="off"></label>
+                        <label class="btn bg-primary"><input type="radio" name="tag" value="bg-primary" autocomplete="off"></label>
                       </div>
                     </div>
                     <div class="form-group">
-                      <label class="form-control-label">Time</label>
-                      <div class="form-group">
-                        <div class='input-group date' id='datetimepicker1'>
-                            <input type='text' class="form-control" />
-                            <span class="input-group-addon input-group-append">
-                                <button class="btn btn-outline-primary" type="button" id="button-addon2">  <span class="fa fa-calendar"></span></button>
-                            </span>
-                        </div>
-                    </div>
-                      <i class="form-group--bar"></i>
-                    </div>
+                      <label for="example-time-input" class="form-control-label">Time</label>
+                      <input class="form-control" type="time"  id="example-time-input">
+                  </div>
                     <div class="form-group">
                       <label class="form-control-label">Description</label>
                       <textarea class="form-control form-control-alternative edit-event--description textarea-autosize" placeholder="Event Desctiption"></textarea>
@@ -423,6 +423,7 @@
         });
     });
 </script>
+<script src="/assets/js/handleEventName.js"></script>
 <script src="/assets/vendor/moment.min.js"></script>
 <script src="/assets/vendor/bootstrap-datetimepicker.js"></script>
 </body>

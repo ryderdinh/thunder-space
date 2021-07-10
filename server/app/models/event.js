@@ -4,6 +4,7 @@ const Schema = mongoose.Schema
 const Event = new Schema({ 
     eid : { type: String, require : "true" },
     name : {type: String, require:"true", default:"Mai tang thang quang anh"},
+    tag : String,
     date : { type: String, require:"true" },
     event_detail : {  
         hours : { type :String, require : "true" }, 

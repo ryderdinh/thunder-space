@@ -46,7 +46,8 @@ router.get("/admin/userInfo/filter", (req, res, next) => {
                 //  const   pages = Math.ceil(data / PAGE_SIZE)
                     res.render("tables/userInfo", {
                         userList: user,
-                        path: '/admin/userInfo',
+                        path1: '/admin/userInfo',
+                        path2: '/admin/userInfo',
                         // page: page,
                         department: departmentList,
                         position: positionList,
