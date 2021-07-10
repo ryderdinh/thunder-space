@@ -1,8 +1,15 @@
+const Staff = require('../models/staffInformation')
 const Report = require("../models/report")
+const authenticateToken = ("")
 const express =require("express")
 const router = express.Router()
 const { convert } = require("../utils/dateFormat")
+const moment = require("moment-timezone")
+const { v4: uuidv4 } = require('uuid');
 router.post("/:id", (req, res) => {
+    const rid = uuidv4()
+    var time = moment.tz("Asia/Ho_Chi_Minh").format("hh:mm:ss")
+    var date = convert(Date.now())
     const id = req.params.id
     const dataUser = JSON.parse(Object.keys(req.body)[0]);
     dataUser.date.dateStart = convert(dataUser.date.dateStart)
@@ -12,6 +19,7 @@ router.post("/:id", (req, res) => {
     if (checkType === "true") {
         Report.findByIdAndUpdate( id,{
             $push : { "reportDetails" : { 
+                rid: rid,
                  typeReport : dataUser.typeReport,
                 date : {
                     dateStart : dataUser.date.dateStart,
@@ -21,7 +29,15 @@ router.post("/:id", (req, res) => {
             }} 
         }, (err, report) => {
             if (!err) {
-                res.json({ data : { status : "Report complete" }} )
+                Staff.findByIdAndUpdate(id,  { $push : { activity_log: {
+                    rid : rid,
+                    status : `Create a report at ${time} in ${date}`
+                  }} },
+                  (err, staff) => {
+                        if(!err){
+                            return  res.json({ data : { status : "Report complete" }} )
+                        }
+                  })
             }
             else res.json({data : { status : "Canot report" }})
         })
@@ -29,6 +45,7 @@ router.post("/:id", (req, res) => {
         
         Report.findByIdAndUpdate( id,{
             $push : { "reportDetails" : { 
+                rid: rid,
                  typeReport : dataUser.typeReport,
                 date : {
                     dateStart : dataUser.date.dateStart,
@@ -38,7 +55,16 @@ router.post("/:id", (req, res) => {
             }} 
         }, (err, report) => {
             if (!err) {
-                res.json({ data : { status : "Report complete" }} )
+                Staff.findByIdAndUpdate(id,  { $push : { activity_log: {
+                    rid : rid,
+                    status : `Create a report at ${time} in ${date}`
+                  }} },
+                  (err, staff) => {
+                        if(!err){
+                            return  res.json({ data : { status : "Report complete" }} )
+                        }
+                  })
+            
             }
             else res.json({data : { status : "Canot report" }})
         })

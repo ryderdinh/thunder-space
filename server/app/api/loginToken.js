@@ -31,7 +31,3 @@ module.exports = (req, res) => {
         }
     })
 }
-
-
-
-

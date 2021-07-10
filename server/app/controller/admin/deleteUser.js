@@ -13,22 +13,30 @@ router.post("", (req, res) => {
     const password = req.body.password
     if (password !== "admin") {
         req.flash("err", "Your password is incorrect")
-        res.redirect("/admin/user-information")
+        res.redirect("/admin/userInfo?page=1")
     } else {
         try {
             Staff.findByIdAndDelete(id, (err, staff) => {
+                if (!err) {
+                    Report.findByIdAndDelete(id, (err, report) => {
+                        if (!err) {
+                            Status.findByIdAndDelete(id, (err, status) => {
+                                if(!err){
+                                    Table.findByIdAndDelete(id, (err, table) => {
+                                        if (!err) {
+                                            req.flash("success", "Delete user successfully")
+                                            res.redirect("/admin/userInfo?page=1")
+                                        }
+                                    })
+                                }
+                            })
+                        }
+                    })
+                }
             })
-            Report.findByIdAndDelete(id, (err, report) => {
-            })
-            Status.findByIdAndDelete(id, (err, status) => {
-            })
-            Table.findByIdAndDelete(id, (err, table) => {
-            })
-            req.flash("success", "Delete user successfully")
-            res.redirect("/admin/user-information")
         } catch (err) {
-            req.flash = ("err", "Delete user unsuccessfully")
-            res.redirect("/admin/user-information")
+            req.flash("err", "Delete user unsuccessfully")
+            res.redirect("/admin/userInfo?page=1")
 
         }
     }

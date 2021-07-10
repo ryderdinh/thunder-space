@@ -3,86 +3,59 @@ const Event = require("../../models/event");
 const bcrypt = require("bcrypt");
 const express = require("express")
 const router = express.Router()
-// var popupS = require('popups');
+const moment = require('moment')
+const { authSchema } = require("../../../middleware/checkFormEvent")
 
 router.post("/:id", (req, res) => {
     let id = req.params.id;
-    console.log(id);
+    // get input information
+    var newDate = req.body.newDate
+    var newName = req.body.newName.trim();
+    var newPosition = req.body.newPosition.trim();
+    var newContent = req.body.newContent.trim()
+    var result = {}
+    const validDate = moment(newDate, "YYYY-MM-DDThh:mm").isValid()
+
     Event.findById(id, (error, event) => {
         if (error) {
             res.redirect("/createEvent");
         }
-        // convert type of date
-        // let newDate = req.body.newDate.toString();
-        // newDate = newDate.toString();
-        // let arrayDate = newDate.split("-");
-        // newDate = "";
-        // for(let i=0; i<arrayDate.length; i++){
-        //     if (arrayDate.length-i-1 !== 0){
-        //         newDate += arrayDate[arrayDate.length-i-1] + "-";
-        //     } else {
-        //         newDate += arrayDate[arrayDate.length-i-1];
-        //     }
-        // }
-
-        // console.log("success");
-
-        // get input information
-        let newDate = req.body.newDate
-        let newName = req.body.newName.trim();
-        let newPosition = req.body.newPosition.trim();
         updateName = newName !== ""  ? newName : event.name
-        updatePosition = newPosition !== "" ? newPosition : event.position
-        console.log(updateName);
-        console.log(updatePosition);
-        var result = {}
-        if (newDate.length == 10) {
+        updatePosition = newPosition !== "" ? newPosition : event.event_detail.position
+        updateContent = newContent !== "" ? newContent : event.event_detail.content
+
+        if (validDate) {
+            const hour = moment(req.body.newDate).format("LTS")
             result = {
                 name: updateName,
                 date: newDate,
-                position: updatePosition
+                event_detail : {
+                    hours : hour,
+                    position : updatePosition,
+                    content : updateContent
+                }
             }
         } else {
             result = {
                 name: updateName,
-                position: updatePosition
+                event_detail : {
+                    hours : moment(event.date).format("LTS"),
+                    position : updatePosition,
+                    content : updateContent
+                }
             }
         }
-        console.log(result)
-        // validate input information
-        // switch (newName) {
-        //     case "":
-        //         newName = event.name;
-        //         break;
-        //     case null:
-        //         newName = event.name;
-        //         break;
-        // }
-        // switch (newDate) {
-        //     case "":
-        //         newDate = event.date;
-        //         break;
-        //     case null:
-        //         newDate = event.date;
-        //         break;
-        // }
-        // switch (newPosition) {
-        //     case "":
-        //         newPosition = event.position;
-        //         break;
-        //     case null:
-        //         newPosition = event.position;
-        //         break;
-        // }
         Event.findByIdAndUpdate(
             id,
             result,
             { new: true },
             (err, event) => {
                 if (err) {
-                    return res.render("updateEvent");
+                    req.flash("err","Update event failure")
+                res.redirect("/admin/event-information?page=1");
                 }
-                return res.redirect("/admin/event-information");
+                req.flash("success","Update event successfully")
+                res.redirect("/admin/event-information?page=1");
             }
         )
     })

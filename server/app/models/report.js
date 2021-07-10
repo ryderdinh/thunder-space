@@ -5,14 +5,14 @@ const Schema = mongoose.Schema
 const Report = new Schema ({
     userName : { type :String, require: "true" },
     reportDetails : [
-        {
-            typeReport : {type : String, require:"true"},
-            date : {
-                dateStart : {type : String},
-                dateEnd : {type : String},
-            },
-            content : {type: String, require:"true" }
-        }
+        // {
+        //     typeReport : {type : String, require:"true"},
+        //     date : {
+        //         dateStart : {type : String},
+        //         dateEnd : {type : String},
+        //     },
+        //     content : {type: String, require:"true" }
+        // }
     ]
 })
 
