@@ -18,6 +18,7 @@ class App extends React.Component {
 
   componentDidMount() {
     this.props.actRefreshPage();
+    window.scrollTo(0, 0);
   }
 
   activeSidebar = (value) => {
@@ -59,11 +60,17 @@ class App extends React.Component {
           <Route exact path="/report">
             {this.checkAndRenderCPN(checkId, "report")}
           </Route>
-          <Route exact path="/works">
-            {this.checkAndRenderCPN(checkId, "works")}
+          <Route exact path="/work">
+            {this.checkAndRenderCPN(checkId, "work")}
           </Route>
           <Route exact path="/project">
             {this.checkAndRenderCPN(checkId, "project")}
+          </Route>
+          <Route exact path="/project/:pid">
+            {this.checkAndRenderCPN(checkId, "project")}
+          </Route>
+          <Route exact path="/project/:pid/:iid">
+            {this.checkAndRenderCPN(checkId, "issue")}
           </Route>
           <Route exact path="/account">
             {this.checkAndRenderCPN(checkId, "account")}
