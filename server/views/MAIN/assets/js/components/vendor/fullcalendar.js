@@ -176,6 +176,7 @@ var Fullcalendar = (function() {
 
 		$('body').on('click', '.new-event--add', function() {
 			var eventTitle = $('.new-event--title').val();
+			var eventPosition = $('.new-event--position').val();
 
 			// Generate ID
 			var GenRandom = {

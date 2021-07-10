@@ -3,18 +3,14 @@ const Status = require("../../models/status")
 const Table = require("../../models/tableOfWork")
 const Report = require("../../models/report")
 const flash = require("express-flash")
+const Swal = require('sweetalert2')
 
 const express = require("express")
 
 const router = express.Router()
 
-router.post("", (req, res) => {
-    const id = req.body.userId
-    const password = req.body.password
-    if (password !== "admin") {
-        req.flash("err", "Your password is incorrect")
-        res.redirect("/admin/userInfo?page=1")
-    } else {
+router.post("/admin/userInfo/delete", (req, res) => {
+    const id = req.body.searchId
         try {
             Staff.findByIdAndDelete(id, (err, staff) => {
                 if (!err) {
@@ -25,7 +21,7 @@ router.post("", (req, res) => {
                                     Table.findByIdAndDelete(id, (err, table) => {
                                         if (!err) {
                                             req.flash("success", "Delete user successfully")
-                                            res.redirect("/admin/userInfo?page=1")
+                                            res.redirect("/admin/userInfo")
                                         }
                                     })
                                 }
@@ -36,10 +32,9 @@ router.post("", (req, res) => {
             })
         } catch (err) {
             req.flash("err", "Delete user unsuccessfully")
-            res.redirect("/admin/userInfo?page=1")
-
+            res.redirect("/admin/userInfo")
         }
-    }
+    
 })
 
 module.exports = router

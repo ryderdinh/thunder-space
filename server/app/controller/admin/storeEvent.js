@@ -6,7 +6,6 @@ const { authSchema } = require("../../../middleware/checkFormEvent")
 const { v4: uuidv4 } = require('uuid');
 
 module.exports =async (req, res, next) => {
-    console.log(req.body.name);
     console.log(req.body);
     // try{
     //     const hour = moment(req.body.date).format("LTS")
