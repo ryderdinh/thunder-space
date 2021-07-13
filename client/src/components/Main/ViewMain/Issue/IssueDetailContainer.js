@@ -6,6 +6,7 @@ import WorkflowIntruction from "../Workfow/WorkflowIntruction";
 import WorkflowName from "../Workfow/WorkflowName";
 import IssueDetail from "./IssueDetail";
 import IssueDescription from "./IssueDescription";
+import IssueComment from "./IssueComment";
 
 export default function IssueDetailContainer() {
   // eslint-disable-next-line no-unused-vars
@@ -83,6 +84,7 @@ export default function IssueDetailContainer() {
           </div>
           <div className="col">
             <IssueDescription />
+            <IssueComment />
           </div>
         </div>
       </div>

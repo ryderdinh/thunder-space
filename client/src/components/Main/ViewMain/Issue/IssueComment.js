@@ -17,6 +17,18 @@ function IssueComment() {
           </div>
         </div>
       </div>
+      <div className="issue__item-chattool">
+        <form>
+          <label>
+            <div className="chattool-input">
+              <input type="text" value="" placeholder="Nhập vào gì đó..." />
+            </div>
+          </label>
+          <label>
+            <div className="chattool-submit">Gửi</div>
+          </label>
+        </form>
+      </div>
     </div>
   );
 }
