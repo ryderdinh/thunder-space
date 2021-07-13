@@ -26,13 +26,13 @@ export default function SidebarItemSubMenu(props) {
 
   return (
     <li className={state.menu ? "showMenu" : ""}>
-      <div class="iocn-link">
+      <div className="iocn-link">
         <a>
           <i className={props.icon}></i>
           <span className="link_name">{props.title}</span>
         </a>
         <i
-          class="bx bxs-chevron-down arrow"
+          className="bx bxs-chevron-down arrow"
           onClick={() => setState({ ...state, menu: !state.menu })}
         ></i>
       </div>

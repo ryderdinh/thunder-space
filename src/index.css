@@ -33,10 +33,34 @@ body {
     monospace;
 } */
 
-li {
-  list-style: none !important;
-}
+/* li {
+  list-style: none;
+} */
 a {
   color: #fff;
   text-decoration: none;
+}
+
+@keyframes loading {
+  0% {
+    transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+  }
+  20% {
+    transform: rotate(-60deg);
+    -webkit-transform: rotate(-60deg);
+    -moz-transform: rotate(-60deg);
+    -ms-transform: rotate(-60deg);
+    -o-transform: rotate(-60deg);
+  }
+  100% {
+    transform: rotate(1800deg);
+    -webkit-transform: rotate(1800deg);
+    -moz-transform: rotate(1800deg);
+    -ms-transform: rotate(1800deg);
+    -o-transform: rotate(1800deg);
+  }
 }

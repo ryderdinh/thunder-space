@@ -54,20 +54,20 @@ export class Sidebar extends Component {
             path="/table-of-work"
             title="Bảng công"
             type="sub-menu blank"
-            icon="bx bx-line-chart"
+            icon="bx bx-table"
             activeSidebar={this.props.activeSidebar}
           />
           <SidebarItem
             path="/report"
             title="Báo cáo"
             type="sub-menu blank"
-            icon="bx bx-pie-chart-alt-2"
+            icon="bx bx-line-chart"
             activeSidebar={this.props.activeSidebar}
           />
           <SidebarItemSubMenu
             title="Quản lý"
             type="sub-menu"
-            icon="bx bx-pie-chart-alt-2"
+            icon="bx bx-list-check"
             listMenu={[
               { path: "/work", name: "Công việc" },
               { path: "/project", name: "Dự án" },

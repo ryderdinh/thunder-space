@@ -15,7 +15,7 @@ export default function HeaderContainer(props) {
   
   return (
     <div className="view_name">
-      <i class="bx bx-menu" onClick={() => props.activeSidebar()}></i>
+      <i className="bx bx-menu" onClick={() => props.activeSidebar()}></i>
       <NameContainer name={state} />
     </div>
   );

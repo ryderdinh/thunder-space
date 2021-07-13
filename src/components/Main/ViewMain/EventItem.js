@@ -8,8 +8,9 @@ export default function EventItem({ dataEvent }) {
     <div className="event_item">
       <div className="event-time">{dataEvent[0].date}</div>
       <div className="event-detail">
-        {dataEvent.map((value,index) => (
+        {dataEvent.map((value) => (
           <div
+            key={value.eid}
             className="detail_item"
             onClick={() => {
               dispatch(

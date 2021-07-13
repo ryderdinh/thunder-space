@@ -17,7 +17,6 @@ export default function Account(props) {
   const [windowDimensions, setWindowDimensions] = useState(
     getWindowDimensions()
   );
-
   const handleSidebarOnMobile = () => {
     if (windowDimensions.width <= 768) {
       props.activeSidebar();
@@ -30,7 +29,7 @@ export default function Account(props) {
 
   const signOut = () => {
     removeCookie(true, true);
-    window.location.href = "https://zelios-sea.netlify.app/";
+    window.location.href = window.location.origin;
   };
 
   return (

@@ -13,10 +13,12 @@ export default function NotFound() {
 
   return (
     <div className="not-found">
-      {state.map((val) => (
-        <span class="particle">{val}</span>
+      {state.map((val, indez) => (
+        <span className="particle" key={indez}>
+          {val}
+        </span>
       ))}
-      <article class="content">
+      <article className="content">
         <p>Damnit stranger,</p>
         <p>
           You got lost in the <strong>404</strong> galaxy.
