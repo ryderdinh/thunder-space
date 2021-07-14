@@ -39,5 +39,8 @@
     "start:dev": "SET NODE_ENV=dev && nodemon index.js"
   },
   "author": "Thang",
-  "license": "ISC"
+  "license": "ISC",
+  "engines": {
+    "node": "14.x"
+  }
 }
