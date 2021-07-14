@@ -12,3 +12,9 @@ sidebar_position: 1
 | ---------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
 | `Đăng nhập thành công`                                                 | access token                                                                                                                             |
 | `Đăng nhập thất bại, kiểm tra lại tên đăng nhập hoặc mật khẩu của bạn` | - Tài khoản/ mật khẩu không chính xác hoặc không tồn tại. Nếu bạn quên tài khoản/ mật khẩu hãy báo admin để lấy lại tài khoản/ mật khẩu. |
+
+:::caution
+
+Trường hợp quên mật khẩu vui lòng liên hệ admin của hệ thống
+
+:::

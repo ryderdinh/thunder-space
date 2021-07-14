@@ -15,8 +15,4 @@ Bao gồm các trường:
 - `Mật khẩu cũ chưa chính xác`
 - `Đổi mật khẩu thành công`
 
-:::caution
 
-Trường hợp quên mật khẩu vui lòng liên hệ admin của hệ thống
-
-:::
