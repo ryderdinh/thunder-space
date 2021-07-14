@@ -1,0 +1,16 @@
+const { string } = require("joi")
+const mongoose = require("mongoose")
+const Schema = mongoose.Schema
+const Event = new Schema({ 
+    eid : { type: String, require : "true" },
+    name : {type: String, require:"true", default:"Mai tang thang quang anh"},
+    tag : String,
+    date : { type: String, require:"true" },
+    event_detail : {  
+        hours : { type :String, require : "true" }, 
+        position : { type : String, require : "true" }, 
+        content : { type : String, require : "true" }, 
+    }
+ })
+
+ module.exports = mongoose.model("Event", Event)
