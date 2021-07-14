@@ -21,7 +21,7 @@ initializePassport(
 // const ejs = require("ejs
 app.set("view engine", "ejs");
 app.set("views", "views/MAIN/pages");
-app.use(express.static(__dirname + "/views/main"));
+app.use(express.static(__dirname + "/views"));
 // app.use(express.static(path.join(__dirname, 'public')))
 //Parser
 app.use(express.urlencoded({ extended: false }));
