@@ -24,10 +24,10 @@ module.exports = (req, res) => {
                     status : "Login",
                     type : "User",
                     details : {
-                      date : date,
+                      day : date,
                       time : time
                     }
-                  },(err,history) =>{
+                  },(err, history) =>{
                    if(!err){
                     return res.json({
                       data: {

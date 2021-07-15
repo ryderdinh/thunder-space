@@ -9,7 +9,7 @@ router.get("/:id", (req, res) =>{
     staffInfo.findById(id, (err, staffInfo ) => {
         res.json({  staffInfo : {
             name : staffInfo.name,
-            birthday : convert(staffInfo.birthday),
+            birthday : staffInfo.birthday,
             phonenumber : staffInfo.phonenumber,
             position : staffInfo.position,
             department : staffInfo.department,
