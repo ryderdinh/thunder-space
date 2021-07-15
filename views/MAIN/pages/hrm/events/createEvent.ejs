@@ -362,8 +362,14 @@
                     </div>
                     <div class="form-group">
                       <label for="example-time-input" class="form-control-label">Time</label>
-                      <input class="form-control" type="time"  id="example-time-input">
-                  </div>
+                     <div class='input-group date' id='datetimepicker-timeonly'>
+                        <input type='text' class="form-control" />
+                        <span class="input-group-addon input-group-append">
+                            <button class="btn btn-outline-primary" type="button" id="button-addon2">  
+                            <span class="fa fa-calendar"></span></button>
+                        </span>
+                    </div>
+                    </div>
                     <div class="form-group">
                       <label class="form-control-label">Description</label>
                       <textarea class="form-control form-control-alternative edit-event--description textarea-autosize" placeholder="Event Desctiption"></textarea>
@@ -383,6 +389,7 @@
           </div>
         </div>
       </div>
+      
       <!-- Footer -->
       <%-include("../../includes/footer.ejs")-%> 
     </div> 
@@ -397,31 +404,23 @@
   <script src="/assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js"></script>
   <!-- Optional JS -->
   <script src="/assets/vendor/moment/min/moment.min.js"></script>
-   <script src="/assets/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+  <script src="/assets/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
   <script src="/assets/vendor/fullcalendar/dist/fullcalendar.min.js"></script>
-  <script src="/assets/vendor/sweetalert2/dist/sweetalert2.min.js"></script>
-  <!-- Argon JS -->
-  <script src="/assets/js/argon.js?v=1.1.0"></script>
+  <script src="/assets/js/handleEventName.js"></script>
+  <script src="/assets/vendor/moment.min.js"></script>
+  <script src="/assets/vendor/bootstrap-datetimepicker.js"></script>
   <script type="text/javascript">
     $(function () {
-        $('#datetimepicker1').datetimepicker({
-          icons: {
-            time: "fa fa-clock",
-            date: "fa fa-calendar-day",
-            up: "fa fa-chevron-up",
-            down: "fa fa-chevron-down",
-            previous: 'fa fa-chevron-left',
-            next: 'fa fa-chevron-right',
-            today: 'fa fa-screenshot',
-            clear: 'fa fa-trash',
-            close: 'fa fa-remove'
-          }
-        });
+      $('#datetimepicker-timeonly').datetimepicker({
+        format: 'LT',
+        icons: {
+          up: "fa fa-chevron-up",
+          down: "fa fa-chevron-down",
+        }
+      });
     });
-</script>
-<script src="/assets/js/handleEventName.js"></script>
-<script src="/assets/vendor/moment.min.js"></script>
-<script src="/assets/vendor/bootstrap-datetimepicker.js"></script>
+  </script>
+<%- include("../../includes/script.ejs") -%>
 </body>
 
 </html>

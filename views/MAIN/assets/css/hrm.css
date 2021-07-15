@@ -3,3 +3,6 @@
   white-space: normal;
   vertical-align: middle;
 }
+.bootstrap-datetimepicker-widget.dropdown-menu.bottom:before {
+  border-color: #fff;
+}

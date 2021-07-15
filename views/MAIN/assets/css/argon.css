@@ -23647,7 +23647,7 @@ html:not([dir=rtl]) .noUi-horizontal .noUi-handle {
 	vertical-align: middle;
 	border-right: .4em solid transparent;
 	border-bottom: .4em solid;
-	border-left: .4em solid transparent
+	border-left: .4em solid transparent;
 }
 
 .bootstrap-datetimepicker-widget.dropdown-menu.top:before {

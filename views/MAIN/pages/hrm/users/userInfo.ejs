@@ -1,8 +1,5 @@
 <%- include("../../includes/head.ejs") -%>
- <!-- Page plugins -->
- <link rel="stylesheet" href="/assets/vendor/select2/dist/css/select2.min.css">
- <link rel="stylesheet" href="/assets/vendor/quill/dist/quill.core.css">
- <link rel="stylesheet" href="/assets/vendor/sweetalert2/dist/sweetalert2.min.css">
+
  <head>
 <body>
   <%- include("../../includes/sidebar.ejs") -%>
@@ -311,7 +308,7 @@
                     <th>Position</th>
                     <th>Department</th>
                     <th>Phonenumber</th>
-                    <th></th>
+                    <th>Action</th>
                   </tr>
                 </thead>
                 <tfoot>
@@ -322,7 +319,7 @@
                     <th>Position</th>
                     <th>Department</th>
                     <th>Phonenumber</th>
-                    <th></th>
+                    <th>Action</th>
                   </tr>
                 </tfoot>
                 <tbody>
@@ -452,11 +449,7 @@
   <script src="/assets/vendor/datatables.net-buttons/js/buttons.print.min.js"></script>
   <script src="/assets/vendor/datatables.net-select/js/dataTables.select.min.js"></script>
   <script src="/assets/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
-  <script src="/assets/vendor/sweetalert2/dist/sweetalert2.min.js"></script>
-
-  <!-- Argon JS -->
-  <script src="/assets/js/argon.js?v=1.1.0"></script>
-
+  <%- include("../../includes/script.ejs") -%>
   <script src="/assets/js/sweetAlert.js"></script>
 </body>
 

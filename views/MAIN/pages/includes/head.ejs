@@ -57,18 +57,17 @@
       rel="stylesheet"
       href="/assets/vendor/datatables.net-select-bs4/css/select.bootstrap4.min.css"
     />
-    <% } %> <%if (title=='Create User' || title == 'Create Event') { %>
-    <link
-      rel="stylesheet"
-      href="/assets/vendor/select2/dist/css/select2.min.css"
-    />
-    <!-- <link rel="stylesheet" href="../../assets/vendor/quill/dist/quill.core.css"> -->
-    <% } %> <%if (title == 'Create Event') { %>
+    <% } %> <%if (title=='Create User' || title == 'Create Event') { %> <% } %>
+    <%if (title == 'Create Event') { %>
     <link
       rel="stylesheet"
       href="/assets/vendor/fullcalendar/dist/fullcalendar.min.css"
     />
     <% } %>
+    <link
+      rel="stylesheet"
+      href="/assets/vendor/select2/dist/css/select2.min.css"
+    />
     <link
       rel="stylesheet"
       href="/assets/vendor/sweetalert2/dist/sweetalert2.min.css"
