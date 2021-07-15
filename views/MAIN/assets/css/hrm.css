@@ -1,0 +1,5 @@
+.table td,
+.table th {
+  white-space: normal;
+  vertical-align: middle;
+}

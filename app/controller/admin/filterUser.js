@@ -44,7 +44,7 @@ router.get("/admin/userInfo/filter",checkAuthenticated, (req, res, next) => {
               }else{
                 // count.then(data => {
                 //  const   pages = Math.ceil(data / PAGE_SIZE)
-                    res.render("tables/userInfo", {
+                    res.render("hrm/users/userInfo", {
                         userList: user,
                         path1: '/admin/userInfo',
                         path2: '/admin/userInfo',

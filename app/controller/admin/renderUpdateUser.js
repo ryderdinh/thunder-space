@@ -11,7 +11,7 @@ module.exports = (req, res) => {
   if(mode == "edit"){
     Staff.findById(id, (err, staff) => {
       staff.birthday = convert2(staff.birthday)
-      res.render("create/createUser",{
+      res.render("hrm/users/createUser",{
         id : id,
         path1 : "/admin/userInfo",
         path2 : "/admin/userInfo",

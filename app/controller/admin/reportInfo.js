@@ -18,7 +18,7 @@ router.get("/reportInfo", checkAuthenticated, (req, res, next) => {
       }
     })
     
-    res.render("tables/reportInfo",{
+    res.render("hrm/reports/reportInfo",{
       path1 : "/admin/reportInfo",
       path2 : "/admin/reportInfo",
       env : env,

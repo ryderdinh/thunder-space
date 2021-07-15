@@ -1,6 +1,5 @@
-
-module.exports=(req,res)=>{
-    res.render("login/loginAdmin", {
-        title : "Login"
-    })
-}
+module.exports = (req, res) => {
+  res.render("hrm/login/loginAdmin", {
+    title: "Login",
+  });
+};

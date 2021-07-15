@@ -3,7 +3,7 @@ const positionList = ["Account Coordinator", "Account Executive", "Account Repre
 const env = process.env.NODE_ENV.trim()
 
 module.exports = (req,res) => {
-    res.render("create/createUser",{
+    res.render("hrm/users/createUser",{
         path : "/admin/userInfo",
         env : env,
         department : departmentList,

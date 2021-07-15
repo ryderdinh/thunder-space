@@ -1,6 +1,6 @@
  const env = process.env.NODE_ENV.trim()
  module.exports = (req, res) => {
-     res.render("create/createEvent",{
+     res.render("hrm/events/createEvent",{
          path1: '/admin/eventInfo',
          path2: '/admin/eventInfo',
          env : env,
