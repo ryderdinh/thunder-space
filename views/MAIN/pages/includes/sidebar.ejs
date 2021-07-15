@@ -4,8 +4,8 @@
     <!-- Brand -->
     <div class="sidenav-header d-flex align-items-center">
       <a class="navbar-brand" href="/admin/dashboard">
-        <img src="../../assets/img/brand/logo.svg" class="navbar-brand-img" alt="...">
-        <span>Admin HRM</span>
+        <img src="/assets/img/brand/logo.svg" class="navbar-brand-img" alt="...">
+        <span>HRM ADMIN</span>
       </a>
       <div class="ml-auto">
         <!-- Sidenav toggler -->
@@ -24,24 +24,78 @@
         <!-- Nav items -->
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="<%= path1 === '/admin/dashboard' ? 'nav-link active' : 'nav-link' %>" href="#navbar-dashboards" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-dashboards">
+            <a  class="<%= path1 === '/admin/dashboard' ? 'nav-link active' : 'nav-link' %>" href="/admin/dashboard" >
               <i class="ni ni-shop text-primary"></i>
-              <span class="nav-link-text">Dashboards</span>
+              <span class="nav-link-text">Dashboard</span>
             </a>
-            <div class="collapse show" id="navbar-dashboards">
+          </li>
+          <li class="nav-item">
+            <a  class="<%= path1 === '/admin/userInfo' ? 'nav-link active' : 'nav-link' %>" href="#navbar-tables" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="navbar-tables">
+              <i class="ni ni-single-02 text-orange"></i>
+              <span class="nav-link-text">User</span>
+            </a>
+            <div class="collapse" id="navbar-tables">
               <ul class="nav nav-sm flex-column">
-                <li class="<%= path2 === '/admin/dashboard' ? 'nav-item active' : 'nav-item' %>">
-                  <a href="/admin/dashboard" class="nav-link">Dashboard</a>
+                <li class="<%= path2 === '/admin/userInfo' ? 'nav-item active' : 'nav-item' %>">
+                  <a href="/admin/userInfo" class="nav-link">
+                    <span class="sidenav-mini-icon"> U </span>
+                    <span class="sidenav-normal"> User Infomation </span>
+                  </a>
                 </li>
-                <% if(env === 'dev'){ %>                  
-                <li class="nav-item">
-                  <a href="../../pages/dashboards/alternative.html" class="nav-link">Alternative</a>
+                <li class="<%= path2 === '/admin/createUser' ? 'nav-item active' : 'nav-item' %>">
+                    <a href="/admin/createUser" class="nav-link">
+                      <span class="sidenav-mini-icon"> D </span>
+                      <span class="sidenav-normal"> Create User </span>
+                    </a>
                 </li>
-                <%}%>
               </ul>
             </div>
           </li>
-          <%if(env === "dev"){%>
+          <li class="nav-item">
+            <a  class="<%= path1 === '/admin/eventInfo' ? 'nav-link active' : 'nav-link' %>" href="/admin/eventInfo" >
+              <i class="ni ni-calendar-grid-58 text-pink"></i>
+              <span class="nav-link-text">Event</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a  class="<%= path1 === '/admin/reportInfo' ? 'nav-link active' : 'nav-link' %>" href="/admin/reportInfo" >
+              <i class="ni ni-send text-nowrap"></i>
+              <span class="nav-link-text">Report</span>
+            </a>
+          </li>
+        </ul>
+         <% if (env=="dev") { %> 
+        <!-- Divider -->
+        <hr class="my-3">
+        <!-- Heading -->
+        <h6 class="navbar-heading p-0 text-muted">Template</h6>
+        <!-- Navigation -->
+        <!-- Nav items -->
+        <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="#navbar-dashboards" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="navbar-dashboards">
+                <i class="ni ni-shop text-primary"></i>
+                <span class="nav-link-text">Dashboards</span>
+              </a>
+              <div class="collapse" id="navbar-dashboards">
+                <ul class="nav nav-sm flex-column">
+                  <li class="nav-item">
+                    <a href="/pages/dashboards/dashboard.html" class="nav-link">
+                      <span class="sidenav-mini-icon"> D </span>
+                      <span class="sidenav-normal"> Dashboard </span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="/pages/dashboards/alternative.html" class="nav-link">
+                      <span class="sidenav-mini-icon"> A </span>
+                      <span class="sidenav-normal"> 
+                        Alternative 
+                      </span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </li>
             <li class="nav-item">
               <a class="nav-link" href="#navbar-examples" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="navbar-examples">
                 <i class="ni ni-ungroup text-orange"></i>
@@ -50,22 +104,40 @@
               <div class="collapse" id="navbar-examples">
                 <ul class="nav nav-sm flex-column">
                   <li class="nav-item">
-                    <a href="../../pages/examples/pricing.html" class="nav-link">Pricing</a>
+                    <a href="/pages/examples/pricing.html" class="nav-link">
+                      <span class="sidenav-mini-icon"> P </span>
+                      <span class="sidenav-normal"> Pricing </span>
+                    </a>
                   </li>
                   <li class="nav-item">
-                    <a href="../../pages/examples/login.html" class="nav-link">Login</a>
+                    <a href="/pages/examples/login.html" class="nav-link">
+                      <span class="sidenav-mini-icon"> L </span>
+                      <span class="sidenav-normal"> Login </span>
+                    </a>
                   </li>
                   <li class="nav-item">
-                    <a href="../../pages/examples/register.html" class="nav-link">Register</a>
+                    <a href="/pages/examples/register.html" class="nav-link">
+                      <span class="sidenav-mini-icon"> R </span>
+                      <span class="sidenav-normal"> Register </span>
+                    </a>
                   </li>
                   <li class="nav-item">
-                    <a href="../../pages/examples/lock.html" class="nav-link">Lock</a>
+                    <a href="/pages/examples/lock.html" class="nav-link">
+                      <span class="sidenav-mini-icon"> L </span>
+                      <span class="sidenav-normal"> Lock </span>
+                    </a>
                   </li>
                   <li class="nav-item">
-                    <a href="../../pages/examples/timeline.html" class="nav-link">Timeline</a>
+                    <a href="/pages/examples/timeline.html" class="nav-link">
+                      <span class="sidenav-mini-icon"> T </span>
+                      <span class="sidenav-normal"> Timeline </span>
+                    </a>
                   </li>
                   <li class="nav-item">
-                    <a href="../../pages/examples/profile.html" class="nav-link">Profile</a>
+                    <a href="/pages/examples/profile.html" class="nav-link">
+                      <span class="sidenav-mini-icon"> P </span>
+                      <span class="sidenav-normal"> Profile </span>
+                    </a>
                   </li>
                 </ul>
               </div>
@@ -78,26 +150,47 @@
               <div class="collapse" id="navbar-components">
                 <ul class="nav nav-sm flex-column">
                   <li class="nav-item">
-                    <a href="../../pages/components/buttons.html" class="nav-link">Buttons</a>
+                    <a href="/pages/components/buttons.html" class="nav-link">
+                      <span class="sidenav-mini-icon"> B </span>
+                      <span class="sidenav-normal"> Buttons </span>
+                    </a>
                   </li>
                   <li class="nav-item">
-                    <a href="../../pages/components/cards.html" class="nav-link">Cards</a>
+                    <a href="/pages/components/cards.html" class="nav-link">
+                      <span class="sidenav-mini-icon"> C </span>
+                      <span class="sidenav-normal"> Cards </span>
+                    </a>
                   </li>
                   <li class="nav-item">
-                    <a href="../../pages/components/grid.html" class="nav-link">Grid</a>
+                    <a href="/pages/components/grid.html" class="nav-link">
+                      <span class="sidenav-mini-icon"> G </span>
+                      <span class="sidenav-normal"> Grid </span>
+                    </a>
                   </li>
                   <li class="nav-item">
-                    <a href="../../pages/components/notifications.html" class="nav-link">Notifications</a>
+                    <a href="/pages/components/notifications.html" class="nav-link">
+                      <span class="sidenav-mini-icon"> N </span>
+                      <span class="sidenav-normal"> Notifications </span>
+                    </a>
                   </li>
                   <li class="nav-item">
-                    <a href="../../pages/components/icons.html" class="nav-link">Icons</a>
+                    <a href="/pages/components/icons.html" class="nav-link">
+                      <span class="sidenav-mini-icon"> I </span>
+                      <span class="sidenav-normal"> Icons </span>
+                    </a>
                   </li>
                   <li class="nav-item">
-                    <a href="../../pages/components/typography.html" class="nav-link">Typography</a>
+                    <a href="/pages/components/typography.html" class="nav-link">
+                      <span class="sidenav-mini-icon"> T </span>
+                      <span class="sidenav-normal"> Typography </span>
+                    </a>
                   </li>
                   <li class="nav-item">
-                    <a href="#navbar-multilevel" class="nav-link" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-multilevel">Multi level</a>
-                    <div class="collapse show" id="navbar-multilevel" style="">
+                    <a href="#navbar-multilevel" class="nav-link" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-multilevel">
+                      <span class="sidenav-mini-icon"> M </span>
+                      <span class="sidenav-normal"> Multi level </span>
+                    </a>
+                    <div class="collapse show" id="navbar-multilevel">
                       <ul class="nav nav-sm flex-column">
                         <li class="nav-item">
                           <a href="#!" class="nav-link ">Third level menu</a>
@@ -115,117 +208,103 @@
               </div>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#navbar-forms" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="navbar-forms">
+              <a class="nav-link collapsed" href="#navbar-forms" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="navbar-forms">
                 <i class="ni ni-single-copy-04 text-pink"></i>
                 <span class="nav-link-text">Forms</span>
               </a>
-              <div class="collapse" id="navbar-forms">
+              <div class="collapse" id="navbar-forms" style="">
                 <ul class="nav nav-sm flex-column">
                   <li class="nav-item">
-                    <a href="../../pages/forms/elements.html" class="nav-link">Elements</a>
+                    <a href="/pages/forms/elements.html" class="nav-link">
+                      <span class="sidenav-mini-icon"> E </span>
+                      <span class="sidenav-normal"> Elements </span>
+                    </a>
                   </li>
                   <li class="nav-item">
-                    <a href="../../pages/forms/components.html" class="nav-link">Components</a>
+                    <a href="/pages/forms/components.html" class="nav-link">
+                      <span class="sidenav-mini-icon"> C </span>
+                      <span class="sidenav-normal"> Components </span>
+                    </a>
                   </li>
                   <li class="nav-item">
-                    <a href="../../pages/forms/validation.html" class="nav-link">Validation</a>
+                    <a href="/pages/forms/validation.html" class="nav-link">
+                      <span class="sidenav-mini-icon"> V </span>
+                      <span class="sidenav-normal"> Validation </span>
+                    </a>
                   </li>
                 </ul>
               </div>
             </li>
-            <%}%>
-          <li class="nav-item">
-            <a  class="<%= path1 === '/admin/userInfo' ? 'nav-link active' : 'nav-link' %>" href="#navbar-tables" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="navbar-tables">
-              <i class="ni ni-single-02 text-orange"></i>
-              <span class="nav-link-text">User</span>
-            </a>
-            <div class="collapse" id="navbar-tables">
-              <ul class="nav nav-sm flex-column">
-                <li class="<%= path2 === '/admin/userInfo' ? 'nav-item active' : 'nav-item' %>">
-                  <a href="/admin/userInfo" class="nav-link">User Infomation</a>
-                </li>
-                <li class="<%= path2 === '/admin/createUser' ? 'nav-item active' : 'nav-item' %>">
-                  <a href="/admin/createUser" class="nav-link">Create User</a>
-                </li>
-                <%if(env === "dev"){%>
-                  <li class="nav-item">
-                    <a href="../../pages/tables/sortable.html" class="nav-link">Sortable</a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="../../pages/tables/datatables.html" class="nav-link">Datatables</a>
-                  </li>
-                  <%}%>
-              </ul>
-            </div>
-          </li>
-          <li class="nav-item">
-            <a  class="<%= path1 === '/admin/eventInfo' ? 'nav-link active' : 'nav-link' %>" href="/admin/eventInfo" >
-              <i class="ni ni-calendar-grid-58 text-pink"></i>
-              <span class="nav-link-text">Event</span>
-            </a>
-            <!-- <div class="collapse" id="navbar-tables">
-              <ul class="nav nav-sm flex-column">
-                <li class="<%= path2 === '/admin/userInfo' ? 'nav-item active' : 'nav-item' %>">
-                  <a href="/admin/userInfo" class="nav-link">User Infomation</a>
-                </li>
-                <li class="<%= path2 === '/admin/createUser' ? 'nav-item active' : 'nav-item' %>">
-                  <a href="/admin/createUser" class="nav-link">Create User</a>
-                </li>
-              </ul>
-            </div> -->
-          </li>
-          <li class="nav-item">
-            <a  class="<%= path1 === '/admin/reportInfo' ? 'nav-link active' : 'nav-link' %>" href="/admin/reportInfo" >
-              <i class="ni ni-send text-nowrap"></i>
-              <span class="nav-link-text">Report</span>
-            </a>
-            <!-- <div class="collapse" id="navbar-tables">
-              <ul class="nav nav-sm flex-column">
-                <li class="<%= path2 === '/admin/userInfo' ? 'nav-item active' : 'nav-item' %>">
-                  <a href="/admin/userInfo" class="nav-link">User Infomation</a>
-                </li>
-                <li class="<%= path2 === '/admin/createUser' ? 'nav-item active' : 'nav-item' %>">
-                  <a href="/admin/createUser" class="nav-link">Create User</a>
-                </li>
-              </ul>
-            </div> -->
-          </li>
-          <%if(env === "dev"){%>
             <li class="nav-item">
-              <a class="nav-link" href="#navbar-maps" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="navbar-maps">
+              <a class="nav-link collapsed" href="#navbar-tables" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="navbar-tables">
+                <i class="ni ni-align-left-2 text-default"></i>
+                <span class="nav-link-text">Tables</span>
+              </a>
+              <div class="collapse" id="navbar-tables" style="">
+                <ul class="nav nav-sm flex-column">
+                  <li class="nav-item">
+                    <a href="/pages/tables/tables.html" class="nav-link">
+                      <span class="sidenav-mini-icon"> T </span>
+                      <span class="sidenav-normal"> Tables </span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="/pages/tables/sortable.html" class="nav-link">
+                      <span class="sidenav-mini-icon"> S </span>
+                      <span class="sidenav-normal"> Sortable </span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="/pages/tables/datatables.html" class="nav-link">
+                      <span class="sidenav-mini-icon"> D </span>
+                      <span class="sidenav-normal"> Datatables </span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="#navbar-maps" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="navbar-maps">
                 <i class="ni ni-map-big text-primary"></i>
                 <span class="nav-link-text">Maps</span>
               </a>
-              <div class="collapse" id="navbar-maps">
+              <div class="collapse" id="navbar-maps" style="">
                 <ul class="nav nav-sm flex-column">
                   <li class="nav-item">
-                    <a href="../../pages/maps/google.html" class="nav-link">Google</a>
+                    <a href="/pages/maps/google.html" class="nav-link">
+                      <span class="sidenav-mini-icon"> G </span>
+                      <span class="sidenav-normal"> Google </span>
+                    </a>
                   </li>
                   <li class="nav-item">
-                    <a href="../../pages/maps/vector.html" class="nav-link">Vector</a>
+                    <a href="/pages/maps/vector.html" class="nav-link">
+                      <span class="sidenav-mini-icon"> V </span>
+                      <span class="sidenav-normal"> Vector </span>
+                    </a>
                   </li>
                 </ul>
               </div>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="../../pages/widgets.html">
+              <a class="nav-link" href="/pages/widgets.html">
                 <i class="ni ni-archive-2 text-green"></i>
                 <span class="nav-link-text">Widgets</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="../../pages/charts.html">
+              <a class="nav-link" href="/pages/charts.html">
                 <i class="ni ni-chart-pie-35 text-info"></i>
                 <span class="nav-link-text">Charts</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="../../pages/calendar.html">
+              <a class="nav-link" href="../pages/calendar.html">
                 <i class="ni ni-calendar-grid-58 text-red"></i>
                 <span class="nav-link-text">Calendar</span>
               </a>
             </li>
           </ul>
+          
           <!-- Divider -->
           <hr class="my-3">
           <!-- Heading -->
@@ -257,7 +336,7 @@
               </a>
             </li>
           </ul> 
-            <%}%>
+          <% }%>
       </div>
     </div>
   </div>
