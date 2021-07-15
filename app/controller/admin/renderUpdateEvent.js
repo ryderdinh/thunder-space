@@ -15,7 +15,8 @@ module.exports = (req, res) => {
     res.render("updateEvent",{ 
       path : "/admin/event-information",
       id : id,
-      event : data
+      event : data, 
+      title : "Update Event"
      });
   })
 };

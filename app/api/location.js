@@ -1,4 +1,5 @@
 const Status = require("../models/status")
+const History = require("../models/history")
 const { distance } = require("../utils/findDistance")
 const express = require("express")
 const { changeTimeToFloat } = require("../utils/handleTime")

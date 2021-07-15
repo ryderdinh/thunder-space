@@ -87,6 +87,7 @@ const postDeleteUser = require("./app/controller/admin/deleteUser")
 const getStaffInfo = require("./app/controller/admin/userInfo")
 const getFilterUser = require("./app/controller/admin/filterUser")
 const getEventInfo = require("./app/controller/admin/eventInfo")
+const getReportInfo = require("./app/controller/admin/reportInfo")
 //Model
 
 app.use(cors())
@@ -130,6 +131,7 @@ app.use( postDeleteUser)
 app.use(getStaffInfo)
 app.use(getFilterUser)
 app.use("/admin", getEventInfo)
+app.use("/admin", getReportInfo)
 
 //Api
 app.post("/loginToken", loginToken);
@@ -194,9 +196,6 @@ app.use("/user/changePassword", authenticateToken, changePassword)
 
 // Nhat add
 
-const Report = require('./app/models/report')
-const Events = require('./app/models/event')
-const Staff = require("./app/models/staffInformation")
 // const Table = require('./app/models/tableOfWork')
 // const Status = require('./app/models/status')
 // const createEvent = require("./app/controller/admin/createEvent")
@@ -212,14 +211,6 @@ const Staff = require("./app/models/staffInformation")
 // app.post("/admin/updateEvent", checkAuthenticated, updateEvent);
 // app.post("/admin/createEvent", createEvent);
 
-app.get("/admin/report-information", checkAuthenticated, (req,res) => {
-  Report.find({}, function (err,report) {
-    res.render("reportInformation", {
-      reportLists: report,
-      path : "/admin/report-information"
-    })
-  })
-})
 
 
 // app.get("/test", (req, res, next) => {

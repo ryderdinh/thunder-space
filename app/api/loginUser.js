@@ -22,7 +22,7 @@ module.exports = (req, res) => {
                   History.create({
                     email : staff.email,
                     status : "Login",
-                    type : "User",
+                    type : "Account",
                     details : {
                       day : date,
                       time : time

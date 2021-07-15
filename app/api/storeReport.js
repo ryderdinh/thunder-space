@@ -1,5 +1,6 @@
 const Staff = require('../models/staffInformation')
 const Report = require("../models/report")
+const History = require("../models/history")
 const authenticateToken = ("")
 const express =require("express")
 const router = express.Router()
@@ -28,18 +29,24 @@ router.post("/:id", (req, res) => {
                 content: dataUser.content
             }} 
         }, (err, report) => {
-            // if (!err) {
-            //     Staff.findByIdAndUpdate(id,  { $push : { activity_log: {
-            //         rid : rid,
-            //         status : `Create a report at ${time} in ${date}`
-            //       }} },
-            //       (err, staff) => {
-            //             if(!err){
-            //                 return  res.json({ data : { status : "Report complete" }} )
-            //             }
-            //       })
-            // }
-            // else res.json({data : { status : "Canot report" }})
+            if (!err) {
+                Staff.findById(id, (err, staff) => {
+                    History.create({
+                        email : staff.email,
+                        status : "Create",
+                        type : "Report",
+                        details : {
+                          day : date,
+                          time : time
+                        }
+                    }, (err, history) => {
+                        if(!err){
+                            return  res.json({ data : { status : "Report complete" }} )
+                        }
+                    })
+                })
+            }
+            else res.json({data : { status : "Canot report" }})
         })
     } else  if(checkType === "false" ) {
         
@@ -54,19 +61,25 @@ router.post("/:id", (req, res) => {
                 content: dataUser.content
             }} 
         }, (err, report) => {
-            // if (!err) {
-            //     Staff.findByIdAndUpdate(id,  { $push : { activity_log: {
-            //         rid : rid,
-            //         status : `Create a report at ${time} in ${date}`
-            //       }} },
-            //       (err, staff) => {
-            //             if(!err){
-            //                 return  res.json({ data : { status : "Report complete" }} )
-            //             }
-            //       })
+            if (!err) {
+                Staff.findById(id, (err, staff) => {
+                    History.create({
+                        email : staff.email,
+                        status : "Create",
+                        type : "Report",
+                        details : {
+                          day : date,
+                          time : time
+                        }
+                    }, (err, history) => {
+                        if(!err){
+                            return  res.json({ data : { status : "Report complete" }} )
+                        }
+                    })
+                })
             
-            // }
-            // else res.json({data : { status : "Canot report" }})
+            }
+            else res.json({data : { status : "Canot report" }})
         })
        
     }

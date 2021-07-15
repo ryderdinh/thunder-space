@@ -11,6 +11,7 @@ module.exports = (req,res) => {
         path1 : "/admin/userInfo",
         path2 : "/admin/createUser",
         info :'',
-        mode :'create'
+        mode :'create',
+        title : "Create User"
     })
 }

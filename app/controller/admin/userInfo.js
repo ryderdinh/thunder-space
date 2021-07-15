@@ -31,11 +31,12 @@ router.get("/admin/userInfo", checkAuthenticated, (req, res, next) => {
                     department: departmentList,
                     position : positionList,
                     // pages : pages,
-                    env: env
+                    env: env, 
+                    title : "User Info"
                 })
             //    })
 
-            })
+            })  
             .catch(err => console.log(err))
 
     // }else{

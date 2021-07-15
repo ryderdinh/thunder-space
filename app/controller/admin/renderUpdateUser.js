@@ -20,7 +20,8 @@ module.exports = (req, res) => {
         department : departmentList,
         position : positionList,
         mode : 'edit',
-        id : id
+        id : id,
+        title : "Update User"
       });
     })
   }
