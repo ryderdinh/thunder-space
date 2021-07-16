@@ -310,7 +310,7 @@
                       <div class="col-md-4 mb-3">
                         <div class="form-group">
                           <label class="form-control-label" for="name">Birthday</label>
-                          <input value="<%= mode==='edit' ? info.birthday : ''%>" name="<%= mode==='edit' ? 'newBirthday' : 'birthday'%>" type="text" class="form-control datepicker" placeholder="mm/dd/yyyy"  aria-describedby="inputGroupPrepend3" required>
+                          <input data-date-format="dd/mm/yyyy" id="datepicker-birthday" value="<%= mode==='edit' ? info.birthday : ''%>" name="<%= mode==='edit' ? 'newBirthday' : 'birthday'%>" type="text" class="form-control datepicker" placeholder="dd/mm/yyyy"  aria-describedby="inputGroupPrepend3" required>
                         </div>
                       </div>
                     </div>
@@ -368,8 +368,16 @@
   <script src="/assets/vendor/jquery.scrollbar/jquery.scrollbar.min.js"></script>
   <script src="/assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js"></script>
   <script src="/assets/vendor/select2/dist/js/select2.min.js"></script>
-  <!-- Optional JS -->
   <script src="/assets/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+  <!-- Optional JS -->
+  <script type="text/javascript">
+    $(function () {
+      $('#datepicker-birthday').datepicker({
+        format: 'dd/mm/yyyy',
+      });
+    });
+  </script>
+  
   <%- include("../../includes/script.ejs") -%>
 </body>
 
