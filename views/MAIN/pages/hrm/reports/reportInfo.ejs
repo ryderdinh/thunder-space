@@ -17,8 +17,7 @@
               <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
                 <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
                   <li class="breadcrumb-item"><a href="/admin/dashboard"><i class="fas fa-home"></i></a></li>
-                  <li class="breadcrumb-item"><a href="/admin/userInfo">User</a></li>
-                  <li class="breadcrumb-item active" aria-current="page">User Information</li>
+                  <li class="breadcrumb-item"><a href="/admin/userInfo">Report</a></li>
                 </ol>
               </nav>
             </div>
@@ -39,7 +38,7 @@
           <div class="card">
             <!-- Card header -->
             <div class="card-header">
-              <h3 class="mb-0">User Information</h3>
+              <h3 class="mb-0">Report</h3>
             <!---deleted-->
             </div>
                       <!---Alerts-->
@@ -76,15 +75,16 @@
                 </thead>
                 <tfoot>
                   <tr>
-                    <th>NAME</th>
-                    <th>DATE START</th>
-                    <th>DATE END</th>
-                    <th>TYPE</th>
+                    <th>Name</th>
+                    <th>Date Start</th>
+                    <th>Date End</th>
+                    <th>Type</th>
                   </tr>
                 </tfoot>
                 <tbody>
                   <%reports.forEach(report => {%>
-                      <tr>
+                      <tr class="report item" data-toggle="modal" data-target="#modal-default">
+                        <td style="display: none;"><%= report.content%></td>
                         <td><%= report.userName%></td>
                         <td><%= report.dateStart%></td>
                         <td><%= report.dateEnd%></td>
@@ -99,9 +99,32 @@
         </div>
       </div>
       <!-- Footer -->
-    <!---deleted-->
-      <!-- Modal AdvanceFilter -->
-<%- include("../../includes/footer.ejs") -%>
+      <%- include("../../includes/footer.ejs") -%>
+      <!-- Modal Show Report content -->
+      <div class="row">
+        <div class="col-md-4">
+            <div class="modal fade" id="modal-default" tabindex="-1" role="dialog" aria-labelledby="modal-default" aria-hidden="true">
+          <div class="modal-dialog modal- modal-dialog-centered modal-" role="document">
+              <div class="modal-content">
+                
+                  <div class="modal-header">
+                      <h6 class="modal-title" id="modal-title-default">Content</h6>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">×</span>
+                      </button>
+                  </div>
+                  
+                  <div class="modal-body">
+                  <p id="report content"></p>        
+                  </div>
+                  
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-link  ml-auto" data-dismiss="modal">Close</button>
+                  </div>
+                  
+              </div>
+          </div>
+      </div>
 </div>
 
   </div>
@@ -124,7 +147,8 @@
   <script src="/assets/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
   <%- include("../../includes/script.ejs") -%>
 
-  <script src="/assets/js/sweetAlert.js"></script>
+  <!-- <script src="/assets/js/sweetAlert.js"></script> -->
+  <script src="/assets/js/showReportContent.js"></script>
 </body>
 
 </html>

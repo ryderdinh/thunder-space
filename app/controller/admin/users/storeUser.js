@@ -1,11 +1,11 @@
 
-const StaffInformation = require ("../../models/staffInformation")
-const Status = require( "../../models/status" )
-const TableOfWork = require ("../../models/tableOfWork")
-const Report = require("../../models/report") 
+const StaffInformation = require ("../../../models/staffInformation")
+const Status = require( "../../../models/status" )
+const TableOfWork = require ("../../../models/tableOfWork")
+const Report = require("../../../models/report") 
 const bcrypt = require("bcrypt")
-const { authSchema } = require("../../../middleware/checkFormRegister")
-const { convert } = require("../../utils/dateFormat")
+const { authSchema } = require("../../../../middleware/checkFormRegister")
+const { convert } = require("../../../utils/dateFormat")
 
 const flash = require('express-flash')
 

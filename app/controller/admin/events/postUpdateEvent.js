@@ -1,10 +1,10 @@
 const { model } = require("mongoose");
-const Event = require("../../models/event");
+const Event = require("../../../models/event");
 const bcrypt = require("bcrypt");
 const express = require("express")
 const router = express.Router()
 const moment = require('moment')
-const { authSchema } = require("../../../middleware/checkFormEvent")
+const { authSchema } = require("../../../../middleware/checkFormEvent")
 
 router.post("/:id", (req, res) => {
     let id = req.params.id;

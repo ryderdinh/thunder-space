@@ -1,10 +1,10 @@
 const { model } = require("mongoose");
-const StaffInformation = require("../../models/staffInformation");
+const StaffInformation = require("../../../models/staffInformation");
 const bcrypt = require("bcrypt");
-const { convert } = require("../../utils/dateFormat");
+const { convert } = require("../../../utils/dateFormat");
 const express = require("express")
 const router = express.Router()
-const { authSchema } = require("../../../middleware/checkFormRegister")
+const { authSchema } = require("../../../../middleware/checkFormRegister")
 // var popupS = require('popups');
 router.post("/:id", (req, res) => {
   let id = req.params.id
@@ -78,7 +78,7 @@ router.post("/:id", (req, res) => {
         }
         // console.log(staffInfo);
         // console.log("updated");
-        return res.redirect("/admin/user-information");
+        return res.redirect("/admin/userInfo");
       }
     );
   });

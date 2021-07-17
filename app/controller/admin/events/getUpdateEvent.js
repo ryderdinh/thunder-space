@@ -1,5 +1,5 @@
-const Event = require("../../models/event")
-const { toUTCString } = require("../../utils/toUTCString")
+const Event = require("../../../models/event")
+const { toUTCString } = require("../../../utils/toUTCString")
 const moment = require("moment")
 
 module.exports = (req, res) => {

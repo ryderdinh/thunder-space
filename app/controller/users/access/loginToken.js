@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken")
-const staffInfo = require("../models/staffInformation")
+const staffInfo = require("../../../models/staffInformation")
 const bcrypt = require("bcrypt")
-const Staff = require("../models/staffInformation")
+const Staff = require("../../../models/staffInformation")
 module.exports = (req, res) => {
         //Authenticate user
         const dataUser = JSON.parse(Object.keys(req.body)[0]);

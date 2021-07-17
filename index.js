@@ -16,8 +16,8 @@ initializePassport(
   (id) => admins.find((admin) => admin.id === id)
 );
 
-//Set view engine
-// const ejs = require("ejs
+//----------------------------------VIEW ENGINE------------------------------------
+
 app.set("view engine", "ejs");
 app.set("views", "views/MAIN/pages");
 app.use(express.static(__dirname + "/views/MAIN"));
@@ -27,6 +27,7 @@ app.use(express.urlencoded({ extended: false }));
 // app.use(bodyParser.json())
 // app.use(bodyParser.raw());
 
+//----------------------------------INIT PASSPORT------------------------------------
 app.use(flash());
 app.use(
   session({
@@ -40,10 +41,11 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(methodOverride("_method"));
 app.use(express.json());
-//Connect Db
+
+//----------------------------------CONNECT DATABASE------------------------------------
 db.connect();
 
-//Fake data
+//----------------------------------ADMIN  INFO------------------------------------
 const admins = [
   {
     id: "123123",
@@ -52,44 +54,7 @@ const admins = [
   },
 ];
 
-const { convert } = require("./app/utils/dateFormat");
-
-//Controller
-
-// const loginAdmin = require("./app/controller/loginAdmin")
-const dashBoard = require("./app/controller/admin/dashBoard");
-const home = require("./app/controller/admin/loginAdminControl");
-const create = require("./app/controller/admin/createUser");
-const storeUser = require("./app/controller/admin/storeUser");
-const checkAuthenticated = require("./middleware/checkAuthenticated");
-const checkNotAuthenticated = require("./middleware/checkNotAuthenticated");
-const authenticateToken = require("./middleware/authenticateToken");
-const logoutAdmin = require("./app/controller/admin/logoutAdmin");
-const loginUser = require("./app/api/loginUser");
-const loginToken = require("./app/api/loginToken");
-const location = require("./app/api/location");
-const userInfo = require("./app/api/userInfo");
-const storeTimeLine = require("./app/api/storeTimeLine");
-const createEvent = require("./app/controller/admin/createEvent");
-const aptiEvent = require("./app/api/event");
-const userTable = require("./app/api/table");
-const storeEvent = require("./app/controller/admin/storeEvent");
-// const updateUserControl = require("./app/controller/admin/updateUser")
-// const storeUpdateUser = require("./app/controller/admin/storeUpdateUser")
-const storeReport = require("./app/api/storeReport");
-const userReport = require("./app/api/report");
-const changePassword = require("./app/api/changePassword");
-const getUpdateUser = require("./app/controller/admin/renderUpdateUser");
-const getUpdateEvent = require("./app/controller/admin/renderUpdateEvent");
-const postUpdateUser = require("./app/controller/admin/updateUser");
-const postUpdateEvent = require("./app/controller/admin/updateEvent");
-const postDeleteUser = require("./app/controller/admin/deleteUser");
-const getStaffInfo = require("./app/controller/admin/userInfo");
-const getFilterUser = require("./app/controller/admin/filterUser");
-const getEventInfo = require("./app/controller/admin/eventInfo");
-const getReportInfo = require("./app/controller/admin/reportInfo");
-//Model
-
+//----------------------------------CORS------------------------------------
 app.use(cors());
 app.use((req, res, next) => {
   // res.header("Access-Control-Allow-Origin", "https://hrmapplication.herokuapp.com/");
@@ -106,8 +71,68 @@ app.use((req, res, next) => {
   );
   next();
 });
+
+//----------------------------------ADMIN CONTROLLER------------------------------------
+// const loginAdmin = require("./app/controller/loginAdmin")
+//ACCESS
+const home = require("./app/controller/admin/access/getLogin");
+const logoutAdmin = require("./app/controller/admin/access/logout");
+
+//DASHBOARD
+const dashBoard = require("./app/controller/admin/dashBoard/dashBoard");
+
+//USER
+const createUser = require("./app/controller/admin/users/createUser");
+const storeUser = require("./app/controller/admin/users/storeUser");
+const getUpdateUser = require("./app/controller/admin/users/getUpdateUser");
+const postUpdateUser = require("./app/controller/admin/users/postUpdateUser");
+const postDeleteUser = require("./app/controller/admin/users/postDeleteUser");
+const getUserInfo = require("./app/controller/admin/users/getUserInfo");
+const getUserFilter = require("./app/controller/admin/users/getUserFilter");
+
+//EVENT
+// const getUpdateEvent = require("./app/controller/admin/events/getUpdateEvent");
+// const postUpdateEvent = require("./app/controller/admin/events/postUpdateEvent");
+// const getEventInfo = require("./app/controller/admin/events/getEventInfo");
+const getCreateEvent = require("./app/controller/admin/events/getCreateEvent");
+const postCreateEvent = require("./app/controller/admin/events/storeEvent");
+
+//REPORT
+const getReportInfo = require("./app/controller/admin/reports/getReportInfo");
+
+//MIDDLE WARE
+const checkAuthenticated = require("./middleware/checkAuthenticated");
+const checkNotAuthenticated = require("./middleware/checkNotAuthenticated");
+const authenticateToken = require("./middleware/authenticateToken");
+
+//----------------------------------USER CONTROLLER------------------------------------
+
+//ACCESS
+const loginUser = require("./app/controller/users/access/loginUser");
+const loginToken = require("./app/controller/users/access/loginToken");
+const changePassword = require("./app/controller/users/access/changePassword");
+
+//INFOR
+const apiGetUserInfo = require("./app/controller/users/info/apiGetUserInfo");
+
+//TIMEKEEPING
+const apiPostLocation = require("./app/controller/users/timeKeeping/location");
+const apiGetTimeline = require("./app/controller/users/timeKeeping/storeTimeLine");
+
+//EVENT
+const apiGetEvent = require("./app/controller/users/event/apiGetEvent");
+
+//STATISTIC
+const apiGetTable = require("./app/controller/users/statistic/apiGetTable");
+
+//REPORT
+const apiPostReport = require("./app/controller/users/report/apiPostReport");
+const apiGetReport = require("./app/controller/users/report/apiGetReport");
+
+//----------------------------------ADMIN ROUTE------------------------------------
+
+//ACCESS
 app.get("/", checkNotAuthenticated, home);
-app.get("/admin/createUser", checkAuthenticated, create);
 app.post(
   "/admin/login",
   checkNotAuthenticated,
@@ -116,36 +141,44 @@ app.post(
     failureRedirect: "/",
     failureFlash: true,
   })
-);
-app.post("/admin/storeUser", checkAuthenticated, storeUser);
-app.get("/admin/logout", logoutAdmin);
-app.get("/admin/eventInfo", checkAuthenticated, createEvent);
-app.post("/admin/createEvent", checkAuthenticated, storeEvent);
-app.get("/admin/dashboard", checkAuthenticated, dashBoard);
+  );
+  app.get("/admin/logout", logoutAdmin);
+  
+  //DASHBOARD
+  app.get("/admin/dashboard", checkAuthenticated, dashBoard);
 
+//USER
+app.get("/admin/createUser", checkAuthenticated, createUser);
+app.post("/admin/storeUser", checkAuthenticated, storeUser);
 app.get("/admin/userInfo/update", checkAuthenticated, getUpdateUser);
-app.get("/admin/updateEvent", checkAuthenticated, getUpdateEvent);
 app.use("/admin/editUser", checkAuthenticated, postUpdateUser);
-app.use("/admin/updateEvent", checkAuthenticated, postUpdateEvent);
+app.use(getUserInfo);
 app.use(postDeleteUser);
-app.use(getStaffInfo);
-app.use(getFilterUser);
-app.use("/admin", getEventInfo);
+app.use(getUserFilter);
+
+//EVENT
+app.get("/admin/eventInfo", checkAuthenticated, getCreateEvent);
+app.post("/admin/createEvent", checkAuthenticated, postCreateEvent);
+// app.get("/admin/updateEvent", checkAuthenticated, getUpdateEvent);
+// app.use("/admin/updateEvent", checkAuthenticated, postUpdateEvent);
+// app.use("/admin", getEventInfo);
+
+//REPORT
 app.use("/admin", getReportInfo);
 
-//Api
+//----------------------------------USER ROUTE------------------------------------
 app.post("/loginToken", loginToken);
-app.use("/location", authenticateToken, location);
-app.use("/storeTimeLine", authenticateToken, storeTimeLine);
-app.use("/userInfo", authenticateToken, userInfo);
+app.use("/location", authenticateToken, apiPostLocation);
+app.use("/storeTimeLine", authenticateToken, apiGetTimeline);
+app.use("/userInfo", authenticateToken, apiGetUserInfo);
 app.get("/user/login", authenticateToken, loginUser);
-app.get("/event", authenticateToken, aptiEvent);
-app.use("/table", authenticateToken, userTable);
-app.use("/user/report", authenticateToken, userReport);
-app.use("/user/storeReport", authenticateToken, storeReport);
+app.get("/event", authenticateToken, apiGetEvent);
+app.use("/table", authenticateToken, apiGetTable);
+app.use("/user/report", authenticateToken, apiGetReport);
+app.use("/user/storeReport", authenticateToken, apiPostReport);
 app.use("/user/changePassword", authenticateToken, changePassword);
 
-// Cron tab
+//----------------------------------CRON TAB------------------------------------
 
 // # ┌────────────── second (optional)
 // # │ ┌──────────── minute
@@ -193,33 +226,6 @@ app.use("/user/changePassword", authenticateToken, changePassword);
 //   })
 // })
 
-// Nhat add
-
-// const Table = require('./app/models/tableOfWork')
-// const Status = require('./app/models/status')
-// const createEvent = require("./app/controller/admin/createEvent")
-// // const event = require("./app/controller-Nhat/event");
-// const updateUser = require("./app/controller/admin/updateUser");
-// const updateEvent = require("./app/controller/admin/updateEvent");
-// const renderCreateEvent = require("./app/controller/admin/renderCreateEvent");
-// const renderUpdateUser = require("./app/controller/admin/renderUpdateUser");
-// const renderUpdateEvent = require("./app/controller/admin/renderUpdateEvent");
-// app.get("/admin/updateUser", checkAuthenticated, renderUpdateUser);
-// app.get("/admin/createEvent", checkAuthenticated, renderCreateEvent);
-// app.post("/admin/updateUser", checkAuthenticated, updateUser);
-// app.post("/admin/updateEvent", checkAuthenticated, updateEvent);
-// app.post("/admin/createEvent", createEvent);
-
-// app.get("/test", (req, res, next) => {
-//   Staff.find({}, (err, staff) => {
-//     staff = staff.map(e => e =
-//       e.position
-//     )
-//     // staff = [...new Set(staff)]
-//     res.json(staff)
-//   })
-
-// })
 // const axios = require('axios')
 
 // async function getUser() {

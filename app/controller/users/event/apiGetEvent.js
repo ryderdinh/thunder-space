@@ -1,7 +1,7 @@
 
 const { env } = require("shelljs")
-const Event = require("../models/event")
-const { convert } = require("../utils/dateFormat")
+const Event = require("../../../models/event")
+const { convert } = require("../../../utils/dateFormat")
 
 module.exports = (req, res) => {
     

@@ -35,7 +35,7 @@ const showAlert = () => {
     showAlert();
     setInterval(() => {
       let dataPre;
-      let datatableButtons = document.querySelector("#datatable-buttons");
+      let datatableButtons = document.querySelector("#datatable-basic");
       if (dataPre !== datatableButtons.innerHTML) {
         showAlert();
       }

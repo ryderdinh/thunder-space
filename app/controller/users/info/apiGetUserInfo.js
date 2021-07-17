@@ -1,8 +1,8 @@
-const staffInfo = require("../models/staffInformation")
-const convertDate = require("../utils/convertDate")
+const staffInfo = require("../../../models/staffInformation")
+const convertDate = require("../../../utils/convertDate")
 const express = require("express")
 const router = express.Router()
-const { convert } = require("../utils/dateFormat")
+const { convert } = require("../../../utils/dateFormat")
 
 router.get("/:id", (req, res) =>{
     let id = req.params.id

@@ -1,10 +1,10 @@
-const Staff = require('../models/staffInformation')
-const Report = require("../models/report")
-const History = require("../models/history")
+const Staff = require('../../../models/staffInformation')
+const Report = require("../../../models/report")
+const History = require("../../../models/history")
 const authenticateToken = ("")
 const express =require("express")
 const router = express.Router()
-const { convert } = require("../utils/dateFormat")
+const { convert } = require("../../../utils/dateFormat")
 const moment = require("moment-timezone")
 const { v4: uuidv4 } = require('uuid');
 router.post("/:id", (req, res) => {

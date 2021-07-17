@@ -76,22 +76,23 @@
                     <div class="form-group mb-0">
                       <label class="form-control-label d-block mb-3">Status color</label>
                       <div class="btn-group btn-group-toggle btn-group-colors event-tag" data-toggle="buttons">
-                        <label class="btn bg-info active"><input type="radio" name="tag" value="bg-info" autocomplete="off" checked></label>
-                        <label class="btn bg-warning"><input type="radio" name="tag" value="bg-warning" autocomplete="off"></label>
-                        <label class="btn bg-danger"><input type="radio" name=tag" value="bg-danger" autocomplete="off"></label>
-                        <label class="btn bg-success"><input type="radio" name=tag" value="bg-success" autocomplete="off"></label>
-                        <label class="btn bg-default"><input type="radio" name=tag" value="bg-default" autocomplete="off"></label>
-                        <label class="btn bg-primary"><input type="radio" name=tag" value="bg-primary" autocomplete="off"></label>
+                        <label class="btn bg-info active"><input type="radio" name='tag' value="bg-info" autocomplete="off" checked></label>
+                        <label class="btn bg-warning"><input type="radio" name='tag' value="bg-warning" autocomplete="off"></label>
+                        <label class="btn bg-danger"><input type="radio" name='tag' value="bg-danger" autocomplete="off"></label>
+                        <label class="btn bg-success"><input type="radio" name='tag' value="bg-success" autocomplete="off"></label>
+                        <label class="btn bg-default"><input type="radio" name='tag' value="bg-default" autocomplete="off"></label>
+                        <label class="btn bg-primary"><input type="radio" name='tag' value="bg-primary" autocomplete="off"></label>
                       </div>
                     </div>
-                    <input id="handleEvent" name="name" type="hidden" />
+                    <input id="handleEventName" name="name" type="hidden" />
+                    <input id="handleEventPosition" name="position" type="hidden" />
                     <input name="start" type="hidden" class="new-event--start" />
                     <input name="end" type="hidden" class="new-event--end"  />
                   </form>
                 </div>
                 <!-- Modal footer -->
                 <div class="modal-footer">
-                  <button id="btnSubmitEvent" type="submit" form="formEvent" class="btn btn-primary new-event--add">Add event</button>
+                  <button id="btnSubmitEvent" type="submit" form="formEvent" class="btn btn-primary ">Add event</button>
                   <button type="button" class="btn btn-link ml-auto" data-dismiss="modal">Close</button>
                 </div>
               </div>
@@ -155,7 +156,7 @@
           </div>
         </div>
       </div>
-      
+      <input id="eventInfo" type="hidden" value="<%= eventInfo%>">
       <!-- Footer -->
       <%-include("../../includes/footer.ejs")-%> 
     </div> 
@@ -172,6 +173,7 @@
   <script src="/assets/vendor/moment/min/moment.min.js"></script>
   <script src="/assets/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
   <script src="/assets/vendor/fullcalendar/dist/fullcalendar.min.js"></script>
+  <script src="/assets/js/components/vendor/fullcalendar.js"></script>
   <script src="/assets/js/handleEventName.js"></script>
   <script src="/assets/vendor/moment.min.js"></script>
   <script src="/assets/vendor/bootstrap-datetimepicker.js"></script>

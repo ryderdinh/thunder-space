@@ -1,5 +1,5 @@
-const Staff = require("../../models/staffInformation");
-const History = require("../../models/history");
+const Staff = require("../../../models/staffInformation");
+const History = require("../../../models/history");
 const env = process.env.NODE_ENV.trim();
 module.exports = (req, res, next) => {
   const countHistory = History.countDocuments();

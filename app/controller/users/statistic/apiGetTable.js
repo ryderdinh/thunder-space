@@ -1,5 +1,5 @@
 
-const Table = require('../models/tableOfWork')
+const Table = require('../../../models/tableOfWork')
 const express = require("express")
 const router = express.Router()
 

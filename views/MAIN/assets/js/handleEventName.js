@@ -1,8 +1,11 @@
 const eventName = document.getElementById('eventName')
-const handleEvent = document.getElementById("handleEvent")
+const eventPosition = document.getElementById('eventPosition')
+const handleEventName = document.getElementById("handleEventName")
+const handleEventPosition = document.getElementById("handleEventPosition")
 const btnSubmitEvent = document.getElementById("btnSubmitEvent")
 
 
 btnSubmitEvent.addEventListener('click', () => {
-    handleEvent.value = eventName.value
+    handleEventName.value = eventName.value
+    handleEventPosition.value = eventPosition.value
 })

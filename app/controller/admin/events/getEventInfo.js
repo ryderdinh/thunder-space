@@ -1,8 +1,8 @@
-const Event = require("../../models/event");
-const checkAuthenticated = require("../../../middleware/checkAuthenticated")
+const Event = require("../../../models/event");
+const checkAuthenticated = require("../../../../middleware/checkAuthenticated")
 const express = require("express")
 const router = express.Router()
-const { convert } = require("../../utils/dateFormat")
+const { convert } = require("../../../utils/dateFormat")
 
 router.get("/event-information", checkAuthenticated, (req, res, next) => {
 

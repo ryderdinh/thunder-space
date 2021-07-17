@@ -1,11 +1,11 @@
-const Staff = require("../models/staffInformation")
-const History = require("../models/history")
+const Staff = require("../../../models/staffInformation")
+const History = require("../../../models/history")
 const express = require("express")
 const bcrypt = require("bcrypt")
 const router = express.Router()
 const jwt = require("jsonwebtoken")
 const e = require("cors")
-const { convert } = require("../utils/dateFormat")
+const { convert } = require("../../../utils/dateFormat")
 const moment = require("moment-timezone")
 router.post("/:id", (req, res) => {
   // const authHeader = req.headers["authorization"];
