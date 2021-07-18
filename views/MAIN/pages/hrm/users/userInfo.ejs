@@ -145,42 +145,18 @@
       <form action="/admin/userInfo/filter" method="GET">
         <div class="modal-body">
           <div class="card">
-            <!-- Card header -->
-            <!-- <div class="card-header">
-              <h4 class="mb-0">Position</h4>
-            </div> -->
-            <!-- Card body -->
             <div class="card-body">
-              <label for="position"><h4>Position</h4></label>
-                <select name="position" class="form-control" data-toggle="select">
-                  <%position.forEach(element => {%>
-                    <option><%= element%></option>
-                    <%})%>
-                </select>
-            </div>
-          </div>
-          <div class="card">
-            <!-- Card header -->
-            <!-- <div class="card-header">
-              <h4 class="mb-0">Department</h4>
-            </div> -->
-            <!-- Card body -->
-            <div class="card-body">
-              <label for="department"><h4>Department</h4></label>
-                <select name="department" class="form-control" data-toggle="select">
+              <label for="birthday"><h4>Department</h4></label>
+              <div class="form-group">
+                <select  class="form-control"  >
                   <%department.forEach(element => {%>
                     <option><%= element%></option>
                     <%})%>
                 </select>
+              </div>
             </div>
           </div>
-         
           <div class="card">
-            <!-- Card header -->
-            <!-- <div class="card-header">
-              <h4 class="mb-0">Birthday</h4>
-            </div> -->
-            <!-- Card body -->
             <div class="card-body">
               <label for="birthday"><h4>Birthday</h4></label>
               <input name="birthday" class="form-control datepicker" placeholder="Select date" type="text">
@@ -216,6 +192,7 @@
   <script src="/assets/vendor/datatables.net-buttons/js/buttons.print.min.js"></script>
   <script src="/assets/vendor/datatables.net-select/js/dataTables.select.min.js"></script>
   <script src="/assets/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+  <script src="/assets/vendor/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js"></script>
   <%- include("../../includes/script.ejs") -%>
   <script src="/assets/js/sweetAlert.js"></script>
 </body>
