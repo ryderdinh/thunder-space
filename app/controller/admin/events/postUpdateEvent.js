@@ -5,16 +5,19 @@ const express = require("express")
 const router = express.Router()
 const moment = require('moment')
 const { authSchema } = require("../../../../middleware/checkFormEvent")
+const checkAuthenticated = require("../../../../middleware/checkAuthenticated")
 
-router.post("/:id", (req, res) => {
-    let id = req.params.id;
+router.post("/updateEvent", checkAuthenticated, (req, res) => {
+    // console.log(req.body);
+    let id = req.body.id;
     // get input information
-    var newDate = req.body.newDate
+    var newTime = req.body.newTime
     var newName = req.body.newName.trim();
     var newPosition = req.body.newPosition.trim();
-    var newContent = req.body.newContent.trim()
+    var newContent = req.body.content.trim()
+    var newTag = req.body.tag
     var result = {}
-    const validDate = moment(newDate, "YYYY-MM-DDThh:mm").isValid()
+    const validTime = moment(newTime, "hh:mm a").isValid()
 
     Event.findById(id, (error, event) => {
         if (error) {
@@ -24,13 +27,13 @@ router.post("/:id", (req, res) => {
         updatePosition = newPosition !== "" ? newPosition : event.event_detail.position
         updateContent = newContent !== "" ? newContent : event.event_detail.content
 
-        if (validDate) {
-            const hour = moment(req.body.newDate).format("LTS")
+        if (validTime) {
+            // const hour = moment(req.body.newDate).format("LTS")
             result = {
                 name: updateName,
-                date: newDate,
+                tag: newTag,
                 event_detail : {
-                    hours : hour,
+                    hours : newTime,
                     position : updatePosition,
                     content : updateContent
                 }
@@ -39,7 +42,6 @@ router.post("/:id", (req, res) => {
             result = {
                 name: updateName,
                 event_detail : {
-                    hours : moment(event.date).format("LTS"),
                     position : updatePosition,
                     content : updateContent
                 }
@@ -52,10 +54,10 @@ router.post("/:id", (req, res) => {
             (err, event) => {
                 if (err) {
                     req.flash("err","Update event failure")
-                res.redirect("/admin/event-information?page=1");
+                res.redirect("/admin/eventInfo");
                 }
                 req.flash("success","Update event successfully")
-                res.redirect("/admin/event-information?page=1");
+                res.redirect("/admin/eventInfo");
             }
         )
     })

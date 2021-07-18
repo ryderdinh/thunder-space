@@ -3,9 +3,9 @@
 //
 
 const eventInfo = document.getElementById("eventInfo")
-console.log(eventInfo);
+// console.log(eventInfo);
 dataEvent = JSON.parse(eventInfo.value)
-console.log(dataEvent);
+// console.log(dataEvent);
 
 'use strict';
 
@@ -74,6 +74,7 @@ var Fullcalendar = (function() {
 				$('.edit-event--title').val(event.title);
 				$('.edit-event--description').val(event.description);
 				$('.edit-event--position').val(event.position);
+				$('.edit-event--time').val(event.time);
 			}
 		};
 

@@ -11,6 +11,7 @@
             className : event[i].tag,
             description : event[i].event_detail.content,
             position : event[i].event_detail.position,
+            time : event[i].event_detail.hours,
          }
      }
     //  console.log(event);

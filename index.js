@@ -92,8 +92,8 @@ const getUserFilter = require("./app/controller/admin/users/getUserFilter");
 
 //EVENT
 // const getUpdateEvent = require("./app/controller/admin/events/getUpdateEvent");
-// const postUpdateEvent = require("./app/controller/admin/events/postUpdateEvent");
 // const getEventInfo = require("./app/controller/admin/events/getEventInfo");
+const postUpdateEvent = require("./app/controller/admin/events/postUpdateEvent");
 const getCreateEvent = require("./app/controller/admin/events/getCreateEvent");
 const postCreateEvent = require("./app/controller/admin/events/storeEvent");
 
@@ -159,8 +159,8 @@ app.use(getUserFilter);
 //EVENT
 app.get("/admin/eventInfo", checkAuthenticated, getCreateEvent);
 app.post("/admin/createEvent", checkAuthenticated, postCreateEvent);
+app.use("/admin", postUpdateEvent);
 // app.get("/admin/updateEvent", checkAuthenticated, getUpdateEvent);
-// app.use("/admin/updateEvent", checkAuthenticated, postUpdateEvent);
 // app.use("/admin", getEventInfo);
 
 //REPORT
