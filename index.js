@@ -10,6 +10,10 @@ const passport = require("passport");
 const methodOverride = require("method-override");
 const initializePassport = require("./passport-config");
 const cors = require("cors");
+
+const fileupload = require('express-fileupload'); 
+app.use(express.json({ limit: '50mb' }));
+app.use(fileupload({useTempFiles: true}))
 initializePassport(
   passport,
   (uname) => admins.find((admin) => admin.uname === uname),
@@ -23,7 +27,7 @@ app.set("views", "views/MAIN/pages");
 app.use(express.static(__dirname + "/views/MAIN"));
 // app.use(express.static(path.join(__dirname, 'public')))
 //Parser
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ limit: "50mb", extended: false }));
 // app.use(bodyParser.json())
 // app.use(bodyParser.raw());
 
@@ -129,6 +133,9 @@ const apiGetTable = require("./app/controller/users/statistic/apiGetTable");
 const apiPostReport = require("./app/controller/users/report/apiPostReport");
 const apiGetReport = require("./app/controller/users/report/apiGetReport");
 
+//UPLOAD 
+const apiPostAvata = require("./app/controller/users/data/uploadAvata")
+
 //----------------------------------ADMIN ROUTE------------------------------------
 
 //ACCESS
@@ -177,6 +184,8 @@ app.use("/table", authenticateToken, apiGetTable);
 app.use("/user/report", authenticateToken, apiGetReport);
 app.use("/user/storeReport", authenticateToken, apiPostReport);
 app.use("/user/changePassword", authenticateToken, changePassword);
+
+app.use(apiPostAvata)
 
 //----------------------------------CRON TAB------------------------------------
 
