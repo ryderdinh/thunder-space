@@ -10,7 +10,9 @@ router.post('/upload/file', async (req, res) => {
         const fileStr = req.files.image.tempFilePath
         console.log(req.files);
         const uploadResponse = await cloudinary.uploader.upload(fileStr, {
-            upload_preset : "ml_default"
+            resource_type: "auto" ,
+            upload_preset : "ml_default",
+            folder : "hrmadmin"
         });
         res.json({ data : { 
             status : "Upload file successfully !!!!!",
