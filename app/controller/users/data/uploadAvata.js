@@ -12,8 +12,10 @@ router.post('/upload/file', async (req, res) => {
         const uploadResponse = await cloudinary.uploader.upload(fileStr, {
             upload_preset : "ml_default"
         });
-        console.log(uploadResponse);
-        res.json({ data : { status : "Upload file successfully !!!!!" } });
+        res.json({ data : { 
+            status : "Upload file successfully !!!!!",
+            url : uploadResponse.url
+        } });
     } catch (err) {
         console.error(err);
         res.status(500).json({ err: 'Something went wrong' });
