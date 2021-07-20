@@ -6,3 +6,6 @@
 .bootstrap-datetimepicker-widget.dropdown-menu.bottom:before {
   border-color: #fff;
 }
+.select2-container.select2-container--default.select2-container--open {
+  z-index: 1072;
+}
