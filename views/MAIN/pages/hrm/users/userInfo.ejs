@@ -24,7 +24,7 @@
               </nav>
             </div>
             <div class="col-lg-6 col-5 text-right">
-              <a href="/admin/createUser"  class="btn btn-sm btn-neutral">New</a>
+              <a href="/admin/createUser"  class="btn btn-sm btn-neutral" style="text-decoration: none;">New</a>
               <a  class="btn btn-sm btn-neutral" data-toggle="modal" data-target="#exampleModal">Filters</a>
             </div>
           </div>
@@ -146,15 +146,23 @@
         <div class="modal-body">
           <div class="form-group">
             <label class="form-control-label">Department</label>
-            <select class="form-control" data-toggle="select" multiple data-placeholder="Select multiple options" >
+            <select name="department" class="form-control" data-toggle="select" multiple data-placeholder="Select multiple options" >
               <%department.forEach(element => {%>
                 <option><%= element%></option>
               <%})%>
             </select>
           </div>
           <div class="form-group">
+            <label class="form-control-label">Position</label>
+            <select name="position" class="form-control" data-toggle="select" multiple data-placeholder="Select multiple options" >
+              <%position.forEach(element => {%>
+                <option><%= element%></option>
+              <%})%>
+            </select>
+          </div>
+          <div class="form-group">
             <label class="form-control-label">Birthday</label>
-            <input name="birthday" class="form-control datepicker" placeholder="Select date" type="text">
+            <input name="birthday" data-date-format="dd/mm/yyyy" id="datepicker-birthday" class="form-control datepicker" placeholder="Select date" type="text">
           </div>
         </div>
           <div>
@@ -190,6 +198,7 @@
   <script src="/assets/vendor/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js"></script>
   <%- include("../../includes/script.ejs") -%>
   <script src="/assets/js/sweetAlert.js"></script>
+
 </body>
 
 </html>

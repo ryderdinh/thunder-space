@@ -1,7 +1,4 @@
 <%- include("../../includes/head.ejs") -%>
- <!-- Page plugins -->
- <link rel="stylesheet" href="../../assets/vendor/select2/dist/css/select2.min.css">
- <link rel="stylesheet" href="../../assets/vendor/quill/dist/quill.core.css">
  <head>
 <body>
   <%- include("../../includes/sidebar.ejs") -%>
@@ -87,89 +84,69 @@
       <!-- Footer -->
     <!---deleted-->
       <!-- Modal AdvanceFilter -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Choose to filter</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Choose to filter</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <form action="/admin/userInfo/filter" method="GET">
+              <div class="modal-body">
+                <div class="form-group">
+                  <label class="form-control-label">Department</label>
+                  <select name="department" class="form-control" data-toggle="select" multiple data-placeholder="Select multiple options" >
+                    <%department.forEach(element => {%>
+                      <option><%= element%></option>
+                    <%})%>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label class="form-control-label">Position</label>
+                  <select name="position" class="form-control" data-toggle="select" multiple data-placeholder="Select multiple options" >
+                    <%position.forEach(element => {%>
+                      <option><%= element%></option>
+                    <%})%>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label class="form-control-label">Birthday</label>
+                  <input name="birthday" data-date-format="dd/mm/yyyy" id="datepicker-birthday" class="form-control datepicker" placeholder="Select date" type="text">
+                </div>
+              </div>
+                <div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Find</button>
+              </div>
+            </form>
+          </div>
+        </div>
       </div>
-      <form action="/admin/filterUser" method="GET">
-        <div class="modal-body">
-          <div class="card">
-            <!-- Card header -->
-            <!-- <div class="card-header">
-              <h4 class="mb-0">Position</h4>
-            </div> -->
-            <!-- Card body -->
-            <div class="card-body">
-              <label for="position"><h4>Position</h4></label>
-                <select name="position" class="form-control" data-toggle="select">
-                  <%position.forEach(element => {%>
-                    <option><%= element%></option>
-                    <%})%>
-                </select>
-            </div>
-          </div>
-          <div class="card">
-            <!-- Card header -->
-            <!-- <div class="card-header">
-              <h4 class="mb-0">Department</h4>
-            </div> -->
-            <!-- Card body -->
-            <div class="card-body">
-              <label for="department"><h4>Department</h4></label>
-                <select name="department" class="form-control" data-toggle="select">
-                  <%department.forEach(element => {%>
-                    <option><%= element%></option>
-                    <%})%>
-                </select>
-            </div>
-          </div>
-         
-          <div class="card">
-            <!-- Card header -->
-            <!-- <div class="card-header">
-              <h4 class="mb-0">Birthday</h4>
-            </div> -->
-            <!-- Card body -->
-            <div class="card-body">
-              <label for="birthday"><h4>Birthday</h4></label>
-              <input name="birthday" class="form-control datepicker" placeholder="Select date" type="text">
-            </div>
-          </div>
-        </div>
-          <div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary">Find</button>
-        </div>
-      </form>
-    </div>
-  </div>
-</div>
     </div>
   </div>
   <!-- Argon Scripts -->
   <!-- Core -->
-  <script src="../../assets/vendor/jquery/dist/jquery.min.js"></script>
-  <script src="../../assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="../../assets/vendor/js-cookie/js.cookie.js"></script>
-  <script src="../../assets/vendor/jquery.scrollbar/jquery.scrollbar.min.js"></script>
-  <script src="../../assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js"></script>
+  <script src="/assets/vendor/jquery/dist/jquery.min.js"></script>
+  <script src="/assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="/assets/vendor/js-cookie/js.cookie.js"></script>
+  <script src="/assets/vendor/jquery.scrollbar/jquery.scrollbar.min.js"></script>
+  <script src="/assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js"></script>
   <!-- Optional JS -->
-  <script src="../../assets/vendor/datatables.net/js/jquery.dataTables.min.js"></script>
-  <script src="../../assets/vendor/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
-  <script src="../../assets/vendor/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
-  <script src="../../assets/vendor/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js"></script>
-  <script src="../../assets/vendor/datatables.net-buttons/js/buttons.html5.min.js"></script>
-  <script src="../../assets/vendor/datatables.net-buttons/js/buttons.flash.min.js"></script>
-  <script src="../../assets/vendor/datatables.net-buttons/js/buttons.print.min.js"></script>
-  <script src="../../assets/vendor/datatables.net-select/js/dataTables.select.min.js"></script>
+  <script src="/assets/vendor/datatables.net/js/jquery.dataTables.min.js"></script>
+  <script src="/assets/vendor/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+  <script src="/assets/vendor/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+  <script src="/assets/vendor/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js"></script>
+  <script src="/assets/vendor/datatables.net-buttons/js/buttons.html5.min.js"></script>
+  <script src="/assets/vendor/datatables.net-buttons/js/buttons.flash.min.js"></script>
+  <script src="/assets/vendor/datatables.net-buttons/js/buttons.print.min.js"></script>
+  <script src="/assets/vendor/datatables.net-select/js/dataTables.select.min.js"></script>
   <script src="/assets/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+  <script src="/assets/vendor/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js"></script>
   <%- include("../../includes/script.ejs") -%>
+  <script src="/assets/js/sweetAlert.js"></script>
 </body>
 
 </html>

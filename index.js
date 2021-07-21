@@ -2,7 +2,7 @@
 
 const express = require("express");
 const app = express();
-const db = require("./config/db");
+const db = require("./config/db/database");
 const jwt = require("jsonwebtoken");
 const flash = require("express-flash");
 const session = require("express-session");
@@ -158,10 +158,10 @@ app.post(
 app.get("/admin/createUser", checkAuthenticated, createUser);
 app.post("/admin/storeUser", checkAuthenticated, storeUser);
 app.get("/admin/userInfo/update", checkAuthenticated, getUpdateUser);
-app.use("/admin/editUser", checkAuthenticated, postUpdateUser);
-app.use(getUserInfo);
-app.use(postDeleteUser);
-app.use(getUserFilter);
+app.use("/admin", checkAuthenticated, postUpdateUser);
+app.use("/admin", getUserInfo);
+app.use("/admin", postDeleteUser);
+app.use("/admin", getUserFilter);
 
 //EVENT
 app.get("/admin/eventInfo", checkAuthenticated, getCreateEvent);

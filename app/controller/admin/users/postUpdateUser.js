@@ -6,7 +6,7 @@ const express = require("express")
 const router = express.Router()
 const { authSchema } = require("../../../../middleware/checkFormRegister")
 // var popupS = require('popups');
-router.post("/:id", (req, res) => {
+router.post("/editUser/:id", (req, res) => {
   let id = req.params.id
   StaffInformation.findById(id, (error, staffInformation) => {
     if (error) {

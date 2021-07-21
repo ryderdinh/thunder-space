@@ -1,7 +1,7 @@
 
 const express = require('express')
 const router = express.Router()
-const  cloudinary  = require("../../../../config/cloudinary") 
+const  cloudinary  = require("../../../../config/cloud/cloudinary") 
 // const upload = require("../../../../config/multer")
 
 router.post('/upload/file', async (req, res) => {

@@ -9,7 +9,7 @@ const express = require("express")
 
 const router = express.Router()
 
-router.post("/admin/userInfo/delete", checkAuthenticated,  (req, res) => {
+router.post("/userInfo/delete", checkAuthenticated,  (req, res) => {
     const id = req.body.searchId
         try {
             Staff.findByIdAndDelete(id, (err, staff) => {
