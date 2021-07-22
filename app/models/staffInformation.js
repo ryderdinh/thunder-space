@@ -14,7 +14,7 @@ const StaffInformation  = new Schema({
     token : { type : String },
     avatar : {
         public_id : {type : String, default: ""},
-        url : {type: String, default : "https://res.cloudinary.com/dawqbbo2l/image/upload/v1626952501/avatar/istockphoto-1223671392-612x612_nfzg3e.jpg"}
+        url : {type: String, default : "https://res.cloudinary.com/dawqbbo2l/image/upload/v1626963206/avatar/avatar-none_byqbnn.svg"}
     }
 });
     StaffInformation.pre("save", function (next) {
