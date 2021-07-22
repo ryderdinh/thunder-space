@@ -4,7 +4,7 @@ sidebar_position: 1
 
 # Access Token
 
-Get token.
+Lấy access token.
 
 Method **`POST`**
 

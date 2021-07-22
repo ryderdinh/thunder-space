@@ -2,9 +2,7 @@
 sidebar_position: 2
 ---
 
-# Sign in
-
-Đăng nhập.
+# Đăng nhập
 
 Method **`GET`**
 
