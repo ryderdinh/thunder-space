@@ -87,7 +87,7 @@ const dashBoard = require("./app/controller/admin/dashBoard/dashBoard");
 
 //USER
 const createUser = require("./app/controller/admin/users/createUser");
-const storeUser = require("./app/controller/admin/users/storeUser");
+const postCreateUser = require("./app/controller/admin/users/postCreateUser");
 const getUpdateUser = require("./app/controller/admin/users/getUpdateUser");
 const postUpdateUser = require("./app/controller/admin/users/postUpdateUser");
 const postDeleteUser = require("./app/controller/admin/users/postDeleteUser");
@@ -156,9 +156,9 @@ app.post(
 
 //USER
 app.get("/admin/createUser", checkAuthenticated, createUser);
-app.post("/admin/storeUser", checkAuthenticated, storeUser);
 app.get("/admin/userInfo/update", checkAuthenticated, getUpdateUser);
 app.use("/admin", checkAuthenticated, postUpdateUser);
+app.use("/admin", postCreateUser)
 app.use("/admin", getUserInfo);
 app.use("/admin", postDeleteUser);
 app.use("/admin", getUserFilter);
