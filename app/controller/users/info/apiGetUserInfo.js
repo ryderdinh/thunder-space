@@ -13,7 +13,8 @@ router.get("/:id", (req, res) =>{
             phonenumber : staffInfo.phonenumber,
             position : staffInfo.position,
             department : staffInfo.department,
-            email:staffInfo.email  
+            email:staffInfo.email  ,
+            avatar : staffInfo.avatar.url
           } })
     })
 })
