@@ -24,7 +24,6 @@ module.exports = {
           label: "Documentation",
         },
         { to: "/blog", label: "Blog", position: "left" },
-        // { to: "/developer", label: "Developer", position: "left" },
         {
           href: "https://github.com/dinhquanganh/HRM_ZeliosSea",
           label: "GitHub",
