@@ -2,14 +2,14 @@
 sidebar_position: 2
 ---
 
-# Đăng nhập
+# Sign in
 
 Đăng nhập.
 
 Method **`GET`**
 
 ```shell
-https://hrmapplication.herokuapp.com/loginUser
+https://hrmadmin.herokuapp.com/loginUser
 ```
 
 ### Header

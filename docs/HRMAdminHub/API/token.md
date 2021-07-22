@@ -4,12 +4,12 @@ sidebar_position: 1
 
 # Access Token
 
-Lấy Token.
+Get token.
 
 Method **`POST`**
 
 ```shell
-https://hrmapplication.herokuapp.com/loginToken
+https://hrmadmin.herokuapp.com/loginToken
 ```
 
 ### Tham số
