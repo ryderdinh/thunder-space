@@ -5,53 +5,53 @@ const  cloudinary  = require("../../../../config/cloud/cloudinary")
 const fs = require("fs")
 // const upload = require("../../../../config/multer")
 
-router.post('/upload/avata/:id', async (req, res) => {
+router.post('/upload/avatar/:id', async (req, res) => {
     try {
         const id = req.params.id
-        const avata = req.files.image.tempFilePath
+        const avatar = req.files.image.tempFilePath
         const staffInfo = await Staff.findById(id)
-        if(staffInfo.avata.public_id == ""){
-            const uploadResponse = await cloudinary.uploader.upload(avata, {
+        if(staffInfo.avatar.public_id == ""){
+            const uploadResponse = await cloudinary.uploader.upload(avatar, {
                 resource_type: "image" ,
                 upload_preset : "ml_default",
-                folder : "avata",
+                folder : "avatar",
             });
             Staff.findByIdAndUpdate(id, {
-                    avata : {
+                    avatar : {
                             public_id : uploadResponse.public_id,
                             url :uploadResponse.url
                         }
                     }, (err, staff) => {
                         if(!err){
-                            fs.unlinkSync(avata)
+                            fs.unlinkSync(avatar)
                             res.json({ data : { 
-                                status : "Upload avata successfully !!!!!",
+                                status : "Upload avatar successfully !!!!!",
                             } });
                         }
                     })
         }else{
-            const uploadResponse = await cloudinary.uploader.upload(avata, {
+            const uploadResponse = await cloudinary.uploader.upload(avatar, {
                 resource_type: "image" ,
                 upload_preset : "ml_default",
-                public_id : staffInfo.avata.public_id,
+                public_id : staffInfo.avatar.public_id,
                 overwrite :"true"
             });
             Staff.findByIdAndUpdate(id, {
-                    avata : {
+                    avatar : {
                             public_id : uploadResponse.public_id,
                             url :uploadResponse.url
                         }
                     }, (err, staff) => {
                         if(!err){
-                            fs.unlinkSync(avata)
+                            fs.unlinkSync(avatar)
                             res.json({ data : { 
-                                status : "Upload avata successfully !!!!!",
+                                status : "Upload avatar successfully !!!!!",
                             } });
                         }
                     })
         }
     } catch (err) {
-        fs.unlinkSync(avata)
+        fs.unlinkSync(avatar)
         console.error(err);
         res.status(500).json({ err: 'Something went wrong' });
     }

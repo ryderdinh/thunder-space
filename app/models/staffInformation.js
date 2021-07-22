@@ -12,9 +12,9 @@ const StaffInformation  = new Schema({
     department : {type : String, required : true},
     phonenumber : { type: String },
     token : { type : String },
-    avata : {
-        public_id : {type : String},
-        url : {type: String, default : "https://res.cloudinary.com/dawqbbo2l/image/upload/v1626856684/avata/tmp-1-1626856682545_nivcz2.jpg", require : true}
+    avatar : {
+        public_id : {type : String, default: "", required : true},
+        url : {type: String, default : "https://res.cloudinary.com/dawqbbo2l/image/upload/v1626952501/avatar/istockphoto-1223671392-612x612_nfzg3e.jpg", required : true}
     }
 });
     StaffInformation.pre("save", function (next) {

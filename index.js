@@ -134,7 +134,7 @@ const apiPostReport = require("./app/controller/users/report/apiPostReport");
 const apiGetReport = require("./app/controller/users/report/apiGetReport");
 
 //UPLOAD 
-const apiPostAvata = require("./app/controller/users/data/uploadAvata")
+const apiPostAvatar = require("./app/controller/users/data/uploadAvatar")
 
 //----------------------------------ADMIN ROUTE------------------------------------
 
@@ -185,7 +185,7 @@ app.use("/user/report", authenticateToken, apiGetReport);
 app.use("/user/storeReport", authenticateToken, apiPostReport);
 app.use("/user/changePassword", authenticateToken, changePassword);
 
-app.use(apiPostAvata)
+app.use(apiPostAvatar)
 
 //----------------------------------CRON TAB------------------------------------
 
