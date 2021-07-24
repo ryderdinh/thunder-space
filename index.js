@@ -136,6 +136,9 @@ const apiGetReport = require("./app/controller/users/report/apiGetReport");
 //UPLOAD 
 const apiPostAvatar = require("./app/controller/users/data/uploadAvatar")
 
+// PROJCECT
+const apiPostProject = require("./app/controller/users/project/apiPostProject")
+
 //----------------------------------ADMIN ROUTE------------------------------------
 
 //ACCESS
@@ -186,9 +189,9 @@ app.use("/user/storeReport", authenticateToken, apiPostReport);
 app.use("/user/changePassword", authenticateToken, changePassword);
 
 app.use(apiPostAvatar)
+app.use(apiPostProject)
 
 //----------------------------------CRON TAB------------------------------------
-
 // # ┌────────────── second (optional)
 // # │ ┌──────────── minute
 // # │ │ ┌────────── hour
@@ -325,3 +328,4 @@ const port = process.env.PORT || 3000;
 app.listen(port, () => {
   console.log(`Listening on http://localhost:${port}/`);
 });
+
