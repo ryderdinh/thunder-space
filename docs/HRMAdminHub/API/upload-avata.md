@@ -1,8 +1,8 @@
 ---
-sidebar_position: 4
+sidebar_position: 2
 ---
 
-# Upload Avatar
+# Thay ảnh đại diện
 
 Change avatar for user.
 
@@ -17,3 +17,4 @@ https://hrmadmin.herokuapp.com/upload/avatar/:id
 | Key | Value   | Description          |
 | -------------- | ------ | ------------------- |
 | `image`     | file | image file avatar    |
+
