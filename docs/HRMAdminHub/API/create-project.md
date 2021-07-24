@@ -12,12 +12,12 @@ https://hrmadmin.herokuapp.com/api/createProject/:id
 
 ### Tham số
 
-| Trường dữ liệu | Kiểu   | Chú thích             |
-| -------------- | ------ | --------------------- |
-| `code`         | string | code dự án            |
-| `name`         | string | tên dự án             |
-| `manager`      | array  | mảng email quản lí    |
-| `member`       | array  | mảng email thành viên |
+| Trường dữ liệu | Kiểu   | Chú thích                        |
+| -------------- | ------ | -------------------------------- |
+| `code`         | string | mã code dự án                    |
+| `name`         | string | tên dự án                        |
+| `manager`      | array  | các email quản lí trong dự án    |
+| `member`       | array  | các email thành viên trong dự án |
 
 ### Header
 
