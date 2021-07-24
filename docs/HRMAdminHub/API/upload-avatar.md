@@ -15,3 +15,9 @@ https://hrmadmin.herokuapp.com/upload/avatar/:id
 | Trường dữ liệu | Kiểu   | Chú thích         |
 | -------------- | ------ | ----------------- |
 | `image`        | binary | image file avatar |
+
+### Header
+
+| Trường dữ liệu  | Kiểu   | Chú thích                                   |
+| --------------- | ------ | ------------------------------------------- |
+| `Authorization` | string | `Bearer` + [`accessToken`](access-token.md) |

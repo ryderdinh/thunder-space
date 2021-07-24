@@ -18,3 +18,9 @@ https://hrmadmin.herokuapp.com/api/createProject/:id
 | `name`         | string | tên dự án             |
 | `manager`      | array  | mảng email quản lí    |
 | `member`       | array  | mảng email thành viên |
+
+### Header
+
+| Trường dữ liệu  | Kiểu   | Chú thích                                   |
+| --------------- | ------ | ------------------------------------------- |
+| `Authorization` | string | `Bearer` + [`accessToken`](access-token.md) |

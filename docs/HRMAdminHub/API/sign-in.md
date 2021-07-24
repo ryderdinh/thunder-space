@@ -12,8 +12,6 @@ https://hrmadmin.herokuapp.com/loginUser
 
 ### Header
 
-| Trường dữ liệu  | Kiểu   | Chú thích                |
-| --------------- | ------ | ------------------------ |
-| `Authorization` | string | `Bearer` + `accessToken` |
-
-Tìm hiểu về cách lấy [`Access token`](access-token.md)
+| Trường dữ liệu  | Kiểu   | Chú thích                                   |
+| --------------- | ------ | ------------------------------------------- |
+| `Authorization` | string | `Bearer` + [`accessToken`](access-token.md) |
