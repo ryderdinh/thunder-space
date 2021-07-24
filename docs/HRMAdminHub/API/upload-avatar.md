@@ -4,16 +4,14 @@ sidebar_position: 4
 
 # Thay ảnh đại diện
 
-Change avatar for user.
-
 Method **`POST`**
 
 ```shell
 https://hrmadmin.herokuapp.com/upload/avatar/:id
 ```
 
-### Parameter
+### Tham số
 
-| Trường dữ liệu | Kiểu | Chú thích         |
-| -------------- | ---- | ----------------- |
-| `image`        | file | image file avatar |
+| Trường dữ liệu | Kiểu   | Chú thích         |
+| -------------- | ------ | ----------------- |
+| `image`        | binary | image file avatar |
