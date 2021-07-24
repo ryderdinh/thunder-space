@@ -1,25 +1,8 @@
 ---
-sidebar_position: 1
+sidebar_position: 2
 ---
 
 # Đăng nhập
-
-## Lấy access token.
-
-Method **`POST`**
-
-```shell
-https://hrmadmin.herokuapp.com/loginToken
-```
-
-### Tham số
-
-| Trường dữ liệu | Kiểu   | Chú thích           |
-| -------------- | ------ | ------------------- |
-| `username`     | string | email người dùng    |
-| `password`     | string | mật khẩu người dùng |
-
-## Lấy thông tin người dùng
 
 Method **`GET`**
 
@@ -28,6 +11,9 @@ https://hrmadmin.herokuapp.com/loginUser
 ```
 
 ### Header
-| Trường dữ liệu | Kiểu   | Chú thích           |
-| -------------- | ------ | ------------------- |
-| `Authorization`     | string | `Bearer` + `accessToken`   |
+
+| Trường dữ liệu  | Kiểu   | Chú thích                |
+| --------------- | ------ | ------------------------ |
+| `Authorization` | string | `Bearer` + `accessToken` |
+
+Tìm hiểu về cách lấy [`Access token`](sign-in.md)
