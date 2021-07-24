@@ -16,4 +16,4 @@ https://hrmadmin.herokuapp.com/loginUser
 | --------------- | ------ | ------------------------ |
 | `Authorization` | string | `Bearer` + `accessToken` |
 
-Tìm hiểu về cách lấy [`Access token`](sign-in.md)
+Tìm hiểu về cách lấy [`Access token`](access-token.md)
