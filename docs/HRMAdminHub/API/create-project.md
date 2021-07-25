@@ -4,10 +4,6 @@ sidebar_position: 5
 
 # Tạo dự án
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 3b314dade43ed5d147dcc509924408d5043a35d4
 Method **`POST`**
 
 ```shell

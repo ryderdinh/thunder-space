@@ -1,5 +1,5 @@
 ---
-sidebar_position: 5
+sidebar_position: 6
 ---
 
 # Tìm kiếm người dùng
@@ -19,4 +19,6 @@ https://hrmadmin.herokuapp.com/api/searchUser
 
 ### Header
 
-Tìm hiểu về cách lấy [`Access token`](sign-in.md)
+| Trường dữ liệu  | Kiểu   | Chú thích                                   |
+| --------------- | ------ | ------------------------------------------- |
+| `Authorization` | string | `Bearer` + [`accessToken`](access-token.md) |
