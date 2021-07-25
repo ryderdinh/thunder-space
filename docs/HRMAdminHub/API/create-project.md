@@ -4,7 +4,6 @@ sidebar_position: 4
 
 # Tạo dự án
 
-## Lấy access token.
 
 Method **`POST`**
 

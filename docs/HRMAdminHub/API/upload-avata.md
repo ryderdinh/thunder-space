@@ -4,8 +4,6 @@ sidebar_position: 2
 
 # Thay ảnh đại diện
 
-Change avatar for user.
-
 Method **`POST`**
 
 ```shell
