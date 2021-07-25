@@ -1,7 +1,10 @@
 const Staff = require("../../../models/staffInformation");
 const History = require("../../../models/history");
 const env = process.env.NODE_ENV.trim();
-module.exports = (req, res, next) => {
+const checkAuthenticated = require("../../../../middleware/checkAuthenticated")
+const router = require("express").Router()
+
+router.get("/dashboard", checkAuthenticated, (req, res, next) => {
   const countHistory = History.countDocuments();
   Staff.countDocuments((err, count) => {
     countHistory.then((data) => {
@@ -33,4 +36,6 @@ module.exports = (req, res, next) => {
       }
     });
   });
-};
+})
+
+module.exports = router

@@ -134,15 +134,18 @@ const apiPostReport = require("./app/controller/users/report/apiPostReport");
 const apiGetReport = require("./app/controller/users/report/apiGetReport");
 
 //UPLOAD 
-const apiPostAvatar = require("./app/controller/users/data/uploadAvatar")
+const apiPostAvatar = require("./app/controller/users/info/uploadAvatar")
 
 // PROJCECT
 const apiPostProject = require("./app/controller/users/project/apiPostProject")
 
+// SEARCH
+const apiSearchUser = require("./app/controller/users/info/searchUser")
+
 //----------------------------------ADMIN ROUTE------------------------------------
 
 //ACCESS
-app.get("/", checkNotAuthenticated, home);
+app.use(home);
 app.post(
   "/admin/login",
   checkNotAuthenticated,
@@ -152,13 +155,13 @@ app.post(
     failureFlash: true,
   })
   );
-  app.get("/admin/logout", logoutAdmin);
+  app.use("/admin", logoutAdmin);
   
   //DASHBOARD
-  app.get("/admin/dashboard", checkAuthenticated, dashBoard);
+  app.use("/admin", dashBoard);
 
 //USER
-app.get("/admin/createUser", checkAuthenticated, createUser);
+app.use("/admin", createUser);
 app.get("/admin/userInfo/update", checkAuthenticated, getUpdateUser);
 app.use("/admin", checkAuthenticated, postUpdateUser);
 app.use("/admin", postCreateUser)
@@ -189,7 +192,8 @@ app.use("/user/storeReport", authenticateToken, apiPostReport);
 app.use("/user/changePassword", authenticateToken, changePassword);
 
 app.use(apiPostAvatar)
-app.use(apiPostProject)
+app.use("/api", apiPostProject)
+app.use("/api", apiSearchUser)
 
 //----------------------------------CRON TAB------------------------------------
 // # ┌────────────── second (optional)

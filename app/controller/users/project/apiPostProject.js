@@ -3,7 +3,7 @@ const Staff = require("../../../models/staffInformation")
 const router = require("express").Router()
 const authenticateToken = require("../../../../middleware/authenticateToken")
 const { v4: uuidv4 } = require('uuid');
-router.post("/api/createProject/:id", async (req, res, next) => {
+router.post("/createProject/:id", async (req, res, next) => {
     try {
         const userId = req.params.id
         // const project =  JSON.parse(Object.keys(req.body)[0]);
