@@ -10,7 +10,7 @@ module.exports = (req, res) => {
         if (user) {
           // console.log(user);
           var id = user.id
-          console.log(id + "''''''''''''''''");
+          // console.log(id + "''''''''''''''''");
             bcrypt.compare(password, user.password, (error, same) => {
                 if (same) { // if passwords match
                   const userInfo = { name: user.email };
