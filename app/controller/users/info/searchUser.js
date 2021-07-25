@@ -4,7 +4,8 @@ const Staff = require("../../../models/staffInformation")
 
 router.get("/searchUser", async (req, res, next) => {
     try{
-    const email =  JSON.parse(Object.keys(req.body)[0]).email;
+    console.log(req.body);
+    // const email =  JSON.parse(Object.keys(req.body)[0]).email;
     const existEmail = await Staff.findOne({ email : email })
     console.log(existEmail);
     if(existEmail){
