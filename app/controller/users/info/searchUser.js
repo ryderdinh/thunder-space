@@ -2,10 +2,9 @@ const router = require("express").Router()
 const authenticateToken = require("../../../../middleware/authenticateToken")
 const Staff = require("../../../models/staffInformation")
 
-router.post("/searchUser", async (req, res, next) => {
+router.get("/searchUser", async (req, res, next) => {
     try{
-    const  email = req.body.email
-    console.log(req.body);
+    const email =  JSON.parse(Object.keys(req.body)[0]).email;
     const existEmail = await Staff.findOne({ email : email })
     console.log(existEmail);
     if(existEmail){
