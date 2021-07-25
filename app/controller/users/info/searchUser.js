@@ -2,7 +2,7 @@ const router = require("express").Router()
 const authenticateToken = require("../../../../middleware/authenticateToken")
 const Staff = require("../../../models/staffInformation")
 
-router.get("/searchUser", async (req, res, next) => {
+router.post("/searchUser", async (req, res, next) => {
     try{
     const  email = req.body.email
     console.log(email);
