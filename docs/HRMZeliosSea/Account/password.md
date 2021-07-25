@@ -2,7 +2,7 @@
 sidebar_position: 2
 ---
 
-# Đổi mật khẩu
+# Thay đổi mật khẩu
 
 Bao gồm các trường:
 
@@ -14,5 +14,3 @@ Bao gồm các trường:
 - `Mật khẩu nhập vào phải trên 5 kí tự`
 - `Mật khẩu cũ chưa chính xác`
 - `Đổi mật khẩu thành công`
-
-
