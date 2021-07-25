@@ -5,7 +5,7 @@ const Staff = require("../../../models/staffInformation")
 router.post("/searchUser", async (req, res, next) => {
     try{
     const  email = req.body.email
-    console.log(email);
+    console.log(req.body);
     const existEmail = await Staff.findOne({ email : email })
     console.log(existEmail);
     if(existEmail){
