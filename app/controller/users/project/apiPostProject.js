@@ -9,10 +9,10 @@ router.post("/createProject/:id", async (req, res, next) => {
         // const project =  JSON.parse(Object.keys(req.body)[0]);
         const pid = uuidv4()
         console.log(req.body);
-        const code = req.body.code
-        const name = req.body.name
-        var manager = req.body.manager
-        var member = req.body.member
+        const code = req.body.projectCode
+        const name = req.body.projectName
+        var manager = req.body.projectManager
+        var member = req.body.projectMember
         for(let i = 0; i< manager.length; i++){
             for(let j =0; j< member.length; j++){
                 if(manager[i] === member[j]){
