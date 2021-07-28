@@ -14,10 +14,10 @@ https://hrmadmin.herokuapp.com/api/createProject/:id
 
 | Trường dữ liệu | Kiểu   | Chú thích                        |
 | -------------- | ------ | -------------------------------- |
-| `code`         | string | mã code dự án                    |
-| `name`         | string | tên dự án                        |
-| `manager`      | array  | các email quản lí trong dự án    |
-| `member`       | array  | các email thành viên trong dự án |
+| `projectCode`         | string | mã code dự án                    |
+| `projectName`         | string | tên dự án                        |
+| `projectManager`      | array  | các email quản lí trong dự án    |
+| `projectMember`       | array  | các email thành viên trong dự án |
 
 ### Header
 
