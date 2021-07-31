@@ -3,19 +3,20 @@ const Staff = require("../../../models/staffInformation")
 const router = require("express").Router()
 const authenticateToken = require("../../../../middleware/user/login/authenticateToken")
 const { v4: uuidv4 } = require('uuid');
+const { findById } = require("../../../models/staffInformation");
+const { set } = require("mongoose");
 router.post("/createProject/:id", async (req, res, next) => {
     try {
         const userId = req.params.id
         // const project =  JSON.parse(Object.keys(req.body)[0]);
         const pid = uuidv4()
-        console.log(req.body);
+        // console.log(req.body);
         const code = req.body.projectCode
         const name = req.body.projectName
-        var manager = req.body.projectManager
-        var member = req.body.projectMember
-
+        var manager = [... new Set(req.body.projectManager.map(e => e = e.email))]
+        var member = [... new Set(req.body.projectMember.map(e => e = e.email))]
         const existCreater = await Staff.findById(userId)
-
+        // console.log(existCreater);
         if(!existCreater){
             return res.json({
                 data: {
@@ -23,7 +24,14 @@ router.post("/createProject/:id", async (req, res, next) => {
                 }
             })
         }else{
-            manager.push(existCreater.email)
+        const tempManager =  manager.findIndex( e => e === existCreater.email)
+          if (tempManager < 0 ) {
+              manager.push(existCreater.email)
+          } 
+          const tempMember = member.findIndex( e => e === existCreater.email)
+          if ( tempMember  >= 0 ) {
+              member.splice(tempMember, 1)
+          } 
         }
 
         const existCode = await Project.findOne({
@@ -44,13 +52,7 @@ router.post("/createProject/:id", async (req, res, next) => {
             })
         }
         // console.log(existManager);
-        if(existManager.length == 0){
-         return   res.json({
-                data: {
-                    status: "Manager is invalid !"
-                }
-            })
-        }else{
+        if(existManager.length >= 1){
                 for (let i =0; i < existManager.length; i++){
                         existManager[i] = {
                             uid : existManager[i].id,
@@ -59,19 +61,15 @@ router.post("/createProject/:id", async (req, res, next) => {
                 }
                 manager = existManager
         }
-        if(existMember.length == 0){
-           return res.json({
-                data: {
-                    status: "Member is invalid !"
-                }
-            })
-        }else{
+        if(existMember.length > 0){
             for (let i =0; i < existMember.length; i++){
                 existMember[i] = {
                     uid : existMember[i].id,
                     name : existMember[i].name
                 }
         }
+        member = existMember.concat(manager)
+        }else{
         member = existMember.concat(manager)
         }
       const result =  await Project.create({

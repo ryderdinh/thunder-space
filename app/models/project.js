@@ -19,7 +19,7 @@ const Project = new Schema({
     ],
     issue : [
         {
-            iid : { type: String, unique : true },
+            iid : { type: String},
             name : String,
             type : {
                 type : String,
