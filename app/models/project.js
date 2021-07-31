@@ -7,13 +7,13 @@ const Project = new Schema({
     name : { type: String, required : true },
     manager : [
         {
-            uid : { type : String, required : true, unique :true },
+            uid : { type : String, required : true },
             name : { type : String, required : true },
         }
     ],
     member : [
         {
-            uid : {type : String, unique : true},
+            uid : {type : String},
             name : {type : String}
         }
     ],
