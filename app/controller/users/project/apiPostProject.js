@@ -23,7 +23,7 @@ router.post("/createProject/:id", async (req, res, next) => {
                 }
             })
         }else{
-            manager.push(existCreater.name)
+            manager.push(existCreater.email)
         }
 
         const existCode = await Project.findOne({
