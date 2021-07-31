@@ -13,17 +13,19 @@ router.post("/createProject/:id", async (req, res, next) => {
         const name = req.body.projectName
         var manager = req.body.projectManager
         var member = req.body.projectMember
-        for(let i = 0; i< manager.length; i++){
-            for(let j =0; j< member.length; j++){
-                if(manager[i] === member[j]){
-                  return  res.json({
-                        data: {
-                            status: "Member is not same manager !"
-                        }
-                    })
+
+        const existCreater = await Staff.findById(userId)
+
+        if(!existCreater){
+            return res.json({
+                data: {
+                    status: "You are not access to project !"
                 }
-            }
+            })
+        }else{
+            manager.push(existCreater.name)
         }
+
         const existCode = await Project.findOne({
             code: code
         })
@@ -70,7 +72,7 @@ router.post("/createProject/:id", async (req, res, next) => {
                     name : existMember[i].name
                 }
         }
-        member = existMember
+        member = existMember.concat(manager)
         }
       const result =  await Project.create({
           pid : pid,
