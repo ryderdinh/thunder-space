@@ -1,7 +1,7 @@
 const Project = require("../../../models/project")
 const Staff = require("../../../models/staffInformation")
 const router = require("express").Router()
-const authenticateToken = require("../../../../middleware/authenticateToken")
+const authenticateToken = require("../../../../middleware/user/login/authenticateToken")
 const { v4: uuidv4 } = require('uuid');
 router.post("/createProject/:id", async (req, res, next) => {
     try {

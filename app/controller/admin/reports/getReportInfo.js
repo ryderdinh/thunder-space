@@ -1,7 +1,7 @@
 const Report = require("../../../models/report")
 const express  = require('express')
 const router = express.Router()
-const checkAuthenticated = require("../../../../middleware/checkAuthenticated")
+const checkAuthenticated = require("../../../../middleware/admin/login/checkAuthenticated")
 const env = process.env.NODE_ENV.trim()
 router.get("/reportInfo", checkAuthenticated, (req, res, next) => {
   Report.find({}, (err, reports) => {

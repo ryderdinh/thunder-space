@@ -2,7 +2,7 @@ const mongoose = require("mongoose")
 const Event = require("../../../models/event")
 const flash = require("express-flash")
 const moment = require("moment")
-const { authSchema } = require("../../../../middleware/checkFormEvent")
+const { authSchema } = require("../../../../middleware/admin/form/checkFormEvent")
 const { v4: uuidv4 } = require('uuid');
 
 module.exports =async (req, res, next) => {

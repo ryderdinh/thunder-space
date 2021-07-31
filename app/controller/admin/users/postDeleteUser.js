@@ -4,7 +4,7 @@ const Table = require("../../../models/tableOfWork")
 const Report = require("../../../models/report")
 const flash = require("express-flash")
 const Swal = require('sweetalert2')
-const checkAuthenticated =require("../../../../middleware/checkAuthenticated")
+const checkAuthenticated =require("../../../../middleware/admin/login/checkAuthenticated")
 const express = require("express")
 
 const router = express.Router()

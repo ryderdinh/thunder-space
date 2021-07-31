@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const Staff = require("../app/models/staffInformation")
+const Staff = require("../../../app/models/staffInformation")
 
 function authenticateToken(req, res, next) {
   console.log(req.headers);

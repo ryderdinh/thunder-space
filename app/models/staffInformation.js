@@ -12,6 +12,8 @@ const StaffInformation  = new Schema({
     department : {type : String, required : true},
     phonenumber : { type: String },
     token : { type : String },
+    resetToken : { type : String },
+    resetTokenExpiration : { type : Date },
     avatar : {
         public_id : {type : String, default: ""},
         url : {type: String, default : "https://res.cloudinary.com/dawqbbo2l/image/upload/v1626963206/avatar/avatar-none_byqbnn.svg"}

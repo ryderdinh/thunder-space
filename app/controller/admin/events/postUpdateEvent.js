@@ -4,8 +4,8 @@ const bcrypt = require("bcrypt");
 const express = require("express")
 const router = express.Router()
 const moment = require('moment')
-const { authSchema } = require("../../../../middleware/checkFormEvent")
-const checkAuthenticated = require("../../../../middleware/checkAuthenticated")
+const { authSchema } = require("../../../../middleware/admin/form/checkFormEvent")
+const checkAuthenticated = require("../../../../middleware/admin/login/checkAuthenticated")
 
 router.post("/updateEvent", checkAuthenticated, (req, res) => {
     // console.log(req.body);

@@ -7,7 +7,8 @@ const jwt = require("jsonwebtoken")
 const e = require("cors")
 const { convert } = require("../../../utils/dateFormat")
 const moment = require("moment-timezone")
-router.post("/:id", (req, res) => {
+const authenticateToken = require("../../../../middleware/user/login/authenticateToken")
+router.post("/changePassword/:id", authenticateToken, (req, res, next) => {
   // const authHeader = req.headers["authorization"];
   // const token = authHeader && authHeader.split(" ")[1];
 

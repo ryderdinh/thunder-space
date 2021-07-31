@@ -3,7 +3,6 @@
 const express = require("express");
 const app = express();
 const db = require("./config/db/database");
-const jwt = require("jsonwebtoken");
 const flash = require("express-flash");
 const session = require("express-session");
 const passport = require("passport");
@@ -63,21 +62,7 @@ app.use(cors({
   origin : "*",
   methods : ["POST", "GET", 'PUT', "DELETE"]
 }));
-// app.use((req, res, next) => {
-//   // res.header("Access-Control-Allow-Origin", "https://hrmapplication.herokuapp.com/");
-//   // res.header("Access-Control-Allow-Credentials", "true")
-//   // res.header("Access-Control-Allow-Headers", "*");
-//   res.setHeader("Access-Control-Allow-Origin", "*");
-//   res.setHeader(
-//     "Access-Control-Allow-Headers",
-//     "Origin, X-Requested-With, Content-Type, Accept"
-//   );
-//   res.setHeader(
-//     "Access-Control-Allow-Methods",
-//     "GET, POST, PATCH, DELETE, OPTIONS"
-//   );
-//   next();
-// });
+
 
 //----------------------------------ADMIN CONTROLLER------------------------------------
 // const loginAdmin = require("./app/controller/loginAdmin")
@@ -108,9 +93,9 @@ const postCreateEvent = require("./app/controller/admin/events/storeEvent");
 const getReportInfo = require("./app/controller/admin/reports/getReportInfo");
 
 //MIDDLE WARE
-const checkAuthenticated = require("./middleware/checkAuthenticated");
-const checkNotAuthenticated = require("./middleware/checkNotAuthenticated");
-const authenticateToken = require("./middleware/authenticateToken");
+const checkAuthenticated = require("./middleware/admin/login/checkAuthenticated");
+const checkNotAuthenticated = require("./middleware/admin/login/checkNotAuthenticated");
+const authenticateToken = require("./middleware/user/login/authenticateToken");
 
 //----------------------------------USER CONTROLLER------------------------------------
 
@@ -118,6 +103,8 @@ const authenticateToken = require("./middleware/authenticateToken");
 const loginUser = require("./app/controller/users/access/loginUser");
 const loginToken = require("./app/controller/users/access/loginToken");
 const changePassword = require("./app/controller/users/access/changePassword");
+const apiResetPassword = require("./app/controller/users/access/postResetPassword")
+const apiNewPassword = require("./app/controller/users/access/postNewPassword")
 
 //INFOR
 const apiGetUserInfo = require("./app/controller/users/info/apiGetUserInfo");
@@ -192,11 +179,24 @@ app.get("/event", authenticateToken, apiGetEvent);
 app.use("/table", authenticateToken, apiGetTable);
 app.use("/user/report", authenticateToken, apiGetReport);
 app.use("/user/storeReport", authenticateToken, apiPostReport);
-app.use("/user/changePassword", authenticateToken, changePassword);
+
+app.use("/api", apiNewPassword)
+app.use("/api", apiResetPassword)
+app.use("/user", changePassword);
 
 app.use(apiPostAvatar)
 app.use("/api", apiPostProject)
 app.use("/api", apiSearchUser)
+
+
+app.use((req, res, next) => {
+  res.render("404");
+});
+
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
+  console.log(`Listening on http://localhost:${port}/`);
+});
 
 //----------------------------------CRON TAB------------------------------------
 // # ┌────────────── second (optional)
@@ -245,41 +245,6 @@ app.use("/api", apiSearchUser)
 //   })
 // })
 
-// const axios = require('axios')
-
-// async function getUser() {
-//   try {
-//     const response = await axios.get('https://jsonplaceholder.typicode.com/users');
-//     const map = await response.data.map(e => e = {
-//       name : e.name,
-//       email : e.email,
-//       password : "123456",
-//       birthday : "14/05/2001",
-//       position : "fffff",
-//      department : "fffff",
-//      phonenumber : "1111111111"
-//     })
-//     return map
-//   } catch (error) {
-//     // console.error(error);
-//   }
-// }
-
-// console.log(getUser());
-// app.post("/test",(req, res, next) => {
-//     getUser().then(data => {
-//       StaffInformation.insertMany(data,{
-//       },(err, staff) => {
-//         console.log(err);
-//       })
-//     })
-
-//   res.redirect("/")
-// })
-
-app.use((req, res, next) => {
-  res.render("404");
-});
 // app.get("/admin/update", checkAuthenticated, (req,res) => {
 //   let idSearch = req.query.searchId;
 //   console.log(idSearch);
@@ -331,8 +296,4 @@ app.use((req, res, next) => {
 
 //App listen
 
-const port = process.env.PORT || 3000;
-app.listen(port, () => {
-  console.log(`Listening on http://localhost:${port}/`);
-});
 
