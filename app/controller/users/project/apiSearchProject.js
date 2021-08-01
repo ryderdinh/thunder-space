@@ -4,7 +4,7 @@ const Project = require("../../../models/project")
 router.get("/searchProject/:id", async (req, res, next) => {
     try{
         const uid = req.params.id
-        const code  = req.body.projectCode
+        const code  = req.query.projectCode
         const existProject = await Project.find({
             code : code,
             member  : { $elemMatch : { uid : uid } }
