@@ -1,20 +1,15 @@
 ---
-sidebar_position: 5
+sidebar_position: 7
 ---
 
-# Tìm kiếm người dùng
+# Lấy thông tin dự án
 
 Method **`GET`**
 
 ```shell
-https://hrmadmin.herokuapp.com/api/searchUser
+https://hrmadmin.herokuapp.com/api/projectInfo/:id
 ```
 
-### Tham số
-
-| Trường dữ liệu | Kiểu   | Chú thích        |
-| -------------- | ------ | ---------------- |
-| `email`        | string | email người dùng |
 
 ### Header
 
