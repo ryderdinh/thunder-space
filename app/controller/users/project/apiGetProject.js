@@ -4,12 +4,18 @@ const Project = require("../../../models/project")
 router.get("/projectInfo/:id", async (req, res, next) => {
     try{
         const uid = req.params.id
-        const existProject = await Project.find({
-            member  : { $elemMatch : { uid : uid } }
-        })
-        const managerProject = await Project.find({
-            manager : { $elemMatch : { uid : uid } }
-        })
+        const code = req.query.projectCode
+        var existProject
+        if(code.length == 0 || code == null){
+             existProject = await Project.find({
+                member  : { $elemMatch : { uid : uid } }
+            })
+        }else{
+            existProject = await Project.find({
+                code : code,
+                member  : { $elemMatch : { uid : uid } }
+            })
+        }
         // console.log(managerProject);
         if(!existProject || existProject.length == 0 ){
             return res.json({
