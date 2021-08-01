@@ -8,50 +8,36 @@ const { convert } = require("../../../utils/dateFormat")
 const checkAuthenticated = require("../../../../middleware/admin/login/checkAuthenticated")
 const express  = require("express")
 const router = express.Router()
+const transporter = require("../../../../config/sendGrid")
 
-
-router.post("/storeUser", checkAuthenticated, async (req, res, next)=> {
+router.post("/sendMail", checkAuthenticated, async (req, res, next)=> {
      try{
           //validate newmember
           // req.body.birthday = convert(req.body.birthday)
           console.log(req.body.birthday);
-          console.log(req.body);
           const result = await authSchema.validateAsync(req.body)
+          console.log(result);
           //Check email exist
           const emailExist = await StaffInformation.findOne({ email: req.body.email })
           if (emailExist)  {
-               req.flash('createUserFailed', "Email hasbeen created")
+            req.flash('createUserFailed', "Email hasbeen created")
            res.redirect("/admin/createUser")
+          }else{
+            const send = await  transporter.sendMail({
+                    to : result.email,
+                    from : "boypham1234567@gmail.com",
+                    subject : "CONFIRM EMAIL",
+                    html : `
+                    <form action="/confirmEmail" method : "POST">
+                    <input type="hidden"  name="fname" value="John"><br>
+                    <input type="hidden" id="lname" name="lname" value="Doe">
+                    <input type="submit" value="CLick this to confirm email">
+                  </form>
+                    `
+                })
           }
-          // Create new user
-          const newStaff = new StaffInformation(result)
-          const saveStaff = await newStaff.save()
-     
-      //Create  new status
-           
-          const statusCre = await Status.create({ 
-            _id : saveStaff._id,
-            timeLocation : []
-           }, (err, status ) => {
-                 console.log(err,status);
-            }) 
-     
-     //Create new table
-          const tableCre = await TableOfWork.create({
-           _id : saveStaff._id,
-            }, (err, table) =>{
-                 console.log(err, table);
-            })
-     //Create report
-          const reportCre = await  Report.create({
-               _id : saveStaff._id,
-               userName : saveStaff.name
-            }, (err, report) => {
-                 console.log(err, report);
-            })
-            
-            console.log(statusCre, tableCre, reportCre);
-            req.flash('createUserSuccess'," Create successfully")     
+
+            req.flash('createUserSuccess'," Waiting user to confirm email !")     
             res.redirect("/admin/createUser")
         }catch(err){
              console.log(err);

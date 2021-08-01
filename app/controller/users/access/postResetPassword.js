@@ -3,12 +3,7 @@ const Staff = require("../../../models/staffInformation")
 const nodemailer = require("nodemailer")
 const sendgridTransport = require("nodemailer-sendgrid-transport")
 
-const transporter = nodemailer.createTransport(
-    sendgridTransport({
-    auth : {
-        api_key: "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"
-    }
-}))
+const transporter = require("../../../../config/sendGrid/confirmEmail")
 const { v4: uuidv4 } = require('uuid');
 router.post("/resetPassword", async (req, res, next) => {
     const resetToken = uuidv4()
@@ -25,7 +20,7 @@ router.post("/resetPassword", async (req, res, next) => {
         }
         user.token = ""
         user.resetToken = resetToken
-        user.resetTokenExpiration = Date.now() + 3600
+        user.resetTokenExpiration = Date.now() +  3600000
         return user.save()
     })
     .then(result => {

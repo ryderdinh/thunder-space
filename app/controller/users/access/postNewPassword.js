@@ -9,9 +9,10 @@ router.post("/newPassword/:resetToken", async (req, res, next) => {
    if(resetPassword === confirmResetPassword && resetPassword.length >= 6){
     Staff.findOne({
         resetToken : resetToken,
-        // resetTokenExpiration : { $gte : Date.now() }
+        resetTokenExpiration : { $gte :  Date.now() }
     })
     .then(resetUser=> {
+        console.log(resetUser);
         resetUser.password = resetPassword
         resetUser.resetToken = undefined
         resetUser.resetTokenExpiration = undefined

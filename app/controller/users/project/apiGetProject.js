@@ -20,10 +20,10 @@ router.get("/projectInfo/:id", async (req, res, next) => {
         }else{
             for(let i=0; i< existProject.length; i++){
                 existProject[i] = {
-                    pid : existProject[i].pid,
-                    code : existProject[i].code,
-                    name : existProject[i].name,
-                    issue : existProject[i].issue
+                    projectId : existProject[i].pid,
+                    projectCode : existProject[i].code,
+                    projectName : existProject[i].name,
+                    projectIssue : existProject[i].issue
                 }
             }
             // console.log(existProject);
