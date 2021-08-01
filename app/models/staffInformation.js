@@ -17,7 +17,8 @@ const StaffInformation  = new Schema({
     avatar : {
         public_id : {type : String, default: ""},
         url : {type: String, default : "https://res.cloudinary.com/dawqbbo2l/image/upload/v1626963206/avatar/avatar-none_byqbnn.svg"}
-    }
+    },
+    pid :  {type : String, default: ""}
 });
     StaffInformation.pre("save", function (next) {
         const staff = this

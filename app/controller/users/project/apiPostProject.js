@@ -83,7 +83,7 @@ router.post("/createProject/:id", async (req, res, next) => {
             name: name,
             manager: existManager,
             member: existMember
-        })
+        })  
         result.save()
         return res.json({
             data: {

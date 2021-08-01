@@ -128,6 +128,7 @@ const apiPostAvatar = require("./app/controller/users/info/uploadAvatar")
 
 // PROJCECT
 const apiPostProject = require("./app/controller/users/project/apiPostProject")
+const apiGetProject = require("./app/controller/users/project/apiGetProject")
 
 // SEARCH
 const apiSearchUser = require("./app/controller/users/info/searchUser")
@@ -185,6 +186,8 @@ app.use("/api", apiResetPassword)
 app.use("/user", changePassword);
 
 app.use(apiPostAvatar)
+
+app.use("/api", apiGetProject)
 app.use("/api", apiPostProject)
 app.use("/api", apiSearchUser)
 
