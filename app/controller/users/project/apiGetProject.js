@@ -5,8 +5,8 @@ router.get("/projectInfo/:id", async (req, res, next) => {
     try{
         const uid = req.params.id
         const code = req.query.projectCode
-        var existProject
-        if(code.length == 0 || code == null){
+        // console.log(code);
+        if(code == undefined ){
              existProject = await Project.find({
                 member  : { $elemMatch : { uid : uid } }
             })
