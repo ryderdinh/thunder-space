@@ -129,7 +129,8 @@ const apiPostAvatar = require("./app/controller/users/info/uploadAvatar")
 // PROJCECT
 const apiPostProject = require("./app/controller/users/project/apiPostProject")
 const apiGetProject = require("./app/controller/users/project/apiGetProject")
-
+const apiSearchProject = require("./app/controller/users/project/apiSearchProject")
+ 
 // SEARCH
 const apiSearchUser = require("./app/controller/users/info/searchUser")
 
@@ -192,6 +193,8 @@ app.use(apiPostAvatar)
 
 app.use("/api", apiGetProject)
 app.use("/api", apiPostProject)
+app.use("/api", apiSearchProject)
+
 app.use("/api", apiSearchUser)
 
 
