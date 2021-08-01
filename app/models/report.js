@@ -13,7 +13,9 @@ const Report = new Schema ({
         //     },
         //     content : {type: String, require:"true" }
         // }
-    ]
+    ],
+    confirmEmail : {type : Boolean, default : false},
+    confirmEmailExpiration : { type : Date, default : Date.now() + 3600000 },
 })
 
 module.exports = mongoose.model("Report",Report)

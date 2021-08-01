@@ -133,6 +133,9 @@ const apiGetProject = require("./app/controller/users/project/apiGetProject")
 // SEARCH
 const apiSearchUser = require("./app/controller/users/info/searchUser")
 
+//---------------------------------- CRON TAB------------------------------------
+const checkEmailConfirm = require("./cronTab/checkEmailConfirm")
+
 //----------------------------------ADMIN ROUTE------------------------------------
 
 //ACCESS
@@ -211,7 +214,8 @@ app.listen(port, () => {
 // # │ │ │ │ │ │
 // # │ │ │ │ │ │
 // # * * * * * *
-// const cron = require("node-cron")
+
+
 // const shell = require("shelljs");
 // const Status = require("./app/models/status")
 // const Table = require("./app/models/tableOfWork")

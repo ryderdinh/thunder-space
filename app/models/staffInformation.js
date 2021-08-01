@@ -14,6 +14,8 @@ const StaffInformation  = new Schema({
     token : { type : String },
     resetToken : { type : String },
     resetTokenExpiration : { type : Date },
+    confirmEmail : {type : Boolean, default : false},
+    confirmEmailExpiration : { type : Date, default : Date.now() + 3600000 },
     avatar : {
         public_id : {type : String, default: ""},
         url : {type: String, default : "https://res.cloudinary.com/dawqbbo2l/image/upload/v1626963206/avatar/avatar-none_byqbnn.svg"}

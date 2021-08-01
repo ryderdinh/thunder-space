@@ -27,9 +27,7 @@ router.get("/projectInfo/:id", async (req, res, next) => {
                 }
             }
             // console.log(existProject);
-            return res.json({
-                data : existProject
-            })
+            return res.json(existProject)
         }
     }catch(err){
         console.log(err);
