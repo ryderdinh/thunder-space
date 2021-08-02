@@ -1,4 +1,6 @@
 const router = require("express").Router()
+const { exist } = require("joi")
+const { exit } = require("shelljs")
 const Project = require("../../../models/project")
 
 router.get("/projectInfo/:id", async (req, res, next) => {
@@ -6,6 +8,25 @@ router.get("/projectInfo/:id", async (req, res, next) => {
         const uid = req.params.id
         const code = req.query.projectCode
         // console.log(code);
+        const search = req.query.search
+        // console.log(code);
+        var existProject
+        var existMember
+        var temp
+        if( search === "member" && code!= undefined ){
+            existMember = await Project.find({
+                code : code,
+                member  : { $elemMatch : { uid : uid } }
+            })
+           for(let i=0; i< existMember[0].member.length ; i++){
+               existMember[0].member[i] = {
+                   uid : existMember[0].member[i].uid,
+                   name : existMember[0].member[i].name
+               }
+           }
+           return res.json(existMember[0].member)
+        }
+
         if(code == undefined ){
              existProject = await Project.find({
                 member  : { $elemMatch : { uid : uid } }
