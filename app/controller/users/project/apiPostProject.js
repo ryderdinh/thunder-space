@@ -15,7 +15,7 @@ router.post("/createProject/:id", async (req, res, next) => {
         var manager = [... new Set(req.body.projectManager.map(e => e = e.email))]
         var member = [... new Set(req.body.projectMember.map(e => e = e.email))]
         //Valid creater
-
+        
         var existCreater = await Staff.findById(userId)
         if (!existCreater) {
             return res.json({
@@ -64,14 +64,18 @@ router.post("/createProject/:id", async (req, res, next) => {
             for (let i = 0; i < existManager.length; i++) {
                 existManager[i] = {
                     uid: existManager[i].id,
-                    name: existManager[i].name
+                    name: existManager[i].name,
+                    email : existManager[i].email,
+                    avatar : existManager[i].avatar.url
                 }
             }
             //Map  member data
             for (let i = 0; i < existMember.length; i++) {
                 existMember[i] = {
                     uid: existMember[i].id,
-                    name: existMember[i].name
+                    name: existMember[i].name,
+                    email : existMember[i].email,
+                    avatar : existMember[i].avatar.url
                 }
             }
 
