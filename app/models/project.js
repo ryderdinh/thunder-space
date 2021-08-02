@@ -17,7 +17,7 @@ const Project = new Schema({
             name : {type : String}
         }
     ],
-    issueData : [
+    issue : [
         {
             iid : { type: String},
             issueName : String,
