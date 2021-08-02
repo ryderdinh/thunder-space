@@ -28,9 +28,7 @@ router.get("/projectInfo/:id", async (req, res, next) => {
                 }
                 return res.json(existMember[0].member)
             }else{
-                return res.json({data : {
-                    status : `You are not in project with code : ${code}  !`
-                }})
+                return res.json(existMember)
             }
         }
 
