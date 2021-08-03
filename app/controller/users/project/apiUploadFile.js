@@ -12,7 +12,7 @@ router.post("/uploadFile", async (req, res, next) => {
         resource_type : "auto"
     })
     console.log(uploadResponse);
-    return res.json({ status : "Success !" })
+    return res.json({ status : `${uploadResponse.url}` })
     }catch(err){
         console.log(err);
         fs.unlinkSync(file)
