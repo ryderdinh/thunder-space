@@ -125,6 +125,7 @@ const apiGetReport = require("./app/controller/users/report/apiGetReport");
 
 //UPLOAD 
 const apiPostAvatar = require("./app/controller/users/info/uploadAvatar")
+const apiPostFile = require("./app/controller/users/project/apiUploadFile")
 
 // PROJCECT
 const apiPostProject = require("./app/controller/users/project/apiPostProject")
@@ -195,6 +196,8 @@ app.use(apiPostAvatar)
 app.use("/api", apiGetProject)
 app.use("/api", apiPostProject)
 app.use("/api", apiSearchProject)
+app.use("/api", apiPostFile)
+
 app.use("/api", apiPostIssue)
 app.use("/api", apiSearchUser)
 

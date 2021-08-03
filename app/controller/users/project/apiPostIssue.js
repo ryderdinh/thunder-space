@@ -64,7 +64,7 @@ router.post("/createIssue/:uid/:pid", async (req, res, next) => {
                     issueCode : result.issueCode,
                     issueType : result.issueType
                 } }
-            },  { runValidators: true })
+            }, { runValidators: true })
         }else{
             return res.json({ status : "Cannot assign !" })
         }

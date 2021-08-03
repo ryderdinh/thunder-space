@@ -18,6 +18,7 @@ router.get("/projectInfo/:id", async (req, res, next) => {
                 code : code,
                 member  : { $elemMatch : { uid : uid } }
             })
+            // console.log(existMember);
           
             if(existMember.length > 0){
                 for(let i=0; i< existMember[0].member.length ; i++){
@@ -35,13 +36,14 @@ router.get("/projectInfo/:id", async (req, res, next) => {
         if(code == undefined ){
              existProject = await Project.find({
                 member  : { $elemMatch : { uid : uid } }
-            })
+            },  { _id: false }).lean()
         }else{
             existProject = await Project.find({
                 code : code,
-                member  : { $elemMatch : { uid : uid } }
-            })
+                member  : { $elemMatch : { uid : uid } },
+            },  { _id: false }).lean()
         }
+        console.log(existProject);
         // console.log(managerProject);
         if(!existProject || existProject.length == 0 ){
             return res.json({
