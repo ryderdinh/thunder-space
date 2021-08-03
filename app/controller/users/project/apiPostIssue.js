@@ -1,6 +1,7 @@
 const router = require("express").Router()
 const Project = require("../../../models/project")
 const Staff = require("../../../models/staffInformation")
+const Issue = require("../../../models/issue")
 const { v4: uuidv4 } = require('uuid');
 const { exist } = require("joi");
 
@@ -42,7 +43,7 @@ router.post("/createIssue/:uid/:pid", async (req, res, next) => {
         }
         // console.log(creatorInfo);
         let result = {
-            iid : uuidv4(),
+            iid : existProject.pid,
             issueName : name,
             issueCode : icode,
             issueType : type,
@@ -51,14 +52,24 @@ router.post("/createIssue/:uid/:pid", async (req, res, next) => {
             issueDescription : description,
             issuePriority : priority
         }
-         const update = await Project.findOneAndUpdate({pid : pid},{ 
-            $push : { issue : result }
-        },  { runValidators: true })
-
+        const newIssue = new Issue(result)
+        let err = newIssue.validateSync()
+        if(!err){
+            console.log(err);
+            newIssue.save()
+            const update = await Project.findOneAndUpdate({pid : pid},{ 
+                $push : { issue : {
+                    iid : result.iid,
+                    issueName : result.issueName,
+                    issueCode : result.issueCode,
+                    issueType : result.issueType
+                } }
+            },  { runValidators: true })
+        }else{
+            return res.json({ status : "Cannot assign !" })
+        }
         return res.json({
-            data : {
                 status : `Assign to ${assign} complete !`
-            }
         })
     }else{
         return res.json([])
