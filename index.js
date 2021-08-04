@@ -125,7 +125,7 @@ const apiGetReport = require("./app/controller/users/report/apiGetReport");
 
 //UPLOAD 
 const apiPostAvatar = require("./app/controller/users/info/uploadAvatar")
-const apiPostFile = require("./app/controller/users/project/apiUploadFile")
+const apiPostFile = require("./app/controller/users/issue/apiUploadFIle")
 
 // PROJCECT
 const apiPostProject = require("./app/controller/users/project/apiPostProject")
