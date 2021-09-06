@@ -8,4 +8,4 @@ const tableOfWork = new Schema({
     confirmEmailExpiration : { type : Date, default : Date.now() + 3600000 },
 })
 
-module.exports = mongoose.model("table_of_work",tableOfWork)
+module.exports = mongoose.model("Timesheets",tableOfWork)

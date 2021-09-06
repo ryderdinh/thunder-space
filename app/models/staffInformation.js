@@ -31,4 +31,4 @@ const StaffInformation  = new Schema({
     })
 
 
-module.exports = mongoose.model("Staff_information ",StaffInformation)
+module.exports = mongoose.model("Staff ",StaffInformation)

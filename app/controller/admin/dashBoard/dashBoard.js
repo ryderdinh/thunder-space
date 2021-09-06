@@ -1,5 +1,6 @@
 const Staff = require("../../../models/staffInformation");
 const History = require("../../../models/history");
+require('dotenv').config()
 const env = process.env.NODE_ENV.trim();
 const checkAuthenticated = require("../../../../middleware/admin/login/checkAuthenticated")
 const router = require("express").Router()
