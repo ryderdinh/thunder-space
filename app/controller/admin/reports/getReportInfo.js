@@ -2,7 +2,9 @@ const Report = require("../../../models/report")
 const express  = require('express')
 const router = express.Router()
 const checkAuthenticated = require("../../../../middleware/admin/login/checkAuthenticated")
-require('dotenv').config()
+if(process.env.NODE_ENV != 'production'){
+  require('dotenv').config()
+}
 const env = process.env.NODE_ENV.trim()
 router.get("/reportInfo", checkAuthenticated, (req, res, next) => {
   Report.find({}, (err, reports) => {

@@ -2,7 +2,9 @@ const mongoose = require("mongoose");
 mongoose.set('useNewUrlParser', true);
 mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
-require('dotenv').config()
+if(process.env.NODE_ENV != 'production'){
+  require('dotenv').config()
+}
 async function connect() {
   try {
     await mongoose.connect(process.env.DATABASE_URL, {

@@ -1,4 +1,6 @@
-require('dotenv').config()
+if(process.env.NODE_ENV != 'production'){
+    require('dotenv').config()
+  }
  const env = process.env.NODE_ENV.trim()
  const Event = require("../../../models/event")
  module.exports = (req, res) => {
