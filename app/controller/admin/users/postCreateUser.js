@@ -16,7 +16,7 @@ router.post("/storeUser", checkAuthenticated, async (req, res, next)=> {
           //validate newmember
           // req.body.birthday = convert(req.body.birthday)
           // console.log(req.body.birthday);
-          req.body.password = uuidv4()
+          // req.body.password = uuidv4()
           console.log(req.body);
           const result = await authSchema.validateAsync(req.body)
           //Check email exist
