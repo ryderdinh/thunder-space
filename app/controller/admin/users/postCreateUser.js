@@ -24,8 +24,8 @@ router.post("/storeUser", checkAuthenticated, async (req, res, next)=> {
           if (emailExist)  {
                req.flash('createUserFailed', "Email hasbeen created")
            res.redirect("/admin/createUser")
-          }
-          // Create new user
+          }else{
+                        // Create new user
           const newStaff = new StaffInformation(result)
           const saveStaff = await newStaff.save()
      
@@ -65,6 +65,8 @@ router.post("/storeUser", checkAuthenticated, async (req, res, next)=> {
             console.log(statusCre, tableCre, reportCre, sendMail);
             req.flash('createUserSuccess'," Create successfully")     
             res.redirect("/admin/createUser")
+          }
+ 
         }catch(err){
              console.log(err);
              if (err.isJoi === true || err) {
