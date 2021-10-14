@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<style>
+  * {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    box-sizing: border-box;
+  }
+
+  #phone {
+    border: 2px solid rgba(0, 0, 0, .5);
+    width: calc(375px / 2);
+    height: calc(812px / 2);
+    border-radius: 20px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    overflow: hidden;
+  }
+
+  #background {
+    background: #05DBEA;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200%;
+    height: calc(100% - 50px);
+    filter: url("#goo");
+    z-index: 1;
+  }
+
+  #round {
+    height: 30px;
+    width: 30px;
+    left: calc(26.5%);
+    border-radius: 100%;
+    position: absolute;
+    bottom: -30px;
+    z-index: 2;
+    transition: left .4s cubic-bezier(0, 0, 0, 1.04);
+    background: #05DBEA;
+  }
+
+  #round.sliding {
+    animation: slide 0.35s cubic-bezier(0, 0, 0, 1.01);
+    ;
+  }
+
+  #tab-bar {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 50px;
+    padding-bottom: 10px;
+    background: #FFF;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+
+  .icon {
+    z-index: 2;
+    position: relative;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    transition: transform .25s ease-in-out;
+    user-select: none;
+  }
+
+  .icon-picture {
+    opacity: .5;
+    width: 10px;
+    height: 10px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .icon.selected {
+    box-sizing: initial;
+    transform: translateY(-7px) scale(1.2);
+    background: #fff;
+    border-radius: 100%;
+    box-shadow: 0px 3px 6px -2px rgba(0, 0, 0, 0.38);
+  }
+
+  .selected .icon-picture {
+    opacity: 1 !important;
+  }
+
+  @keyframes slide {
+    0% {
+      bottom: -30px;
+    }
+
+    50% {
+      bottom: -9px;
+    }
+
+    100% {
+      bottom: -30px;
+    }
+  }
+</style>
+
+<body>
+  <div id="phone">
+    <div id="background">
+      <div id="round">
+      </div>
+    </div>
+    <ul id="tab-bar">
+      <li class="icon selected"><img class="icon-picture" src="https://image.flaticon.com/icons/svg/814/814173.svg" />
+      </li>
+      <li class="icon"><img class="icon-picture" src="https://image.flaticon.com/icons/svg/151/151917.svg" /></li>
+      <li class="icon"><img class="icon-picture" src="https://image.flaticon.com/icons/svg/318/318147.svg" /></li>
+      <li class="icon"><img class="icon-picture" src="https://image.flaticon.com/icons/svg/685/685661.svg" /></li>
+      <li class="icon"><img class="icon-picture" src="https://image.flaticon.com/icons/svg/709/709579.svg" /></li>
+    </ul>
+  </div>
+  <svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+    <defs>
+      <filter id="goo">
+        <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" />
+        <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 30 -7" result="goo" />
+        <feBlend in="SourceGraphic" in2="goo" />
+      </filter>
+    </defs>
+  </svg>
+  <script>
+    const FORMAT_KEY = '$';
+    const MARGIN = 0;
+    const STYLE_FORMAT = `calc(23.9% + ${FORMAT_KEY}px)`;
+    const SELECTED_CLASS = 'selected';
+    const SLIDING_CLASS = 'sliding';
+    const ANIMATION_DELAY = 800;
+
+    const round = document.querySelector('#round');
+    const phone = document.querySelector('#phone');
+
+    const isSelected = el => [...el.classList].find(c => c === SELECTED_CLASS);
+
+    const clearRoundAnimation = () => round.classList.remove(SLIDING_CLASS);
+
+    let selectedIcon = null;
+    const icons = [];
+
+    setTimeout(() => icons[3].click(), 1000);
+
+    [...document.querySelectorAll('.icon')].map(el => {
+      if (!el) return;
+      if (isSelected(el)) selectedIcon = el;
+      icons.push(el);
+      el.addEventListener('click', function () {
+        const currentIndex = icons.indexOf(selectedIcon)
+        const elIndex = icons.indexOf(el);
+
+        if (elIndex < currentIndex - 1
+          || elIndex > currentIndex + 1) {
+          // Is not a neighbour
+          round.classList.add(SLIDING_CLASS);
+          setTimeout(clearRoundAnimation, ANIMATION_DELAY);
+        }
+
+        const left = this.offsetLeft;
+
+        round.style.left = STYLE_FORMAT.replace(FORMAT_KEY, left);
+        selectedIcon.classList.remove(SELECTED_CLASS);
+        el.classList.add(SELECTED_CLASS);
+        selectedIcon = el;
+      });
+    });
+
+  </script>
+</body>
+
+</html>
