@@ -24,7 +24,9 @@ router.get("/projectInfo/:id", async (req, res, next) => {
                 for(let i=0; i< existMember[0].member.length ; i++){
                     existMember[0].member[i] = {
                         uid : existMember[0].member[i].uid,
-                        name : existMember[0].member[i].name
+                        name : existMember[0].member[i].name,
+                        email : existMember[0].member[i].email,
+                        avatar : existMember[0].member[i].avatar,
                     }
                 }
                 return res.json(existMember[0].member)
