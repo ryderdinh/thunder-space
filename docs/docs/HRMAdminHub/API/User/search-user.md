@@ -14,4 +14,4 @@ https://hrmadmin.herokuapp.com/api/searchUser?email=<userEmail>
 
 | Trường dữ liệu  | Kiểu   | Chú thích                                   |
 | --------------- | ------ | ------------------------------------------- |
-| `Authorization` | string | `Bearer` + [`accessToken`](access-token.md) |
+| `Authorization` | string | `Bearer` + [`accessToken`](../access-token.md) |

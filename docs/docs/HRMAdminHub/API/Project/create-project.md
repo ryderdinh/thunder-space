@@ -23,4 +23,4 @@ https://hrmadmin.herokuapp.com/api/createProject/:<userId>
 
 | Trường dữ liệu  | Kiểu   | Chú thích                                   |
 | --------------- | ------ | ------------------------------------------- |
-| `Authorization` | string | `Bearer` + [`accessToken`](access-token.md) |
+| `Authorization` | string | `Bearer` + [`accessToken`](../access-token.md) |

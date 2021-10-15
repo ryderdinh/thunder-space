@@ -15,4 +15,4 @@ https://hrmadmin.herokuapp.com/api/projectInfo/:<projectId>
 
 | Trường dữ liệu  | Kiểu   | Chú thích                                   |
 | --------------- | ------ | ------------------------------------------- |
-| `Authorization` | string | `Bearer` + [`accessToken`](access-token.md) |
+| `Authorization` | string | `Bearer` + [`accessToken`](../access-token.md) |

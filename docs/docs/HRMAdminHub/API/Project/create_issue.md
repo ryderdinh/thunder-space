@@ -24,4 +24,4 @@ https://hrmadmin.herokuapp.com/api/createIssue/:<userId>/:<projectId>
 
 | Trường dữ liệu  | Kiểu   | Chú thích                                   |
 | --------------- | ------ | ------------------------------------------- |
-| `Authorization` | string | `Bearer` + [`accessToken`](access-token.md) |
+| `Authorization` | string | `Bearer` + [`accessToken`](../access-token.md) |
