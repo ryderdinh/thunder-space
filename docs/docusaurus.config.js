@@ -4,7 +4,7 @@ module.exports = {
   tagline: "Welcome to documentation HRM - Zelios Sea",
   url: "https://zelios-sea.netlify.app",
   baseUrl: "/",
-  onBrokenLinks: "throw",
+  onBrokenLinks: "ignore",
   onBrokenMarkdownLinks: "warn",
   favicon: "img/favicon.ico",
   organizationName: "dinhquanganh", // Usually your GitHub org/user name.
