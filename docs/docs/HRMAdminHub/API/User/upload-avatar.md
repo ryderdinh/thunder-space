@@ -7,7 +7,7 @@ sidebar_position: 3
 Method **`POST`**
 
 ```shell
-https://hrmadmin.herokuapp.com/upload/avatar/:id
+https://hrmadmin.herokuapp.com/upload/avatar/<userId>
 ```
 
 ### Tham số

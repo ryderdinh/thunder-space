@@ -2,20 +2,20 @@
 sidebar_position: 3
 ---
 
-# Tạo tác vụ
+# Tạo vấn đề
 
 Method **`POST`**
 
 ```shell
-https://hrmadmin.herokuapp.com/api/createIssue/:<userId>/:<projectId>
+https://hrmadmin.herokuapp.com/api/createIssue/<userId>/<projectId>
 ```
 
 ### Tham số
 
 | Trường dữ liệu | Kiểu   | Chú thích                        |
 | -------------- | ------ | -------------------------------- |
-| `name`         | string | tên tác vụ                    |
-| `type`         | string | loại tác vụ [task, bug]                        |
+| `name`         | string | tên vấn đề                    |
+| `type`         | string | loại vấn đề [task, bug]                        |
 | `assign`      | string | người được giao    |
 | `priority`   |string | mức độ ưu tiên [low, medium, high, highest]|
 | `description`|string| mô tả |
