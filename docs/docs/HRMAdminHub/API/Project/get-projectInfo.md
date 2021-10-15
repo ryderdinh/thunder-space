@@ -7,7 +7,7 @@ sidebar_position: 2
 Method **`GET`**
 
 ```shell
-https://hrmadmin.herokuapp.com/api/projectInfo/:id
+https://hrmadmin.herokuapp.com/api/projectInfo/:<projectId>
 ```
 
 

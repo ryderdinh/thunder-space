@@ -7,7 +7,7 @@ sidebar_position: 1
 Method **`POST`**
 
 ```shell
-https://hrmadmin.herokuapp.com/api/createProject/:id
+https://hrmadmin.herokuapp.com/api/createProject/:<userId>
 ```
 
 ### Tham số

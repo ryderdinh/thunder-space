@@ -7,7 +7,7 @@ sidebar_position: 4
 Method **`GET`**
 
 ```shell
-https://hrmadmin.herokuapp.com/api/searchUser?email=<User's email>
+https://hrmadmin.herokuapp.com/api/searchUser?email=<userEmail>
 ```
 
 ### Header

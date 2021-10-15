@@ -5,7 +5,7 @@ module.exports = {
   url: "https://zelios-sea.netlify.app",
   baseUrl: "/",
   onBrokenLinks: "ignore",
-  onBrokenMarkdownLinks: "warn",
+  onBrokenMarkdownLinks: "ignore",
   favicon: "img/favicon.ico",
   organizationName: "dinhquanganh", // Usually your GitHub org/user name.
   projectName: "HRM_ZeliosSea", // Usually your repo name.

@@ -7,17 +7,18 @@ sidebar_position: 3
 Method **`POST`**
 
 ```shell
-https://hrmadmin.herokuapp.com/api/createIssue/:[User id]/:<Project's id>
+https://hrmadmin.herokuapp.com/api/createIssue/:<userId>/:<projectId>
 ```
 
 ### Tham số
 
 | Trường dữ liệu | Kiểu   | Chú thích                        |
 | -------------- | ------ | -------------------------------- |
-| `projectCode`         | string | mã code dự án                    |
-| `projectName`         | string | tên dự án                        |
-| `projectManager`      | array  | các email quản lí trong dự án    |
-| `projectMember`       | array  | các email thành viên trong dự án |
+| `name`         | string | tên tác vụ                    |
+| `type`         | string | loại tác vụ [task, bug]                        |
+| `assign`      | string | người được giao    |
+| `priority`   |string | mức độ ưu tiên [low, medium, high, highest]|
+| `description`|string| mô tả |
 
 ### Header
 
