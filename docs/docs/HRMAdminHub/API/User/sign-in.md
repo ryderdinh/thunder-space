@@ -1,15 +1,14 @@
 ---
-sidebar_position: 7
+sidebar_position: 1
 ---
 
-# Lấy thông tin dự án
+# Đăng nhập
 
 Method **`GET`**
 
 ```shell
-https://hrmadmin.herokuapp.com/api/projectInfo/:id
+https://hrmadmin.herokuapp.com/loginUser
 ```
-
 
 ### Header
 

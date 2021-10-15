@@ -1,5 +1,5 @@
 ---
-sidebar_position: 5
+sidebar_position: 4
 ---
 
 # Tìm kiếm người dùng
@@ -7,14 +7,8 @@ sidebar_position: 5
 Method **`GET`**
 
 ```shell
-https://hrmadmin.herokuapp.com/api/searchUser
+https://hrmadmin.herokuapp.com/api/searchUser?email=<User's email>
 ```
-
-### Tham số
-
-| Trường dữ liệu | Kiểu   | Chú thích        |
-| -------------- | ------ | ---------------- |
-| `email`        | string | email người dùng |
 
 ### Header
 
