@@ -32,7 +32,7 @@ export const Popup = (props) => {
       );
     }
 
-    case "create-project": {
+    case "project": {
       return (
         <div className={state}>
           <Project dataPopup={dataPopup} />
