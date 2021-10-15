@@ -9,16 +9,12 @@ const Project = new Schema({
         {
             uid : { type : String, required : true },
             name : { type : String, required : true },
-            email : { type : String, required : true },
-            avatar : { type : String, required :false },
         }
     ],
     member : [
         {
             uid : {type : String},
             name : {type : String},
-            email : { type : String},
-            avatar : { type : String}
         }
     ],
     issue : [

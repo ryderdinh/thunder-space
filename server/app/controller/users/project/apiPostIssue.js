@@ -25,16 +25,12 @@ router.post("/createIssue/:uid/:pid", async (req, res, next) => {
         let creatorInfo = {
             uid : creator.uid,
             name : creator.name,
-            email : creator.email,
-            avatar : creator.avatar
         }
         // console.log(creatorInfo);
         if(assigned){
             assignedPerson = {
                 uid : assigned.uid,
                 name : assigned.name,
-                email : assigned.email,
-                avatar : assigned.avatar,
             }
         }else{
             res.json({ data : {
