@@ -31,7 +31,7 @@ const Project = new Schema({
             },
         }
     ],
-    createdAt : Date.now()
+    createdAt : { type: Number, default: Date.now, required : true }
 })
 
 module.exports = mongoose.model("Project", Project)

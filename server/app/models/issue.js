@@ -37,7 +37,7 @@ const Issue = new Schema({
         issueAttachment : [],
         issueStatus : [],
         issueHistory : [],
-        createdAt : Date.now()
+        createdAt : { type : Number, default :Date.now, required : true }
     
 })
 
