@@ -30,8 +30,8 @@ const Project = new Schema({
                 }
             },
         }
-    ]
-    
+    ],
+    createdAt : Date.now()
 })
 
 module.exports = mongoose.model("Project", Project)
