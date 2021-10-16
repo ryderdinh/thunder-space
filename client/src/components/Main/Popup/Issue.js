@@ -115,6 +115,7 @@ export default function Issue({ dataPopup }) {
 
 	//? Create Function
 	const handleDataIssueChange = value => {
+		console.log(value);
 		setState(prevState => ({
 			...prevState,
 			dataIssueInput: [
@@ -205,7 +206,7 @@ export default function Issue({ dataPopup }) {
 	};
 	const createIssue = () => {
 		let data = {
-			issueName: state.dataIssueInput.value,
+			issueName: state.dataIssueInput[0].value,
 			issueType: state.dataIssueInputMulti[1].value,
 			issuePriority: state.dataIssueInputMulti[2].value,
 			issueAssign: state.dataIssueInputMulti[3].email,
