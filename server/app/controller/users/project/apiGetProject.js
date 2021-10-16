@@ -1,6 +1,5 @@
 const router = require("express").Router()
-const { exist } = require("joi")
-const { exit } = require("shelljs")
+const Staff = require("../../../models/staffInformation")
 const Project = require("../../../models/project")
 
 router.get("/projectInfo/:id", async (req, res, next) => {
@@ -18,18 +17,22 @@ router.get("/projectInfo/:id", async (req, res, next) => {
                 code : code,
                 member  : { $elemMatch : { uid : uid } }
             })
-            // console.log(existMember);
+            console.log(existMember);
           
             if(existMember.length > 0){
+                let ids = []
                 for(let i=0; i< existMember[0].member.length ; i++){
-                    existMember[0].member[i] = {
-                        uid : existMember[0].member[i].uid,
-                        name : existMember[0].member[i].name
-                    }
+                    ids.push(existMember[0].member[i].uid)
                 }
-                return res.json(existMember[0].member)
+                let infoMember = await Staff.find().where('_id').in(ids)
+                return res.json(infoMember.map(e => e = {
+                    id : e.id,
+                    name : e.name,
+                    email : e.email,
+                    avatar : e.avatar.url,
+                }))
             }else{
-                return res.json(existMember)
+                return res.json([])
             }
         }
 

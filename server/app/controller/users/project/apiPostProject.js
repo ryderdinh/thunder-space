@@ -65,8 +65,6 @@ router.post("/createProject/:id", async (req, res, next) => {
                 existManager[i] = {
                     uid: existManager[i].id,
                     name: existManager[i].name,
-                    email : existManager[i].email,
-                    avatar : existManager[i].avatar.url
                 }
             }
             //Map  member data
@@ -74,8 +72,6 @@ router.post("/createProject/:id", async (req, res, next) => {
                 existMember[i] = {
                     uid: existMember[i].id,
                     name: existMember[i].name,
-                    email : existMember[i].email,
-                    avatar : existMember[i].avatar.url
                 }
             }
 
