@@ -2,11 +2,12 @@ const mongoose = require("mongoose")
 const Schema = mongoose.Schema
 
 const Issue = new Schema({
-        iid : { type: String},
-        issueName : String,
+        iid : { type: String, required : true},
+        issueName : { type : String, required : true },
         issueCode : { type : String , required : true, unique : true },
         issueType : {
             type : String,
+            required : true,
             enum : {
                 values : [ 'task', 'bug' ],
                 message : '{VALUE}  is not supported'
