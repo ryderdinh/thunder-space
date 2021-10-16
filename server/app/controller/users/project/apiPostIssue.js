@@ -15,26 +15,22 @@ router.post("/createIssue/:uid/:pid", async (req, res, next) => {
     const priority = req.body.issuePriority
     const description = req.body.issueDescription
     const existProject = await Project.findOne({ pid : pid , member  : { $elemMatch : { uid : uid } } })
-    
-    if(existProject){
+    const existUser = await Staff.findOne({ email : assign })
+    if(existProject && existUser){
         let creator = existProject.member.find(e => e.uid === uid ) 
-        let assigned = existProject.member.find(e => e.email === assign ) 
+        let assigned = existProject.member.find(e => e.uid === existUser.id) 
+        console.log(assigned);
         let icode = `${existProject.code}-${existProject.issue.length + 1}`
         // console.log(icode);
-        var assignedPerson
+        let assignedPerson
         let creatorInfo = {
             uid : creator.uid,
             name : creator.name,
-            email : creator.email,
-            avatar : creator.avatar
         }
-        // console.log(creatorInfo);
         if(assigned){
             assignedPerson = {
                 uid : assigned.uid,
                 name : assigned.name,
-                email : assigned.email,
-                avatar : assigned.avatar,
             }
         }else{
             res.json({ data : {
@@ -55,7 +51,7 @@ router.post("/createIssue/:uid/:pid", async (req, res, next) => {
         const newIssue = new Issue(result)
         let err = newIssue.validateSync()
         if(!err){
-            console.log(err);
+            // console.log(err);
             newIssue.save()
             const update = await Project.findOneAndUpdate({pid : pid},{ 
                 $push : { issue : {
