@@ -19,7 +19,7 @@ export const actSignIn = (dataUser) => {
           setCookie(res_1.data.id, res.accessToken);
           dispatch(actFetchEvents());
           dispatch(actFetchStaffInfomation());
-          dispatch(actFetchDataTableOfWork());
+          dispatch(actFetchDataTimeSheet());
           dispatch(actFetchTimeKeeping());
           successToast("Đăng nhập thành công");
 
@@ -52,7 +52,7 @@ export const actFetchStaffInfomation = () => {
     dispatch(setStaffInfomation(payload.staffInfo));
   };
 };
-export const actFetchDataTableOfWork = () => {
+export const actFetchDataTimeSheet = () => {
   const { id, token } = getAllCookie();
   return async (dispatch) => {
     const res = await callAPI(`table/${id}`, "GET", null, {
@@ -155,7 +155,7 @@ export const actRefreshPage = () => {
         if (res_1.data.status === "Login succesfully") {
           dispatch(actFetchEvents());
           dispatch(actFetchStaffInfomation());
-          dispatch(actFetchDataTableOfWork());
+          dispatch(actFetchDataTimeSheet());
           dispatch(actFetchTimeKeeping());
           dispatch(setCheckLogin(true));
           setCookie(res_1.data.id, token);
