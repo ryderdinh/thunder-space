@@ -1,5 +1,5 @@
 const { model } = require("mongoose");
-const StaffInformation = require("../../../models/staffInformation");
+const Staff = require("../../../models/Staff");
 const bcrypt = require("bcrypt");
 const { convert } = require("../../../utils/dateFormat");
 const express = require("express")
@@ -8,7 +8,7 @@ const { authSchema } = require("../../../../middleware/admin/form/checkFormRegis
 // var popupS = require('popups');
 router.post("/editUser/:id", (req, res) => {
   let id = req.params.id
-  StaffInformation.findById(id, (error, staffInformation) => {
+  Staff.findById(id, (error, staff) => {
     if (error) {
       return res.redirect("/createMember");
     }
@@ -32,19 +32,19 @@ router.post("/editUser/:id", (req, res) => {
     // updateBirthday = newBirthday.length == 10 ? newBirthday : convertDate
     // console.log(updateBirthday);
     let newEmail = req.body.newEmail.trim();
-    updateEmail = newEmail.length > 0 ? newEmail : staffInformation.email
+    updateEmail = newEmail.length > 0 ? newEmail : staff.email
     let newPassword = req.body.newPassword.trim();
-    updatePassword = newPassword.length >= 6 ? bcrypt.hashSync(newPassword, 10) : staffInformation.password;
+    updatePassword = newPassword.length >= 6 ? bcrypt.hashSync(newPassword, 10) : staff.password;
     // newPassword = bcrypt.hashSync(newPassword, 10);
     // console.log(newPassword);
     let newName = req.body.newName.trim();
-    updateName = newName !== "" ? newName : staffInformation.name
+    updateName = newName !== "" ? newName : staff.name
     let newPosition = req.body.newPosition.trim();
-    updatePosition = newPosition !== "" ? newPosition : staffInformation.position
+    updatePosition = newPosition !== "" ? newPosition : staff.position
     let newDepartment = req.body.newDepartment.trim();
-    updateDepartment = newDepartment !== "" ? newDepartment : staffInformation.department
+    updateDepartment = newDepartment !== "" ? newDepartment : staff.department
     let newPhonenumber = req.body.newPhonenumber.trim();
-    updatePhonenumber = newPhonenumber !== "" ? newPhonenumber : staffInformation.phonenumber
+    updatePhonenumber = newPhonenumber !== "" ? newPhonenumber : staff.phonenumber
     var result = {}
     if (newBirthday.length == 10) {
       result = {
@@ -67,7 +67,7 @@ router.post("/editUser/:id", (req, res) => {
       }
     }
 
-    StaffInformation.findByIdAndUpdate(
+    Staff.findByIdAndUpdate(
       id,
       result,
       { new: true },

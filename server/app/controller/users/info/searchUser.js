@@ -1,6 +1,6 @@
 const router = require("express").Router()
 const authenticateToken = require("../../../../middleware/user/login/authenticateToken")
-const Staff = require("../../../models/staffInformation")
+const Staff = require("../../../models/Staff")
 
 router.get("/searchUser", async (req, res, next) => {
     try{

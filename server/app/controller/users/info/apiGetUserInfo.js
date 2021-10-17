@@ -1,4 +1,4 @@
-const staffInfo = require("../../../models/staffInformation")
+const staffInfo = require("../../../models/Staff")
 const convertDate = require("../../../utils/convertDate")
 const express = require("express")
 const router = express.Router()

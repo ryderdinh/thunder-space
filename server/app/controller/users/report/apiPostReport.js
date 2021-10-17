@@ -1,4 +1,4 @@
-const Staff = require('../../../models/staffInformation')
+const Staff = require('../../../models/Staff')
 const Report = require("../../../models/report")
 const History = require("../../../models/history")
 const authenticateToken = ("")

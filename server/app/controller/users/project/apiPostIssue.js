@@ -1,6 +1,6 @@
 const router = require("express").Router()
 const Project = require("../../../models/project")
-const Staff = require("../../../models/staffInformation")
+const Staff = require("../../../models/Staff")
 const Issue = require("../../../models/issue")
 const { v4: uuidv4 } = require('uuid');
 const { exist } = require("joi");

@@ -1,4 +1,4 @@
-const Staff = require("../../../models/staffInformation");
+const Staff = require("../../../models/Staff");
 const moment = require("moment-timezone")
 const { convert } = require("../../../utils/dateFormat")
 const History = require("../../../models/history")
