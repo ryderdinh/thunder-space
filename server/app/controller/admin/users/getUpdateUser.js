@@ -1,5 +1,5 @@
 
-const Staff = require('../../../models/staffInformation')
+const Staff = require('../../../models/Staff')
 const { convert2 } = require("../../../utils/dateFormat2")
 const moment = require("moment")
 const departmentList = ["","Accounting", "Business Development", "Engineering", "Human Resources", "Legal", "Marketing", "Product Management", "Research and Development", "Sales", "Services", "Support", "Test", "Training", "test"]

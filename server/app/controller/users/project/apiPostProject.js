@@ -1,5 +1,5 @@
 const Project = require("../../../models/project")
-const Staff = require("../../../models/staffInformation")
+const Staff = require("../../../models/Staff")
 const router = require("express").Router()
 const authenticateToken = require("../../../../middleware/user/login/authenticateToken")
 const { v4: uuidv4 } = require('uuid');

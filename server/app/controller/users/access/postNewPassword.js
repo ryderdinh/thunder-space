@@ -1,5 +1,5 @@
 const router = require("express").Router()
-const Staff = require("../../../models/staffInformation")
+const Staff = require("../../../models/Staff")
 const bcrypt = require("bcrypt")
 const { reset } = require("nodemon")
 router.post("/newPassword/:resetToken", async (req, res, next) => {

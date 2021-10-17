@@ -1,4 +1,4 @@
-const Staff = require("../../../models/staffInformation")
+const Staff = require("../../../models/Staff")
 const express = require('express')
 const router = express.Router()
 const  cloudinary  = require("../../../../config/cloud/cloudinary") 

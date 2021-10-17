@@ -7,12 +7,12 @@ const flash = require("express-flash");
 const session = require("express-session");
 const passport = require("passport");
 const methodOverride = require("method-override");
-const initializePassport = require("./passport-config");
+const initializePassport = require("./config/passport/passport.config");
 const cors = require("cors");
 
-const fileupload = require('express-fileupload'); 
-app.use(express.json({ limit: '50mb' }));
-app.use(fileupload({useTempFiles: true}))
+const fileupload = require("express-fileupload");
+app.use(express.json({ limit: "50mb" }));
+app.use(fileupload({ useTempFiles: true }));
 initializePassport(
   passport,
   (uname) => admins.find((admin) => admin.uname === uname),
@@ -58,11 +58,12 @@ const admins = [
 ];
 
 //----------------------------------CORS------------------------------------
-app.use(cors({
-  origin : "*",
-  methods : ["POST", "GET", 'PUT', "DELETE"]
-}));
-
+app.use(
+  cors({
+    origin: "*",
+    methods: ["POST", "GET", "PUT", "DELETE"],
+  })
+);
 
 //----------------------------------ADMIN CONTROLLER------------------------------------
 // const loginAdmin = require("./app/controller/loginAdmin")
@@ -103,8 +104,8 @@ const authenticateToken = require("./middleware/user/login/authenticateToken");
 const loginUser = require("./app/controller/users/access/loginUser");
 const loginToken = require("./app/controller/users/access/loginToken");
 const changePassword = require("./app/controller/users/access/changePassword");
-const apiResetPassword = require("./app/controller/users/access/postResetPassword")
-const apiNewPassword = require("./app/controller/users/access/postNewPassword")
+const apiResetPassword = require("./app/controller/users/access/postResetPassword");
+const apiNewPassword = require("./app/controller/users/access/postNewPassword");
 
 //INFOR
 const apiGetUserInfo = require("./app/controller/users/info/apiGetUserInfo");
@@ -123,21 +124,21 @@ const apiGetTable = require("./app/controller/users/statistic/apiGetTable");
 const apiPostReport = require("./app/controller/users/report/apiPostReport");
 const apiGetReport = require("./app/controller/users/report/apiGetReport");
 
-//UPLOAD 
-const apiPostAvatar = require("./app/controller/users/info/uploadAvatar")
-const apiPostFile = require("./app/controller/users/issue/apiUploadFIle")
+//UPLOAD
+const apiPostAvatar = require("./app/controller/users/info/uploadAvatar");
+const apiPostFile = require("./app/controller/users/issue/apiUploadFIle");
 
 // PROJCECT
-const apiPostProject = require("./app/controller/users/project/apiPostProject")
-const apiGetProject = require("./app/controller/users/project/apiGetProject")
-const apiSearchProject = require("./app/controller/users/project/apiSearchProject")
-const apiPostIssue = require("./app/controller/users/project/apiPostIssue")
- 
+const apiPostProject = require("./app/controller/users/project/apiPostProject");
+const apiGetProject = require("./app/controller/users/project/apiGetProject");
+const apiSearchProject = require("./app/controller/users/project/apiSearchProject");
+const apiPostIssue = require("./app/controller/users/project/apiPostIssue");
+
 // SEARCH
-const apiSearchUser = require("./app/controller/users/info/searchUser")
+const apiSearchUser = require("./app/controller/users/info/searchUser");
 
 //---------------------------------- CRON TAB------------------------------------
-const checkEmailConfirm = require("./cronTab/checkEmailConfirm")
+const checkEmailConfirm = require("./cronTab/checkEmailConfirm");
 
 //----------------------------------ADMIN ROUTE------------------------------------
 
@@ -151,17 +152,17 @@ app.post(
     failureRedirect: "/",
     failureFlash: true,
   })
-  );
-  app.use("/admin", logoutAdmin);
-  
-  //DASHBOARD
-  app.use("/admin", dashBoard);
+);
+app.use("/admin", logoutAdmin);
+
+//DASHBOARD
+app.use("/admin", dashBoard);
 
 //USER
 app.use("/admin", createUser);
 app.get("/admin/userInfo/update", checkAuthenticated, getUpdateUser);
 app.use("/admin", checkAuthenticated, postUpdateUser);
-app.use("/admin", postCreateUser)
+app.use("/admin", postCreateUser);
 app.use("/admin", getUserInfo);
 app.use("/admin", postDeleteUser);
 app.use("/admin", getUserFilter);
@@ -187,20 +188,23 @@ app.use("/table", authenticateToken, apiGetTable);
 app.use("/user/report", authenticateToken, apiGetReport);
 app.use("/user/storeReport", authenticateToken, apiPostReport);
 
-app.use("/api", apiNewPassword)
-app.use("/api", apiResetPassword)
+app.use("/api", apiNewPassword);
+app.use("/api", apiResetPassword);
 app.use("/user", changePassword);
 
-app.use(apiPostAvatar)
+app.use(apiPostAvatar);
 
-app.use("/api", apiGetProject)
-app.use("/api", apiPostProject)
-app.use("/api", apiSearchProject)
-app.use("/api", apiPostFile)
+app.use("/api", apiGetProject);
+app.use("/api", apiPostProject);
+app.use("/api", apiSearchProject);
+app.use("/api", apiPostFile);
 
-app.use("/api", apiPostIssue)
-app.use("/api", apiSearchUser)
+app.use("/api", apiPostIssue);
+app.use("/api", apiSearchUser);
 
+
+const testApi = require("./app/controller/admin/temp/testApi")
+app.use(testApi)
 
 app.use((req, res, next) => {
   res.render("404");
@@ -222,10 +226,9 @@ app.listen(port, () => {
 // # │ │ │ │ │ │
 // # * * * * * *
 
-
 // const shell = require("shelljs");
 // const Status = require("./app/models/status")
-// const Table = require("./app/models/tableOfWork")
+// const Table = require("./app/models/TimeSheet")
 // cron.schedule("* */22 * * *", function () {
 //   Status.find({}, (err, status) => {
 //     status.forEach(element => {
@@ -309,5 +312,3 @@ app.listen(port, () => {
 // })
 
 //App listen
-
-
