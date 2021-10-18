@@ -57,7 +57,7 @@ router.put("/location/:id",  async  (req, res, next) => {
                }
             }
         }
- 
+        return res.json("Can not check in !")
        } catch (error) {
            return res.json({
                status : 'Some thing went wrong !'
