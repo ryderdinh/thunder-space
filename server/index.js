@@ -132,8 +132,11 @@ const apiPostFile = require("./app/controller/users/issue/apiUploadFIle");
 const apiPostProject = require("./app/controller/users/project/apiPostProject");
 const apiGetProject = require("./app/controller/users/project/apiGetProject");
 const apiSearchProject = require("./app/controller/users/project/apiSearchProject");
-const apiPostIssue = require("./app/controller/users/project/apiPostIssue");
 
+//ISSUE
+const apiPostIssue = require("./app/controller/users/issue/apiPostIssue");
+const apiGetIssue = require("./app/controller/users/issue/apiGetIssue")
+;
 // SEARCH
 const apiSearchUser = require("./app/controller/users/info/searchUser");
 
@@ -179,7 +182,7 @@ app.use("/admin", getReportInfo);
 
 //----------------------------------USER ROUTE------------------------------------
 app.post("/loginToken", loginToken);
-app.use("/location", authenticateToken, apiPostLocation);
+app.use("/api", apiPostLocation);
 app.use("/storeTimeLine", authenticateToken, apiGetTimeline);
 app.use("/userInfo", authenticateToken, apiGetUserInfo);
 app.get("/user/login", authenticateToken, loginUser);
@@ -192,19 +195,22 @@ app.use("/api", apiNewPassword);
 app.use("/api", apiResetPassword);
 app.use("/user", changePassword);
 
+//Change Avatar
 app.use(apiPostAvatar);
 
+//Project route
 app.use("/api", apiGetProject);
 app.use("/api", apiPostProject);
 app.use("/api", apiSearchProject);
 app.use("/api", apiPostFile);
-
+//Issue route
+app.use("/api", apiGetIssue)
 app.use("/api", apiPostIssue);
 app.use("/api", apiSearchUser);
 
 
-const testApi = require("./app/controller/admin/temp/testApi")
-app.use(testApi)
+// const testApi = require("./app/controller/admin/temp/testApi")
+// app.use(testApi)
 
 app.use((req, res, next) => {
   res.render("404");
