@@ -18,26 +18,44 @@ router.put("/location/:id",  async  (req, res, next) => {
         
         if(existStatus && currentDistance){
             const currentTime = Date.now()
-            if(!existStatus.timeStart){
+            if(!existStatus.timeStart && !existStatus.timeEnd){
                 existStatus.timeStart = currentTime
                 existStatus.timeLine.push([currentTime, currentDistance])
                 existStatus.save()
+                return res.json({
+                    status : "Check in complete !"
+                })
             }
-            if(existStatus.timeStart){
+            if(existStatus.timeStart && !existStatus.timeEnd){
                 let limitCheckIn = currentTime - existStatus.timeStart
                if(limitCheckIn > 300000){
                 existStatus.timeEnd = currentTime
                 existStatus.timeLine.push([currentTime, currentDistance])
                 existStatus.save()
+                return res.json({
+                    status : "Check in complete !"
+                })
                }else{
                    return res.json({
                        status : "Try after 5 minutes !"
                    })
                }
             }
-            return res.json({
-                status : "Check in complete !"
-            })
+            if(existStatus.timeStart && existStatus.timeEnd){
+                let limitCheckIn = currentTime - existStatus.timeEnd
+               if(limitCheckIn > 300000){
+                existStatus.timeEnd = currentTime
+                existStatus.timeLine.push([currentTime, currentDistance])
+                existStatus.save()
+                return res.json({
+                    status : "Check in complete !"
+                })
+               }else{
+                   return res.json({
+                       status : "Try after 5 minutes !"
+                   })
+               }
+            }
         }
  
        } catch (error) {
