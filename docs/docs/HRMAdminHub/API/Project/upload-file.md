@@ -1,14 +1,15 @@
 ---
-sidebar_position: 1
+sidebar_position: 5
 ---
 
-# Đăng nhập
+# Tải lên file
 
-Method **`GET`**
+Method **`POST`**
 
 ```shell
-https://hrmadmin.herokuapp.com/api/login
+https://hrmadmin.herokuapp.com/api/upload/file
 ```
+
 
 ### Header
 

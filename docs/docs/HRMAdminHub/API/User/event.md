@@ -1,13 +1,13 @@
 ---
-sidebar_position: 1
+sidebar_position: 7
 ---
 
-# Đăng nhập
+# Lấy thông tin sự kiện
 
 Method **`GET`**
 
 ```shell
-https://hrmadmin.herokuapp.com/api/login
+https://hrmadmin.herokuapp.com/api/event
 ```
 
 ### Header
