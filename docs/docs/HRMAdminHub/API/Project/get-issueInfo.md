@@ -7,7 +7,7 @@ sidebar_position: 4
 Method **`GET`**
 
 ```shell
-https://hrmadmin.herokuapp.com/api/issueInfo/<issueId>
+https://hrmadmin.herokuapp.com/api/issue-info/<issueId>
 ```
 
 ### Header
