@@ -4,7 +4,7 @@ const express = require("express")
 const router = express.Router()
 const { convert } = require("../../../utils/dateFormat")
 
-router.get("/:id", (req, res) =>{
+module.exports = (req, res) =>{
     let id = req.params.id
     staffInfo.findById(id, (err, staffInfo ) => {
         res.json({  staffInfo : {
@@ -17,6 +17,4 @@ router.get("/:id", (req, res) =>{
             avatar : staffInfo.avatar.url
           } })
     })
-})
-
-module.exports = router
+}

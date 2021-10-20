@@ -7,15 +7,15 @@ const jwt = require("jsonwebtoken")
 const e = require("cors")
 const { convert } = require("../../../utils/dateFormat")
 const moment = require("moment-timezone")
-const authenticateToken = require("../../../../middleware/user/login/authenticateToken")
-router.post("/changePassword/:id", authenticateToken, (req, res, next) => {
+
+module.exports = (req, res, next) => {
   // const authHeader = req.headers["authorization"];
   // const token = authHeader && authHeader.split(" ")[1];
 
   var time = moment.tz("Asia/Ho_Chi_Minh").format("hh:mm:ss")
   var date = convert(Date.now())
   let id = req.params.id
-  const data = JSON.parse(Object.keys(req.body)[0])
+  const data = req.query
   const newPassword = data.newPassword.trim()
   const currentPassword = data.currentPassword.trim()
   if (newPassword === currentPassword) {
@@ -54,7 +54,5 @@ router.post("/changePassword/:id", authenticateToken, (req, res, next) => {
     })
   })
 }
-)
 
-module.exports = router
 

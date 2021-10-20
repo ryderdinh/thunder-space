@@ -5,7 +5,7 @@ const Issue = require("../../../models/issue")
 const { v4: uuidv4 } = require('uuid');
 const { exist } = require("joi");
 
-router.post("/createIssue/:uid/:pid", async (req, res, next) => {
+module.exports = async (req, res, next) => {
   try{
     const uid = req.params.uid
     const pid = req.params.pid
@@ -80,6 +80,4 @@ router.post("/createIssue/:uid/:pid", async (req, res, next) => {
     })
   }
 
-})
-
-module.exports = router
+}
