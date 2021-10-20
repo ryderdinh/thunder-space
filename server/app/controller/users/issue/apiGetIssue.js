@@ -1,7 +1,7 @@
 const router = require("express").Router()
 const Issue = require("../../../models/issue")
 
-router.get("/issueInfo/:iid", async (req, res, next) => {
+module.exports = async (req, res, next) => {
     try {
         const iid = req.params.iid
         const existIssue = await Issue.findOne({iid : iid})
@@ -17,6 +17,4 @@ router.get("/issueInfo/:iid", async (req, res, next) => {
             status : "Something went wrong !"
         })
     }
-})
-
-module.exports = router
+}

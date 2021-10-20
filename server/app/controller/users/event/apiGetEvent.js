@@ -3,9 +3,7 @@ const { env } = require("shelljs")
 const Event = require("../../../models/event")
 const { convert } = require("../../../utils/dateFormat")
 
-module.exports = (req, res) => {
-    
-
+module.exports  = (req, res) => {
     Event.find({}, (err, event) =>{
         if(err) {
             res.json({data : {status : "Cannot access event"}})
@@ -23,9 +21,3 @@ module.exports = (req, res) => {
          })
     })
 }
-
-// { data : {
-//     date : convert.toLocaleDateString(),
-//     name : event.name,
-//     position : event.position
-// } }

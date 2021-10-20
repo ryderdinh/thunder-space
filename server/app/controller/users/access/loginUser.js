@@ -2,7 +2,7 @@ const Staff = require("../../../models/Staff");
 const moment = require("moment-timezone")
 const { convert } = require("../../../utils/dateFormat")
 const History = require("../../../models/history")
-module.exports = (req, res) => {
+module.exports  = (req, res, next) => {
   var time = moment.tz("Asia/Ho_Chi_Minh").format("hh:mm:ss")
   var date = convert(Date.now())
   if(req.user.name == null){
