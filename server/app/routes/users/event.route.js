@@ -3,4 +3,4 @@ const authenticateToken = require("../../../middleware/user/login/authenticateTo
 const apiGetEvent = require('../../controller/users/event/apiGetEvent')
 
 //Get event's information
-exports.apiGetEvent = router.get("/event", authenticateToken, apiGetEvent)
+exports.apiGetEvent = router.get("/event",authenticateToken, apiGetEvent)
