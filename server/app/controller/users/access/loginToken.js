@@ -3,7 +3,8 @@ const bcrypt = require("bcrypt")
 const Staff = require("../../../models/Staff")
 module.exports = (req, res, next) => {
         //Authenticate user
-        const dataUser = req.query;
+        const dataUser = req.body;
+        console.log(req.body);
         const { username, password } = dataUser;
         Staff.findOne({ email: username }, (error, user) => {
         if (user) {
