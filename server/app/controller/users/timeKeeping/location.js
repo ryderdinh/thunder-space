@@ -2,11 +2,8 @@ const Status = require("../../../models/status")
 const History = require("../../../models/history")
 const { distance } = require("../../../utils/findDistance")
 const { changeTimeToFloat } = require("../../../utils/handleTime")
-const router = require('express').Router()
-const authenticateToken = require("../../../../middleware/user/login/authenticateToken")
-const moment = require("moment")
 
-router.put("/location/:id",  async  (req, res, next) => {
+module.exports = async (req, res, next) => {
        try {
         const sId = req.params.id;
         const existStatus = await Status.findById(sId)
@@ -63,7 +60,7 @@ router.put("/location/:id",  async  (req, res, next) => {
                status : 'Some thing went wrong !'
            })
        }
-})
+}
 
-module.exports = router;
+
 

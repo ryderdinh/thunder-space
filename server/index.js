@@ -104,8 +104,7 @@ const authenticateToken = require("./middleware/user/login/authenticateToken");
                         ACCESS
 ---------------------------------------------*/ 
 const routesAccess = require("./app/routes/users/access.route");
-const apiResetPassword = require("./app/controller/users/access/postResetPassword");
-const apiNewPassword = require("./app/controller/users/access/postNewPassword");
+
 
 app.use("/api", routesAccess.apiPostToken)
 app.use("/api", routesAccess.apiGetLogin);
@@ -136,11 +135,13 @@ app.use("/api", routesIssue.apiGetIssue)
 app.use("/api", routesIssue.apiPostIssue);
 app.use("/api", routesIssue.apiPostFile);
 
-//TIMEKEEPING
-const apiPostLocation = require("./app/controller/users/timeKeeping/location");
-const apiGetTimeline = require("./app/controller/users/timeKeeping/storeTimeLine");
+/* -------------------------------------------
+                        TIMEKEEPING
+---------------------------------------------*/ 
+const routesCheckin = require('./app/routes/users/checkin.route')
 
-
+app.use("/api", routesCheckin.apiPutLocation);
+app.use("/api", routesCheckin.apiGetTimeLine);
 //STATISTIC
 const apiGetTable = require("./app/controller/users/statistic/apiGetTable");
 
@@ -155,8 +156,7 @@ const apiGetProject = require("./app/controller/users/project/apiGetProject");
 const apiSearchProject = require("./app/controller/users/project/apiSearchProject");
 
 
-app.use("/api", apiPostLocation);
-app.use("/storeTimeLine", authenticateToken, apiGetTimeline);
+
 app.use("/table", authenticateToken, apiGetTable);
 app.use("/user/report", authenticateToken, apiGetReport);
 app.use("/user/storeReport", authenticateToken, apiPostReport);
