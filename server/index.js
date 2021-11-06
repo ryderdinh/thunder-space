@@ -108,7 +108,7 @@ const apiResetPassword = require("./app/controller/users/access/postResetPasswor
 const apiNewPassword = require("./app/controller/users/access/postNewPassword");
 
 app.use("/api", routesAccess.apiPostToken)
-app.use("/api", routesAccess.apiPostLogin);
+app.use("/api", routesAccess.apiGetLogin);
 app.use("/api", routesAccess.apiPutChangePassword);
 
 /* -------------------------------------------
