@@ -334,12 +334,12 @@
 		display: flex;
 	}
 }
-
+/* 
 @media screen and (max-width: 767px) {
 	.login-container {
 		height: 100vh;
 	}
-}
+} */
 
 @media screen and (width: 768px) {
 	.login-container .onboarding {
