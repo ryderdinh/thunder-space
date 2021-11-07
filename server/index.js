@@ -7,12 +7,12 @@ const flash = require("express-flash");
 const session = require("express-session");
 const passport = require("passport");
 const methodOverride = require("method-override");
-const initializePassport = require("./passport-config");
+const initializePassport = require("./config/passport/passport.config");
 const cors = require("cors");
 
-const fileupload = require('express-fileupload'); 
-app.use(express.json({ limit: '50mb' }));
-app.use(fileupload({useTempFiles: true}))
+const fileupload = require("express-fileupload");
+app.use(express.json({ limit: "50mb" }));
+app.use(fileupload({ useTempFiles: true }));
 initializePassport(
   passport,
   (uname) => admins.find((admin) => admin.uname === uname),
@@ -58,11 +58,12 @@ const admins = [
 ];
 
 //----------------------------------CORS------------------------------------
-app.use(cors({
-  origin : "*",
-  methods : ["POST", "GET", 'PUT', "DELETE"]
-}));
-
+app.use(
+  cors({
+    origin: "*",
+    methods: ["POST", "GET", "PUT", "DELETE"],
+  })
+);
 
 //----------------------------------ADMIN CONTROLLER------------------------------------
 // const loginAdmin = require("./app/controller/loginAdmin")
@@ -97,25 +98,50 @@ const checkAuthenticated = require("./middleware/admin/login/checkAuthenticated"
 const checkNotAuthenticated = require("./middleware/admin/login/checkNotAuthenticated");
 const authenticateToken = require("./middleware/user/login/authenticateToken");
 
-//----------------------------------USER CONTROLLER------------------------------------
+//———————————————————————————USER ROUTES—————————————————————————————//
 
-//ACCESS
-const loginUser = require("./app/controller/users/access/loginUser");
-const loginToken = require("./app/controller/users/access/loginToken");
-const changePassword = require("./app/controller/users/access/changePassword");
-const apiResetPassword = require("./app/controller/users/access/postResetPassword")
-const apiNewPassword = require("./app/controller/users/access/postNewPassword")
+/* -------------------------------------------
+                        ACCESS
+---------------------------------------------*/ 
+const routesAccess = require("./app/routes/users/access.route");
 
-//INFOR
-const apiGetUserInfo = require("./app/controller/users/info/apiGetUserInfo");
 
-//TIMEKEEPING
-const apiPostLocation = require("./app/controller/users/timeKeeping/location");
-const apiGetTimeline = require("./app/controller/users/timeKeeping/storeTimeLine");
+app.use("/api", routesAccess.apiPostToken)
+app.use("/api", routesAccess.apiGetLogin);
+app.use("/api", routesAccess.apiPutChangePassword);
 
-//EVENT
-const apiGetEvent = require("./app/controller/users/event/apiGetEvent");
+/* -------------------------------------------
+                        INFOR
+---------------------------------------------*/ 
+const routesInfo = require("./app/routes/users/info.route");
 
+app.use("/api", routesInfo.apiGetUserInfo);
+app.use("/api", routesInfo.apiGetSearchUser);
+app.use("/api", routesInfo.apiPutUploadAvatar);
+
+/* -------------------------------------------
+                        EVENT
+---------------------------------------------*/ 
+const routesEvent = require("./app/routes/users/event.route");
+
+app.use("/api", routesEvent.apiGetEvent);
+
+/* -------------------------------------------
+                        ISSUE
+---------------------------------------------*/ 
+const routesIssue = require("./app/routes/users/issue.route")
+
+app.use("/api", routesIssue.apiGetIssue)
+app.use("/api", routesIssue.apiPostIssue);
+app.use("/api", routesIssue.apiPostFile);
+
+/* -------------------------------------------
+                        TIMEKEEPING
+---------------------------------------------*/ 
+const routesCheckin = require('./app/routes/users/checkin.route')
+
+app.use("/api", routesCheckin.apiPutLocation);
+app.use("/api", routesCheckin.apiGetTimeLine);
 //STATISTIC
 const apiGetTable = require("./app/controller/users/statistic/apiGetTable");
 
@@ -123,21 +149,31 @@ const apiGetTable = require("./app/controller/users/statistic/apiGetTable");
 const apiPostReport = require("./app/controller/users/report/apiPostReport");
 const apiGetReport = require("./app/controller/users/report/apiGetReport");
 
-//UPLOAD 
-const apiPostAvatar = require("./app/controller/users/info/uploadAvatar")
-const apiPostFile = require("./app/controller/users/issue/apiUploadFIle")
 
 // PROJCECT
-const apiPostProject = require("./app/controller/users/project/apiPostProject")
-const apiGetProject = require("./app/controller/users/project/apiGetProject")
-const apiSearchProject = require("./app/controller/users/project/apiSearchProject")
-const apiPostIssue = require("./app/controller/users/project/apiPostIssue")
- 
-// SEARCH
-const apiSearchUser = require("./app/controller/users/info/searchUser")
+const apiPostProject = require("./app/controller/users/project/apiPostProject");
+const apiGetProject = require("./app/controller/users/project/apiGetProject");
+const apiSearchProject = require("./app/controller/users/project/apiSearchProject");
 
-//---------------------------------- CRON TAB------------------------------------
-const checkEmailConfirm = require("./cronTab/checkEmailConfirm")
+
+
+app.use("/table", authenticateToken, apiGetTable);
+app.use("/user/report", authenticateToken, apiGetReport);
+app.use("/user/storeReport", authenticateToken, apiPostReport);
+//Event
+
+
+//Project route
+app.use("/api", apiGetProject);
+app.use("/api", apiPostProject);
+app.use("/api", apiSearchProject);
+
+
+
+
+const testApi = require("./app/controller/admin/temp/testApi");
+app.use(testApi)
+
 
 //----------------------------------ADMIN ROUTE------------------------------------
 
@@ -151,17 +187,17 @@ app.post(
     failureRedirect: "/",
     failureFlash: true,
   })
-  );
-  app.use("/admin", logoutAdmin);
-  
-  //DASHBOARD
-  app.use("/admin", dashBoard);
+);
+app.use("/admin", logoutAdmin);
+
+//DASHBOARD
+app.use("/admin", dashBoard);
 
 //USER
 app.use("/admin", createUser);
 app.get("/admin/userInfo/update", checkAuthenticated, getUpdateUser);
 app.use("/admin", checkAuthenticated, postUpdateUser);
-app.use("/admin", postCreateUser)
+app.use("/admin", postCreateUser);
 app.use("/admin", getUserInfo);
 app.use("/admin", postDeleteUser);
 app.use("/admin", getUserFilter);
@@ -177,29 +213,6 @@ app.use("/admin", postUpdateEvent);
 app.use("/admin", getReportInfo);
 
 //----------------------------------USER ROUTE------------------------------------
-app.post("/loginToken", loginToken);
-app.use("/location", authenticateToken, apiPostLocation);
-app.use("/storeTimeLine", authenticateToken, apiGetTimeline);
-app.use("/userInfo", authenticateToken, apiGetUserInfo);
-app.get("/user/login", authenticateToken, loginUser);
-app.get("/event", authenticateToken, apiGetEvent);
-app.use("/table", authenticateToken, apiGetTable);
-app.use("/user/report", authenticateToken, apiGetReport);
-app.use("/user/storeReport", authenticateToken, apiPostReport);
-
-app.use("/api", apiNewPassword)
-app.use("/api", apiResetPassword)
-app.use("/user", changePassword);
-
-app.use(apiPostAvatar)
-
-app.use("/api", apiGetProject)
-app.use("/api", apiPostProject)
-app.use("/api", apiSearchProject)
-app.use("/api", apiPostFile)
-
-app.use("/api", apiPostIssue)
-app.use("/api", apiSearchUser)
 
 
 app.use((req, res, next) => {
@@ -222,10 +235,9 @@ app.listen(port, () => {
 // # │ │ │ │ │ │
 // # * * * * * *
 
-
 // const shell = require("shelljs");
 // const Status = require("./app/models/status")
-// const Table = require("./app/models/tableOfWork")
+// const Table = require("./app/models/TimeSheet")
 // cron.schedule("* */22 * * *", function () {
 //   Status.find({}, (err, status) => {
 //     status.forEach(element => {
@@ -309,5 +321,3 @@ app.listen(port, () => {
 // })
 
 //App listen
-
-

@@ -1,5 +1,5 @@
 const router = require("express").Router()
-const Staff = require("../../../models/staffInformation")
+const Staff = require("../../../models/Staff")
 const Project = require("../../../models/project")
 
 router.get("/projectInfo/:id", async (req, res, next) => {

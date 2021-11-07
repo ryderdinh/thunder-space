@@ -1,13 +1,12 @@
 const router = require("express").Router()
 const authenticateToken = require("../../../../middleware/user/login/authenticateToken")
-const Staff = require("../../../models/staffInformation")
+const Staff = require("../../../models/Staff")
 
-router.get("/searchUser", async (req, res, next) => {
+module.exports =  async (req, res, next) => {
     try{
     const  email = req.query.email
-    // console.log(req.body);
     const existEmail = await Staff.findOne({ email : email })
-    console.log(existEmail);
+    // console.log(existEmail);
     if(existEmail){
         return res.json( {
             data : {
@@ -33,6 +32,4 @@ router.get("/searchUser", async (req, res, next) => {
             } })
         }
     }
-})
-
-module.exports = router
+}

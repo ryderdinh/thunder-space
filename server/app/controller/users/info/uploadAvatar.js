@@ -1,11 +1,11 @@
-const Staff = require("../../../models/staffInformation")
+const Staff = require("../../../models/Staff")
 const express = require('express')
 const router = express.Router()
 const  cloudinary  = require("../../../../config/cloud/cloudinary") 
 const fs = require("fs")
 // const upload = require("../../../../config/multer")
 
-router.post('/upload/avatar/:id', async (req, res) => {
+module.exports  = async (req, res) => {
     try {
         const id = req.params.id
         const avatar = req.files.image.tempFilePath
@@ -55,6 +55,5 @@ router.post('/upload/avatar/:id', async (req, res) => {
         console.error(err);
         res.status(500).json({ err: 'Something went wrong' });
     }
-});
+};
 
-module.exports = router

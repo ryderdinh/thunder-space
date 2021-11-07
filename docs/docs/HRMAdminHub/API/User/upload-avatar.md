@@ -1,5 +1,5 @@
 ---
-sidebar_position: 3
+sidebar_position: 4
 ---
 
 # Thay ảnh đại diện
@@ -7,7 +7,7 @@ sidebar_position: 3
 Method **`POST`**
 
 ```shell
-https://hrmadmin.herokuapp.com/upload/avatar/<userId>
+https://hrmadmin.herokuapp.com/api/upload/avatar/<userId>
 ```
 
 ### Tham số

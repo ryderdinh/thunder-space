@@ -1,4 +1,4 @@
-const Staff = require("../../../models/staffInformation");
+const Staff = require("../../../models/Staff");
 const History = require("../../../models/history");
 if(process.env.NODE_ENV != 'production'){
   require('dotenv').config()

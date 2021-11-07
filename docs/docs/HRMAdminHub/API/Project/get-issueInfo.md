@@ -1,13 +1,13 @@
 ---
-sidebar_position: 1
+sidebar_position: 4
 ---
 
-# Đăng nhập
+# Lấy thông tin vấn đề
 
 Method **`GET`**
 
 ```shell
-https://hrmadmin.herokuapp.com/api/login
+https://hrmadmin.herokuapp.com/api/issue-info/<issueId>
 ```
 
 ### Header
