@@ -1,11 +1,11 @@
-import React from 'react'
+import React, { useEffect } from 'react';
 
 function WorkflowContainer() {
-  return (
-    <div>
-      
-    </div>
-  )
+	useEffect(() => {
+		document.title = `Không gian làm việc`;
+	}, []);
+
+	return <div></div>;
 }
 
-export default WorkflowContainer
+export default WorkflowContainer;

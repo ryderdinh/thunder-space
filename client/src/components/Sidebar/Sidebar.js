@@ -36,7 +36,7 @@ export class Sidebar extends Component {
 				<div className='logo-details'>
 					<div className='logo'>
 						<img
-							src={require('assets/images/icons/logo-new.png').default}
+							src={require('assets/images/icons/logo-new-2.png').default}
 							alt='logo'
 						/>
 					</div>

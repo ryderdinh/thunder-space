@@ -71,7 +71,7 @@ const Project = ({ dataPopup }) => {
 				try {
 					const result = await axios({
 						method: 'GET',
-						url: `https://hrmadmin.herokuapp.com/api/searchUser`,
+						url: `https://hrmadmin.herokuapp.com/api/search-user`,
 						params: {
 							email
 						},

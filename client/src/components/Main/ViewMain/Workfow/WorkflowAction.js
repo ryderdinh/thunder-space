@@ -7,7 +7,6 @@ import Info from 'assets/images/icons/info_circle.svg';
 import List from 'assets/images/icons/list.svg';
 import { useDispatch } from 'react-redux';
 import { setPopup } from 'actions';
-import toast from 'react-hot-toast';
 
 function useOutsideSearchBox(ref, handle) {
 	useEffect(() => {
@@ -66,24 +65,24 @@ export default function WorkflowAction({ type, ...props }) {
 			return (
 				<div
 					className={`wf-action--item ${type} pointer`}
-					// onClick={() => {
-					//   dispatch(
-					//     setPopup({
-					//       typePopup: "project",
-					//       isShow: true,
-					//       dataPopup: { type: "create" },
-					//     })
-					//   );
-					// }}
 					onClick={() => {
 						dispatch(
 							setPopup({
-								typePopup: 'issue',
+								typePopup: 'project',
 								isShow: true,
 								dataPopup: { type: 'create' }
 							})
 						);
 					}}
+					// onClick={() => {
+					// 	dispatch(
+					// 		setPopup({
+					// 			typePopup: 'issue',
+					// 			isShow: true,
+					// 			dataPopup: { type: 'create' }
+					// 		})
+					// 	);
+					// }}
 				>
 					<img src={Plus} alt='icon' />
 				</div>

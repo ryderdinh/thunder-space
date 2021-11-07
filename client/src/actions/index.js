@@ -1,6 +1,6 @@
 //* IMPORT =============================================
 import callAPI from '../api/callAPI';
-import { getAllCookie, removeCookie, setCookie } from '../units/cookieWeb';
+import { getAllCookie, setCookie } from '../units/cookieWeb';
 import toast from 'react-hot-toast';
 import axios from 'axios';
 
@@ -8,24 +8,25 @@ import axios from 'axios';
 export const actSignIn = dataUser => {
 	loadingToast('Đang đăng nhập');
 	return async dispatch => {
-		const res = await callAPI('loginToken', 'POST', dataUser, null);
-		if (res !== undefined) {
-			const res_1 = await callAPI('user/login', 'GET', null, {
-				authorization: `Bearer ${res.accessToken}`
+		const res = await callAPI('token', 'POST', dataUser, null);
+		if (res) {
+			const res_1 = await callAPI('login', 'GET', null, {
+				authorization: `Bearer ${res?.accessToken}`
 			});
 			removeToast();
-			if (res_1 !== undefined) {
-				if (res_1.data.status === 'Login succesfully') {
-					setCookie(res_1.data.id, res.accessToken);
-					dispatch(actFetchEvents());
-					dispatch(actFetchStaffInfomation());
-					dispatch(actFetchDataTableOfWork());
-					dispatch(actFetchTimeKeeping());
+			if (res_1) {
+				//? check login success
+				if (res_1?.data?.status === 'Login succesfully') {
 					successToast('Đăng nhập thành công');
-
-					setTimeout(() => {
+					Promise.all([
+						setCookie(res_1.data?.id, res.accessToken),
+						await dispatch(actFetchStaffInfomation()),
+						await dispatch(actFetchEvents()),
+						await dispatch(actFetchDataTableOfWork()),
+						await dispatch(actFetchTimeKeeping())
+					]).then(() => {
 						dispatch(setCheckLogin(true));
-					}, 1500);
+					});
 				} else {
 					errorToast(
 						'Đăng nhập thất bại, kiểm tra lại tên đăng nhập hoặc mật khẩu của bạn'
@@ -43,185 +44,193 @@ export const actSignIn = dataUser => {
 		}
 	};
 };
+
 export const actFetchStaffInfomation = () => {
 	const { id, token } = getAllCookie();
 	return async dispatch => {
-		const payload = await callAPI(`userInfo/${id}`, 'GET', null, {
+		const res = await callAPI(`users/${id}`, 'GET', null, {
 			authorization: `Bearer ${token}`
 		});
-		dispatch(setStaffInfomation(payload.staffInfo));
+		res && dispatch(setStaffInfomation(res.staffInfo));
 	};
 };
+
 export const actFetchDataTableOfWork = () => {
 	const { id, token } = getAllCookie();
 	return async dispatch => {
 		const res = await callAPI(`table/${id}`, 'GET', null, {
 			authorization: `Bearer ${token}`
 		});
-		if (res !== undefined) dispatch(getDataTimesheets(res.data));
+		res && dispatch(getDataTimesheets(res.data));
 	};
 };
+
 export const actFetchTimeKeeping = () => {
 	const { id, token } = getAllCookie();
 	return async dispatch => {
-		const res = await callAPI(`storeTimeline/${id}`, 'GET', null, {
+		await dispatch(setLoadingTimeKeeping());
+		const res = await callAPI(`timeline/${id}`, 'GET', null, {
 			authorization: `Bearer ${token}`
 		});
-		if (res !== undefined) {
-			dispatch(getDataTimeKeeping(res.data));
-			dispatch(setTimeKeeping(res.data));
+		if (res?.data) {
+			await dispatch(setDataTimeKeeping(res.data));
+			await dispatch(setTimeKeeping(res.data));
 		}
 	};
 };
+
 export const actSendLocationToServer = location => {
 	loadingToast('Đang chấm công');
 	const { id, token } = getAllCookie();
 	return async dispatch => {
 		const res = await callAPI(
-			`location/${id}`,
-			'POST',
-			{ lat: location[0], lon: location[1] },
+			`location/${id}?lat=${location[0]}&lon=${location[1]}`,
+			'PUT',
+			null,
 			{
 				authorization: `Bearer ${token}`
 			}
 		);
-		if (res !== undefined) {
+		if (res) {
 			dispatch(actFetchTimeKeeping());
 		} else {
 			removeToast();
 			errorToast('Chấm công thất bại');
 		}
-		if (res.data.status === 'Check in complete') {
+		console.log(res);
+		if (res?.status) {
 			removeToast();
-			successToast('Chấm công thành công');
-		}
-		if (res.data.status === 'Try after 5 minutes') {
-			removeToast();
-			errorToast('Bạn vừa chấm công, thử lại sau 5p');
-		}
-		if (res.data.status === 'You are far from company') {
-			removeToast();
-			errorToast('Khoảng cách chấm công quá xa');
+			switch (res.status) {
+				case 'check in complete': {
+					successToast('Chấm công thành công');
+					break;
+				}
+				case 'try after 5 minutes': {
+					errorToast('Bạn vừa chấm công, thử lại sau');
+					break;
+				}
+				case 'you are far from company': {
+					errorToast('Khoảng cách chấm công quá xa');
+					break;
+				}
+				default:
+					break;
+			}
 		}
 	};
 };
+
 export const actFetchEvents = () => {
 	const { token } = getAllCookie();
 	return async dispatch => {
 		const res = await callAPI(`event`, 'GET', null, {
 			authorization: `Bearer ${token}`
 		});
-		dispatch(setEvents(res));
+		res && dispatch(setEvents(res));
 	};
 };
+
 export const actSendReport = data => {
 	const { id, token } = getAllCookie();
-	loadingToast('Đang gửi yêu cầu của bạn');
+	loadingToast('Đang gửi yêu cầu');
 	return async () => {
 		const res = await callAPI(`user/storeReport/${id}`, 'POST', data, {
 			authorization: `Bearer ${token}`
 		});
 
-		if (res === undefined) {
+		if (!res) {
 			removeToast();
-			errorToast('Gửi thất bại');
+			errorToast('Gửi thất bại, vui lòng thử lại sau!');
 		}
-		if (res.data.status === 'Report complete') {
-			removeToast();
-			successToast('Gửi thành công');
-		}
-		if (res.data.status === 'Canot report') {
-			removeToast();
-			successToast('Gửi thất bại');
+		switch (res?.data?.status) {
+			case 'Report complete': {
+				successToast('Gửi thành công');
+				break;
+			}
+			case 'Canot report': {
+				errorToast('Gửi thất bại, vui lòng thử lại sau!');
+				break;
+			}
+			default:
+				break;
 		}
 	};
 };
+
 export const actRefreshPage = () => {
 	loadingToast('Đang đăng nhập lại');
 	const { id, token } = getAllCookie();
-	if (id === undefined || token === undefined)
+	if (!id || !token)
 		return dispatch => {
 			dispatch(setCheckLogin(false));
 			removeToast();
 			errorToast('Bạn cần đăng nhập lại');
 		};
-	else {
-		return async dispatch => {
-			const res_1 = await callAPI('user/login', 'GET', null, {
-				authorization: `Bearer ${token}`
-			});
-			removeToast();
-			if (res_1 !== undefined) {
-				if (res_1.data.status === 'Login succesfully') {
-					dispatch(actFetchEvents());
-					dispatch(actFetchStaffInfomation());
-					dispatch(actFetchDataTableOfWork());
-					dispatch(actFetchTimeKeeping());
-					dispatch(setCheckLogin(true));
-					setCookie(res_1.data.id, token);
-					successToast('Chào mừng quay trở lại');
-				} else {
-					errorToast('Bạn cần đăng nhập lại');
-				}
+	return async dispatch => {
+		const res_1 = await callAPI('login', 'GET', null, {
+			authorization: `Bearer ${token}`
+		});
+		if (res_1) {
+			if (res_1?.data?.status === 'Login succesfully') {
+				Promise.all([
+					await dispatch(actFetchStaffInfomation()),
+					await dispatch(actFetchDataTableOfWork()),
+					await dispatch(actFetchTimeKeeping()),
+					await dispatch(actFetchEvents())
+				])
+					.then(() => {
+						setCookie(res_1.data?.id, token);
+					})
+					.then(() => {
+						removeToast();
+						successToast('Chào mừng quay trở lại');
+						dispatch(setCheckLogin(true));
+					});
 			} else {
+				removeToast();
 				errorToast('Bạn cần đăng nhập lại');
 			}
-		};
-	}
+		} else {
+			removeToast();
+			errorToast('Bạn cần đăng nhập lại');
+		}
+	};
 };
+
 export const actChangePassword = data => {
 	loadingToast('Đang xử lí yêu cầu...');
 	const { id, token } = getAllCookie();
 	return async () => {
-		const res = await callAPI(`user/changePassword/${id}`, 'POST', data, {
+		const res = await callAPI(`change-password/${id}`, 'PUT', data, {
 			authorization: `Bearer ${token}`
 		});
 		removeToast();
-		if (res.data.status === 'New password is invalid') {
-			errorToast('Mật khẩu mới phải trên 5 kí tự');
-		}
-		if (res.data.status === 'Change password successfully') {
-			successToast('Đổi mật khẩu thành công');
-			window.location.href = 'https://zelios-sea.netlify.app/';
-			removeCookie(true, true);
-		}
-		if (res.data.status === 'Current password is incorrectly') {
-			errorToast('Mật khẩu cũ chưa chính xác');
-		}
-		if (res.data.status === 'New password is same your current password') {
-			errorToast('Mật khẩu mới phải khác mật khẩu cũ');
-		}
-	};
-};
-export const searchUser = email => {
-	const { token } = getAllCookie();
-	return async dispatch => {
-		try {
-			const res = await axios({
-				method: 'GET',
-				url: `https://hrmadmin.herokuapp.com/api/searchUser`,
-				headers: {
-					'Content-Type': 'application/json',
-					authorization: `Bearer ${token}`
-				},
-				params: {
-					email
+
+		if (res) {
+			switch (res?.data?.status) {
+				case 'Change password successfully': {
+					successToast('Đổi mật khẩu thành công');
+					break;
 				}
-			});
-			removeToast();
-			if (res.data.hasOwnProperty('data')) {
-				successToast('Tạo dự án thành công');
-				dispatch(closePopup());
-			} else {
-				errorToast('Tạo dự án thất bại');
-				throw new Error('Failed');
+				case 'New password is invalid': {
+					errorToast('Mật khẩu mới phải trên 5 kí tự');
+					break;
+				}
+				case 'Wrong old password': {
+					errorToast('Mật khẩu cũ không đúng');
+					break;
+				}
+				case 'New password is same your current password': {
+					errorToast('Mật khẩu mới không được trùng với mật khẩu cũ');
+					break;
+				}
+				default:
+					break;
 			}
-		} catch (error) {
-			console.log(error);
-			errorToast('Tạo dự án thất bại');
 		}
 	};
 };
+
 export const actCreateProject = data => {
 	loadingToast('Đang xử lí yêu cầu...');
 	const { id, token } = getAllCookie();
@@ -237,7 +246,7 @@ export const actCreateProject = data => {
 				data
 			});
 			removeToast();
-			if (res.data.hasOwnProperty('data')) {
+			if (res?.data?.data) {
 				successToast('Tạo dự án thành công');
 				dispatch(closePopup());
 			} else {
@@ -245,18 +254,19 @@ export const actCreateProject = data => {
 				throw new Error('Failed');
 			}
 		} catch (error) {
-			console.log(error);
+			removeToast();
 			errorToast('Tạo dự án thất bại');
 		}
 	};
 };
+
 export const actFetchProject = data => {
 	// loadingToast("Đang lấy dữ liệu...");
 	const { id, token } = getAllCookie();
 	let _param = '';
-	if (data !== undefined) {
-		for (let i = 0; i < data.length; i++) {
-			_param = `projectCode=${data[i]}`;
+	if (data) {
+		for (const item of data) {
+			_param = `projectCode=${item}`;
 		}
 		_param = '?' + _param;
 	}
@@ -295,11 +305,11 @@ export const actFetchProject = data => {
 				}
 			}
 		} catch (error) {
-			console.log(error);
-			errorToast(`Lỗi`);
+			errorToast(`Lỗi không xác định`);
 		}
 	};
 };
+
 export const actCreateIssue = (wid, data) => {
 	loadingToast('Đang xử lí yêu cầu...');
 	const { id, token } = getAllCookie();
@@ -320,12 +330,11 @@ export const actCreateIssue = (wid, data) => {
 				dispatch(closePopup());
 			} else errorToast('Tạo issue thất bại');
 		} catch (error) {
-			console.log(error);
 			errorToast('Tạo issue thất bại');
 		}
 	};
 };
-// export const actFetch
+
 //? TOAST
 const errorToast = toast.error;
 const successToast = toast.success;
@@ -362,7 +371,10 @@ export const getDataTimesheetsDetail = payload => ({
 	type: 'GET_DATA_TIMESHEETS_DETAIL',
 	payload
 });
-export const getDataTimeKeeping = payload => ({
+export const setLoadingTimeKeeping = () => ({
+	type: 'SET_TIME_KEEPING_LOADING'
+});
+export const setDataTimeKeeping = payload => ({
 	type: 'SET_DATA_TIME_KEEPING',
 	payload
 });
