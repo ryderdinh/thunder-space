@@ -13,29 +13,28 @@ const cors = require("cors");
 const fileupload = require("express-fileupload");
 app.use(express.json({ limit: "50mb" }));
 app.use(fileupload({ useTempFiles: true }));
+
+
+//———————————————————————————VIEWS—————————————————————————————//
+
+app.set("view engine", "ejs");
+app.set("views", "views/MAIN/pages");
+app.use(express.static(__dirname + "/views/MAIN"));
+// app.use(express.static(path.join(__dirname, 'public')))
+app.use(express.urlencoded({ limit: "50mb", extended: false }));
+
+//———————————————————————————INIT PASSPORT—————————————————————————————//
 initializePassport(
   passport,
   (uname) => admins.find((admin) => admin.uname === uname),
   (id) => admins.find((admin) => admin.id === id)
 );
 
-//----------------------------------VIEW ENGINE------------------------------------
-
-app.set("view engine", "ejs");
-app.set("views", "views/MAIN/pages");
-app.use(express.static(__dirname + "/views/MAIN"));
-// app.use(express.static(path.join(__dirname, 'public')))
-//Parser
-app.use(express.urlencoded({ limit: "50mb", extended: false }));
-// app.use(bodyParser.json())
-// app.use(bodyParser.raw());
-
-//----------------------------------INIT PASSPORT------------------------------------
 app.use(flash());
 app.use(
   session({
     secret:
-      "98c00efe44d70207991595b328a8809a9ff45e04459f644b4a0442dcde979f97b20a86365da4fd213e87807138a44296aaeeb0a7b6ec8c9baca3cf181ee31478",
+    process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
   })
@@ -45,10 +44,10 @@ app.use(passport.session());
 app.use(methodOverride("_method"));
 app.use(express.json());
 
-//----------------------------------CONNECT DATABASE------------------------------------
+//———————————————————————————CONNECT DATABASE—————————————————————————————//
 db.connect();
 
-//----------------------------------ADMIN  INFO------------------------------------
+//———————————————————————————ADMIN INFO—————————————————————————————//
 const admins = [
   {
     id: "123123",
@@ -57,7 +56,7 @@ const admins = [
   },
 ];
 
-//----------------------------------CORS------------------------------------
+//———————————————————————————CORS—————————————————————————————//
 app.use(
   cors({
     origin: "*",
@@ -103,79 +102,75 @@ const authenticateToken = require("./middleware/user/login/authenticateToken");
 /* -------------------------------------------
                         ACCESS
 ---------------------------------------------*/ 
-const routesAccess = require("./app/routes/users/access.route");
+const routersAccess = require("./app/routes/users/access.route");
 
 
-app.use("/api", routesAccess.apiPostToken)
-app.use("/api", routesAccess.apiGetLogin);
-app.use("/api", routesAccess.apiPutChangePassword);
+app.use("/api", routersAccess.apiPostToken)
+app.use("/api", routersAccess.apiGetLogin);
+app.use("/api", routersAccess.apiPutChangePassword);
 
 /* -------------------------------------------
                         INFOR
 ---------------------------------------------*/ 
-const routesInfo = require("./app/routes/users/info.route");
+const routersInfo = require("./app/routes/users/info.route");
 
-app.use("/api", routesInfo.apiGetUserInfo);
-app.use("/api", routesInfo.apiGetSearchUser);
-app.use("/api", routesInfo.apiPutUploadAvatar);
+app.use("/api", routersInfo.apiGetUserInfo);
+app.use("/api", routersInfo.apiGetSearchUser);
+app.use("/api", routersInfo.apiPutUploadAvatar);
 
 /* -------------------------------------------
                         EVENT
 ---------------------------------------------*/ 
-const routesEvent = require("./app/routes/users/event.route");
+const routersEvent = require("./app/routes/users/event.route");
 
-app.use("/api", routesEvent.apiGetEvent);
+app.use("/api", routersEvent.apiGetEvent);
 
 /* -------------------------------------------
                         ISSUE
 ---------------------------------------------*/ 
-const routesIssue = require("./app/routes/users/issue.route")
+const routersIssue = require("./app/routes/users/issue.route")
 
-app.use("/api", routesIssue.apiGetIssue)
-app.use("/api", routesIssue.apiPostIssue);
-app.use("/api", routesIssue.apiPostFile);
+app.use("/api", routersIssue.apiGetIssue)
+app.use("/api", routersIssue.apiPostIssue);
+app.use("/api", routersIssue.apiPostFile);
 
 /* -------------------------------------------
                         TIMEKEEPING
 ---------------------------------------------*/ 
-const routesCheckin = require('./app/routes/users/checkin.route')
+const routersCheckin = require('./app/routes/users/checkin.route')
 
-app.use("/api", routesCheckin.apiPutLocation);
-app.use("/api", routesCheckin.apiGetTimeLine);
-//STATISTIC
+app.use("/api", routersCheckin.apiPutLocation);
+app.use("/api", routersCheckin.apiGetTimeLine);
+/* -------------------------------------------
+                        STATISTIC
+---------------------------------------------*/ 
 const apiGetTable = require("./app/controller/users/statistic/apiGetTable");
 
-//REPORT
+/* -------------------------------------------
+                        REPORT
+---------------------------------------------*/ 
 const apiPostReport = require("./app/controller/users/report/apiPostReport");
 const apiGetReport = require("./app/controller/users/report/apiGetReport");
 
+app.use("/user/report", authenticateToken, apiGetReport);
+app.use("/user/storeReport", authenticateToken, apiPostReport);
 
-// PROJCECT
+/* -------------------------------------------
+                        PROJECT
+---------------------------------------------*/ 
 const apiPostProject = require("./app/controller/users/project/apiPostProject");
 const apiGetProject = require("./app/controller/users/project/apiGetProject");
 const apiSearchProject = require("./app/controller/users/project/apiSearchProject");
 
-
-
-app.use("/table", authenticateToken, apiGetTable);
-app.use("/user/report", authenticateToken, apiGetReport);
-app.use("/user/storeReport", authenticateToken, apiPostReport);
-//Event
-
-
-//Project route
 app.use("/api", apiGetProject);
 app.use("/api", apiPostProject);
 app.use("/api", apiSearchProject);
 
+app.use("/table", authenticateToken, apiGetTable);
 
+//Event
 
-
-const testApi = require("./app/controller/admin/temp/testApi");
-app.use(testApi)
-
-
-//----------------------------------ADMIN ROUTE------------------------------------
+//———————————————————————————ADMIN ROUTES—————————————————————————————//
 
 //ACCESS
 app.use(home);
@@ -212,13 +207,12 @@ app.use("/admin", postUpdateEvent);
 //REPORT
 app.use("/admin", getReportInfo);
 
-//----------------------------------USER ROUTE------------------------------------
-
-
+//———————————————————————————404 ROUTES—————————————————————————————//
 app.use((req, res, next) => {
   res.render("404");
 });
 
+//———————————————————————————APP LISTEN—————————————————————————————//
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
   console.log(`Listening on http://localhost:${port}/`);
@@ -320,4 +314,3 @@ app.listen(port, () => {
 //   })
 // })
 
-//App listen
