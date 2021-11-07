@@ -33,8 +33,8 @@ module.exports = async (req, res, next) => {
                     status : "Check in complete !"
                 })
                }else{
-                   return res.json({
-                       status : "Try after 5 minutes !"
+                   return res.send({
+                       status : "try after 5 minutes"
                    })
                }
             }
@@ -48,8 +48,8 @@ module.exports = async (req, res, next) => {
                     status : "Check in complete !"
                 })
                }else{
-                   return res.json({
-                       status : "Try after 5 minutes !"
+                   return res.send({
+                       status : "try after 5 minutes"
                    })
                }
             }
