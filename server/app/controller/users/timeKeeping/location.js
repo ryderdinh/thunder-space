@@ -1,7 +1,6 @@
 const Status = require("../../../models/status")
 const History = require("../../../models/history")
 const { distance } = require("../../../utils/findDistance")
-const { changeTimeToFloat } = require("../../../utils/handleTime")
 
 module.exports = async (req, res, next) => {
        try {
@@ -20,7 +19,7 @@ module.exports = async (req, res, next) => {
                 existStatus.timeLine.push([currentTime, currentDistance])
                 existStatus.save()
                 return res.json({
-                    status : "Check in complete !"
+                    status : "check in complete"
                 })
             }
             if(existStatus.timeStart && !existStatus.timeEnd){
@@ -30,7 +29,7 @@ module.exports = async (req, res, next) => {
                 existStatus.timeLine.push([currentTime, currentDistance])
                 existStatus.save()
                 return res.json({
-                    status : "Check in complete !"
+                    status : "check in complete"
                 })
                }else{
                    return res.send({
@@ -45,7 +44,7 @@ module.exports = async (req, res, next) => {
                 existStatus.timeLine.push([currentTime, currentDistance])
                 existStatus.save()
                 return res.json({
-                    status : "Check in complete !"
+                    status : "check in complete"
                 })
                }else{
                    return res.send({
@@ -54,10 +53,10 @@ module.exports = async (req, res, next) => {
                }
             }
         }
-        return res.json("Can not check in !")
+        return res.send({status :'can not check in'})
        } catch (error) {
-           return res.json({
-               status : 'Some thing went wrong !'
+           return res.send({
+               status : 'some thing went wrong'
            })
        }
 }
