@@ -583,10 +583,20 @@ main.onblur {
 	.list-time-keeping
 	.list-time-keeping_box
 	.list-time-keeping_item
+	.detail {
+	margin: 0 0 0 8px;
+	display: flex;
+	flex-flow: row wrap;
+}
+.view-container
+	.view_main
+	.list-time-keeping
+	.list-time-keeping_box
+	.list-time-keeping_item
 	.time {
-	margin: 0 16px 0 8px;
 	font-size: 14px;
 	color: #ffffff;
+	width: 80px;
 }
 .view-container
 	.view_main
@@ -616,7 +626,7 @@ main.onblur {
 	-moz-border-radius: 10px;
 	-ms-border-radius: 10px;
 	-o-border-radius: 10px;
-	max-height: 200px;
+	max-height: 500px;
 	height: auto;
 	overflow-y: auto;
 }

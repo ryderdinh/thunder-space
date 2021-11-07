@@ -16,9 +16,11 @@ export default class ListTimeKeepingItem extends React.Component {
 					<img src={require('assets/images/icons/gps.svg').default} alt='' />
 					<div className='rect'></div>
 				</div>
-				<div className='time'>{this.convertTime(time)}</div>
-				<div className='range'>
-					<p>{`cách công ty ${rangeMetter}m`}</p>
+				<div className='detail'>
+					<div className='time'>{this.convertTime(time)}</div>
+					<div className='range'>
+						<p>{`Cách công ty ${rangeMetter}m`}</p>
+					</div>
 				</div>
 			</div>
 		);
