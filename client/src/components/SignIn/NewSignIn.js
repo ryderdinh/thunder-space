@@ -14,7 +14,7 @@ import 'swiper/swiper.min.css';
 import 'swiper/swiper-bundle.min.css';
 import './NewSignin.css';
 function NewSignIn() {
-	// install Swiper modules
+	// Install Swiper modules
 	SwiperCore.use([
 		Pagination,
 		Autoplay,
@@ -23,26 +23,57 @@ function NewSignIn() {
 		EffectCube,
 		Parallax
 	]);
+
+	// Create state
 	const [state, setState] = useState({
 		username: '',
-		password: ''
+		password: '',
+		securityPassword: ''
 	});
+
+	// Create dispatch
 	const dispatch = useDispatch();
+
+	// Create function
 	const handleUsername = e => {
 		setState({ ...state, username: e.target.value });
 	};
 	const handlePassword = e => {
-		setState({ ...state, password: e.target.value });
+		let lastCharPass = e.target.value[e.target.value.length - 1];
+		// Set password
+		setState(prevState => ({
+			...prevState,
+			password: prevState.password + lastCharPass
+		}));
+		// Set security password
+		setState(prevState => ({
+			...prevState,
+			securityPassword: e.target.value
+		}));
+		// Debounce password
+		let timeoutId;
+		clearTimeout(timeoutId);
+		timeoutId = setTimeout(() => {
+			securityPassword(e.target.value);
+		}, 300);
 	};
 	const handleSignIn = () => {
-		dispatch(actSignIn(state));
+		dispatch(actSignIn({ username: state.username, password: state.password }));
 	};
 	const handleKeyUp = event => {
 		if (event.key === 'Enter') {
 			handleSignIn();
 		}
 	};
-
+	const securityPassword = value => {
+		setState(prevState => ({
+			...prevState,
+			securityPassword: value
+				.split('')
+				.map(() => '*')
+				.join('')
+		}));
+	};
 	// change title
 	document.title = 'Đăng nhập';
 
@@ -232,6 +263,7 @@ function NewSignIn() {
 								type='text'
 								placeholder='email@website.com'
 								id='email'
+								value={state.username}
 								onChange={handleUsername}
 							/>
 						</div>
@@ -244,6 +276,7 @@ function NewSignIn() {
 								type='text'
 								placeholder='Minimum 6 characters'
 								id='pwd'
+								value={state.securityPassword}
 								onChange={handlePassword}
 								onKeyUp={handleKeyUp}
 							/>
@@ -251,12 +284,7 @@ function NewSignIn() {
 
 						<div className='login-form-group single-row'>
 							<div className='custom-check'>
-								<input
-									autoComplete='off'
-									type='checkbox'
-									defaultChecked
-									id='remember'
-								/>
+								<input autoComplete='off' type='checkbox' id='remember' />
 								<label htmlFor='remember'>Remember me</label>
 							</div>
 
