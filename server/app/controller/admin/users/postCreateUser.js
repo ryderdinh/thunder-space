@@ -9,7 +9,7 @@ const { convert } = require("../../../utils/dateFormat");
 const checkAuthenticated = require("../../../../middleware/admin/login/checkAuthenticated");
 const express = require("express");
 const router = express.Router();
-const transporter = require("../../../../config/sendGrid/confirmEmail");
+//const transporter = require("../../../../config/sendGrid/confirmEmail");
 const { v4: uuidv4 } = require("uuid");
 
 router.post("/storeUser", checkAuthenticated, async (req, res, next) => {
@@ -59,18 +59,18 @@ router.post("/storeUser", checkAuthenticated, async (req, res, next) => {
           console.log(err, report);
         }
       );
-      const sendMail = await transporter.sendMail({
-        to: saveStaff.email,
-        from: "boypham1234567@gmail.com",
-        subject: "CONFIRM EMAIL",
-        html: `
-                   <h5>You need to confirm email to access HRM</h5>
-                   <p>This is your password : "123456", please change this when you login in HRM</p>
-                   <a href="http://localhost:3000/api/confirmEmai?email=${saveStaff.email}">CLick this link  to login</a>
-               `,
-      });
+      //const sendMail = await transporter.sendMail({
+        //to: saveStaff.email,
+        //from: "boypham1234567@gmail.com",
+        //subject: "CONFIRM EMAIL",
+        //html: `
+          //         <h5>You need to confirm email to access HRM</h5>
+            //       <p>This is your password : "123456", please change this when you login in HRM</p>
+             //      <a href="http://localhost:3000/api/confirmEmai?email=${saveStaff.email}">CLick this link  to login</a>
+               //`,
+      //});
 
-      console.log(statusCre, tableCre, reportCre, sendMail);
+      //console.log(statusCre, tableCre, reportCre, sendMail);
       req.flash("createUserSuccess", " Create successfully");
       res.redirect("/admin/createUser");
     }
