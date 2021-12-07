@@ -6,8 +6,8 @@ module.exports = async (req, res, next) => {
        try {
         const sId = req.params.id;
         const existStatus = await Status.findById(sId)
-        const lat = Number(req.query.lat)
-        const lon = Number( req.query.lon)
+        const lat = Number(req.body.lat)
+        const lon = Number( req.body.lon)
         const currentDistance = Math.round(
           distance(lat, lon, 20.963528714717416, 105.81668138811938)
         );
