@@ -1,4 +1,4 @@
-const Report = require("../../../models/report")
+const Report = require("../../../models/Report")
 const express  = require('express')
 const router = express.Router()
 const checkAuthenticated = require("../../../middleware/admin/login/checkAuthenticated")

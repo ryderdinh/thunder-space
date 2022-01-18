@@ -1,5 +1,5 @@
 const { model } = require("mongoose");
-const Event = require("../../../models/event");
+const Event = require("../../../models/Event");
 const bcrypt = require("bcrypt");
 const express = require("express")
 const router = express.Router()

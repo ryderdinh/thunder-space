@@ -1,7 +1,7 @@
 const Staff = require("../../../models/Staff")
 const Status = require("../../../models/status")
 const TimeSheet = require("../../../models/TimeSheet")
-const Report = require("../../../models/report")
+const Report = require("../../../models/Report")
 const cloudinary = require("../../../../config/cloud/cloudinary")
 const checkAuthenticated =require("../../../middleware/admin/login/checkAuthenticated")
 const express = require("express")

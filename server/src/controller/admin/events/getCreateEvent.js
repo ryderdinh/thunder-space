@@ -1,5 +1,5 @@
     const env = process.env.NODE_ENV.trim()
- const Event = require("../../../models/event")
+ const Event = require("../../../models/Event")
  module.exports = (req, res) => {
      Event.find({}, (err, event) => {
      for(let i=0 ; i< event.length; i++){

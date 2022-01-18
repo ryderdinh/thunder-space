@@ -1,5 +1,5 @@
 const Status = require("../../../models/status")
-const History = require("../../../models/history")
+const History = require("../../../models/History")
 const { distance } = require("../../../utils/findDistance")
 
 module.exports = async (req, res, next) => {

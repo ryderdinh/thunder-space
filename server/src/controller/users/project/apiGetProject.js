@@ -1,5 +1,5 @@
 const Staff = require("../../../models/Staff")
-const Project = require("../../../models/project")
+const Project = require("../../../models/Project")
 
 module.exports = async (req, res, next) => {
     try{

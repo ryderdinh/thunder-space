@@ -1,5 +1,5 @@
 const router = require("express").Router()
-const Issue = require("../../../models/issue")
+const Issue = require("../../../models/Issue")
 
 module.exports = async (req, res, next) => {
     try {

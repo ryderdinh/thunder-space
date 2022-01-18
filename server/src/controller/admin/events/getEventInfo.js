@@ -1,4 +1,4 @@
-const Event = require("../../../models/event");
+const Event = require("../../../models/Event");
 const checkAuthenticated = require("../../../middleware/admin/login/checkAuthenticated")
 const express = require("express")
 const router = express.Router()

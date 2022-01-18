@@ -1,4 +1,4 @@
-const Event = require("../../../models/event")
+const Event = require("../../../models/Event")
 const flash = require("express-flash")
 const moment = require("moment")
 const { v4: uuidv4 } = require('uuid');

@@ -1,5 +1,5 @@
 const { exist } = require("joi")
-const Project = require("../../../models/project")
+const Project = require("../../../models/Project")
 const Staff = require("../../../models/Staff")
 
 module.exports = async (req, res, next) => {

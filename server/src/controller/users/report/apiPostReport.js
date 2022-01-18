@@ -1,4 +1,4 @@
-const Report = require("../../../models/report")
+const Report = require("../../../models/Report")
 
 module.exports = async  (req, res, next) => {
     try {

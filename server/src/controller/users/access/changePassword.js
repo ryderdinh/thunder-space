@@ -1,5 +1,5 @@
 const Staff = require("../../../models/Staff")
-const History = require("../../../models/history")
+const History = require("../../../models/History")
 const express = require("express")
 const bcrypt = require("bcrypt")
 
