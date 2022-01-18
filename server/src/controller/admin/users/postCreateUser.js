@@ -1,7 +1,7 @@
 const StaffInformation = require("../../../models/Staff");
 const Status = require("../../../models/status");
 const TimeSheet = require("../../../models/TimeSheet");
-const Report = require("../../../models/report");
+const Report = require("../../../models/Report");
 const {
   authSchema,
 } = require("../../../middleware/admin/form/checkFormRegister");
