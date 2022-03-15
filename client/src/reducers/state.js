@@ -1,33 +1,28 @@
-import { combineReducers } from "redux";
-import menuReducer from "./menuReducer";
-import nameContainer from "./nameContainer";
-import timeKeeping from "./listTimeKeeping";
-import getTimesheets from "./timesheets";
-import listTimeKeeping from "./listTimeKeeping";
-import checkLogin from "./checkLogin";
-import staffInfomation from "./staffInfomation";
-import events from "./events";
-import setActiveSidebar from "./activeSidebar";
-import popup from "./popup";
-import loading from "./loading";
-import project from "./project";
-import issue from "./issue";
-import workflow from "./workflow";
+import { combineReducers } from 'redux';
+import checkLogin from './checkLogin';
+import events from './events';
+import issue from './issue';
+import loading from './loading';
+import popup from './popup';
+import project from './project';
+import report from './report';
+import sidebar from './sidebar';
+import staffInfomation from './staffInfomation';
+import timeKeeping from './timeKeeping';
+import getTimesheets from './timesheets';
+import workflow from './workflow';
 
 export default combineReducers({
-  side_item_name: menuReducer,
-  indexActiveSidebar: setActiveSidebar,
-  name_container: nameContainer,
-  _location: timeKeeping,
-  _timesheets: getTimesheets,
-  _timeOfAttendance: listTimeKeeping,
-  _checkLogin: checkLogin,
-  _staffInfomation: staffInfomation,
-  _events: events,
-  _report: "",
-  _popup: popup,
-  _workflow: workflow,
-  _project: project,
-  _issue: issue,
-  loading,
+	_sidebar: sidebar,
+	_timesheets: getTimesheets,
+	_timeOfAttendance: timeKeeping,
+	_checkLogin: checkLogin,
+	_staffInfomation: staffInfomation,
+	_events: events,
+	_report: report,
+	_popup: popup,
+	_workflow: workflow,
+	_project: project,
+	_issue: issue,
+	loading
 });

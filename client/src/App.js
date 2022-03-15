@@ -1,98 +1,70 @@
-import React, { useEffect, useState } from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { Toaster } from 'react-hot-toast';
-import { useDispatch, useSelector } from 'react-redux';
-import { actRefreshPage } from 'actions';
-import Main from 'components/Main/Main';
-import { Popup } from 'components/Main/Popup';
-import NotFound from 'components/404';
-import 'animate.css';
-import Sidebar from 'components/Sidebar/Sidebar';
-import ProgressBarLoading from 'components/Loading/ProgressBarLoading';
-import { AnimatePresence, motion } from 'framer-motion';
-import NewSignIn from 'components/SignIn/NewSignIn';
+import { actRefreshPage } from 'actions'
+import 'animate.css'
+import { AnimatePresence } from 'framer-motion'
+import NotFound from 'pages/404'
+import Account from 'pages/Account'
+import Home from 'pages/Home'
+import Issue from 'pages/Issue'
+import Login from 'pages/Login'
+import Project from 'pages/Project'
+import Report from 'pages/Report'
+import TimeSheets from 'pages/TimeSheets'
+import Work from 'pages/Work'
+import Workflow from 'pages/Workflow'
+import { useEffect } from 'react'
+import { useDispatch } from 'react-redux'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
-function App() {
-	//? Create State
-	const [state, setState] = useState({
-		sidebar: false
-	});
-	//? Connect Redux
-	const checkId = useSelector(state => state._checkLogin._checkLogin);
-	const dispatch = useDispatch();
+export default function App() {
+  //? Connect Redux
+  const dispatch = useDispatch()
 
-	//? Create Effect
-	useEffect(() => {
-		dispatch(actRefreshPage());
-		window.scrollTo(0, 0);
-	}, [dispatch]);
+  //? Create Effect
+  useEffect(() => {
+    dispatch(actRefreshPage())
+  }, [dispatch])
 
-	//? Create Function
-	const activeSidebar = value => {
-		value === undefined
-			? setState({ sidebar: !state.sidebar })
-			: setState({ sidebar: Boolean(value) });
-	};
-	const checkAndRenderCPN = (checkId, path) => {
-		return checkId ? (
-			<motion.div
-				className='container'
-				initial={{ opacity: 1 }}
-				animate={{ opacity: 1 }}
-				exit={{ opacity: 1 }}
-			>
-				<Sidebar sidebar={state.sidebar} activeSidebar={activeSidebar} />
-				<Main pathName={path} activeSidebar={activeSidebar} />
-				<Toaster position='top-right' reverseOrder={true} />
-				<Popup />
-				<ProgressBarLoading />
-			</motion.div>
-		) : (
-			<>
-				{/* <SignIn /> */}
-				<NewSignIn />
-				<Toaster position='top-right' reverseOrder={true} />
-			</>
-		);
-	};
-
-	return (
-		<Router>
-			<Route
-				render={({ location }) => (
-					<AnimatePresence exitBeforeEnter>
-						<Switch location={location} key={location.pathname}>
-							<Route exact path='/'>
-								{checkAndRenderCPN(checkId, 'home')}
-							</Route>
-							<Route exact path='/timesheets'>
-								{checkAndRenderCPN(checkId, 'timesheets')}
-							</Route>
-							<Route exact path='/report'>
-								{checkAndRenderCPN(checkId, 'report')}
-							</Route>
-							<Route exact path='/work'>
-								{checkAndRenderCPN(checkId, 'work')}
-							</Route>
-							<Route exact path='/project'>
-								{checkAndRenderCPN(checkId, 'project')}
-							</Route>
-							<Route exact path='/project/:pcode'>
-								{checkAndRenderCPN(checkId, 'project')}
-							</Route>
-							<Route exact path='/project/:pid/:iid'>
-								{checkAndRenderCPN(checkId, 'issue')}
-							</Route>
-							<Route exact path='/account'>
-								{checkAndRenderCPN(checkId, 'account')}
-							</Route>
-							<Route component={NotFound} />
-						</Switch>
-					</AnimatePresence>
-				)}
-			/>
-		</Router>
-	);
+  return (
+    <Router>
+      <Route
+        render={({ location }) => (
+          <AnimatePresence exitBeforeEnter>
+            <Switch location={location} key={location.pathname}>
+              <Route exact path='/'>
+                <Home />
+              </Route>
+              <Route exact path='/timesheets'>
+                <TimeSheets />
+              </Route>
+              <Route exact path='/report'>
+                <Report />
+              </Route>
+              <Route exact path='/workflow'>
+                <Workflow />
+              </Route>
+              <Route exact path='/work'>
+                <Work />
+              </Route>
+              <Route exact path='/project'>
+                <Project />
+              </Route>
+              <Route exact path='/project/:pid'>
+                <Project />
+              </Route>
+              <Route exact path='/project/:pid/:iid'>
+                <Issue />
+              </Route>
+              <Route exact path='/account'>
+                <Account />
+              </Route>
+              <Route exact path='/login'>
+                <Login />
+              </Route>
+              <Route component={NotFound} />
+            </Switch>
+          </AnimatePresence>
+        )}
+      />
+    </Router>
+  )
 }
-
-export default App;

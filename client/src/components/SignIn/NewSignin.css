@@ -94,12 +94,17 @@
 	margin-bottom: 10px;
 }
 
+.login-container .login-form .login-form-group .login-input-group {
+	width: 100%;
+	position: relative;
+}
+
 .login-container .login-form .login-form-group input {
 	padding: 13px 20px;
 	box-sizing: border-box;
 	border: 1px solid var(--grey);
 	border-radius: 10px;
-	font-weight: 600;
+	font-weight: 500;
 	font-size: 14px;
 	color: var(--text);
 	transition: linear 0.2s;
@@ -119,9 +124,29 @@
 	font-size: 14px;
 }
 
+.login-container .login-form .login-form-group .login-input-group input {
+	width: 100%;
+}
+
+.login-container
+	.login-form
+	.login-form-group
+	.login-input-group
+	.password-input {
+	padding: 13px 40px 13px 20px;
+}
+
+.login-container .login-form .login-form-group .login-input-group .eye-icon {
+	position: absolute;
+	top: 50%;
+	right: 20px;
+	transform: translateY(-50%);
+}
+
 .login-container .login-form .login-form-group.single-row {
 	flex-direction: row;
-	justify-content: space-between;
+	/* justify-content: space-between; */
+	justify-content: right;
 	padding-top: 5px;
 }
 
@@ -200,7 +225,7 @@
 
 .login-container .login-form .link {
 	color: var(--primary-color);
-	font-weight: 700;
+	font-weight: 600;
 	text-decoration: none;
 	font-size: 14px;
 }
@@ -269,7 +294,7 @@
 .login-container .onboarding .swiper-slide {
 	text-align: center;
 	font-size: 18px;
-	font-weight: 400;
+	font-weight: 300;
 	color: var(--text);
 	/* Center slide text vertically */
 	display: -webkit-box;
@@ -303,6 +328,7 @@
 	height: 100%;
 	object-fit: contain;
 }
+
 .login-container .onboarding .slide-content {
 	width: 60%;
 }
