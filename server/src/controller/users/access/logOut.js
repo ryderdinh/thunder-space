@@ -7,8 +7,14 @@ module.exports = async (req, res, next) => {
             await Staff.findByIdAndUpdate(req.user.id, {tokens : newTokens}, { new : true })
             return res.status(200).send()
         }
-        return  res.status(401).send("unauthorize")
+        return res.status(401).send({
+            status: 401,
+            error: "unauthorized",
+          });
     } catch (error) {
-        return res.status(401).send("unauthorize")
+        res.status(400).send({
+            status : 400,
+            error : "something went wrong"
+          })
     }
 }

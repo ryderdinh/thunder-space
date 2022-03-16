@@ -6,6 +6,6 @@ const apiPutUploadAvatar = require('../../controller/users/info/uploadAvatar')
 //Get current user's infor
 exports.apiGetUserInfo = router.get('/users/:id', authenticateToken, apiGetUserInfo)
 //Get any user's info
-exports.apiGetSearchUser = router.get('/search-user', authenticateToken, apiGetSearchUser)
+exports.apiGetSearchUser = router.get('/user', authenticateToken, apiGetSearchUser)
 //Change avatar for current user
 exports.apiPutUploadAvatar = router.put('/upload/avatar', authenticateToken, apiPutUploadAvatar)

@@ -15,11 +15,15 @@ const Staff = require("../../../models/Staff")
       next();
     }
   }else{
-    return res.status(400).send({ status : 'login failed' })
+    return res.status(401).send({ 
+      status : 401,
+      error : 'unauthorized' })
   }
 
 } catch (error) {
-  return res.send({ status: "login failed" });
+  return res.status(400).send({ 
+    status : 400,
+    error: "something went wrong" });
   }
 }
 
