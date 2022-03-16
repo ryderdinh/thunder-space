@@ -12,7 +12,7 @@ module.exports = async (req, res, next) => {
         }
         return res.status(401).send({
             status: 401,
-            error: "unauthorized",
+            error: "unauthorize",
           });
     } catch (error) {
         res.status(400).send({

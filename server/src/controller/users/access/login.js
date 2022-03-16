@@ -1,5 +1,5 @@
 const Staff = require("../../../models/Staff");
-lsmodule.exports = async (req, res, next) => {
+module.exports = async (req, res, next) => {
   try {
     const id = req.user._id.toString();
     const user = await Staff.findOne({ _id: id });
@@ -12,7 +12,7 @@ lsmodule.exports = async (req, res, next) => {
     }
     return res.status(401).send({
       status: 401,
-      error: "unauthorized",
+      error: "unauthorize",
     });
   
   } catch (error) {

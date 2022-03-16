@@ -5,11 +5,14 @@ module.exports = async (req, res, next) => {
         if(user){
             let newTokens = user.tokens.filter(token => token.token != req.token)
             await Staff.findByIdAndUpdate(req.user.id, {tokens : newTokens}, { new : true })
-            return res.status(200).send()
+            return res.status(200).send({
+                status : 200,
+               data : "success"
+            })
         }
         return res.status(401).send({
             status: 401,
-            error: "unauthorized",
+            error: "unauthorize",
           });
     } catch (error) {
         res.status(400).send({
