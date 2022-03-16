@@ -1,6 +1,7 @@
 :root {
   --bodybg: #dcdefe;
   --primary-color: var(--primary);
+  --btn: var(--primary);
   --grey: #d6d6d6;
   --placeholder: #969696;
   --white: #fff;
