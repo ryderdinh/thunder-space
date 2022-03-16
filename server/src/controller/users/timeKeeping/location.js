@@ -45,9 +45,9 @@ module.exports = async (req, res, next) => {
           existStatus.timeEnd = currentTime;
           existStatus.timeLine.push([currentTime, currentDistance]);
           existStatus.save();
-          return res.status(400).send({
-            status: 400,
-            error: "try after 5 minutes",
+          return res.status(200).send({
+            status: 200,
+            error: "check in complete",
           });
         } else {
           return res.status(400).send({

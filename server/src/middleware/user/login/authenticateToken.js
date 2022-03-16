@@ -3,9 +3,7 @@ const Staff = require("../../../models/Staff")
 
  async function authenticateToken(req, res, next) {
    try {
-     console.log(req.headers);
     const authHeader = req.headers["authorization"];
-
     const token = authHeader.replace('Bearer ', '')
     if (token == null) return res.send({ status: "login failed" });
     const user = await Staff.findOne({ 'tokens.token' : token })
