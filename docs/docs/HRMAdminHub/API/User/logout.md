@@ -2,7 +2,7 @@
 sidebar_position: 10
 ---
 
-# Đăng xuất khỏi tất cả thiết bị
+# Đăng xuất khỏi thiết bị hiện thời
 
 Method **`POST`**
 
