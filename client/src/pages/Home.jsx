@@ -7,27 +7,34 @@ import TimeKeeping from 'components/Main/ViewMain/TimeKeeping'
 import ViewBox from 'components/Main/ViewMain/ViewBox'
 import ViewBoxName from 'components/Main/ViewMain/ViewBoxName'
 import ViewMain from 'components/Main/ViewMain/ViewMain'
+import { useEffect } from 'react'
 import variantGlobal from 'units/variantGlobal'
 
 export default function Home() {
-	const path = 'home'
+  const path = 'home'
 
-	return (
-		<Layout>
-			<Main>
-				<HeaderContainer pathName={path} />
-				<ViewMain>
-					<ViewBox>
-						<ViewBoxName name={'Chấm công'} />
-						<TimeKeeping variants={variantGlobal({ type: 1, addValue: 0 })} />
-						<ListTimeKeeping
-							variants={variantGlobal({ type: 1, addValue: 0.3 })}
-						/>
-						<ViewBoxName name={'Sự kiện'} />
-						<Event variants={variantGlobal({ type: 1, addValue: 0.6 })} />
-					</ViewBox>
-				</ViewMain>
-			</Main>
-		</Layout>
-	)
+  useEffect(() => {
+    document.title = 'Trang chủ'
+  }, [])
+
+  return (
+    <Layout>
+      <Main>
+        <HeaderContainer pathName={path} />
+        <ViewMain>
+          <ViewBox>
+            <ViewBoxName name={'Chấm công'} />
+            <TimeKeeping variants={variantGlobal({ type: 1, addValue: 0 })} />
+            <ListTimeKeeping
+              variants={variantGlobal({ type: 1, addValue: 0.3 })}
+            />
+          </ViewBox>
+          <ViewBox>
+            <ViewBoxName name={'Sự kiện'} />
+            <Event variants={variantGlobal({ type: 1, addValue: 0.6 })} />
+          </ViewBox>
+        </ViewMain>
+      </Main>
+    </Layout>
+  )
 }

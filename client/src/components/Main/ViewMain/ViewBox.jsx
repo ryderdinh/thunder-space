@@ -1,3 +1,7 @@
 export default function ViewBox({ children }) {
-	return <div className='col view-box'>{children}</div>;
+  return (
+    <div className='row view-box'>
+      <div className='col'>{children}</div>
+    </div>
+  )
 }

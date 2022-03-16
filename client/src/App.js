@@ -39,19 +39,25 @@ export default function App() {
               <Route exact path='/report'>
                 <Report />
               </Route>
-              <Route exact path='/workflow'>
-                <Workflow />
+              <Route path='/workflow'>
+                <Route exact path='/works'>
+                  <Work />
+                </Route>
+                <Route exact path='/projects'>
+                  <Project />
+                </Route>
+                <Route component={Workflow} />
               </Route>
-              <Route exact path='/work'>
+              <Route exact path='/works'>
                 <Work />
               </Route>
-              <Route exact path='/project'>
+              <Route exact path='/projects'>
                 <Project />
               </Route>
-              <Route exact path='/project/:pid'>
+              <Route exact path='/projects/:pid'>
                 <Project />
               </Route>
-              <Route exact path='/project/:pid/:iid'>
+              <Route exact path='/projects/:pid/:iid'>
                 <Issue />
               </Route>
               <Route exact path='/account'>
