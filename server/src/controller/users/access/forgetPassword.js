@@ -7,9 +7,10 @@ module.exports =  async (req, res, next) => {
         const email = req.body.email
         const user = await Staff.findOne({ email : email })
         if(!user){
-            return res.status(401).send("your email does not exist")
+            return res.status(401).send({ 
+                status : 401,
+                error :"your email does not exist"})
         }
-        
         const info = await transporter.sendMail({
         from: '"HRM Thunder Space 👻" <tempmailfc2@gmail.com>', // sender address
         to: email, // list of receivers
@@ -21,9 +22,13 @@ module.exports =  async (req, res, next) => {
         });
         const update = { resetToken : resetToken, resetTokenExpiration : Date.now() + 3600000}
         const staff = await Staff.findOneAndUpdate({ email : email }, update , { new : true })
-         return res.status(200).send({ data : 'success' })
+         return res.status(200).send({
+            status : 200,
+            data : 'success' })
     }catch(err){
-        console.log(err);
-        return res.status(400).send("some thing went wrong")
+        res.status(400).send({
+            status : 400,
+            error : "something went wrong"
+          })
     }
 }

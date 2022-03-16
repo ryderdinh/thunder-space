@@ -3,7 +3,9 @@ const Staff = require("../../../models/Staff")
 
  async function authenticateToken(req, res, next) {
    try {
+     console.log(req.headers);
     const authHeader = req.headers["authorization"];
+
     const token = authHeader.replace('Bearer ', '')
     if (token == null) return res.send({ status: "login failed" });
     const user = await Staff.findOne({ 'tokens.token' : token })
@@ -15,11 +17,15 @@ const Staff = require("../../../models/Staff")
       next();
     }
   }else{
-    return res.status(400).send({ status : 'login failed' })
+    return res.status(401).send({ 
+      status : 401,
+      error : 'unauthorize' })
   }
 
 } catch (error) {
-  return res.send({ status: "login failed" });
+  return res.status(400).send({ 
+    status : 400,
+    error: "something went wrong" });
   }
 }
 

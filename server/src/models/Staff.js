@@ -53,15 +53,16 @@ const Staff  = new Schema({
     Staff.methods.generateToken = async function(password){
         try {
             const validPass = await bcrypt.compare(password, this.password)
+            console.log(validPass);
             if(validPass){
                const token = await jwt.sign({_id : this._id.toString()}, process.env.ACCESS_TOKEN_SECRET, {
                     expiresIn : '60m'
                 })
                 return token
             }
-            return res.status(401).send({ status : 'wrong email or password' })
+            return null
         } catch (error) {
-            return res.status(400).send() 
+            return null
         }
     }
 

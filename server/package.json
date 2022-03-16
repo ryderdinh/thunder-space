@@ -46,7 +46,7 @@
   "scripts": {
     "test": "env-cmd test.env jest --watchAll --detectOpenHandles",
     "start": "env-cmd .env node index.js",
-    "dev": "env-cmd test.env nodemon index.js"
+    "dev": "env-cmd dev.env nodemon index.js"
   },
   "jest": {
     "testEnvironment": "node"

@@ -14,12 +14,10 @@ const Issue = new Schema({
             }
         },
         creator :{
-            uid : { type : String, required : true },
-            name : { type : String, required :true },
+          id :  { type : mongoose.Schema.Types.ObjectId , ref : "Staff", required : true}
         },
         assign : {
-            uid : { type : String, required : true  },
-            name : { type : String, required : true },
+          id :  { type : mongoose.Schema.Types.ObjectId, ref: "Staff", required : true }
         },
         estimate : {
             start : String, 
@@ -41,5 +39,16 @@ const Issue = new Schema({
     
 })
 
+Issue.virtual("creators", {
+    ref : "Staff",
+     localField : "creator.id",
+     foreignField : "_id"
+})
+
+Issue.virtual("assigns", {
+    ref : "Staff",
+    localField : "assign.id",
+    foreignField : "_id"
+})
 
 module.exports = mongoose.model("Issue", Issue)
