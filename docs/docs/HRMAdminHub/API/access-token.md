@@ -15,5 +15,5 @@ https://hrmadmin.herokuapp.com/api/token
 
 | Trường dữ liệu | Kiểu   | Chú thích           |
 | -------------- | ------ | ------------------- |
-| `username`     | string | email người dùng    |
+| `email`     | string | email người dùng    |
 | `password`     | string | mật khẩu người dùng |
