@@ -1,13 +1,12 @@
 ---
-sidebar_position: 2
+sidebar_position: 8
 ---
 
-# Lấy thông tin người dùng
-
+# Mốc chấm công 
 Method **`GET`**
 
 ```shell
-https://hrmadmin.herokuapp.com/api/user-info/<userId>
+https://hrmadmin.herokuapp.com/api/timeline
 ```
 
 ### Header
@@ -16,5 +15,18 @@ https://hrmadmin.herokuapp.com/api/user-info/<userId>
 | --------------- | ------ | ------------------------------------------- |
 | `Authorization` | string | `Bearer` + [`accessToken`](../access-token.md) |
 
-
 ### Response
+```json
+    status : 200,
+    data : [
+        [
+
+        ]
+    ]
+```
+
+### Error
+```json
+     status: 400,
+    error: "something went wrong"
+```

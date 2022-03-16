@@ -1,13 +1,14 @@
 ---
-sidebar_position: 3
+sidebar_position: 9
 ---
-# Chấm công
-Method **`PUT`**
+
+# Đăng xuất khỏi thiết bị hiện thời
+
+Method **`POST`**
 
 ```shell
-https://hrmadmin.herokuapp.com/api/location?lat=<latitude>&lon=><longtitude>
+https://hrmadmin.herokuapp.com/api/logout-all
 ```
-
 ### Header
 
 | Trường dữ liệu  | Kiểu   | Chú thích                                   |
@@ -17,19 +18,15 @@ https://hrmadmin.herokuapp.com/api/location?lat=<latitude>&lon=><longtitude>
 ### Response
 ```json
     status: 200,
-    data: "check in complete"
+    data: "success"
 ```
 
 ### Error
 ```json
-    status: 400,
-    error: "try after 5 minutes"
+    status: 401,
+    error: "unauthorize"
 ```
 ```json
-    status: 400,
-    error: "can not check in"
-```
-```json
-    status: 400,
-    error: "something went wrong"
+    status : 400,
+    error : "something went wrong"
 ```
