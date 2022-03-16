@@ -5,8 +5,15 @@ sidebar_position: 3
 Method **`PUT`**
 
 ```shell
-https://hrmadmin.herokuapp.com/api/location?lat=<latitude>&lon=><longtitude>
+https://hrmadmin.herokuapp.com/api/location
 ```
+
+### Tham số
+
+| Trường dữ liệu | Kiểu   | Chú thích           |
+| -------------- | ------ | ------------------- |
+| `lat`     | string | vĩ độ   |
+| `lon`     | string | kinh độ |
 
 ### Header
 
