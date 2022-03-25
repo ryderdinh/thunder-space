@@ -1,46 +1,31 @@
-const { exist } = require("joi");
 const Project = require("../../../models/Project");
 const Staff = require("../../../models/Staff");
-
+const Response = require("../../../models/Response")
 module.exports = async (req, res, next) => {
   try {
     const userId = req.user._id;
-    const code = req.body.projectCode;
-    const name = req.body.projectName;
+    const code = req.body.code;
+    const name = req.body.name;
 
     const existCreater = await Staff.findById({ _id: userId });
-    if (!existCreater)
-      return res.status(401).send({
-        status: 401,
-        error: "unauthorized",
-      });
     //Valid code
     const existCode = await Project.findOne({ code: code });
     if (existCode)
-      return res.status(400).send({
-        status: 400,
-        error: "project code already exist",
-      });
+      return res.status(400).send(new Response(400, "project code already exist"));
     //Valide body
     const maybeDuplicate = [
-      ...req.body.projectManager,
-      ...req.body.projectMember,
+      ...req.body.managers,
+      ...req.body.members,
     ];
     const removeDuplicate = [...new Set(maybeDuplicate)];
 
     if (removeDuplicate.length != maybeDuplicate.length)
-      return res.status(400).send({
-        status: 400,
-        error: "wrong data request",
-      });
+      return res.status(400).send(new Response(400, "wrong data form"));
     if (!removeDuplicate.every((e) => e !== existCreater.email))
-      return res.status(400).send({
-        status: 400,
-        error: "wrong data request",
-      });
+      return res.status(400).send(new Response(400, "wrong data form,"));
     //Valid exsit member
-    const existManager = await Staff.find({ email: req.body.projectManager });
-    const existMember = await Staff.find({ email: req.body.projectMember });
+    const existManager = await Staff.find({ email: req.body.managers });
+    const existMember = await Staff.find({ email: req.body.members });
     //Map value
     const managers = [...existManager, existCreater].map(
       (e) =>
@@ -57,6 +42,7 @@ module.exports = async (req, res, next) => {
         })
     );
 
+console.log([...managers, ...members]);
     // Create
     const result = await Project.create({
       code: code,
@@ -64,14 +50,8 @@ module.exports = async (req, res, next) => {
       member: [...managers, ...members],
     });
     result.save();
-    return res.status(200).send({
-      status: 200,
-      data: "success",
-    });
+    return res.status(200).send(new Response(200, "success"));
   } catch (err) {
-    res.status(400).send({
-      status: 400,
-      error: "something went wrong",
-    });
+    res.status(400).send(new Response(400, "something went wrong"));
   }
 };

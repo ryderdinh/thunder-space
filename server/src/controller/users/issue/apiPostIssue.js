@@ -35,7 +35,7 @@ module.exports = async (req, res, next) => {
             }
         }else{
             res.json({ data : {
-                status : "The person you assign is not available or not in your project ! "
+                status : "the person you assign is not in your project ! "
             } })
         }
         // console.log(creatorInfo);
@@ -63,10 +63,10 @@ module.exports = async (req, res, next) => {
                 } }
             }, { runValidators: true })
         }else{
-            return res.json({ status : "Cannot assign !" })
+            return res.json({ status : "cannot assign !" })
         }
         return res.json({
-                status : `Assign to ${assign} complete !`
+                status : `assign to ${assign} complete !`
         })
     }else{
         return res.json([])
@@ -74,10 +74,9 @@ module.exports = async (req, res, next) => {
 
   }catch(err){
     console.log(err.message);
-    return res.json({
-        data : {
-            status : "Something went wrong !"
-        }
+    return res.status(400).send({
+        status: 400,
+        erro: "some thing went wrong"
     })
   }
 
