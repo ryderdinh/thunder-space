@@ -25,19 +25,27 @@ https://hrmadmin.herokuapp.com/api/change-password
 
 ### Response
 ```json
-    status: 200,
-    data: "success"
+{
+  "status": 200,
+  "message": "success"
+}
 ```
 ### Error
 ```json
-    status: 400,
-    error: "new password is same your current password"
+{
+  "status": 400,
+  "message": "new password is same your current password"
+}
 ```
 ```json
-    status: 400,
-    error: "new password is invalid"
+ {
+  "status": 400,
+  "message": "new password is invalid"
+}
 ```
 ```json
-    status: 400,
-    error: "something went wrong"
+  {
+  "status": 400,
+  "message": "something went wrong"
+}
 ```
