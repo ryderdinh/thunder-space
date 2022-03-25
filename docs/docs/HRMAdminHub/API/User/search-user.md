@@ -18,27 +18,36 @@ https://hrmadmin.herokuapp.com/api/search-user?email=<userEmail>
 
 ### Response
 ```json
-    status: 200,
-    data: {
-    email: "", 
-    name: "",
-    birthday: "",
-    position: "",
-    department: "",
-    phonenumber: "",
-    avatar: {
-        public_id: "" ,
-        url: ""
-    }}
+{
+  "status": 200,
+  "message": "success",
+  "data": {
+    "avatar": "https://res.cloudinary.com/dawqbbo2l/image/upload/v1626963206/avatar/avatar-none_byqbnn.svg",
+    "_id": "623b376bcf978427d09cd28c",
+    "email": "occho@ngul.com",
+    "name": "Dinh Quang Anh",
+    "birthday": "14/07/2021",
+    "position": "Developer IV",
+    "department": "Business Development",
+    "phonenumber": "0000000000",
+    "createdAt": "1970-01-20T01:47:27.979Z",
+    "updatedAt": "1970-01-20T01:47:27.979Z",
+    "__v": 0
+  }
+}
 ```
 
 ### Error
 
 ```json
-     status: 404,
-    error: "user not found"
+ {
+  "status": 404,
+  "message": "user not found"
+}
 ```
 ```json
-    status: 400,
-    error: "something went wrong"
+{
+  "status": 400,
+  "message": "something went wrong"
+}
 ```

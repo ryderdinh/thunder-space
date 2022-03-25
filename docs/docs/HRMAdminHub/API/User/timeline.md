@@ -17,16 +17,30 @@ https://hrmadmin.herokuapp.com/api/timeline
 
 ### Response
 ```json
-    status : 200,
-    data : [
-        [
-
-        ]
+{
+  "status": 200,
+  "message": "success",
+  "data": [
+    [
+      1647444451771,
+      11399379
+    ],
+    [
+      1647444813488,
+      11399379
+    ],
+    [
+      1648222304238,
+      11502612
     ]
+  ]
+}
 ```
 
 ### Error
 ```json
-     status: 400,
-    error: "something went wrong"
+{
+  "status": 400,
+  "message": "something went wrong",
+}
 ```

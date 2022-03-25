@@ -7,7 +7,7 @@ sidebar_position: 7
 Method **`GET`**
 
 ```shell
-https://hrmadmin.herokuapp.com/api/event
+https://hrmadmin.herokuapp.com/api/events
 ```
 
 ### Header
@@ -19,19 +19,23 @@ https://hrmadmin.herokuapp.com/api/event
 
 ### Response
 ```json
-    status : 200,
-    data : {
-        [
+    {
+  "status": 200,
+  "message": "success",
+  "data":
+    [
             eid: "",
             name: "",
             date: "",
             event_detail: "" 
-        ]
-    }
+    ]
+}
 ```
 ### Error
 ```json
-    status: 400,
-    error: "something went wrong"
+{
+  "status": 400,
+  "message": "something went wrong",
+}
 ```
 

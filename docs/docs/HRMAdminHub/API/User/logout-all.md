@@ -17,16 +17,17 @@ https://hrmadmin.herokuapp.com/api/logout-all
 
 ### Response
 ```json
-    status: 200,
-    data: "success"
+{
+  "status": 200,
+  "message": "success"
+}
 ```
 
 ### Error
+
 ```json
-    status: 401,
-    error: "unauthorize"
-```
-```json
-    status : 400,
-    error : "something went wrong"
+{
+  "status": 400,
+  "message": "something went wrong"
+}
 ```

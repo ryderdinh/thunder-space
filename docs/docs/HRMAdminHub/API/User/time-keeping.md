@@ -23,20 +23,28 @@ https://hrmadmin.herokuapp.com/api/location
 
 ### Response
 ```json
-    status: 200,
-    data: "check in complete"
+{
+  "status": 200,
+  "message": "check in complete"
+}
 ```
 
 ### Error
 ```json
-    status: 400,
-    error: "try after 5 minutes"
+{
+  "status": 200,
+  "message": "try after 5 minutes"
+}
 ```
 ```json
-    status: 400,
-    error: "can not check in"
+{
+  "status": 400,
+  "message": "can not check in"
+}
 ```
 ```json
-    status: 400,
-    error: "something went wrong"
+  {
+  "status": 400,
+  "message": "something went wrong"
+}
 ```
