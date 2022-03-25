@@ -115,7 +115,7 @@ app.use('/api', routersAccess.apiPostResetPassword)
 ---------------------------------------------*/ 
 const routersInfo = require("./routers/users/info.router");
 
-app.use("/api", routersInfo.apiGetUserInfo);
+// app.use("/api", routersInfo.apiGetUserInfo);
 app.use("/api", routersInfo.apiGetSearchUser);
 app.use("/api", routersInfo.apiPutUploadAvatar);
 

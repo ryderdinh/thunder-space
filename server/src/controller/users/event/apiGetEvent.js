@@ -1,14 +1,11 @@
 const { env } = require("shelljs");
 const Event = require("../../../models/Event");
 const { convert } = require("../../../utils/dateFormat");
-
+const Response = require("../../../models/Response")
 module.exports = (req, res) => {
   Event.find({}, (err, event) => {
     if (err) {
-      res.status(400).send({
-        status: 400,
-        error: "something went wrong",
-      });
+      res.status(400).send(new Response(400, "someting went wrong"));
     }
     event = event.map(
       (e) =>
@@ -19,9 +16,6 @@ module.exports = (req, res) => {
           event_detail: e.event_detail,
         })
     );
-    res.status(200).send({
-      status: 200,
-      data: event,
-    });
+    res.status(200).send(new Response(200, "success", event));
   });
 };

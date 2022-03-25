@@ -6,11 +6,11 @@ const apiPatchAddMemberToProject = require("../../controller/users/project/apiPa
 const { authenticate } = require('passport')
 const router = require('express').Router()
 
-//Gett all project
+//Get all project
 exports.apiGetProject = router.get('/projects', authenticateToken, apiGetProject)
 //Create new project
-exports.apiPostProject = router.post('/project', authenticateToken, apiPostProject)
+exports.apiPostProject = router.post('/projects/create', authenticateToken, apiPostProject)
 //Add more member to project
-exports.apiPatchAddMemberToProject = router.patch("/project/add-member/:uid", authenticateToken, apiPatchAddMemberToProject)
+exports.apiPatchAddMemberToProject = router.patch("/projects/add-member/:uid", authenticateToken, apiPatchAddMemberToProject)
 //Find one project
 exports.apiGetSearchProject = router.get('/project', authenticateToken, apiGetSearchProject)

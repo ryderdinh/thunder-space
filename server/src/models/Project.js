@@ -1,5 +1,5 @@
 const { Result } = require('express-validator')
-const { object } = require('joi')
+const { object, required } = require('joi')
 const mongoose = require('mongoose')
 const { logger } = require('../../config/nodeMailer/email')
 const Schema = mongoose.Schema
@@ -9,13 +9,13 @@ const Project = new Schema({
     name : { type: String, required : true },
     member : [
         {
-            id : {type : mongoose.Schema.Types.ObjectId, ref : 'Staff', required : true},
+            uid : {type : mongoose.Schema.Types.ObjectId, ref : 'Staff'},
             role : { type : String, enum : ['manager', 'normal'] , required : true}
         }
     ],
     issue : [
         {
-            id : {type :mongoose.Schema.Types.ObjectId, ref : "Issue" }
+            iid : {type :mongoose.Schema.Types.ObjectId, ref : "Issue" }
         }
     ],
     createdAt : { type: Number, default: Date.now, required : true }
@@ -23,13 +23,13 @@ const Project = new Schema({
 
 Project.virtual('members', {
     ref : 'Staff ',
-    localField : 'member.id',
+    localField : 'member.uid',
     foreignField : '_id'
 })
 
 Project.virtual("issues", {
     ref : "Issue",
-    localField : "issue.id",
+    localField : "issue.iid",
     foreignField : "_id"
 })
 
