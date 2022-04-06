@@ -25,7 +25,7 @@
     "date-fns": "^2.23.0",
     "framer-motion": "^4.1.17",
     "js-cookie": "^2.2.1",
-    "moment": "^2.29.1",
+    "moment": "^2.29.2",
     "query-string": "^7.1.0",
     "quill-image-resize-module-react": "^3.0.0",
     "quill-image-uploader": "^1.2.2",
