@@ -20,8 +20,8 @@ const Staff  = new Schema({
         public_id : {type : String, default: ""},
         url : {type: String, default : "https://res.cloudinary.com/dawqbbo2l/image/upload/v1626963206/avatar/avatar-none_byqbnn.svg"}
     },
-    resetToken : { type : String, default : ''},
-    resetTokenExpiration : {type: Number, default : 0},
+    otp : { type : String, default : ''},
+    otpExpiration : {type: Number, default : 0},
     confirmEmailExpiration : { type : Date, default : 0 },
 }, {
     timestamps : { currentTime : () => Math.floor(Date.now() / 1000) }
@@ -48,6 +48,25 @@ const Staff  = new Schema({
         delete userObject.resetTokenExpiration 
         userObject.avatar = userObject.avatar.url
         return userObject
+    }
+    Staff.methods.getProfileToCreateProject = function(){
+         let userObject = this.toObject()
+         delete userObject.phonenumber
+         delete userObject.department
+         delete userObject.position
+         delete userObject.birthday
+         delete userObject.password
+         delete userObject.tokens
+         delete userObject.confirmEmailExpiration
+         delete userObject.resetToken
+         delete userObject.resetTokenExpiration 
+         delete userObject.otp
+         delete userObject.otpExpiration
+         delete userObject.createdAt
+         delete userObject.updatedAt
+         delete userObject.__v
+         userObject.avatar = userObject.avatar.url
+         return userObject
     }
 
     Staff.methods.generateToken = async function(password){

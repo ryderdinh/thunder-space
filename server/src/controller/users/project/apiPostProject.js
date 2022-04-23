@@ -32,6 +32,8 @@ module.exports = async (req, res, next) => {
         (e = {
           uid: e._id,
           role: "manager",
+          name : e.name,
+          avatar : e.avatar.url
         })
     );
     const members = [...existMember].map(
@@ -39,6 +41,8 @@ module.exports = async (req, res, next) => {
         (e = {
           uid: e._id,
           role: "normal",
+          name : e.name,
+          avatar : e.avatar.url
         })
     );
 

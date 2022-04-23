@@ -10,7 +10,9 @@ const Project = new Schema({
     member : [
         {
             uid : {type : mongoose.Schema.Types.ObjectId, ref : 'Staff'},
-            role : { type : String, enum : ['manager', 'normal'] , required : true}
+            role : { type : String, enum : ['manager', 'normal'] , required : true},
+            name : {type: String, required: true},
+            avatar: {type : String, required : true}
         }
     ],
     issue : [
