@@ -5,6 +5,7 @@ const Response = require("../../../models/Response")
 module.exports = async (req, res, next) => {
   try {
     const { email, password } = req.body;
+    console.log(req.headers);
     const user = await Staff.findOne({ email: email });
     if (user) {
       const token = await user.generateToken(password);

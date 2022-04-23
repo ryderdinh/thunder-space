@@ -4,6 +4,7 @@ const Response = require("../../../models/Response")
 module.exports = async (req, res, next) => {
   try {
     const user = await Staff.findById(req.user._id);
+    console.log(user);
     const projects = (await user.populate("projects")).projects;
 
     // let data = [];
