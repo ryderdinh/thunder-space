@@ -10,10 +10,10 @@ module.exports = async (req, res, next) => {
       email: email,
       otpExpiration: { $gte: Date.now() },
     });
-    if(!staff) return res.status(401).send(new Response(401, "OTP is not validate"))
+    if(!staff) return res.status(401).send(new Response(400, "OTP is not validate"))
     if (staff) {
       const validateOtp = await bcrypt.compare(otp, staff.otp);
-      if(!validateOtp) return res.status(401).send(new Response(401, 'OTP is not validate'))
+      if(!validateOtp) return res.status(401).send(new Response(400, 'OTP is not validate'))
       if (comparePassword(password, confirmPassword)) {
         staff.password = password;
         staff.otp = "" ;
