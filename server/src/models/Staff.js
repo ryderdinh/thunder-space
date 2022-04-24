@@ -46,6 +46,8 @@ const Staff  = new Schema({
         delete userObject.confirmEmailExpiration
         delete userObject.resetToken
         delete userObject.resetTokenExpiration 
+        delete userObject.otp
+        delete userObject.otpExpiration
         userObject.avatar = userObject.avatar.url
         return userObject
     }
