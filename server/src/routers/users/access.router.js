@@ -20,4 +20,4 @@ exports.apiPutChangePassword = router.put("/change-password", authenticateToken,
 //Forget password
 exports.apiPostForgetPassword = router.post('/forget-password', apiPostForgetPassword)
 //Reset password
-exports.apiPostResetPassword = router.post('/reset-password/:resetToken', apiPostResetPassword)
+exports.apiPostResetPassword = router.put('/reset-password', apiPostResetPassword)
