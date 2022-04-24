@@ -1,30 +1,33 @@
 const Staff = require("../../../models/Staff");
+const bcrypt = require("bcrypt");
+const Response = require("../../../models/Response")
+const { comparePassword } = require("../../../utils/comparePassword")
 module.exports = async (req, res, next) => {
   try {
-    const { password, confirmPassword } = req.body;
-    const resetToken = req.params.resetToken;
+    const { otp, email, password, confirmPassword } = req.body;
+    console.log(Date.now());
     const staff = await Staff.findOne({
-      resetToken: resetToken,
-      resetTokenExpiration: { $gte: Date.now() },
+      email: email,
+      otpExpiration: { $gte: Date.now() },
     });
-    console.log(staff);
+    if(!staff) return res.status(401).send(new Response(401, "OTP is not validate"))
     if (staff) {
-      if (password === confirmPassword && password.length >= 6) {
+      const validateOtp = await bcrypt.compare(otp, staff.otp);
+      if(!validateOtp) return res.status(401).send(new Response(401, 'OTP is not validate'))
+      if (comparePassword(password, confirmPassword)) {
         staff.password = password;
-        staff.resetToken = process.env.DEFAULT_RESET_TOKEN;
-        staff.resetTokenExpiration = 0;
+        staff.otp = "" ;
+        staff.tokens = [];
         staff.save();
-        return res.status(200).send({ data: "success" });
+        return res.status(200).send(new Response(200, "success"));
+      }else{
+        return res.status(400).send(new Response(400, "password not match"))
       }
+      
     }
-    return res.status(401).send({
-      status: 401,
-      error: "unauthorized",
-    });
+   
   } catch (err) {
-    res.status(400).send({
-      status: 400,
-      error: "something went wrong",
-    });
+    console.log(err);
+    res.status(400).send(new Response(400, "something went wrong"));
   }
 };

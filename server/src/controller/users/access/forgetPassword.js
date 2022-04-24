@@ -14,7 +14,6 @@ module.exports =  async (req, res, next) => {
         })
         const hashOtp = await bcrypt.hash(otpCode, 10)
         const email = req.body.email
-        console.log(email);
         const user = await Staff.findOne({ email : email })
         if(!user){
             return res.status(401).send(new Response(401, "your email does not exist"))
@@ -64,8 +63,8 @@ module.exports =  async (req, res, next) => {
                                                 <span
                                                     style="display:inline-block; vertical-align:middle; margin:29px 0 26px; border-bottom:1px solid #cecece; width:100px;"></span>
                                                 <p style="color:#455056; font-size:15px;line-height:24px; margin:0;">
-                                                    We cannot simply send you your old password. A unique OTP to reset your
-                                                    password has been generated for you.
+                                                    A unique OTP to reset your
+                                                    password has been generated for you.The OTP will expire in 2 minutes
                                                 </p>
                                                 <a href="javascript:void(0);"
                                                     style="background:#20e277;text-decoration:none !important; font-weight:500; margin-top:35px; color:#fff; font-size:30px;padding:10px 24px;display:inline-block;border-radius:50px;">${otpCode}</a>
@@ -97,7 +96,8 @@ module.exports =  async (req, res, next) => {
         </html>
         `
         });
-        const update = { otp : hashOtp, otpExpiration : Date.now() + 3600000}
+        const update = { otp : hashOtp, otpExpiration : Date.now() + 120000}
+        console.log(Date.now());
         const staff = await Staff.findOneAndUpdate({ email : email }, update , { new : true })
          return res.status(200).send(new Response(200, 'success'))
     }catch(err){

@@ -22,7 +22,7 @@ module.exports = async (req, res, next) => {
     if (removeDuplicate.length != maybeDuplicate.length)
       return res.status(400).send(new Response(400, "wrong data form"));
     if (!removeDuplicate.every((e) => e !== existCreater.email))
-      return res.status(400).send(new Response(400, "wrong data form,"));
+      return res.status(400).send(new Response(400, "wrong data form"));
     //Valid exsit member
     const existManager = await Staff.find({ email: req.body.managers });
     const existMember = await Staff.find({ email: req.body.members });
