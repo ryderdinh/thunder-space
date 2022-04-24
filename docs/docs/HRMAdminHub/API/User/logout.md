@@ -1,5 +1,5 @@
 ---
-sidebar_position: 10
+sidebar_position: 9
 ---
 
 # Đăng xuất khỏi thiết bị hiện thời
