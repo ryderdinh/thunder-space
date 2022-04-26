@@ -7,6 +7,7 @@ const Schema = mongoose.Schema
 const Project = new Schema({
     code : { type : String, required : true, unique : true },
     name : { type: String, required : true },
+    description : { type: String },
     member : [
         {
             uid : {type : mongoose.Schema.Types.ObjectId, ref : 'Staff'},
@@ -20,7 +21,15 @@ const Project = new Schema({
             iid : {type :mongoose.Schema.Types.ObjectId, ref : "Issue" }
         }
     ],
-    createdAt : { type: Number, default: Date.now, required : true }
+    createdAt : { type: Number, default: Date.now(), required : true },
+    updateAt : { type: Number, default: Date.now(), required: true },
+    deleted : { type: Boolean, default: false, required: true }
+})
+
+Project.pre("save", function(next){
+    const project = this;
+    project.updateAt = Date.now()
+    next()
 })
 
 Project.virtual('members', {
@@ -34,6 +43,13 @@ Project.virtual("issues", {
     localField : "issue.iid",
     foreignField : "_id"
 })
+
+Project.methods.getProjectDetails = function(){
+    let objectProject = this.toObject();
+    delete objectProject.__v
+    delete objectProject.deleted
+    return objectProject
+}
 
 Project.methods.getManagers = function() {
     const mem = this.member.filter(e => e.role === "manager")
