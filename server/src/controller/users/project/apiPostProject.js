@@ -56,6 +56,6 @@ console.log([...managers, ...members]);
     result.save();
     return res.status(200).send(new Response(200, "success"));
   } catch (err) {
-    res.status(400).send(new Response(400, "something went wrong"));
+    res.status(400).send(new Response(400, err));
   }
 };
