@@ -162,7 +162,8 @@ const routersProject = require('./routers/users/project.router');
 
 app.use("/api", routersProject.apiGetProject);
 app.use("/api", routersProject.apiPostProject);
-app.use("/api", routersProject.apiGetSearchProject);
+app.use("/api", routersProject.apiGetFindProject);
+app.use("/api", routersProject.apiDeleteProject)
 
 app.use("/table", authenticateToken, apiGetTable);
 

@@ -6,7 +6,7 @@ module.exports = async (req, res, next) => {
     const userId = req.user._id;
     const code = req.body.code;
     const name = req.body.name;
-
+    const description = req.body.description || ""
     const existCreater = await Staff.findById({ _id: userId });
     //Valid code
     const existCode = await Project.findOne({ code: code });
@@ -46,11 +46,12 @@ module.exports = async (req, res, next) => {
         })
     );
 
-console.log([...managers, ...members]);
+// console.log([...managers, ...members]);
     // Create
     const result = await Project.create({
       code: code,
       name: name,
+      description : description,
       member: [...managers, ...members],
     });
     result.save();
