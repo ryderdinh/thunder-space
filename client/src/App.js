@@ -2,10 +2,10 @@ import { actRefreshPage } from 'actions'
 import 'animate.css'
 import { AnimatePresence } from 'framer-motion'
 import NotFound from 'pages/404'
-import Account from 'pages/Account'
 import Home from 'pages/Home'
 import Issue from 'pages/Issue'
 import Login from 'pages/Login'
+import Profile from 'pages/Profile'
 import Project from 'pages/Project'
 import Report from 'pages/Report'
 import TimeSheets from 'pages/TimeSheets'
@@ -61,7 +61,8 @@ export default function App() {
                 <Issue />
               </Route>
               <Route exact path='/account'>
-                <Account />
+                {/* <Account /> */}
+                <Profile />
               </Route>
               <Route exact path='/login'>
                 <Login />

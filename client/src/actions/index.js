@@ -1,25 +1,24 @@
 //* IMPORT =============================================
-import authApi from 'api/authApi'
-import timekeepingApi from 'api/timekeepingApi'
+import { authApi, projectApi, timekeepingApi, userApi } from 'api'
 import axios from 'axios'
 import toast from 'react-hot-toast'
 import callAPI from '../api/callAPI'
-import { getCookie, setCookie } from '../units/cookieWeb'
+import { getCookie, removeCookie, setCookie } from '../units/cookieWeb'
 
 //? CALL API============================================
 export const actSignIn = (dataUser) => {
-  loadingToast('Đang đăng nhập')
+  removeToast()
+  loadingToast('Checking account...')
 
   return async (dispatch) => {
     let token = ''
 
     try {
       const res = await authApi.authentication(dataUser)
-      res?.accessToken && (token = res.accessToken)
+      res?.data?.accessToken && (token = res.data.accessToken)
     } catch (error) {
-      console.log(error)
       removeToast()
-      toast.error('Vào không gian thất bại, vui lòng thử lại sau !')
+      toast.error('Failed, try again later!')
     }
 
     if (token) {
@@ -31,7 +30,7 @@ export const actSignIn = (dataUser) => {
         removeToast()
 
         //? Login success
-        successToast('Đang dọn dẹp không gian...')
+        successToast('Cleaning up the space...')
 
         setCookie([
           { key: 'id', value: res.data?._id.toString() },
@@ -47,11 +46,37 @@ export const actSignIn = (dataUser) => {
         })
       } catch (error) {
         removeToast()
-        errorToast('Thất bại, kiểm tra lại tên đăng nhập hoặc mật khẩu của bạn')
+        errorToast('Failed, double-check your login information')
       }
     } else {
       removeToast()
-      errorToast('Thất bại, kiểm tra lại tên đăng nhập hoặc mật khẩu của bạn')
+      errorToast('Failed, double-check your login information')
+    }
+  }
+}
+
+export const actLogout = (type) => {
+  loadingToast('Logging out...')
+
+  return async (dispatch) => {
+    try {
+      const res = await authApi.logout(type)
+      console.log(res)
+
+      if (res.message === 'success') {
+        removeToast()
+        removeCookie('all')
+        successToast('Successful logout!')
+
+        setTimeout(() => {
+          dispatch(setCheckLogin(false))
+          window.location.href = window.location.origin
+        }, 1000)
+      }
+    } catch (error) {
+      console.log(error)
+      removeToast()
+      errorToast('Failed, logout failed!')
     }
   }
 }
@@ -63,6 +88,12 @@ export const actFetchStaffInfomation = () => {
     const res = await callAPI(`users/${id}`, 'GET', null, {
       authorization: `Bearer ${token}`
     })
+
+    // try {
+    //   userApi.getUser(res.data.userId)
+    // } catch (error) {
+
+    // }
 
     res && dispatch(setStaffInfomation(res.staffInfo))
   }
@@ -171,7 +202,7 @@ export const actSendReport = (data) => {
 export const actRefreshPage = () => {
   const { id, token } = getCookie()
 
-  id && token && loadingToast('Đang đăng nhập lại...')
+  id && token && loadingToast('Logging in again...')
 
   if (!id && !token) {
     return (dispatch) => {
@@ -238,31 +269,27 @@ export const actChangePassword = (data) => {
   }
 }
 
-export const actCreateProject = (data) => {
+export const actCreateProject = (data, uMail) => {
+  console.log(data, uMail)
   loadingToast('Đang xử lí yêu cầu...')
-  const { id, token } = getCookie()
+  let sbData = data
+  if (data?.managers)
+    sbData = {
+      ...data,
+      managers: data.managers.filter((item) => item !== uMail)
+    }
+  else sbData = { ...data, managers: [] }
+
   return async (dispatch) => {
     try {
-      const res = await axios({
-        method: 'POST',
-        url: `https://hrmadmin.herokuapp.com/api/createProject/${id}`,
-        headers: {
-          'Content-Type': 'application/json',
-          authorization: `Bearer ${token}`
-        },
-        data
-      })
+      const res = await projectApi.create(sbData)
+
+      console.log(res)
       removeToast()
-      if (res?.data?.data) {
-        successToast('Tạo dự án thành công')
-        dispatch(closePopup())
-      } else {
-        errorToast('Tạo dự án thất bại')
-        throw new Error('Failed')
-      }
+
+      dispatch(actQueryProject())
     } catch (error) {
-      removeToast()
-      errorToast('Tạo dự án thất bại')
+      console.log(error)
     }
   }
 }
@@ -277,43 +304,27 @@ export const actFetchProject = (data) => {
     }
     _param = '?' + _param
   }
+
   return async (dispatch) => {
+    const res = await projectApi.gets()
+
+    res.status === 200 &&
+      Promise.all([
+        await dispatch(setDataTimeKeeping(res.data)),
+        await dispatch(setTimeKeeping(res.data))
+      ])
+  }
+}
+
+export const actQueryProject = (query = null) => {
+  return async (dispatch) => {
+    await dispatch(setProjectLoading())
+
     try {
-      const res = await axios({
-        method: 'GET',
-        url: `https://hrmadmin.herokuapp.com/api/projectInfo/${id}${_param}`,
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`
-        }
-      })
-      let data = res.data
-
-      if (data?.status) {
-        errorToast(`${data.status}`)
-      } else {
-        dispatch(setDataProject(data))
-
-        if (!data) {
-          dispatch(
-            setWorkflow({
-              workflowName: 'Tất cả',
-              workflowType: 'project',
-              workflowId: ''
-            })
-          )
-        } else {
-          dispatch(
-            setWorkflow({
-              workflowName: data[0].projectName,
-              workflowType: 'project',
-              workflowId: data[0].projectCode
-            })
-          )
-        }
-      }
+      const res = await projectApi.gets(query)
+      dispatch(setDataProjects(res.data))
     } catch (error) {
-      errorToast(`Lỗi không xác định`)
+      console.log(error)
     }
   }
 }
@@ -346,11 +357,26 @@ export const actCreateIssue = (wid, data) => {
   }
 }
 
-export const toggleTest = () => {
-  return (dispatch) => {
-    dispatch(toggleActiveSidebar())
+export const actGetAllUsers = () => {
+  return async (dispatch) => {
+    await dispatch(setUsersLoading(true))
+
+    try {
+      const res = await userApi.getAllUsers()
+
+      await dispatch(setUsersData(res.data))
+    } catch (error) {
+      console.log(error)
+      dispatch(setUsersLoading(false))
+    }
   }
 }
+
+// export const toggleTest = () => {
+//   return (dispatch) => {
+//     dispatch(toggleActiveSidebar())
+//   }
+// }
 
 //? TOAST
 const errorToast = toast.error
@@ -427,13 +453,21 @@ export const finishLoading = () => ({
   type: 'FINISH_LOADING'
 })
 
+// PROJECT ACTION ================================
+export const setProjectLoading = () => ({
+  type: 'SET_LOADING'
+})
+
+//? Detail project
 export const setDataProject = (payload) => ({
   type: 'SET_DATA_PROJECT',
   payload
 })
 
-export const setInitalProject = () => ({
-  type: 'SET_INITAL_PROJECT'
+//? All project
+export const setDataProjects = (payload) => ({
+  type: 'SET_DATA_PROJECTS',
+  payload
 })
 
 export const setDataIssue = (payload) => ({
@@ -443,5 +477,16 @@ export const setDataIssue = (payload) => ({
 
 export const setWorkflow = (payload) => ({
   type: 'SET_WORKFLOW',
+  payload
+})
+
+// USERS ACTION ======================================
+export const setUsersLoading = (payload) => ({
+  type: 'SET_USERS_LOADING',
+  payload
+})
+
+export const setUsersData = (payload) => ({
+  type: 'SET_USERS_DATA',
   payload
 })

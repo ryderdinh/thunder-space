@@ -1,37 +1,37 @@
-import { toggleActiveSidebar } from 'actions';
-import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import NameContainer from './NameContainer';
+import { toggleActiveSidebar } from 'actions'
+import { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { NameContainer } from './NameContainer'
 
 export default function HeaderContainer({ pathName }) {
-	const [name, setName] = useState('');
+  const [name, setName] = useState('')
 
-	const sidebar = useSelector(state => state._sidebar);
+  const sidebar = useSelector((state) => state._sidebar)
 
-	const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
-	useEffect(() => {
-		const list = {
-			home: 'Trang chủ',
-			timesheets: 'Bảng công',
-			report: 'Báo cáo',
-			workflow: 'Không gian làm việc',
-			work: 'Quản lý công việc',
-			project: 'Quản lý dự án',
-			account: 'Tài khoản'
-		};
+  useEffect(() => {
+    const list = {
+      home: 'Home',
+      timesheets: 'Timesheets',
+      report: 'Report',
+      workflow: 'Mission Overview',
+      work: 'Workflow Overview',
+      project: 'Project Overview',
+      account: 'Account'
+    }
 
-		setName(list[pathName]);
-	}, [pathName]);
+    setName(list[pathName])
+  }, [pathName])
 
-	const activeSidebar = () => {
-		dispatch(toggleActiveSidebar(!sidebar.active));
-	};
+  const activeSidebar = () => {
+    dispatch(toggleActiveSidebar(!sidebar.active))
+  }
 
-	return (
-		<div className='view_name'>
-			<i className='bx bx-menu' onClick={activeSidebar}></i>
-			<NameContainer name={name} />
-		</div>
-	);
+  return (
+    <div className='view_name'>
+      <i className='bx bx-menu' onClick={activeSidebar}></i>
+      <NameContainer name={name} />
+    </div>
+  )
 }

@@ -11,7 +11,7 @@ export default function Login() {
 	const history = useHistory();
 
 	useEffect(() => {
-		document.title = 'Đăng nhập';
+		document.title = 'Login';
 	}, []);
 
 	useEffect(() => {

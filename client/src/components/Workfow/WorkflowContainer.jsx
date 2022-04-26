@@ -42,7 +42,7 @@ function WorkflowContainer() {
   ])
   //? Create effect
   useEffect(() => {
-    document.title = `Tông quan`
+    document.title = `Tổng quan`
   }, [])
 
   return (

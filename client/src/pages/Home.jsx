@@ -7,14 +7,14 @@ import TimeKeeping from 'components/Main/ViewMain/TimeKeeping'
 import ViewBox from 'components/Main/ViewMain/ViewBox'
 import ViewBoxName from 'components/Main/ViewMain/ViewBoxName'
 import ViewMain from 'components/Main/ViewMain/ViewMain'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import variantGlobal from 'units/variantGlobal'
 
 export default function Home() {
-  const path = 'home'
+  const [path] = useState('home')
 
   useEffect(() => {
-    document.title = 'Trang chủ'
+    document.title = 'Home'
   }, [])
 
   return (

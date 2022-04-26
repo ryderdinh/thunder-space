@@ -1,16 +1,24 @@
 const initState = {
   _dataProject: [],
-};
+  _dataProjects: [],
+  _dataProjectDetail: {},
+  isLoading: false,
+  isError: false
+}
 
 export default function project(state = initState, action) {
   switch (action.type) {
-    case "SET_DATA_PROJECT":
-      return { ...state, _dataProject: action.payload };
-    case "SET_INITAL_PROJECT": {
-      return { ...state, _dataProject: [] };
+    case 'SET_LOADING':
+      return { ...state, isLoading: true }
+    case 'SET_DATA_PROJECT':
+      return { ...state, _dataProject: action.payload, isLoading: false }
+    case 'SET_DATA_PROJECTS':
+      return { ...state, _dataProjects: action.payload, isLoading: false }
+    case 'SET_INITAL_PROJECT': {
+      return { ...state, _dataProject: [] }
     }
     default:
-      return { ...state };
+      return { ...state }
   }
 }
 

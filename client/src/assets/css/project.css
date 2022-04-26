@@ -1,0 +1,25 @@
+code {
+  margin: 0 0.2em;
+  padding: 0.2em 0.4em 0.1em;
+  background: hsla(0, 0%, 59%, 0.1);
+  border: 1px solid hsla(0, 0%, 39%, 0.2);
+  border-radius: 3px;
+}
+
+code,
+kbd,
+pre,
+samp {
+  font-family: source code pro, Menlo, monospace;
+  font-size: 1em;
+}
+
+.card-panel {
+  background: var(--background-panel);
+  border: 1px solid #282828;
+  padding: 1rem;
+}
+
+.card-panel:hover {
+  background: #262626;
+}

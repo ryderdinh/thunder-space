@@ -1,3 +1,4 @@
-import useNavigatorStatus from './useNavigatorStatus';
+import useInput from './useInput'
+import useNavigatorStatus from './useNavigatorStatus'
 
-export { useNavigatorStatus };
+export { useNavigatorStatus, useInput }

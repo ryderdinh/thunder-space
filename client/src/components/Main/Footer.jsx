@@ -2,7 +2,7 @@ import React from 'react'
 
 function Footer() {
   return (
-    <footer class='footer'>
+    <footer className='footer'>
       © 2021 Thunder Space
       <span>
         Crafted by <a href='https://github.com/ryderdinh'>ryderdinh</a>

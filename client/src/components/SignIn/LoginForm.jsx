@@ -43,7 +43,9 @@ export default function LoginForm() {
 
   const handleSignIn = () => {
     if (email && password.text) {
-      dispatch(actSignIn({ email, password: password.text }))
+      dispatch(
+        actSignIn({ email: email.trim(), password: password.text.trim() })
+      )
       return
     }
 
@@ -62,18 +64,18 @@ export default function LoginForm() {
         <div className='logo'>
           <ThunderSpaceIcon />
         </div>
-        <h1>Đăng nhập</h1>
-        <p className='body-text'>Gia nhập không gian của bạn!</p>
+        <h1>Login</h1>
+        <p className='body-text'>Join your space!</p>
 
         <div className='rounded-button google-login-button'>
           <span className='google-icon'>
             <GoogleIcon />
           </span>
-          <span>Đăng nhập với Google (Development)</span>
+          <span>Login with Google (Developing)</span>
         </div>
 
         <div className='sign-in-seperator'>
-          <span>hoặc đăng nhập bằng Email của bạn</span>
+          <span>or login with your email in the company</span>
         </div>
 
         <div className='login-form-group'>
@@ -129,7 +131,7 @@ export default function LoginForm() {
         </div>
 
         <div className='rounded-button login-cta' onClick={handleSignIn}>
-          Đi vào không gian
+          Go
         </div>
 
         {/* <div className='register-div'>
