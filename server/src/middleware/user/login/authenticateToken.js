@@ -18,7 +18,10 @@ const Response = require("../../../models/Response")
     return res.status(401).send(new Response(401, "unauthorize"))
   }
 
-} catch (error) {
+} catch (err) {
+  if(err.name == "TokenExpiredError"){
+    return res.status(400).send(new Response(400, err.message))
+  }
   return res.status(400).send(new Response(400, "something went wrong"));
   }
 }

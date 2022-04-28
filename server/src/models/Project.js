@@ -5,7 +5,8 @@ const { logger } = require('../../config/nodeMailer/email')
 const Schema = mongoose.Schema
 
 const Project = new Schema({
-    code : { type : String, required : true, unique : true },
+    code : { type : String, required : true, unique : true, uppercase : true },
+    seqcode : { type: Number, required: true, default : 0 },
     name : { type: String, required : true },
     description : { type: String },
     member : [
@@ -48,6 +49,7 @@ Project.methods.getProjectDetails = function(){
     let objectProject = this.toObject();
     delete objectProject.__v
     delete objectProject.deleted
+    delete objectProject.seqcode
     return objectProject
 }
 
@@ -72,4 +74,4 @@ Project.methods.getDetails = function(members){
   })
 return objectProject
 }
-module.exports = mongoose.model("Project", Project)
+    module.exports = mongoose.model("Project", Project)
