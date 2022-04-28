@@ -20,7 +20,7 @@
     "apexcharts": "^3.33.2",
     "axios": "^0.21.1",
     "babel-plugin-macros": "^3.1.0",
-    "caniuse-lite": "^1.0.30001284",
+    "caniuse-lite": "^1.0.30001325",
     "chokidar": "^3.5.1",
     "date-fns": "^2.23.0",
     "framer-motion": "^4.1.17",
