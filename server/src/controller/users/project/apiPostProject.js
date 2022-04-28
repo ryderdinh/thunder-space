@@ -54,8 +54,8 @@ module.exports = async (req, res, next) => {
       description : description,
       member: [...managers, ...members],
     });
-    result.save();
-    return res.status(200).send(new Response(200, "success"));
+    
+    return res.status(200).send(new Response(200, "success", await result.getProjectDetails()));
   } catch (err) {
     res.status(400).send(new Response(400, err));
   }
