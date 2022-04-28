@@ -9,9 +9,8 @@ import ReactNiceAvatar, { genConfig } from 'react-nice-avatar'
 import { useDispatch, useSelector } from 'react-redux'
 
 const schema = Joi.object({
-  name: Joi.string().required(),
-  code: Joi.string().required(),
-  description: Joi.string().default(''),
+  name: Joi.string().min(2).max(25).required(),
+  description: Joi.string().allow('').max(300),
   managers: Joi.array().items(Joi.string()),
   members: Joi.array().items(Joi.string()).required()
 })
@@ -109,7 +108,7 @@ export default function CreateProject({ closeModal }) {
                 <div className=''>
                   <div className='py-5 sm:py-6'>
                     <div className='grid grid-cols-6 gap-6'>
-                      <div className='col-span-6 sm:col-span-3'>
+                      <div className='col-span-6'>
                         <label
                           htmlFor='name'
                           className='block text-sm font-medium text-zinc-200'
@@ -120,35 +119,12 @@ export default function CreateProject({ closeModal }) {
                           {...register('name')}
                           autoComplete='off'
                           className='mt-1 block w-full rounded-md border border-gray-300 
-                        p-1 shadow-sm focus:border-emerald-500  focus:outline-none 
-                        focus:ring-2 focus:ring-emerald-500 sm:text-sm'
+                          p-1 shadow-sm focus:border-emerald-500  focus:outline-none 
+                          focus:ring-2 focus:ring-emerald-500 sm:text-sm'
                         />
                         {errors.name && (
                           <span className='text-xs italic text-red-500'>
                             {errors?.name?.message}
-                          </span>
-                        )}
-                      </div>
-
-                      <div className='col-span-6 sm:col-span-3'>
-                        <label
-                          htmlFor='project-code'
-                          className='block text-sm font-medium text-zinc-200'
-                        >
-                          Code
-                        </label>
-
-                        <input
-                          {...register('code')}
-                          autoComplete='off'
-                          className='mt-1 block w-full rounded-md border border-gray-300 
-                          p-1 shadow-sm focus:border-emerald-500  focus:outline-none 
-                          focus:ring-2 focus:ring-emerald-500 sm:text-sm'
-                        />
-
-                        {errors.code && (
-                          <span className='text-xs italic text-red-500'>
-                            {errors?.code?.message}
                           </span>
                         )}
                       </div>

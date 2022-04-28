@@ -270,9 +270,9 @@ export const actChangePassword = (data) => {
 }
 
 export const actCreateProject = (data, uMail) => {
-  console.log(data, uMail)
-  loadingToast('Đang xử lí yêu cầu...')
+  loadingToast('Processing...')
   let sbData = data
+  
   if (data?.managers)
     sbData = {
       ...data,
