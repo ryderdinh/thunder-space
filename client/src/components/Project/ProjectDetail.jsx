@@ -74,13 +74,13 @@ export default function ProjectDetail({ variant }) {
             </p>
           )}
 
-          {!isLoading && !_dataProject?.issue.length && (
+          {!isLoading && !_dataProject?.issue?.length && (
             <p className='w-full py-14 text-center text-xs text-neutral-500'>
               No data
             </p>
           )}
 
-          {!isLoading && _dataProject.length > 0 && (
+          {!isLoading && _dataProject?.length > 0 && (
             <div
               className='grid w-full grid-cols-1 gap-3 md:grid-cols-2
               xl:grid-cols-3'
