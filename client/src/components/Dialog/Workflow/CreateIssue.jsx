@@ -127,9 +127,9 @@ export default function CreateIssue({ closeModal }) {
               type='button'
               className='inline-flex justify-center rounded-md border 
               border-transparent px-4 py-2 text-sm font-medium
-              text-red-500 transition-all duration-300 ease-in-out 
-              hover:bg-red-500 hover:text-red-200 focus:outline-none focus-visible:ring-2 
-              focus-visible:ring-red-500 focus-visible:ring-offset-2'
+              text-neutral-400 transition-all duration-300 ease-in-out 
+              hover:bg-neutral-500 hover:text-neutral-200 focus:outline-none focus-visible:ring-2 
+              focus-visible:ring-neutral-500 focus-visible:ring-offset-2'
               onClick={closeModal}
             >
               Cancel

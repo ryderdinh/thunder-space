@@ -4,8 +4,8 @@ import HeaderContainer from 'components/Main/HeaderContainer/HeaderContainer'
 import Main from 'components/Main/Main'
 import ViewBox from 'components/Main/ViewMain/ViewBox'
 import ViewMain from 'components/Main/ViewMain/ViewMain'
-import ProjectContainer from 'components/Project/ProjectContainer'
 import ProjectDetail from 'components/Project/ProjectDetail'
+import ProjectsOverview from 'components/Project/ProjectsOverview'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import variantGlobal from 'units/variantGlobal'
@@ -32,16 +32,11 @@ export default function Project() {
             )}
 
             {!pathName?.pid && (
-              <ProjectContainer
+              <ProjectsOverview
                 variants={variantGlobal({ type: 2, addValue: 0 })}
               />
             )}
           </ViewBox>
-          {/* <ViewBox>
-            <ProjectContainer
-              variants={variantGlobal({ type: 2, addValue: 0 })}
-            />
-          </ViewBox> */}
         </ViewMain>
       </Main>
     </Layout>

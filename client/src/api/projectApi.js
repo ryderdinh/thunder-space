@@ -19,11 +19,10 @@ const projectApi = {
   update: (data) => {
     const url = '/projects'
     return axiosClient.put(url, data)
-  
   },
-  delete: (data) => {
-    const url = '/projects'
-    return axiosClient.put(url, data)
+  delete: (id) => {
+    const url = `/projects/${id}`
+    return axiosClient.delete(url)
   }
 }
 

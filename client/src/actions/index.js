@@ -294,25 +294,28 @@ export const actCreateProject = (data, uMail) => {
   }
 }
 
-export const actFetchProject = (data) => {
-  // loadingToast("Đang lấy dữ liệu...");
-  const { id, token } = getCookie()
-  let _param = ''
-  if (data) {
-    for (const item of data) {
-      _param = `projectCode=${item}`
-    }
-    _param = '?' + _param
-  }
-
+export const actFetchProject = (pid) => {
   return async (dispatch) => {
-    const res = await projectApi.gets()
+    await dispatch(setProjectLoading())
 
-    res.status === 200 &&
-      Promise.all([
-        await dispatch(setDataTimeKeeping(res.data)),
-        await dispatch(setTimeKeeping(res.data))
-      ])
+    try {
+      const res = await projectApi.get(pid)
+      await dispatch(setDataProject(res.data))
+    } catch (error) {
+      console.log(error)
+      await dispatch(setProjectError(true))
+    }
+  }
+}
+
+export const actDeleteProject = (pid, callback) => {
+  return async () => {
+    try {
+      await projectApi.delete(pid)
+      callback()
+    } catch (error) {
+      console.log(error)
+    }
   }
 }
 
@@ -325,6 +328,7 @@ export const actQueryProject = (query = null) => {
       dispatch(setDataProjects(res.data))
     } catch (error) {
       console.log(error)
+      await dispatch(setProjectError(true))
     }
   }
 }
@@ -456,6 +460,11 @@ export const finishLoading = () => ({
 // PROJECT ACTION ================================
 export const setProjectLoading = () => ({
   type: 'SET_LOADING'
+})
+
+export const setProjectError = (payload) => ({
+  type: 'SET_ERROR',
+  payload
 })
 
 //? Detail project

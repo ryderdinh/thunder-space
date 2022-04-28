@@ -3,17 +3,21 @@ import { actQueryProject } from 'actions'
 import 'assets/css/project.css'
 import Col from 'components/Layouts/Col'
 import Row from 'components/Layouts/Row'
+import { LayoutContext } from 'context/LayoutContext'
 import queryString from 'query-string'
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import 'react-date-range/dist/styles.css' // main css file
 import 'react-date-range/dist/theme/default.css' // theme css file
 import Avatar, { genConfig } from 'react-nice-avatar'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useHistory } from 'react-router-dom'
 import MenuComponent from './MenuComponent'
+import MenuItem from './MenuItem'
 import SearchBox from './SearchBox'
 
-function ProjectContainer() {
+function ProjectsOverview() {
+  const { openDialog } = useContext(LayoutContext)
+
   const { isLoading, _dataProjects } = useSelector((state) => state._project)
   const dispatch = useDispatch()
 
@@ -37,6 +41,10 @@ function ProjectContainer() {
     let optimizeTextValue = optimizeText(value)
     setSearchValue(optimizeTextValue)
     history.push(`${history.location.pathname}?project=${optimizeTextValue}`)
+  }
+
+  const handleOpenDialog = () => {
+    openDialog('create-project')
   }
 
   useEffect(() => {
@@ -76,7 +84,13 @@ function ProjectContainer() {
               handleSearch={handleSearch}
               defaultValue={defaultSearchValue}
             />
-            <MenuComponent addDialogName={'create-project'} />
+            {/* <MenuComponent addDialogName={'create-project'} /> */}
+
+            <MenuComponent>
+              <div className='px-1 py-1'>
+                <MenuItem onClick={handleOpenDialog} type={'add'} />
+              </div>
+            </MenuComponent>
           </div>
         </Col>
       </Row>
@@ -101,7 +115,7 @@ function ProjectContainer() {
             >
               {projects.map((project) => (
                 <ProjectItemGrid
-                  key={project['_id'].toString()}
+                  key={project._id}
                   config={config}
                   projectOverview={project}
                 />
@@ -114,7 +128,7 @@ function ProjectContainer() {
   )
 }
 
-export default ProjectContainer
+export default ProjectsOverview
 
 function ProjectItemGrid({ config, projectOverview }) {
   return (
@@ -142,8 +156,11 @@ function ProjectItemGrid({ config, projectOverview }) {
           </div>
           <div className=''>
             <div className='relative left-1 flex -space-x-1'>
-              {projectOverview.member.map((member) => (
-                <div className='relative inline-block h-6 w-6 overflow-hidden rounded-full ring-2 ring-white'>
+              {projectOverview.member.map((member, index) => (
+                <div
+                  className='relative inline-block h-6 w-6 overflow-hidden rounded-full ring-2 ring-white'
+                  key={index}
+                >
                   <img
                     className='relative z-10 h-full w-full'
                     src={member.avatar}
@@ -152,26 +169,6 @@ function ProjectItemGrid({ config, projectOverview }) {
                   <div className='absolute top-0 left-0 z-0 h-full w-full bg-neutral-800'></div>
                 </div>
               ))}
-              {/* <img
-                className='inline-block h-6 w-6 rounded-full ring-2 ring-white'
-                src='https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80'
-                alt=''
-              />
-              <img
-                className='inline-block h-6 w-6 rounded-full ring-2 ring-white'
-                src='https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80'
-                alt=''
-              />
-              <img
-                className='inline-block h-6 w-6 rounded-full ring-2 ring-white'
-                src='https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.25&w=256&h=256&q=80'
-                alt=''
-              />
-              <img
-                className='inline-block h-6 w-6 rounded-full ring-2 ring-white'
-                src='https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80'
-                alt=''
-              /> */}
             </div>
           </div>
         </div>

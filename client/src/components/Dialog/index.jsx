@@ -3,9 +3,11 @@ import { LayoutContext } from 'context/LayoutContext'
 import { Fragment, useContext } from 'react'
 import CreateIssue from './Workflow/CreateIssue'
 import CreateProject from './Workflow/CreateProject'
+import DeleteProject from './Workflow/DeleteProject'
 
 function Dialog() {
-  const { nameDialog, isDialogOpen, closeDialog } = useContext(LayoutContext)
+  const { nameDialog, isDialogOpen, closeDialog, data } =
+    useContext(LayoutContext)
 
   return (
     <Transition appear show={isDialogOpen} as={Fragment}>
@@ -18,6 +20,10 @@ function Dialog() {
 
         {nameDialog === 'create-project' && (
           <CreateProject closeModal={closeDialog} />
+        )}
+
+        {nameDialog === 'remove-project' && (
+          <DeleteProject closeModal={closeDialog} data={data} />
         )}
 
         {nameDialog === 'create-issue' && (

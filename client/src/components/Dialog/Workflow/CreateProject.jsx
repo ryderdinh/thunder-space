@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from 'react-redux'
 const schema = Joi.object({
   name: Joi.string().required(),
   code: Joi.string().required(),
+  description: Joi.string().default(''),
   managers: Joi.array().items(Joi.string()),
   members: Joi.array().items(Joi.string()).required()
 })
@@ -30,6 +31,8 @@ export default function CreateProject({ closeModal }) {
   } = useForm({
     resolver: joiResolver(schema)
   })
+
+  console.log(errors)
 
   const [selectedManagers, setSelectedManagers] = useState([yourMail])
   const [selectedMembers, setSelectedMembers] = useState([])
@@ -84,9 +87,9 @@ export default function CreateProject({ closeModal }) {
         leaveTo='opacity-0 scale-95'
       >
         <div
-          className='my-8 inline-block w-4/6 max-w-2xl transform
-          rounded-md border border-neutral-800 bg-[#232323] p-6 text-left 
-          align-middle shadow-xl transition-all'
+          className='my-8 inline-block max-h-screen w-4/6 max-w-2xl
+          transform overflow-scroll rounded-md border border-neutral-800 
+          bg-[#232323] p-6 text-left align-middle shadow-xl transition-all'
         >
           <Dialog.Title
             as='h3'
@@ -114,7 +117,7 @@ export default function CreateProject({ closeModal }) {
                           Name
                         </label>
                         <input
-                          {...register('name', { required: true })}
+                          {...register('name')}
                           autoComplete='off'
                           className='mt-1 block w-full rounded-md border border-gray-300 
                         p-1 shadow-sm focus:border-emerald-500  focus:outline-none 
@@ -136,11 +139,11 @@ export default function CreateProject({ closeModal }) {
                         </label>
 
                         <input
-                          {...register('code', { required: true })}
+                          {...register('code')}
                           autoComplete='off'
                           className='mt-1 block w-full rounded-md border border-gray-300 
-                        p-1 shadow-sm focus:border-emerald-500  focus:outline-none 
-                        focus:ring-2 focus:ring-emerald-500 sm:text-sm'
+                          p-1 shadow-sm focus:border-emerald-500  focus:outline-none 
+                          focus:ring-2 focus:ring-emerald-500 sm:text-sm'
                         />
 
                         {errors.code && (
@@ -148,6 +151,30 @@ export default function CreateProject({ closeModal }) {
                             {errors?.code?.message}
                           </span>
                         )}
+                      </div>
+
+                      <div className='col-span-6'>
+                        <label
+                          htmlFor='project-description'
+                          className='block text-sm font-medium text-zinc-200'
+                        >
+                          Description
+                        </label>
+
+                        <textarea
+                          {...register('description')}
+                          autoComplete='off'
+                          rows={3}
+                          className='mt-1 block w-full rounded-md border border-gray-300 
+                          p-1 shadow-sm focus:border-emerald-500  focus:outline-none 
+                          focus:ring-2 focus:ring-emerald-500 sm:text-sm'
+                        />
+
+                        {/* {errors.code && (
+                          <span className='text-xs italic text-red-500'>
+                            {errors?.description?.message}
+                          </span>
+                        )} */}
                       </div>
 
                       <div className='col-span-6 sm:col-span-3'>
