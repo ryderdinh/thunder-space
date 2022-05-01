@@ -2,7 +2,6 @@ const mongoose = require("mongoose")
 const Schema = mongoose.Schema
 
 const Issue = new Schema({
-        iid : { type: String, required : true},
         name : { type : String, required : true },
         code : { type : String , required : true, unique : true },
         type : {
@@ -20,8 +19,8 @@ const Issue = new Schema({
           id :  { type : mongoose.Schema.Types.ObjectId, ref: "Staff", required : true }
         },
         estimate : {
-            start : String, 
-            end : String
+            start :{ type : Number }, 
+            end : { type: Number}
         },
         description : String,
         priority : { 
@@ -35,8 +34,8 @@ const Issue = new Schema({
         attachment : [],
         status : [],
         history : [],
-        createdAt : { type : Number, default :Date.now, required : true }
-    
+        createdAt : { type : Number, default :Date.now(), required : true },
+        updateAt : { type : Number, default: Date.now(), required: true }
 })
 
 Issue.virtual("creators", {
@@ -50,5 +49,9 @@ Issue.virtual("assigns", {
     localField : "assign.id",
     foreignField : "_id"
 })
-
-module.exports = mongoose.model("Issue", Issue)
+Issue.pre("save", function(next){
+    const issue = this;
+    issue.updateAt = Date.now();
+    next();
+})
+    module.exports = mongoose.model("Issue", Issue)
