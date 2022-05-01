@@ -11,7 +11,7 @@ exports.apiGetProject = router.get('/projects', authenticateToken, apiGetProject
 //Create new project
 exports.apiPostProject = router.post('/projects/create', authenticateToken, apiPostProject)
 //Add more member to project
-// exports.apiPatchAddMemberToProject = router.patch("/projects/add-member/:uid", authenticateToken, apiPatchAddMemberToProject)
+exports.apiPatchAddMemberToProject = router.patch("/projects/:id/members/add", authenticateToken, apiPatchAddMemberToProject)
 //Find one project
 exports.apiGetFindProject = router.get('/projects/:id', authenticateToken, apiGetFindProject)
 //Delete Project
