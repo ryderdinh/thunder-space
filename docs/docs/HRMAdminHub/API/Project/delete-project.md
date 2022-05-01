@@ -1,15 +1,21 @@
 ---
-sidebar_position: 5
+sidebar_position: 7
 ---
 
-# Lấy thông tin vấn đề
+# Xoá một dự án
 
-Method **`GET`**
+Method **`DELETE`**
 
 ```shell
-https://hrmadmin.herokuapp.com/api/issue-info/<issueId>
+https://hrmadmin.herokuapp.com/api/projects/<id>
 ```
-
+### Response
+```json
+{
+  "status": 200,
+  "message": "success",
+}
+```
 ### Header
 
 | Trường dữ liệu  | Kiểu   | Chú thích                                   |

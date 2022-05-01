@@ -1,5 +1,5 @@
 ---
-sidebar_position: 3
+sidebar_position: 4
 ---
 
 # Tạo vấn đề
@@ -7,7 +7,7 @@ sidebar_position: 3
 Method **`POST`**
 
 ```shell
-https://hrmadmin.herokuapp.com/api/create-issue/<userId>/<projectId>
+https://hrmadmin.herokuapp.com/api/issues/create/<pid>
 ```
 
 ### Tham số
@@ -16,7 +16,8 @@ https://hrmadmin.herokuapp.com/api/create-issue/<userId>/<projectId>
 | -------------- | ------ | -------------------------------- |
 | `name`         | string | tên vấn đề                    |
 | `type`         | string | loại vấn đề [task, bug]                        |
-| `assign`      | string | người được giao    |
+| `assigned`      | string | người được giao    |
+| `estimate`      | array | mảng chứa thởi gian bắt đầu và kết thúc [start, end]    |
 | `priority`   |string | mức độ ưu tiên [low, medium, high, highest]|
 | `description`|string| mô tả |
 
@@ -25,3 +26,39 @@ https://hrmadmin.herokuapp.com/api/create-issue/<userId>/<projectId>
 | Trường dữ liệu  | Kiểu   | Chú thích                                   |
 | --------------- | ------ | ------------------------------------------- |
 | `Authorization` | string | `Bearer` + [`accessToken`](../access-token.md) |
+
+### Response
+```json
+{
+  "status": 200,
+  "message": "success",
+  "data": {
+    "name": "test",
+    "code": "PJT-2",
+    "type": "task",
+    "creator": {
+      "id": "61e146ad37bfab063e6ab935"
+    },
+    "assign": {
+      "id": "623b376bcf978427d09cd28c"
+    },
+    "estimate": {
+      "start": 123123,
+      "end": 123123
+    },
+    "description": "",
+    "priority": "low",
+    "attachment": [],
+    "status": [],
+    "history": [],
+    "createdAt": 1651403552081,
+    "updateAt": 1651403573369,
+    "_id": "626e6b35264ad93aa9ffcb9b",
+    "__v": 0
+  }
+}
+```
+
+### Error
+
+
