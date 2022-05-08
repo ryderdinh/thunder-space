@@ -7,7 +7,7 @@ sidebar_position: 6
 Method **`POST`**
 
 ```shell
-https://hrmadmin.herokuapp.com/api/issues/create/<pid>
+https://hrmadmin.herokuapp.com/api/projects/<pid>/issues/create
 ```
 
 ### Tham số
@@ -17,7 +17,7 @@ https://hrmadmin.herokuapp.com/api/issues/create/<pid>
 | `name`         | string | tên vấn đề                    |
 | `type`         | string | loại vấn đề [task, bug]                        |
 | `assigned`      | string | người được giao    |
-| `estimate`      | array | mảng chứa thởi gian bắt đầu và kết thúc [start, end]    |
+| `estimate`      | number | thởi gian kết thúc |
 | `priority`   |string | mức độ ưu tiên [low, medium, high, highest]|
 | `description`|string| mô tả |
 
