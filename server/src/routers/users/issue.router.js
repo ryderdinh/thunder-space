@@ -6,6 +6,6 @@ const apiPostFile = require("../../controller/users/issue/apiUploadFIle")
 //Get issue's infor
 exports.apiGetIssue = router.get('/issues', authenticateToken, apiGetIssue)
 //Assign a issue for a member in project
-exports.apiPostIssue = router.post('/issues/create/:pid', authenticateToken, apiPostIssue)
+exports.apiPostIssue = router.post('/projects/:pid/issues/create', authenticateToken, apiPostIssue)
 //Upload attachment
 exports.apiPostFile = router.post("/upload/file", authenticateToken, apiPostFile)

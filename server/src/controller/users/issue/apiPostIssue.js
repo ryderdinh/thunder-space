@@ -2,6 +2,7 @@ const Project = require("../../../models/Project")
 const Staff = require("../../../models/Staff")
 const Issue = require("../../../models/Issue")
 const Response = require("../../../models/Response")
+const { date } = require("joi")
 module.exports = async (req, res, next) => {
   try{
       //params
@@ -11,9 +12,12 @@ module.exports = async (req, res, next) => {
     const name = req.body.name
     const type = req.body.type
     const assigned = req.body.assigned
-    const [ start, end] = req.body.estimate;
+    const end = req.body.estimate;
     const priority = req.body.priority
     const description = req.body.description || ""
+console.log(Date.now());
+    //Check  valid estimate
+    if(end < Date.now()) return res.status(400).send(new Response(400, "estimate value is not valid"))
     //Check exist project
     const existProject = await Project.findOne({ id : pid, deleted : false }).elemMatch("member", { uid : uid });
     if(!existProject) return res.status(400).send(new Response(400, "project is not available"))
@@ -34,7 +38,7 @@ module.exports = async (req, res, next) => {
         creator: creator,
         assign: assign,
         estimate: {
-            start: start,
+            start: Date.now(),
             end: end
         },
         description: description,
