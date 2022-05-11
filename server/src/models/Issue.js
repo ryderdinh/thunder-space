@@ -37,7 +37,7 @@ const Issue = new Schema({
         createdAt : { type : Number, default :Date.now(), required : true },
         updateAt : { type : Number, default: Date.now(), required: true }
 })
-
+//te
 Issue.virtual("creators", {
     ref : "Staff",
      localField : "creator.id",
