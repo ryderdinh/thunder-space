@@ -73,7 +73,6 @@ module.exports = async (req, res, next) => {
     
     return res.status(200).send(new Response(200, "success", await result.getProjectDetails()));
   } catch (err) {
-    console.log(err);
-    res.status(400).send(new Response(400, err));
+    res.status(400).send(new Response(400, err.message));
   }
 };
