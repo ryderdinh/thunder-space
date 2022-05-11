@@ -11,10 +11,11 @@ const Project = new Schema({
     description : { type: String },
     member : [
         {
-            uid : {type : mongoose.Schema.Types.ObjectId, ref : 'Staff'},
-            role : { type : String, enum : ['manager', 'normal'] , required : true},
-            name : {type: String, required: true},
-            avatar: {type : String, required : true}
+            uid: {type: mongoose.Schema.Types.ObjectId, ref: 'Staff'},
+            role: { type: String, enum: ['manager', 'normal'] , required: true},
+            name: {type: String, required: true},
+            email: { type: String, required: true },
+            avatar: {type: String, required: true}
         }
     ],
     issue : [

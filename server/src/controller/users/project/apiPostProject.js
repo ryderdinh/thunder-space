@@ -26,8 +26,6 @@ module.exports = async (req, res, next) => {
       seqcode = existCode[0].seqcode + 1
       code+= seqcode
     }
-    // if (existCode)
-    //   return res.status(400).send(new Response(400, "project code already exist"));
     //Valide body
     const maybeDuplicate = [
       ...req.body.managers,
@@ -49,6 +47,7 @@ module.exports = async (req, res, next) => {
           uid: e._id,
           role: "manager",
           name : e.name,
+          email: e.email,
           avatar : e.avatar.url
         })
     );
@@ -58,11 +57,11 @@ module.exports = async (req, res, next) => {
           uid: e._id,
           role: "normal",
           name : e.name,
+          email: e.email,
           avatar : e.avatar.url
         })
     );
 
-// console.log([...managers, ...members]);
     // Create
     const result = await Project.create({
       code: code,
