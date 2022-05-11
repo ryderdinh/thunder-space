@@ -20,16 +20,18 @@ module.exports = async (req, res, next) => {
     //Check exist project
     const existProject = await Project.findOne({ id : pid, deleted : false }).elemMatch("member", { uid : uid });
     if(!existProject) return res.status(400).send(new Response(400, "project is not available"))
-
     //Check user assigned
     const existUserAssigned = await Staff.findOne({ email : assigned })
-    if(!existUserAssigned) return res.status(400).send(new Response(400,'user assigned does not exist'))
-    const members = (await existProject.populate("members")).member;
-    const UserAssignedBelongtoProject = members.find(member => member.uid.toString() ===  existUserAssigned.id.toString());
-    if(!UserAssignedBelongtoProject) return res.status(400).send(new Response(400, "user is assgined is not valid"));
 
+    const members = (await existProject.populate("members")).member;
+    const UserAssignedBelongtoProject = null
+    if(existUserAssigned){
+       UserAssignedBelongtoProject = members.find(member => member.uid.toString() ===  existUserAssigned.id.toString());
+    }
+    if((!UserAssignedBelongtoProject) && (assigned!="")) return res.status(400).send(new Response(400, "user is assgined is not valid"));
+    console.log(existProject);
     const creator = { id : uid };
-    const assign = { id : existUserAssigned.id }
+    const assign = assigned === "" ? null : { id : existUserAssigned.id }
     const newIssue = await Issue.create({
         name: name,
         code: `${existProject.code}-${existProject.issue.length + 1}`,
@@ -44,10 +46,10 @@ module.exports = async (req, res, next) => {
         priority: priority
     })
     //Save to project
-    existProject.issue.push({ iid: newIssue.id })
+    existProject.issue.push({ iid: newIssue.id });
+    await existProject.save();
     return res.status(200).send(new Response(200, "success", newIssue))
   }catch(err){
-      console.log(err);
     return res.status(400).send(new Response(400, err.message));
   }
 

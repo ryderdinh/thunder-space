@@ -16,7 +16,7 @@ const Issue = new Schema({
           id :  { type : mongoose.Schema.Types.ObjectId , ref : "Staff", required : true}
         },
         assign : {
-          id :  { type : mongoose.Schema.Types.ObjectId, ref: "Staff", required : true }
+          id :  { type : mongoose.Schema.Types.ObjectId, ref: "Staff" }
         },
         estimate : {
             start :{ type : Number }, 

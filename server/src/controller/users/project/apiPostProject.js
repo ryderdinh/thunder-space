@@ -6,7 +6,7 @@ module.exports = async (req, res, next) => {
     const userId = req.user._id;
     let  code = "";
     let seqcode = 0;
-    const name = " " + req.body.name.trim();
+    const name = req.body.name.trim();
     const description = req.body.description || "";
     const existCreater = await Staff.findById({ _id: userId });
     
@@ -19,7 +19,6 @@ module.exports = async (req, res, next) => {
     for(let i = 0; i < arrWordOfName.length; i++){
       code += arrWordOfName[i].charAt(0)
     }
-    name.trim()
     const existCode = await Project.find({ name: name }).sort({seqcode : "desc"}).limit(1);
     // console.log(existCode);
     if(existCode[0]){
