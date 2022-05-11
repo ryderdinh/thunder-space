@@ -24,12 +24,11 @@ module.exports = async (req, res, next) => {
     const existUserAssigned = await Staff.findOne({ email : assigned })
 
     const members = (await existProject.populate("members")).member;
-    const UserAssignedBelongtoProject = null
+    let userAssignedBelongtoProject 
     if(existUserAssigned){
-       UserAssignedBelongtoProject = members.find(member => member.uid.toString() ===  existUserAssigned.id.toString());
+      userAssignedBelongtoProject = members.find(member => member.uid.toString() ===  existUserAssigned.id.toString());
     }
-    if((!UserAssignedBelongtoProject) && (assigned!="")) return res.status(400).send(new Response(400, "user is assgined is not valid"));
-    console.log(existProject);
+    if((!userAssignedBelongtoProject) && (assigned!="")) return res.status(400).send(new Response(400, "user is assgined is not valid"));
     const creator = { id : uid };
     const assign = assigned === "" ? null : { id : existUserAssigned.id }
     const newIssue = await Issue.create({
@@ -50,6 +49,7 @@ module.exports = async (req, res, next) => {
     await existProject.save();
     return res.status(200).send(new Response(200, "success", newIssue))
   }catch(err){
+    console.log(err);
     return res.status(400).send(new Response(400, err.message));
   }
 
