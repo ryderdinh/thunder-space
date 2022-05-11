@@ -15,7 +15,6 @@ module.exports = async (req, res, next) => {
     const end = req.body.estimate;
     const priority = req.body.priority
     const description = req.body.description || ""
-console.log(Date.now());
     //Check  valid estimate
     if(end < Date.now()) return res.status(400).send(new Response(400, "estimate value is not valid"))
     //Check exist project
@@ -46,61 +45,6 @@ console.log(Date.now());
     })
     //Save to project
     existProject.issue.push({ iid: newIssue.id })
-    await existProject.save()
-    // if(existProject && existUser){
-    //     let creator = existProject.member.find(e => e.uid === uid ) 
-    //     let assigned = existProject.member.find(e => e.uid === existUser.id) 
-    //     console.log(assigned);
-    //     let code = `${existProject.code}-${existProject.issue.length + 1}`
-    //     // console.log(icode);
-    //     let assignedPerson
-    //     let creatorInfo = {
-    //         uid : creator.uid,
-    //         name : creator.name,
-    //     }
-    //     if(assigned){
-    //         assignedPerson = {
-    //             uid : assigned.uid,
-    //             name : assigned.name,
-    //         }
-    //     }else{
-    //         res.json({ data : {
-    //             status : "the person you assign is not in your project ! "
-    //         } })
-    //     }
-    //     // console.log(creatorInfo);
-    //     let result = {
-    //         iid : existProject.pid,
-    //         issueName : name,
-    //         issueCode : icode,
-    //         issueType : type,
-    //         issueCreator : creatorInfo,
-    //         issueAssign : assignedPerson,
-    //         issueDescription : description,
-    //         issuePriority : priority
-    //     }
-    //     const newIssue = new Issue(result)
-    //     let err = newIssue.validateSync()
-    //     if(!err){
-    //         // console.log(err);
-    //         newIssue.save()
-    //         const update = await Project.findOneAndUpdate({pid : pid},{ 
-    //             $push : { issue : {
-    //                 iid : result.iid,
-    //                 issueName : result.issueName,
-    //                 issueCode : result.issueCode,
-    //                 issueType : result.issueType
-    //             } }
-    //         }, { runValidators: true })
-    //     }else{
-    //         return res.json({ status : "cannot assign !" })
-    //     }
-    //     return res.json({
-    //             status : `assign to ${assign} complete !`
-    //     })
-    // }else{
-    //     return res.json([])
-    // }
     return res.status(200).send(new Response(200, "success", newIssue))
   }catch(err){
       console.log(err);
