@@ -13,8 +13,7 @@ module.exports = async (req, res, next) => {
             return res.status(200).send(new Response(200, "success"))
         }
         return res.status(400).send(new Response(400, "you are not allow to delete this project"))
-    } catch (error) {
-        console.log(error);
-        return res.status(400).send(new Response(400, "something went wrong"))
+    } catch (err) {
+        return res.status(400).send(new Response(400, err.message ))
     }
 }
