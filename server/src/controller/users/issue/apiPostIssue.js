@@ -2,7 +2,7 @@ const Project = require("../../../models/Project")
 const Staff = require("../../../models/Staff")
 const Issue = require("../../../models/Issue")
 const Response = require("../../../models/Response")
-const { date } = require("joi")
+const { date, exist } = require("joi")
 module.exports = async (req, res, next) => {
   try{
       //params
@@ -29,8 +29,10 @@ module.exports = async (req, res, next) => {
       userAssignedBelongtoProject = members.find(member => member.uid.toString() ===  existUserAssigned.id.toString());
     }
     if((!userAssignedBelongtoProject) && (assigned!="")) return res.status(400).send(new Response(400, "user is assgined is not valid"));
-    const creator = { id : uid };
-    const assign = assigned === "" ? null : { id : existUserAssigned.id }
+
+    const existCreator = await Staff.findById(uid);
+    const creator = { id : existCreator, name: existCreator.name, email: existCreator.email, avatar: existCreator.avatar.url };
+    const assign = assigned === "" ? null : { id : existUserAssigned.id, name: existUserAssigned.name, email: existUserAssigned.email, avatar: existUserAssigned.avatar.url }
     const newIssue = await Issue.create({
         name: name,
         code: `${existProject.code}-${existProject.issue.length + 1}`,
