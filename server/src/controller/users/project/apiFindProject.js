@@ -6,9 +6,7 @@ module.exports = async (req, res, next) => {
   try {
     const uid = req.user.id;
     const pid = req.params.id;
-    console.log(pid);
     const project = await Project.findById(pid)
-    console.log(project);
     if(!project || project.deleted == true){
       return res.status(400).send(new Response(400, "project are not available"))
     }
@@ -19,8 +17,9 @@ module.exports = async (req, res, next) => {
         checkUserInProject = true
       }
     });
+    const issues = (await project.populate("issues")).issues
     if(checkUserInProject){
-      return res.status(200).send(new Response(200, "success",await project.getProjectDetails()))
+      return res.status(200).send(new Response(200, "success",await project.getProjectDetails(issues)))
     }
     return res.status(400).send(new Response(400, "you are not in this project"))
   } catch (err) {

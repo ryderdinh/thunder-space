@@ -46,11 +46,12 @@ Project.virtual("issues", {
     foreignField : "_id"
 })
 
-Project.methods.getProjectDetails = function(){
+Project.methods.getProjectDetails = async function(issues){
     let objectProject = this.toObject();
     delete objectProject.__v
     delete objectProject.deleted
     delete objectProject.seqcode
+    objectProject.issue = issues
     return objectProject
 }
 

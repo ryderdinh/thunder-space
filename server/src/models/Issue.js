@@ -13,10 +13,16 @@ const Issue = new Schema({
             }
         },
         creator :{
-          id :  { type : mongoose.Schema.Types.ObjectId , ref : "Staff", required : true}
+          id :  { type : mongoose.Schema.Types.ObjectId , ref : "Staff", required : true},
+          name: { type: String },
+          email: { type: String },
+          avatar: { type: String }
         },
         assign : {
-          id :  { type : mongoose.Schema.Types.ObjectId, ref: "Staff" }
+          id :  { type : mongoose.Schema.Types.ObjectId, ref: "Staff" },
+          name: { type: String },
+          email: { type: String },
+          avatar: { type: String }
         },
         estimate : {
             start :{ type : Number }, 
