@@ -19,7 +19,7 @@ module.exports = async (req, res, next) => {
     });
     const issues = (await project.populate("issues")).issues
     if(checkUserInProject){
-      return res.status(200).send(new Response(200, "success",await project.getProjectDetails(issues)))
+      return res.status(200).send(new Response(200, "success",await project.getProjectDetailsWithIssues(issues)))
     }
     return res.status(400).send(new Response(400, "you are not in this project"))
   } catch (err) {
