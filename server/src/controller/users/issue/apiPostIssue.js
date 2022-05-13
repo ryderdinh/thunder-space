@@ -18,7 +18,8 @@ module.exports = async (req, res, next) => {
     //Check  valid estimate
     if(end < Date.now()) return res.status(400).send(new Response(400, "estimate value is not valid"))
     //Check exist project
-    const existProject = await Project.findOne({ id : pid, deleted : false }).elemMatch("member", { uid : uid });
+    const existProject = await Project.findOne({_id: pid, deleted : false }).elemMatch("member", { uid : uid });
+    console.log(existProject);
     if(!existProject) return res.status(400).send(new Response(400, "project is not available"))
     //Check user assigned
     const existUserAssigned = await Staff.findOne({ email : assigned })
@@ -40,7 +41,7 @@ module.exports = async (req, res, next) => {
         creator: creator,
         assign: assign,
         estimate: {
-            start: Date.now(),
+            start: null,
             end: end
         },
         description: description,
