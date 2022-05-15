@@ -19,8 +19,7 @@ module.exports = async (req, res, next) => {
     for(let i = 0; i < arrWordOfName.length; i++){
       code += arrWordOfName[i].charAt(0)
     }
-    const existCode = await Project.find({ name: name }).sort({seqcode : "desc"}).limit(1);
-    console.log(existCode.seqcode);
+    const existCode = await Project.find({ code: code }).sort({seqcode : "desc"}).limit(1);
     if(existCode[0]){
       seqcode = existCode[0].seqcode + 1
       code+= seqcode
