@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const Project = require("../../../models/Project");
+const Project = require("../../../models/Pro\ject");
 const Staff = require("../../../models/Staff")
 const Response = require("../../../models/Response")
 module.exports = async (req, res, next) => {

@@ -48,7 +48,7 @@ Project.virtual("issues", {
 
 Project.methods.getProjectDetailsWithIssues= async function(issues){
     let objectProject = this.toObject();
-    if(seqcode !== 0){
+    if(objectProject.seqcode !== 0){
         objectProject.code = objectProject.code + objectProject.seqcode
     }
     delete objectProject.__v
@@ -59,6 +59,9 @@ Project.methods.getProjectDetailsWithIssues= async function(issues){
 }
 Project.methods.getProjectDetails = function(){
     let objectProject = this.toObject();
+    if(objectProject.seqcode !== 0){
+        objectProject.code = objectProject.code + objectProject.seqcode
+    }
     delete objectProject.__v
     delete objectProject.deleted
     delete objectProject.seqcode
