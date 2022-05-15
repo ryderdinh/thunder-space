@@ -6,8 +6,8 @@ const issueApi = {
     const params = { id }
     return axiosClient.get(url, { params })
   },
-  create: (data) => {
-    const url = `/issue/create`
+  create: (pid, data) => {
+    const url = `/projects/${pid}/issues/create`
     return axiosClient.post(url, data)
   }
 }

@@ -1,4 +1,3 @@
-import IssueContainer from 'components/Issue/IssueContainer'
 import Layout from 'components/Layouts/Layout'
 import HeaderContainer from 'components/Main/HeaderContainer/HeaderContainer'
 import Main from 'components/Main/Main'
@@ -18,9 +17,7 @@ export default function Issue() {
       <Main>
         <HeaderContainer pathName={path} />
         <ViewMain>
-          <ViewBox>
-            <IssueContainer />
-          </ViewBox>
+          <ViewBox>{/* <IssueContainer /> */}</ViewBox>
         </ViewMain>
       </Main>
     </Layout>

@@ -1709,6 +1709,14 @@
   dependencies:
     "@babel/runtime" "^7.12.5"
 
+"@tinymce/tinymce-react@^4.1.0":
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/@tinymce/tinymce-react/-/tinymce-react-4.1.0.tgz#e2a5e289dc1af03837365bebe969b1a722bf6d99"
+  integrity sha512-7qXheXhyY9a8mY5tXQUz3BFq+Z4TQ7zd/OIaKasbVzojkjCw3VWdwFhHOEcwmDDprepgQwECsYqe3AGOtehfFg==
+  dependencies:
+    prop-types "^15.6.2"
+    tinymce "^6.0.0 || ^5.5.1"
+
 "@tootallnate/once@1":
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/@tootallnate/once/-/once-1.1.2.tgz#ccb91445360179a04e7fe6aff78c00ffc1eeaf82"
@@ -2581,11 +2589,6 @@ autoprefixer@^10.4.4:
     picocolors "^1.0.0"
     postcss-value-parser "^4.2.0"
 
-autosize@^4.0.2:
-  version "4.0.4"
-  resolved "https://registry.yarnpkg.com/autosize/-/autosize-4.0.4.tgz#924f13853a466b633b9309330833936d8bccce03"
-  integrity sha512-5yxLQ22O0fCRGoxGfeLSNt3J8LB1v+umtpMnPW6XjkTWXKoN0AmXAIhelJcDtFT/Y/wYWmfE+oqU10Q0b8FhaQ==
-
 axe-core@^4.3.5:
   version "4.4.1"
   resolved "https://registry.yarnpkg.com/axe-core/-/axe-core-4.4.1.tgz#7dbdc25989298f9ad006645cd396782443757413"
@@ -3161,11 +3164,6 @@ compression@^1.7.4:
     on-headers "~1.0.2"
     safe-buffer "5.1.2"
     vary "~1.1.2"
-
-computed-style@~0.1.3:
-  version "0.1.4"
-  resolved "https://registry.yarnpkg.com/computed-style/-/computed-style-0.1.4.tgz#7f344fd8584b2e425bedca4a1afc0e300bb05d74"
-  integrity sha1-fzRP2FhLLkJb7cpKGvwOMAuwXXQ=
 
 concat-map@0.0.1:
   version "0.0.1"
@@ -5895,13 +5893,6 @@ lilconfig@^2.0.3, lilconfig@^2.0.4:
   resolved "https://registry.yarnpkg.com/lilconfig/-/lilconfig-2.0.5.tgz#19e57fd06ccc3848fd1891655b5a447092225b25"
   integrity sha512-xaYmXZtTHPAw5m+xLN8ab9C+3a8YmV3asNSPOATITbtwrfbwaLJj8h66H1WMIpALCkqsIzK3h7oQ+PdX+LQ9Eg==
 
-line-height@^0.3.1:
-  version "0.3.1"
-  resolved "https://registry.yarnpkg.com/line-height/-/line-height-0.3.1.tgz#4b1205edde182872a5efa3c8f620b3187a9c54c9"
-  integrity sha1-SxIF7d4YKHKl76PI9iCzGHqcVMk=
-  dependencies:
-    computed-style "~0.1.3"
-
 lines-and-columns@^1.1.6:
   version "1.2.4"
   resolved "https://registry.yarnpkg.com/lines-and-columns/-/lines-and-columns-1.2.4.tgz#eca284f75d2965079309dc0ad9255abb2ebc1632"
@@ -7244,7 +7235,7 @@ prompts@^2.0.1, prompts@^2.4.2:
     kleur "^3.0.3"
     sisteransi "^1.0.5"
 
-prop-types@15, prop-types@^15.5.10, prop-types@^15.5.6, prop-types@^15.5.7, prop-types@^15.6.2, prop-types@^15.7.2, prop-types@^15.8.1:
+prop-types@15, prop-types@^15.5.10, prop-types@^15.5.7, prop-types@^15.6.2, prop-types@^15.7.2, prop-types@^15.8.1:
   version "15.8.1"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.8.1.tgz#67d87bf1a694f48435cf332c24af10214a3140b5"
   integrity sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==
@@ -7310,21 +7301,7 @@ quill-delta@^3.6.2:
     extend "^3.0.2"
     fast-diff "1.1.2"
 
-quill-image-resize-module-react@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/quill-image-resize-module-react/-/quill-image-resize-module-react-3.0.0.tgz#dec32cecd175fcdc52bfd184206174fdd111a864"
-  integrity sha512-3jVChLoXh+fwEELx3OswOEEuF+1KU3r/B9RAqZ//s+d+UMduVZzUepU1g/XoxjKoBJvWD2lJwBIFBRUNb8ebCw==
-  dependencies:
-    lodash "^4.17.4"
-    quill "^1.2.2"
-    raw-loader "^0.5.1"
-
-quill-image-uploader@^1.2.2:
-  version "1.2.2"
-  resolved "https://registry.yarnpkg.com/quill-image-uploader/-/quill-image-uploader-1.2.2.tgz#ef4722f0394fbbcdef937d9ad29b4b43e2f5c3f3"
-  integrity sha512-23jM2SVJC2W4hCXre4PX1hy4Lk3fBNVIognvHoyKTLl0AjQOiCSnsoIoUSnS2+9+wxvZIk6ET/cMVvtwpERa6g==
-
-quill@^1.2.2, quill@^1.3.7:
+quill@^1.3.7:
   version "1.3.7"
   resolved "https://registry.yarnpkg.com/quill/-/quill-1.3.7.tgz#da5b2f3a2c470e932340cdbf3668c9f21f9286e8"
   integrity sha512-hG/DVzh/TiknWtE6QmWAF/pxoZKYxfe3J/d/+ShUWkDvvkZQVTPeVmUJVu1uE6DDooC4fWTiCLh84ul89oNz5g==
@@ -7365,11 +7342,6 @@ raw-body@2.4.3:
     iconv-lite "0.4.24"
     unpipe "1.0.0"
 
-raw-loader@^0.5.1:
-  version "0.5.1"
-  resolved "https://registry.yarnpkg.com/raw-loader/-/raw-loader-0.5.1.tgz#0c3d0beaed8a01c966d9787bf778281252a979aa"
-  integrity sha1-DD0L6u2KAclm2Xh793goElKpeao=
-
 react-apexcharts@^1.4.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/react-apexcharts/-/react-apexcharts-1.4.0.tgz#e3619104b34750da67a2ca80289dc87085c2aa27"
@@ -7388,15 +7360,6 @@ react-app-polyfill@^3.0.0:
     raf "^3.4.1"
     regenerator-runtime "^0.13.9"
     whatwg-fetch "^3.6.2"
-
-react-autosize-textarea@^7.1.0:
-  version "7.1.0"
-  resolved "https://registry.yarnpkg.com/react-autosize-textarea/-/react-autosize-textarea-7.1.0.tgz#902c84fc395a689ca3a484dfb6bc2be9ba3694d1"
-  integrity sha512-BHpjCDkuOlllZn3nLazY2F8oYO1tS2jHnWhcjTWQdcKiiMU6gHLNt/fzmqMSyerR0eTdKtfSIqtSeTtghNwS+g==
-  dependencies:
-    autosize "^4.0.2"
-    line-height "^0.3.1"
-    prop-types "^15.5.6"
 
 react-data-table-component@^7.4.7:
   version "7.4.7"
@@ -7518,12 +7481,10 @@ react-nice-avatar@^1.2.4:
     chroma-js "^2.1.2"
     prop-types "^15.7.2"
 
-react-nice-dates@^3.1.0:
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/react-nice-dates/-/react-nice-dates-3.1.0.tgz#1be7dc18397a54a81e6b37bae460a34c058e5a14"
-  integrity sha512-tOsA7tB2E9q+47nZwrk2ncK2rOUublNOWPVnY/N2HFDLO8slexGaAfOTKpej2KzPxCN3gcvOKeE2/9vua2LAjQ==
-  dependencies:
-    classnames "^2.2.6"
+react-picky-date-time@^2.0.5:
+  version "2.0.5"
+  resolved "https://registry.yarnpkg.com/react-picky-date-time/-/react-picky-date-time-2.0.5.tgz#5e9b21d953466ac2f78c7aebe07e38a77bde384c"
+  integrity sha512-VYQYE5qi3FupEWyiLvx55OYAEH1si6/pqZ6ikZ483axUWI4iznB2IMZb10kYvg57ROgrV3RaQN+hPNdey6ZS2g==
 
 react-quill@^1.3.5:
   version "1.3.5"
@@ -8680,6 +8641,11 @@ tiny-warning@^1.0.0, tiny-warning@^1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/tiny-warning/-/tiny-warning-1.0.3.tgz#94a30db453df4c643d0fd566060d60a875d84754"
   integrity sha512-lBN9zLN/oAf68o3zNXYrdCt1kP8WsiGW8Oo2ka41b2IM5JL/S1CTyX1rW0mb/zSuJun0ZUrDxx4sqvYS2FWzPA==
+
+"tinymce@^6.0.0 || ^5.5.1":
+  version "6.0.2"
+  resolved "https://registry.yarnpkg.com/tinymce/-/tinymce-6.0.2.tgz#7813ce952a9b5b42901ed5a91e915d0d8eb8eb29"
+  integrity sha512-i4OEzcTF6mGxZ+scumOoWiaI9HYn6uya980hJ+9jwnhgLbhBb+73ar2t9Ewfkns3DTl2Ez3r1pQs2tpT+ka29Q==
 
 tmpl@1.0.5:
   version "1.0.5"

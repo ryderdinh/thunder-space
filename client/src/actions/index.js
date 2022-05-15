@@ -1,9 +1,19 @@
 //* IMPORT =============================================
-import { authApi, projectApi, timekeepingApi, userApi } from 'api'
-import axios from 'axios'
+import { authApi, issueApi, projectApi, timekeepingApi, userApi } from 'api'
 import toast from 'react-hot-toast'
 import callAPI from '../api/callAPI'
 import { getCookie, removeCookie, setCookie } from '../units/cookieWeb'
+
+//? JWT expired=========================================
+const jwtExpired = async (message, dispatch) => {
+  message === 'jwt expired' && (await dispatch(setCheckLogin(false)))
+}
+
+const tokenExpired = () => {
+  return async (dispatch) => {
+    await dispatch(setCheckLogin(false))
+  }
+}
 
 //? CALL API============================================
 export const actSignIn = (dataUser) => {
@@ -19,6 +29,7 @@ export const actSignIn = (dataUser) => {
     } catch (error) {
       removeToast()
       toast.error('Failed, try again later!')
+      await dispatch(setCheckLogin(false))
     }
 
     if (token) {
@@ -272,7 +283,7 @@ export const actChangePassword = (data) => {
 export const actCreateProject = (data, uMail) => {
   loadingToast('Processing...')
   let sbData = data
-  
+
   if (data?.managers)
     sbData = {
       ...data,
@@ -300,7 +311,9 @@ export const actFetchProject = (pid) => {
 
     try {
       const res = await projectApi.get(pid)
-      await dispatch(setDataProject(res.data))
+      const issueSorted = res.data.issue.sort((a, b) => b.updateAt - a.updateAt)
+
+      await dispatch(setDataProject({ ...res.data, issue: issueSorted }))
     } catch (error) {
       console.log(error)
       await dispatch(setProjectError(true))
@@ -325,38 +338,35 @@ export const actQueryProject = (query = null) => {
 
     try {
       const res = await projectApi.gets(query)
-      dispatch(setDataProjects(res.data))
+      const sortData = res.data.sort((a, b) => b.updateAt - a.updateAt)
+
+      await dispatch(setDataProjects(sortData))
     } catch (error) {
       console.log(error)
+      // await jwtExpired(dispatch)
       await dispatch(setProjectError(true))
     }
   }
 }
 
-export const actCreateIssue = (wid, data) => {
-  loadingToast('Đang xử lí yêu cầu...')
-  const { id, token } = getCookie()
-
-  return async (dispatch) => {
+export const actCreateIssue = (pid, data, callback) => {
+  return async () => {
     try {
-      const res = await axios({
-        method: 'POST',
-        url: `https://hrmadmin.herokuapp.com/api/createIssue/${id}/${wid}`,
-        headers: {
-          'Content-Type': 'application/json',
-          authorization: `Bearer ${token}`
-        },
-        data
-      })
-
-      removeToast()
-
-      if (res?.data?.data) {
-        successToast('Tạo issue thành công')
-        dispatch(closePopup())
-      } else errorToast('Tạo issue thất bại')
+      const res = await issueApi.create(pid, data)
+      callback(res.data._id)
     } catch (error) {
-      errorToast('Tạo issue thất bại')
+      errorToast(error.response?.error || 'Something went wrong')
+    }
+  }
+}
+
+export const actQueryIssue = (pid, data, callback) => {
+  return async () => {
+    try {
+      const res = await issueApi.create(pid, data)
+      callback(res.data._id)
+    } catch (error) {
+      errorToast(error.response?.error || 'Something went wrong')
     }
   }
 }
@@ -391,11 +401,6 @@ const loadingToast = (content) => {
 const removeToast = () => toast.remove(loadingToast())
 
 //TODO: ACTION TO REDUCER ================================
-export const toggleActiveSidebar = (payload) => ({
-  type: 'TOGGLE_ACTIVE_SIDEBAR',
-  payload
-})
-
 export const getLocation = () => ({
   type: 'TIME_KEEPING'
 })

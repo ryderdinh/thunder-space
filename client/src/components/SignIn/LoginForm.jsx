@@ -1,7 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { actSignIn } from 'actions'
 import GoogleIcon from 'components/Icon/GoogleIcon'
-import ThunderSpaceIcon from 'components/Icon/ThunderSpaceIcon'
 import { useState } from 'react'
 import toast from 'react-hot-toast'
 import { useDispatch } from 'react-redux'
@@ -62,10 +61,13 @@ export default function LoginForm() {
     <div className='login-form'>
       <div className='login-form-inner'>
         <div className='logo'>
-          <ThunderSpaceIcon />
+          <img
+            src={require('assets/images/icons/newlogo-logo.svg').default}
+            alt='logo'
+          />
         </div>
-        <h1>Login</h1>
-        <p className='body-text'>Join your space!</p>
+        <h1 className='text-2xl font-bold'>Login</h1>
+        <p className='body-text'>Come join your space!</p>
 
         <div className='rounded-button google-login-button'>
           <span className='google-icon'>
@@ -75,7 +77,7 @@ export default function LoginForm() {
         </div>
 
         <div className='sign-in-seperator'>
-          <span>or login with your email in the company</span>
+          <span>or Login with Email</span>
         </div>
 
         <div className='login-form-group'>

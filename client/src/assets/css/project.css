@@ -14,12 +14,18 @@ samp {
   font-size: 1em;
 }
 
+.card-panel-a {
+  background: var(--background-panel);
+  border: 1px solid #282828;
+  padding: 0;
+}
 .card-panel {
   background: var(--background-panel);
   border: 1px solid #282828;
   padding: 1rem;
 }
 
+.card-panel-a:hover,
 .card-panel:hover {
   background: #262626;
 }

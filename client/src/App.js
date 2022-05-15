@@ -16,7 +16,7 @@ import { useDispatch } from 'react-redux'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
 export default function App() {
-  //? Connect Redux
+  //? Connect Redux store
   const dispatch = useDispatch()
 
   //? Create Effect

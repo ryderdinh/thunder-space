@@ -4,6 +4,7 @@ import 'assets/css/project.css'
 import Col from 'components/Layouts/Col'
 import Row from 'components/Layouts/Row'
 import { LayoutContext } from 'context/LayoutContext'
+import { motion } from 'framer-motion'
 import queryString from 'query-string'
 import { useContext, useEffect, useState } from 'react'
 import 'react-date-range/dist/styles.css' // main css file
@@ -15,7 +16,20 @@ import MenuComponent from './MenuComponent'
 import MenuItem from './MenuItem'
 import SearchBox from './SearchBox'
 
-function ProjectsOverview() {
+const transition = { duration: 0.5, ease: [0.43, 0.13, 0.23, 0.96], delay: 0 }
+const variants = (delay) => {
+  return {
+    initial: { scale: 0.8, opacity: 0 },
+    enter: { scale: 1, opacity: 1, transition: { ...transition, delay } },
+    exit: {
+      scale: 0.7,
+      opacity: 0,
+      transition: { duration: 1, ...transition }
+    }
+  }
+}
+
+export default function ProjectsOverview() {
   const { openDialog } = useContext(LayoutContext)
 
   const { isLoading, _dataProjects } = useSelector((state) => state._project)
@@ -32,7 +46,7 @@ function ProjectsOverview() {
   const config = genConfig()
 
   const optimizeText = (text) => {
-    return text.trim().replace(/\s/g, '')
+    return text.trim().replace(/\s/g, '').toLowerCase()
   }
 
   const handleSearch = (value) => {
@@ -40,7 +54,8 @@ function ProjectsOverview() {
 
     let optimizeTextValue = optimizeText(value)
     setSearchValue(optimizeTextValue)
-    history.push(`${history.location.pathname}?project=${optimizeTextValue}`)
+
+    history.push(`${history.location.pathname}?search=${optimizeTextValue}`)
   }
 
   const handleOpenDialog = () => {
@@ -50,8 +65,8 @@ function ProjectsOverview() {
   useEffect(() => {
     const query = queryString.parse(history.location.search)
 
-    if ('project' in query) {
-      setDefaultSearchValue(query.project)
+    if ('search' in query) {
+      setDefaultSearchValue(query.search)
     }
   }, [history.location.search])
 
@@ -63,8 +78,13 @@ function ProjectsOverview() {
     if (searchValue) {
       let data = _dataProjects.filter((project) => {
         let optimizeTextValue = optimizeText(searchValue)
+        let optimizeProjectName = optimizeText(project.name)
+        let optimizeProjectCode = optimizeText(project.code)
 
-        return optimizeTextValue.includes(project.name)
+        return (
+          optimizeProjectName.includes(optimizeTextValue) ||
+          optimizeProjectCode.includes(optimizeTextValue)
+        )
       })
 
       setProjects(data)
@@ -113,11 +133,12 @@ function ProjectsOverview() {
               className='grid w-full grid-cols-1 gap-3 md:grid-cols-2
               xl:grid-cols-3'
             >
-              {projects.map((project) => (
+              {projects.map((project, index) => (
                 <ProjectItemGrid
                   key={project._id}
                   config={config}
                   projectOverview={project}
+                  variants={variants(index * 0.1)}
                 />
               ))}
             </div>
@@ -128,57 +149,75 @@ function ProjectsOverview() {
   )
 }
 
-export default ProjectsOverview
-
-function ProjectItemGrid({ config, projectOverview }) {
+function ProjectItemGrid({ config, projectOverview, variants }) {
   return (
     <Link to={`/projects/${projectOverview._id}`}>
-      <div
-        className='card-panel group relative flex h-36 w-full 
-                    cursor-pointer rounded-md border duration-150 ease-in-out'
+      <motion.div
+        className='card-panel-a group relative flex h-36 w-full 
+                    cursor-pointer overflow-hidden rounded-md border
+                    duration-150 ease-in-out'
+        variants={variants}
+        initial='initial'
+        animate='enter'
+        exit='exit'
       >
-        <div className='mr-4 flex flex-col'>
-          <Avatar
-            className='h-8 w-8 transition-all group-hover:scale-110'
-            {...config}
-          />
+        <div
+          className='mr-4 flex w-6 flex-col items-center justify-center 
+          bg-emerald-600 py-4'
+        >
+          <p
+            className='-rotate-90 truncate text-sm font-medium uppercase 
+            text-neutral-200'
+          >
+            {projectOverview.code}
+          </p>
         </div>
-        <div className='flex w-4/5 flex-col justify-between space-y-2'>
-          <div className='h-3/4 space-y-2'>
-            <h5 className='font-medium text-zinc-200'>
-              {projectOverview.name}
-            </h5>
-            <p className='text-sm text-zinc-500 line-clamp-2'>
-              {projectOverview?.description
-                ? projectOverview?.description
-                : 'No description'}
-            </p>
+        <div className='flex w-full p-4 pl-0'>
+          <div className='mr-4 flex flex-col'>
+            <Avatar
+              className='h-8 w-8 transition-all group-hover:scale-110'
+              {...config}
+            />
           </div>
-          <div className=''>
-            <div className='relative left-1 flex -space-x-1'>
-              {projectOverview.member.map((member, index) => (
-                <div
-                  className='relative inline-block h-6 w-6 overflow-hidden rounded-full ring-2 ring-white'
-                  key={index}
-                >
-                  <img
-                    className='relative z-10 h-full w-full'
-                    src={member.avatar}
-                    alt=''
-                  />
-                  <div className='absolute top-0 left-0 z-0 h-full w-full bg-neutral-800'></div>
-                </div>
-              ))}
+
+          <div className='flex w-4/5 flex-col justify-between space-y-2'>
+            <div className='h-3/4 space-y-2'>
+              <h5 className='font-medium text-neutral-200'>
+                {projectOverview.name}
+              </h5>
+              <p className='text-sm text-neutral-500 line-clamp-2'>
+                {projectOverview?.description
+                  ? projectOverview?.description
+                  : 'No description'}
+              </p>
+            </div>
+            <div className=''>
+              <div className='relative left-1 flex -space-x-1'>
+                {projectOverview.member.map((member, index) => (
+                  <div
+                    className='relative inline-block h-6 w-6 overflow-hidden rounded-full ring-2 ring-white'
+                    key={index}
+                  >
+                    <img
+                      className='relative z-10 h-full w-full'
+                      src={member.avatar}
+                      alt=''
+                    />
+                    <div className='absolute top-0 left-0 z-0 h-full w-full bg-neutral-800'></div>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
-        </div>
-        <div
-          className='absolute right-4 top-4 w-6 text-zinc-500 transition-all 
+
+          <div
+            className='absolute right-4 top-4 w-6 text-zinc-500 transition-all 
                       duration-200 group-hover:right-3'
-        >
-          <ChevronRightIcon className='' />
+          >
+            <ChevronRightIcon className='' />
+          </div>
         </div>
-      </div>
+      </motion.div>
     </Link>
   )
 }

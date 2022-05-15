@@ -1,14 +1,14 @@
-import { toggleActiveSidebar } from 'actions'
-import { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { LayoutContext } from 'context/LayoutContext'
+import { useContext, useEffect, useState } from 'react'
 import { NameContainer } from './NameContainer'
 
 export default function HeaderContainer({ pathName }) {
   const [name, setName] = useState('')
 
-  const sidebar = useSelector((state) => state._sidebar)
+  // const sidebar = useSelector((state) => state._sidebar)
+  // const dispatch = useDispatch()
 
-  const dispatch = useDispatch()
+  const { sidebar } = useContext(LayoutContext)
 
   useEffect(() => {
     const list = {
@@ -24,13 +24,13 @@ export default function HeaderContainer({ pathName }) {
     setName(list[pathName])
   }, [pathName])
 
-  const activeSidebar = () => {
-    dispatch(toggleActiveSidebar(!sidebar.active))
+  const toggleSidebar = () => {
+    sidebar.toggle()
   }
 
   return (
     <div className='view_name'>
-      <i className='bx bx-menu' onClick={activeSidebar}></i>
+      <i className='bx bx-menu' onClick={toggleSidebar}></i>
       <NameContainer name={name} />
     </div>
   )

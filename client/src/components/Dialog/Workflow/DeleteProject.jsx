@@ -36,7 +36,7 @@ export default function DeleteProject({
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
-    if (watch('name') === projectName) {
+    if (watch('name') === projectName.trim()) {
       setAllowDelete(true)
     } else setAllowDelete(false)
   })
@@ -128,7 +128,7 @@ export default function DeleteProject({
               ${
                 !allowDelete
                   ? 'cursor-not-allowed opacity-50'
-                  : 'hover:bg-emerald-700'
+                  : 'cursor-pointer hover:bg-emerald-700'
               }`}
               onClick={handleSubmit(onSubmit)}
             >

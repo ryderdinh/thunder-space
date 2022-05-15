@@ -13,7 +13,7 @@ import { useHistory } from 'react-router'
 import { getCookie } from 'units/cookieWeb'
 
 export default function Layout({ children }) {
-  const checkId = useSelector((state) => state._checkLogin._checkLogin)
+  const { auth } = useSelector((state) => state._checkLogin)
   const dispatch = useDispatch()
 
   const isOnline = useNavigatorStatus()
@@ -26,14 +26,16 @@ export default function Layout({ children }) {
   })
 
   useEffect(() => {
-    if (checkId) {
-      if (!isOnline) {
-        toast.error('Không có kết nối mạng')
-      }
+    if (auth && !isOnline) {
+      toast.error('Không có kết nối mạng')
     }
 
-    if (!checkId) history.push('/login')
-  }, [checkId, history, isOnline])
+    // if (checkId) {
+    //   history.push('/')
+    // }
+
+    if (!auth) history.push('/login')
+  }, [auth, history, isOnline])
 
   return (
     <LayoutContextProvider>
@@ -43,7 +45,7 @@ export default function Layout({ children }) {
         animate={{ opacity: 1 }}
         exit={{ opacity: 0.5 }}
       >
-        {!checkId ? (
+        {!auth ? (
           <LoadingContainer />
         ) : (
           <>

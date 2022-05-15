@@ -4,6 +4,7 @@ export const LayoutContext = createContext()
 
 export default function LayoutContextProvider({ children }) {
   const [isDialogOpen, setIsDialogOpen] = useState(false)
+  const [isOpenSidebar, setIsOpenSidebar] = useState(false)
   const [nameDialog, setNameDialog] = useState('')
   const [data, setData] = useState({})
 
@@ -17,6 +18,31 @@ export default function LayoutContextProvider({ children }) {
     setIsDialogOpen(false)
   }
 
+  const dialog = {
+    active: isDialogOpen,
+    open: (nameDialog, dataDialog) => {
+      setNameDialog(nameDialog)
+      setData(dataDialog)
+      setIsDialogOpen(true)
+    },
+    close: () => {
+      setIsDialogOpen(false)
+    }
+  }
+
+  const sidebar = {
+    active: isOpenSidebar,
+    open: () => {
+      setIsOpenSidebar(true)
+    },
+    close: () => {
+      setIsOpenSidebar(false)
+    },
+    toggle: () => {
+      setIsOpenSidebar(!isOpenSidebar)
+    }
+  }
+
   return (
     <LayoutContext.Provider
       value={{
@@ -24,6 +50,8 @@ export default function LayoutContextProvider({ children }) {
         isDialogOpen,
         openDialog,
         closeDialog,
+        dialog,
+        sidebar,
         data
       }}
     >

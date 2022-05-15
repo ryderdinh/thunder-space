@@ -6,7 +6,6 @@ import loading from './loading'
 import popup from './popup'
 import project from './project'
 import report from './report'
-import sidebar from './sidebar'
 import staffInfomation from './staffInfomation'
 import timeKeeping from './timeKeeping'
 import getTimesheets from './timesheets'
@@ -14,7 +13,6 @@ import users from './users'
 import workflow from './workflow'
 
 export default combineReducers({
-  _sidebar: sidebar,
   _timesheets: getTimesheets,
   _timeOfAttendance: timeKeeping,
   _checkLogin: checkLogin,

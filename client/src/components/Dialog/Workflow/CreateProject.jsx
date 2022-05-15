@@ -31,8 +31,6 @@ export default function CreateProject({ closeModal }) {
     resolver: joiResolver(schema)
   })
 
-  console.log(errors)
-
   const [selectedManagers, setSelectedManagers] = useState([yourMail])
   const [selectedMembers, setSelectedMembers] = useState([])
 
@@ -129,30 +127,6 @@ export default function CreateProject({ closeModal }) {
                         )}
                       </div>
 
-                      <div className='col-span-6'>
-                        <label
-                          htmlFor='project-description'
-                          className='block text-sm font-medium text-zinc-200'
-                        >
-                          Description
-                        </label>
-
-                        <textarea
-                          {...register('description')}
-                          autoComplete='off'
-                          rows={3}
-                          className='mt-1 block w-full rounded-md border border-gray-300 
-                          p-1 shadow-sm focus:border-emerald-500  focus:outline-none 
-                          focus:ring-2 focus:ring-emerald-500 sm:text-sm'
-                        />
-
-                        {/* {errors.code && (
-                          <span className='text-xs italic text-red-500'>
-                            {errors?.description?.message}
-                          </span>
-                        )} */}
-                      </div>
-
                       <div className='col-span-6 sm:col-span-3'>
                         <label
                           htmlFor='type-of-issue'
@@ -204,6 +178,24 @@ export default function CreateProject({ closeModal }) {
                             {errors?.members?.message}
                           </span>
                         )}
+                      </div>
+
+                      <div className='col-span-6'>
+                        <label
+                          htmlFor='project-description'
+                          className='block text-sm font-medium text-zinc-200'
+                        >
+                          Description
+                        </label>
+
+                        <textarea
+                          {...register('description')}
+                          autoComplete='off'
+                          rows={3}
+                          className='mt-1 block w-full rounded-md border border-gray-300 
+                          p-1 shadow-sm focus:border-emerald-500  focus:outline-none 
+                          focus:ring-2 focus:ring-emerald-500 sm:text-sm'
+                        />
                       </div>
                     </div>
                   </div>
@@ -457,7 +449,7 @@ function ListBoxMultipleUser({
         <Listbox.Button
           className='relative w-full cursor-default rounded-lg
           bg-white py-2 pl-3 pr-10 text-left shadow-md focus:outline-none
-          focus-visible:border-indigo-500 focus-visible:ring-2
+          focus-visible:border-emerald-500 focus-visible:ring-2
           focus-visible:ring-white focus-visible:ring-opacity-75
           focus-visible:ring-offset-2 focus-visible:ring-offset-emerald-300
           sm:text-sm'
@@ -473,7 +465,7 @@ function ListBoxMultipleUser({
             flex items-center pr-2'
           >
             <svg
-              className='h-5 w-5 text-gray-400'
+              className='h-5 w-5 text-neutral-400'
               viewBox='0 0 20 20'
               fill='none'
               stroke='currentColor'
@@ -520,7 +512,9 @@ function ListBoxMultipleUser({
                     {({ active }) => (
                       <div
                         className={`${
-                          active ? 'bg-emerald-600 text-white' : 'text-gray-900'
+                          active
+                            ? 'bg-emerald-600 text-white'
+                            : 'text-neutral-900'
                         } relative cursor-default select-none py-2 pl-14 pr-4
                         ${Manager.email === yourMail ? 'opacity-30' : ''}
                         `}
@@ -536,7 +530,7 @@ function ListBoxMultipleUser({
                         </span>
                         <span
                           className='absolute inset-y-0 left-0 flex items-center
-                        pl-3 '
+                          pl-3'
                         >
                           <img
                             src={Manager.avatar}
@@ -547,7 +541,7 @@ function ListBoxMultipleUser({
                         {selected && (
                           <span
                             className={`${
-                              active ? 'text-white' : 'text-blue-600'
+                              active ? 'text-white' : 'text-emerald-600'
                             } absolute inset-y-0 right-0 flex items-center pr-1.5`}
                           >
                             <svg

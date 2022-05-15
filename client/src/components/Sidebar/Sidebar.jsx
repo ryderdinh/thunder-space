@@ -1,17 +1,18 @@
-import { toggleActiveSidebar } from 'actions'
-import { useDispatch, useSelector } from 'react-redux'
+import { LayoutContext } from 'context/LayoutContext'
+import { useContext } from 'react'
 import Account from './Account'
 import './Sidebar.css'
 import SidebarItem from './SidebarItem'
 import SidebarItemSubMenu from './SidebarItemSubMenu'
 
 export default function Sidebar() {
-  const sidebar = useSelector((state) => state._sidebar)
+  // const sidebar = useSelector((state) => state._sidebar)
+  // const dispatch = useDispatch()
 
-  const dispatch = useDispatch()
+  const { sidebar } = useContext(LayoutContext)
 
-  const activeSidebar = () => {
-    dispatch(toggleActiveSidebar)
+  const toggleSidebar = () => {
+    sidebar.toggle()
   }
 
   return (
@@ -31,21 +32,21 @@ export default function Sidebar() {
           title='Trang chủ'
           type='sub-menu blank'
           icon='bx bx-grid-alt'
-          activeSidebar={activeSidebar}
+          toggleSidebar={toggleSidebar}
         />
         <SidebarItem
           path='/timesheets'
           title='Bảng công'
           type='sub-menu blank'
           icon='bx bx-table'
-          activeSidebar={activeSidebar}
+          toggleSidebar={toggleSidebar}
         />
         <SidebarItem
           path='/report'
           title='Báo cáo'
           type='sub-menu blank'
           icon='bx bx-line-chart'
-          activeSidebar={activeSidebar}
+          toggleSidebar={toggleSidebar}
         />
         <SidebarItemSubMenu
           path='/workflow'
@@ -57,9 +58,9 @@ export default function Sidebar() {
             { path: '/works', name: 'Công việc' },
             { path: '/projects', name: 'Dự án' }
           ]}
-          activeSidebar={activeSidebar}
+          toggleSidebar={toggleSidebar}
         />
-        <Account activeSidebar={activeSidebar} />
+        <Account toggleSidebar={toggleSidebar} />
       </ul>
     </div>
   )
