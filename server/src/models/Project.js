@@ -5,7 +5,7 @@ const { logger } = require('../../config/nodeMailer/email')
 const Schema = mongoose.Schema
 
 const Project = new Schema({
-    code : { type : String, required : true, unique : true, uppercase : true },
+    code : { type : String, required : true, uppercase : true },
     seqcode : { type: Number, required: true, default : 0 },
     name : { type: String, required : true },
     description : { type: String },
@@ -48,6 +48,9 @@ Project.virtual("issues", {
 
 Project.methods.getProjectDetailsWithIssues= async function(issues){
     let objectProject = this.toObject();
+    if(seqcode !== 0){
+        objectProject.code = objectProject.code + objectProject.seqcode
+    }
     delete objectProject.__v
     delete objectProject.deleted
     delete objectProject.seqcode
