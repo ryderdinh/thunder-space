@@ -22,7 +22,6 @@ module.exports = async (req, res, next) => {
     const existCode = await Project.find({ code: code }).sort({seqcode : "desc"}).limit(1);
     if(existCode[0]){
       seqcode = existCode[0].seqcode + 1
-      code+= seqcode
     }
     //Valide body
     const maybeDuplicate = [
