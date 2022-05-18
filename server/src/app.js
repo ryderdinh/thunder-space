@@ -131,7 +131,8 @@ app.use("/api", routersEvent.apiGetEvent);
 ---------------------------------------------*/ 
 const routersIssue = require("./routers/users/issue.router")
 
-app.use("/api", routersIssue.apiGetIssue)
+app.use("/api", routersIssue.apiGetAllIssueInProject)
+app.use("/api", routersIssue.apiGetOneIssueInProject)
 app.use("/api", routersIssue.apiPostIssue);
 app.use("/api", routersIssue.apiPostFile);
 

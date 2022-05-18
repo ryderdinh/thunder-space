@@ -12,6 +12,7 @@ const Issue = new Schema({
                 message : '{VALUE}  is not supported'
             }
         },
+        // project: { type: mongoose.Schema.Types.ObjectId, ref: "Issue", required: true },
         creator :{
           id :  { type : mongoose.Schema.Types.ObjectId , ref : "Staff", required : true},
           name: { type: String },
@@ -55,6 +56,7 @@ Issue.virtual("assigns", {
     localField : "assign.id",
     foreignField : "_id"
 })
+
 Issue.pre("save", function(next){
     const issue = this;
     issue.updateAt = Date.now();

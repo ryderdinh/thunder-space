@@ -3,6 +3,7 @@ const Staff = require("../../../models/Staff")
 const Issue = require("../../../models/Issue")
 const Response = require("../../../models/Response")
 const { date, exist } = require("joi")
+const mongoose = require("mongoose")
 module.exports = async (req, res, next) => {
   try{
       //params
@@ -19,7 +20,7 @@ module.exports = async (req, res, next) => {
     if(end < Date.now()) return res.status(400).send(new Response(400, "estimate value is not valid"))
     //Check exist project
     const existProject = await Project.findOne({_id: pid, deleted : false }).elemMatch("member", { uid : uid });
-    console.log(existProject);
+    
     if(!existProject) return res.status(400).send(new Response(400, "project is not available"))
     //Check user assigned
     const existUserAssigned = await Staff.findOne({ email : assigned })
@@ -45,7 +46,7 @@ module.exports = async (req, res, next) => {
             end: end
         },
         description: description,
-        priority: priority
+        priority: priority,
     })
     //Save to project
     existProject.issue.push({ iid: newIssue.id });

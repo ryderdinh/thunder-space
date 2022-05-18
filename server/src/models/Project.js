@@ -7,9 +7,9 @@ const Schema = mongoose.Schema
 const Project = new Schema({
     code : { type : String, required : true, uppercase : true },
     seqcode : { type: Number, required: true, default : 0 },
-    name : { type: String, required : true },
-    description : { type: String },
-    member : [
+    name: { type: String, required : true },
+    description: { type: String },
+    member: [
         {
             uid: {type: mongoose.Schema.Types.ObjectId, ref: 'Staff'},
             role: { type: String, enum: ['manager', 'normal'] , required: true},
@@ -18,9 +18,9 @@ const Project = new Schema({
             avatar: {type: String, required: true}
         }
     ],
-    issue : [
+    issue: [
         {
-            iid : {type :mongoose.Schema.Types.ObjectId, ref : "Issue" }
+            iid : { type: Schema.Types.ObjectId, ref: "Issue" }
         }
     ],
     createdAt : { type: Number, default: Date.now(), required : true },
@@ -41,11 +41,10 @@ Project.virtual('members', {
 })
 
 Project.virtual("issues", {
-    ref : "Issue",
-    localField : "issue.iid",
-    foreignField : "_id"
+    ref : 'Issue',
+    localField : 'issue.iid',
+    foreignField : '_id'
 })
-
 Project.methods.getProjectDetailsWithIssues= async function(issues){
     let objectProject = this.toObject();
     if(objectProject.seqcode !== 0){
