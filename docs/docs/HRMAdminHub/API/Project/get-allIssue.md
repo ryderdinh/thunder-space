@@ -1,13 +1,13 @@
 ---
-sidebar_position: 5
+sidebar_position: 6
 ---
 
-# Lấy thông tin vấn đề
+# Lấy thông tin tất cả vấn đề trong dự án
 
 Method **`GET`**
 
 ```shell
-https://hrmadmin.herokuapp.com/api/issue-info/<issueId>
+https://hrmadmin.herokuapp.com/api/projects/:pid/issues
 ```
 
 ### Header
@@ -15,3 +15,8 @@ https://hrmadmin.herokuapp.com/api/issue-info/<issueId>
 | Trường dữ liệu  | Kiểu   | Chú thích                                   |
 | --------------- | ------ | ------------------------------------------- |
 | `Authorization` | string | `Bearer` + [`accessToken`](../access-token.md) |
+
+### Response
+```json
+    
+```

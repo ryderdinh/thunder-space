@@ -1,25 +1,20 @@
 ---
-sidebar_position: 8
+sidebar_position: 5
 ---
 
-# Xoá một dự án
+# Lấy thông tin một vấn đề trong dự án
 
-Method **`DELETE`**
+Method **`GET`**
 
 ```shell
-https://hrmadmin.herokuapp.com/api/projects/<id>
+https://hrmadmin.herokuapp.com/api/projects/<pid>/issues/<iid>
 ```
+
 ### Header
 
 | Trường dữ liệu  | Kiểu   | Chú thích                                   |
 | --------------- | ------ | ------------------------------------------- |
 | `Authorization` | string | `Bearer` + [`accessToken`](../access-token.md) |
-
 ### Response
 ```json
-{
-  "status": 200,
-  "message": "success",
-}
 ```
-
