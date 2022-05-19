@@ -37,7 +37,7 @@ module.exports = async (req, res, next) => {
     const assign = assigned === "" ? null : { id : existUserAssigned.id, name: existUserAssigned.name, email: existUserAssigned.email, avatar: existUserAssigned.avatar.url }
     const newIssue = await Issue.create({
         name: name,
-        code: `${existProject.code}-${existProject.issue.length + 1}`,
+        code: existProject.seqcode === 0 ? `${existProject.code}-${existProject.issue.length + 1}` : `${existProject.code}${existProject.seqcode}-${existProject.issue.length + 1}`,
         type: type,
         creator: creator,
         assign: assign,
