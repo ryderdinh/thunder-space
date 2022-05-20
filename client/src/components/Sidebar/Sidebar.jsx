@@ -1,3 +1,4 @@
+import Logo from 'components/Icon/Logo'
 import { LayoutContext } from 'context/LayoutContext'
 import { useContext } from 'react'
 import Account from './Account'
@@ -6,9 +7,6 @@ import SidebarItem from './SidebarItem'
 import SidebarItemSubMenu from './SidebarItemSubMenu'
 
 export default function Sidebar() {
-  // const sidebar = useSelector((state) => state._sidebar)
-  // const dispatch = useDispatch()
-
   const { sidebar } = useContext(LayoutContext)
 
   const toggleSidebar = () => {
@@ -19,44 +17,41 @@ export default function Sidebar() {
     <div className={sidebar.active ? 'sidebar' : 'sidebar close'}>
       <div className='logo-details'>
         <div className='logo'>
-          <img
-            src={require('assets/images/icons/newlogo-logo.svg').default}
-            alt='logo'
-          />
+          <Logo />
         </div>
         <span className='logo_name'>Thunder Space</span>
       </div>
       <ul className='nav-links'>
         <SidebarItem
           path='/'
-          title='Trang chủ'
+          title='Home'
           type='sub-menu blank'
           icon='bx bx-grid-alt'
           toggleSidebar={toggleSidebar}
         />
         <SidebarItem
           path='/timesheets'
-          title='Bảng công'
+          title='Timesheets'
           type='sub-menu blank'
           icon='bx bx-table'
           toggleSidebar={toggleSidebar}
         />
         <SidebarItem
           path='/report'
-          title='Báo cáo'
+          title='Requests and Reports'
           type='sub-menu blank'
           icon='bx bx-line-chart'
           toggleSidebar={toggleSidebar}
         />
         <SidebarItemSubMenu
           path='/workflow'
-          title='Quản lý'
+          title='Workflow'
           type='sub-menu'
           icon='bx bx-list-check'
           listMenu={[
-            { path: '/workflow', name: 'Tổng quan' },
-            { path: '/works', name: 'Công việc' },
-            { path: '/projects', name: 'Dự án' }
+            { path: '/workflow', name: 'Overview' },
+            { path: '/works', name: 'Tasks' },
+            { path: '/projects', name: 'Projects ' }
           ]}
           toggleSidebar={toggleSidebar}
         />

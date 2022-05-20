@@ -20,7 +20,7 @@ const schema = Joi.object({
   description: Joi.string().allow(''),
   type: Joi.string().allow('task', 'bug').required(),
   priority: Joi.string().allow('low', 'medium', 'high', 'highest').required(),
-  assigned: Joi.string()
+  assigned: Joi.string().allow('')
 })
 
 const getTimeStamp = (y, m, d, h, min, s, meridiem) => {
@@ -438,9 +438,6 @@ function ListBoxNonMultiple({ selectList, ...props }) {
     field: { value, onChange }
   } = useController(props)
 
-  // const [typeOfIssues] = useState([{ name: 'task' }, { name: 'bug' }])
-  // const [selected, setSelected] = useState(typeOfIssues[0])
-
   return (
     <Listbox value={value} onChange={onChange}>
       <div className='relative mt-1 w-full'>
@@ -518,10 +515,6 @@ function ListBoxImageNonMultiple({ people, ...props }) {
     field: { value, onChange }
   } = useController(props)
 
-  // const people = [{ name: 'Wade Cooper' }, { name: 'Arlene Mccoy' }]
-  // const [selected, setSelected] = useState(null)
-  // const config = genConfig()
-
   const handleOnChange = (value) => {
     onChange(value)
   }
@@ -591,7 +584,7 @@ function ListBoxImageNonMultiple({ people, ...props }) {
                       {person.name}
                     </span>
 
-                    {person.avatar !== '' ? (
+                    {person.avatar ? (
                       <span
                         className='absolute inset-y-0 left-0 flex items-center
                         pl-3'

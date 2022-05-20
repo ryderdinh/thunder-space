@@ -9,12 +9,11 @@ function SearchBox({ defaultValue, placeholder, handleSearch }) {
   }, [setValue, defaultValue])
 
   return (
-    <div className='relative h-max'>
+    <div className='relative h-max w-full md:w-auto'>
       <form
         onSubmit={(e) => {
           e.preventDefault()
           handleSearch(value)
-          reset()
         }}
       >
         <input
@@ -27,6 +26,9 @@ function SearchBox({ defaultValue, placeholder, handleSearch }) {
           outline-none transition-all focus:shadow-md focus:ring-2 focus:ring-current'
           value={defaultValue}
           {...bind}
+          onKeyUp={(e) => {
+            handleSearch(value)
+          }}
         />
         <div
           className='text-scale-1100 pointer-events-none absolute inset-y-0 left-0 flex 

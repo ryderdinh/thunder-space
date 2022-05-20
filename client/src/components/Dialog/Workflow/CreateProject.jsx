@@ -7,12 +7,13 @@ import { Fragment, useEffect, useState } from 'react'
 import { useController, useForm } from 'react-hook-form'
 import ReactNiceAvatar, { genConfig } from 'react-nice-avatar'
 import { useDispatch, useSelector } from 'react-redux'
+import { useHistory } from 'react-router-dom'
 
 const schema = Joi.object({
   name: Joi.string().min(2).max(25).required(),
   description: Joi.string().allow('').max(300),
   managers: Joi.array().items(Joi.string()),
-  members: Joi.array().items(Joi.string()).required()
+  members: Joi.array().items(Joi.string()).default([])
 })
 
 export default function CreateProject({ closeModal }) {
@@ -21,6 +22,8 @@ export default function CreateProject({ closeModal }) {
   )
   const { data, isLoading } = useSelector((state) => state._users)
   const dispatch = useDispatch()
+
+  const history = useHistory()
 
   const {
     register,
@@ -35,7 +38,12 @@ export default function CreateProject({ closeModal }) {
   const [selectedMembers, setSelectedMembers] = useState([])
 
   const onSubmitForm = (data) => {
-    dispatch(actCreateProject(data, yourMail))
+    dispatch(actCreateProject(data, yourMail, handleWhenSuccessCreate))
+  }
+
+  const handleWhenSuccessCreate = (pid) => {
+    console.log(pid)
+    history.push(`/projects/${pid}`)
     closeModal()
   }
 
@@ -117,7 +125,7 @@ export default function CreateProject({ closeModal }) {
                           {...register('name')}
                           autoComplete='off'
                           className='mt-1 block w-full rounded-md border border-gray-300 
-                          p-1 shadow-sm focus:border-emerald-500  focus:outline-none 
+                          p-2 shadow-sm focus:border-emerald-500  focus:outline-none 
                           focus:ring-2 focus:ring-emerald-500 sm:text-sm'
                         />
                         {errors.name && (

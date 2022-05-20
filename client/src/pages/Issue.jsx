@@ -1,13 +1,14 @@
+import Issue from 'components/Issue/Issue'
 import Layout from 'components/Layouts/Layout'
 import HeaderContainer from 'components/Main/HeaderContainer/HeaderContainer'
 import Main from 'components/Main/Main'
 import ViewBox from 'components/Main/ViewMain/ViewBox'
 import ViewMain from 'components/Main/ViewMain/ViewMain'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 
-export default function Issue() {
-  const [path] = useState('issue')
+const path = 'issue'
 
+export default function IssuePage() {
   useEffect(() => {
     document.title = 'Issue'
   }, [])
@@ -17,7 +18,9 @@ export default function Issue() {
       <Main>
         <HeaderContainer pathName={path} />
         <ViewMain>
-          <ViewBox>{/* <IssueContainer /> */}</ViewBox>
+          <ViewBox>
+            <Issue />
+          </ViewBox>
         </ViewMain>
       </Main>
     </Layout>

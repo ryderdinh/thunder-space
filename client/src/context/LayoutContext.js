@@ -4,7 +4,9 @@ export const LayoutContext = createContext()
 
 export default function LayoutContextProvider({ children }) {
   const [isDialogOpen, setIsDialogOpen] = useState(false)
-  const [isOpenSidebar, setIsOpenSidebar] = useState(false)
+  const [isOpenSidebar, setIsOpenSidebar] = useState(
+    localStorage.getItem('sidebar-x') === 'true' ? true : false || false
+  )
   const [nameDialog, setNameDialog] = useState('')
   const [data, setData] = useState({})
 
@@ -34,12 +36,15 @@ export default function LayoutContextProvider({ children }) {
     active: isOpenSidebar,
     open: () => {
       setIsOpenSidebar(true)
+      localStorage.setItem('sidebar-x', true)
     },
     close: () => {
       setIsOpenSidebar(false)
+      localStorage.setItem('sidebar-x', false)
     },
     toggle: () => {
       setIsOpenSidebar(!isOpenSidebar)
+      localStorage.setItem('sidebar-x', !isOpenSidebar)
     }
   }
 

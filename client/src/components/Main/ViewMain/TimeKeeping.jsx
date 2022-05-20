@@ -4,8 +4,9 @@ import { useSelector } from 'react-redux'
 import BtnTimeKeeping from '../../Button/BtnTimeKeeping'
 
 export default function TimeKeeping({ variants }) {
-  const count = useSelector((state) => state._timeOfAttendance._count)
-  const status = useSelector((state) => state._timeOfAttendance._status)
+  const { _count: count, _status: status } = useSelector(
+    (state) => state._timeOfAttendance
+  )
 
   return (
     <motion.div
@@ -16,22 +17,19 @@ export default function TimeKeeping({ variants }) {
       exit='exit'
     >
       <div className='time-keeping_hour'>
-        <CircleChart label={`${count}/8 giờ`} value={count} />
+        <CircleChart label={`${count}/8 hour`} value={count} />
       </div>
       <div className='time-keeping_label'>
         <p className='status-realtime'>
           {status === false
-            ? 'Chưa chấm công'
+            ? 'No attendance'
             : count < 8.5
-            ? 'Chưa đủ công'
-            : 'Đã đủ công'}
+            ? 'Not enough time'
+            : 'Enough time'}
         </p>
         <p className='status-hour'></p>
       </div>
-      <BtnTimeKeeping
-        className={'btn time-keeping_btn'}
-        content={'Chấm công'}
-      />
+      <BtnTimeKeeping className={'btn time-keeping_btn'} content={'Check'} />
     </motion.div>
   )
 }

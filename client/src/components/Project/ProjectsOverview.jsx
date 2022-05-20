@@ -1,8 +1,8 @@
 import { ChevronRightIcon } from '@heroicons/react/solid'
-import { actQueryProject } from 'actions'
+import { actQueryProject, setInitialProject } from 'actions'
 import 'assets/css/project.css'
-import Col from 'components/Layouts/Col'
-import Row from 'components/Layouts/Row'
+import { Breadcumb } from 'components/Breadcumb/Breadcumb'
+import { Col, Row } from 'components/Layouts'
 import { LayoutContext } from 'context/LayoutContext'
 import { motion } from 'framer-motion'
 import queryString from 'query-string'
@@ -37,9 +37,13 @@ export default function ProjectsOverview() {
 
   const [searchValue, setSearchValue] = useState('')
   const [defaultSearchValue, setDefaultSearchValue] = useState('')
-  const [projects, setProjects] = useState(
-    useSelector((state) => state._project)._dataProjects
-  )
+  const [projects, setProjects] = useState(_dataProjects)
+  const [breadcumbs] = useState([
+    {
+      name: 'Projects',
+      link: '/projects'
+    }
+  ])
 
   const history = useHistory()
 
@@ -51,11 +55,9 @@ export default function ProjectsOverview() {
 
   const handleSearch = (value) => {
     if (value === searchValue) return
+    setSearchValue(value)
 
-    let optimizeTextValue = optimizeText(value)
-    setSearchValue(optimizeTextValue)
-
-    history.push(`${history.location.pathname}?search=${optimizeTextValue}`)
+    history.push(`${history.location.pathname}?search=${value}`)
   }
 
   const handleOpenDialog = () => {
@@ -95,16 +97,17 @@ export default function ProjectsOverview() {
 
   return (
     <div className='view-item project w-full space-y-3'>
-      <Row className='flex justify-between'>
-        <Col></Col>
-        <Col>
-          <div className='flex justify-end gap-2'>
+      <Row className='md:flex'>
+        <Col className='mb-2 w-full md:mb-0 md:w-1/2'>
+          <Breadcumb list={breadcumbs} />
+        </Col>
+        <Col className='w-full md:w-1/2'>
+          <div className='flex w-full justify-end gap-2'>
             <SearchBox
-              placeholder={'Filter project'}
+              placeholder={'Filter projects'}
               handleSearch={handleSearch}
               defaultValue={defaultSearchValue}
             />
-            {/* <MenuComponent addDialogName={'create-project'} /> */}
 
             <MenuComponent>
               <div className='px-1 py-1'>
@@ -122,13 +125,13 @@ export default function ProjectsOverview() {
             </p>
           )}
 
-          {!isLoading && !_dataProjects.length && (
+          {!isLoading && !projects.length && (
             <p className='w-full py-14 text-center text-xs text-neutral-500'>
               No data
             </p>
           )}
 
-          {!isLoading && _dataProjects.length > 0 && (
+          {!isLoading && projects.length > 0 && (
             <div
               className='grid w-full grid-cols-1 gap-3 md:grid-cols-2
               xl:grid-cols-3'
@@ -150,12 +153,26 @@ export default function ProjectsOverview() {
 }
 
 function ProjectItemGrid({ config, projectOverview, variants }) {
+  const dispatch = useDispatch()
+  const initDataPreviewProject = () => {
+    dispatch(
+      setInitialProject({
+        name: projectOverview.name,
+        code: projectOverview.code,
+        _id: projectOverview._id
+      })
+    )
+  }
+
   return (
-    <Link to={`/projects/${projectOverview._id}`}>
+    <Link
+      to={`/projects/${projectOverview._id}`}
+      onClick={initDataPreviewProject}
+    >
       <motion.div
         className='card-panel-a group relative flex h-36 w-full 
-                    cursor-pointer overflow-hidden rounded-md border
-                    duration-150 ease-in-out'
+        cursor-pointer overflow-hidden rounded-md border
+        duration-150 ease-in-out'
         variants={variants}
         initial='initial'
         animate='enter'

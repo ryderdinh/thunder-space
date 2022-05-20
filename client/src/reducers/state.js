@@ -3,7 +3,6 @@ import checkLogin from './checkLogin'
 import events from './events'
 import issue from './issue'
 import loading from './loading'
-import popup from './popup'
 import project from './project'
 import report from './report'
 import staffInfomation from './staffInfomation'
@@ -19,7 +18,6 @@ export default combineReducers({
   _staffInfomation: staffInfomation,
   _events: events,
   _report: report,
-  _popup: popup,
   _workflow: workflow,
   _project: project,
   _issue: issue,

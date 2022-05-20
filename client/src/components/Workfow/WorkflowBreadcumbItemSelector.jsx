@@ -1,8 +1,8 @@
 import { Combobox, Transition } from '@headlessui/react'
 import { CheckIcon, SearchIcon } from '@heroicons/react/solid'
-import { Fragment, useEffect } from 'react'
+import { Fragment } from 'react'
 
-export default function ProjectSelector({
+export default function WorkflowBreadcumbItemSelector({
   list,
   selected,
   setSelected,
@@ -19,23 +19,19 @@ export default function ProjectSelector({
             .includes(query.toLowerCase().replace(/\s+/g, ''))
         )
 
-  useEffect(() => {
-    console.log(selected)
-  }, [selected])
-
   return (
     <Combobox value={selected} onChange={setSelected}>
-      <div className='relative z-10 mt-1'>
+      <div className='relative z-10'>
         <div
-          className='relative w-52 cursor-default overflow-hidden rounded-lg 
+          className='relative w-max cursor-default overflow-hidden
           bg-transparent text-left focus:outline-none focus-visible:ring-2 
           focus-visible:ring-white focus-visible:ring-opacity-75 
           focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm'
         >
-          <Combobox.Button className='flex items-center pr-2'>
+          <Combobox.Button className='flex items-center rounded-md bg-neutral-800'>
             <p
-              className='w-full border-none bg-transparent py-2 pr-10 text-lg 
-              leading-5 text-gray-50 focus:ring-0'
+              className='w-full border-none bg-transparent p-2 text-lg 
+              leading-5 text-neutral-50 focus:ring-0'
             >
               {selected.name}
             </p>
@@ -84,9 +80,9 @@ export default function ProjectSelector({
                   Nothing found.
                 </div>
               ) : (
-                filteredList.map((item) => (
+                filteredList.map((item, index) => (
                   <Combobox.Option
-                    key={item._id}
+                    key={index}
                     className={({ active }) =>
                       `relative cursor-default select-none py-2 pl-10 pr-4 ${
                         active

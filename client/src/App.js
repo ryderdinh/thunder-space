@@ -3,7 +3,8 @@ import 'animate.css'
 import { AnimatePresence } from 'framer-motion'
 import NotFound from 'pages/404'
 import Home from 'pages/Home'
-import Issue from 'pages/Issue'
+import IssuePage from 'pages/Issue'
+import Landing from 'pages/Landing'
 import Login from 'pages/Login'
 import Profile from 'pages/Profile'
 import Project from 'pages/Project'
@@ -40,12 +41,6 @@ export default function App() {
                 <Report />
               </Route>
               <Route path='/workflow'>
-                <Route exact path='/works'>
-                  <Work />
-                </Route>
-                <Route exact path='/projects'>
-                  <Project />
-                </Route>
                 <Route component={Workflow} />
               </Route>
               <Route exact path='/works'>
@@ -58,14 +53,16 @@ export default function App() {
                 <Project />
               </Route>
               <Route exact path='/projects/:pid/:iid'>
-                <Issue />
+                <IssuePage />
               </Route>
               <Route exact path='/account'>
-                {/* <Account /> */}
                 <Profile />
               </Route>
               <Route exact path='/login'>
                 <Login />
+              </Route>
+              <Route exact path='/landing'>
+                <Landing />
               </Route>
               <Route component={NotFound} />
             </Switch>

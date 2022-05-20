@@ -1,11 +1,8 @@
 import { Menu, Transition } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/solid'
-import { LayoutContext } from 'context/LayoutContext'
-import { Fragment, useContext } from 'react'
+import { Fragment } from 'react'
 
 export default function MenuComponent({ children }) {
-  // const { openDialog } = useContext(LayoutContext)
-
   return (
     <Menu as='div' className='relative z-10 inline-block text-left'>
       <div className='flex justify-end'>
@@ -32,109 +29,10 @@ export default function MenuComponent({ children }) {
         leaveTo='transform opacity-0 scale-95'
       >
         <Menu.Items
-          className='absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100
+          className='absolute right-0 mt-2 w-56 origin-top-right divide-y divide-neutral-100
           rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none'
         >
           {children}
-          {/* <div className='px-1 py-1 '>
-            <Menu.Item>
-              {({ active }) => (
-                <button
-                  className={`${
-                    active ? 'bg-emerald-600 text-white' : 'text-neutral-700'
-                  } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
-                  onClick={() => {
-                    openDialog(addDialogName)
-                  }}
-                >
-                  {active ? (
-                    <PlusActiveIcon
-                      className='mr-2 h-5 w-5'
-                      aria-hidden='true'
-                    />
-                  ) : (
-                    <PlusInactiveIcon
-                      className='mr-2 h-5 w-5'
-                      aria-hidden='true'
-                    />
-                  )}
-                  Add
-                </button>
-              )}
-            </Menu.Item>
-          </div>
-          <div className='px-1 py-1 '>
-            <Menu.Item>
-              {({ active }) => (
-                <button
-                  className={`${
-                    active ? 'bg-emerald-600 text-white' : 'text-neutral-700'
-                  } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
-                >
-                  {active ? (
-                    <EditActiveIcon
-                      className='mr-2 h-5 w-5'
-                      aria-hidden='true'
-                    />
-                  ) : (
-                    <EditInactiveIcon
-                      className='mr-2 h-5 w-5'
-                      aria-hidden='true'
-                    />
-                  )}
-                  Edit
-                </button>
-              )}
-            </Menu.Item>
-          </div>
-          <div className='px-1 py-1'>
-            <Menu.Item>
-              {({ active }) => (
-                <button
-                  className={`${
-                    active ? 'bg-emerald-600 text-white' : 'text-neutral-700'
-                  } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
-                >
-                  {active ? (
-                    <ArchiveActiveIcon
-                      className='mr-2 h-5 w-5'
-                      aria-hidden='true'
-                    />
-                  ) : (
-                    <ArchiveInactiveIcon
-                      className='mr-2 h-5 w-5'
-                      aria-hidden='true'
-                    />
-                  )}
-                  Archive
-                </button>
-              )}
-            </Menu.Item>
-          </div>
-          <div className='px-1 py-1'>
-            <Menu.Item>
-              {({ active }) => (
-                <button
-                  className={`${
-                    active ? 'bg-emerald-600 text-white' : 'text-neutral-700'
-                  } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
-                >
-                  {active ? (
-                    <DeleteActiveIcon
-                      className='mr-2 h-5 w-5 text-emerald-400'
-                      aria-hidden='true'
-                    />
-                  ) : (
-                    <DeleteInactiveIcon
-                      className='mr-2 h-5 w-5 text-emerald-400'
-                      aria-hidden='true'
-                    />
-                  )}
-                  Delete
-                </button>
-              )}
-            </Menu.Item>
-          </div> */}
         </Menu.Items>
       </Transition>
     </Menu>

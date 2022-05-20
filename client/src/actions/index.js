@@ -4,17 +4,6 @@ import toast from 'react-hot-toast'
 import callAPI from '../api/callAPI'
 import { getCookie, removeCookie, setCookie } from '../units/cookieWeb'
 
-//? JWT expired=========================================
-const jwtExpired = async (message, dispatch) => {
-  message === 'jwt expired' && (await dispatch(setCheckLogin(false)))
-}
-
-const tokenExpired = () => {
-  return async (dispatch) => {
-    await dispatch(setCheckLogin(false))
-  }
-}
-
 //? CALL API============================================
 export const actSignIn = (dataUser) => {
   removeToast()
@@ -280,7 +269,7 @@ export const actChangePassword = (data) => {
   }
 }
 
-export const actCreateProject = (data, uMail) => {
+export const actCreateProject = (data, uMail, callback) => {
   loadingToast('Processing...')
   let sbData = data
 
@@ -295,11 +284,16 @@ export const actCreateProject = (data, uMail) => {
     try {
       const res = await projectApi.create(sbData)
 
-      console.log(res)
       removeToast()
-
-      dispatch(actQueryProject())
+      
+      await dispatch(
+        setInitialProject({
+          name: data.name
+        })
+      )
+      callback(res.data._id)
     } catch (error) {
+      removeToast()
       console.log(error)
     }
   }
@@ -307,7 +301,7 @@ export const actCreateProject = (data, uMail) => {
 
 export const actFetchProject = (pid) => {
   return async (dispatch) => {
-    await dispatch(setProjectLoading())
+    await dispatch(setProjectLoading(true))
 
     try {
       const res = await projectApi.get(pid)
@@ -315,8 +309,7 @@ export const actFetchProject = (pid) => {
 
       await dispatch(setDataProject({ ...res.data, issue: issueSorted }))
     } catch (error) {
-      console.log(error)
-      await dispatch(setProjectError(true))
+      await dispatch(setProjectError(error.response.error))
     }
   }
 }
@@ -328,13 +321,14 @@ export const actDeleteProject = (pid, callback) => {
       callback()
     } catch (error) {
       console.log(error)
+      errorToast(error.response.error)
     }
   }
 }
 
 export const actQueryProject = (query = null) => {
   return async (dispatch) => {
-    await dispatch(setProjectLoading())
+    await dispatch(setProjectLoading(true))
 
     try {
       const res = await projectApi.gets(query)
@@ -342,8 +336,6 @@ export const actQueryProject = (query = null) => {
 
       await dispatch(setDataProjects(sortData))
     } catch (error) {
-      console.log(error)
-      // await jwtExpired(dispatch)
       await dispatch(setProjectError(true))
     }
   }
@@ -360,13 +352,19 @@ export const actCreateIssue = (pid, data, callback) => {
   }
 }
 
-export const actQueryIssue = (pid, data, callback) => {
-  return async () => {
+export const actQueryIssue = (pid, iid, callback) => {
+  return async (dispatch) => {
+    await dispatch(setIssueLoading(true))
+
     try {
-      const res = await issueApi.create(pid, data)
-      callback(res.data._id)
+      const res = await issueApi.get(pid, iid)
+
+      await dispatch(setDataIssue(res.data))
     } catch (error) {
-      errorToast(error.response?.error || 'Something went wrong')
+      const err = error.response?.error || 'Something went wrong'
+
+      errorToast(err)
+      dispatch(setIssueError(err))
     }
   }
 }
@@ -444,48 +442,45 @@ export const setEvents = (payload) => ({
   payload
 })
 
-export const setPopup = (payload) => ({
-  type: 'SET_POPUP',
-  payload
-})
-
-export const closePopup = () => ({
-  type: 'CLOSE_POPUP'
-})
-
-export const setLoading = (payload) => ({
-  type: 'SET_LOADING',
-  payload
-})
-
-export const finishLoading = () => ({
-  type: 'FINISH_LOADING'
-})
-
 // PROJECT ACTION ================================
-export const setProjectLoading = () => ({
-  type: 'SET_LOADING'
+export const setProjectLoading = (payload) => ({
+  type: 'SET_PROJECT_LOADING',
+  payload
 })
-
 export const setProjectError = (payload) => ({
-  type: 'SET_ERROR',
+  type: 'SET_PROJECT_ERROR',
   payload
 })
 
+export const setInitialProject = (payload) => ({
+  type: 'SET_INITIAL_PROJECT',
+  payload
+})
 //? Detail project
 export const setDataProject = (payload) => ({
   type: 'SET_DATA_PROJECT',
   payload
 })
-
 //? All project
 export const setDataProjects = (payload) => ({
   type: 'SET_DATA_PROJECTS',
   payload
 })
 
+export const setIssueLoading = (payload) => ({
+  type: 'SET_ISSUE_LOADING',
+  payload
+})
+export const setIssueError = (payload) => ({
+  type: 'SET_ISSUE_ERROR',
+  payload
+})
 export const setDataIssue = (payload) => ({
   type: 'SET_DATA_ISSUE',
+  payload
+})
+export const setInitialIssue = (payload) => ({
+  type: 'SET_INITIAL_ISSUE',
   payload
 })
 

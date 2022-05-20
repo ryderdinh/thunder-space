@@ -1,7 +1,6 @@
 import { setCheckLogin } from 'actions'
 import Dialog from 'components/Dialog'
 import LoadingContainer from 'components/Loading/LoadingContainer'
-import { Popup } from 'components/Popup'
 import Sidebar from 'components/Sidebar/Sidebar'
 import LayoutContextProvider from 'context/LayoutContext'
 import { motion } from 'framer-motion'
@@ -52,7 +51,6 @@ export default function Layout({ children }) {
             <Sidebar />
             <Toaster position='top-right' reverseOrder={true} />
             {children}
-            <Popup />
             <Dialog />
           </>
         )}

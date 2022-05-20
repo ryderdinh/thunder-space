@@ -1,42 +1,40 @@
-import React from "react";
-import { connect } from "react-redux";
-import { actSendLocationToServer, setLoading } from "actions";
-import toast from "react-hot-toast";
+import { actSendLocationToServer } from 'actions'
+import React from 'react'
+import toast from 'react-hot-toast'
+import { connect } from 'react-redux'
 export class BtnTimeKeeping extends React.Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
-      location: [],
-    };
+      location: []
+    }
   }
-  
+
   getLocation() {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {
         this.setState({
-          location: [position.coords.latitude, position.coords.longitude],
-        });
-        this.props.actSendLocationToServer(this.state.location);
-      });
+          location: [position.coords.latitude, position.coords.longitude]
+        })
+        this.props.actSendLocationToServer(this.state.location)
+      })
     } else {
-      toast.error("Geolocation is not supported by this browser.");
+      toast.error('Geolocation is not supported by this browser.')
     }
   }
   render() {
-    const { className, content } = this.props;
+    const { className, content } = this.props
     return (
       <div
         className={className}
         onClick={() => {
-          this.getLocation();
+          this.getLocation()
         }}
       >
         {content}
       </div>
-    );
+    )
   }
 }
 
-export default connect(null, { actSendLocationToServer, setLoading })(
-  BtnTimeKeeping
-);
+export default connect(null, { actSendLocationToServer })(BtnTimeKeeping)
