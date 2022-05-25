@@ -1,13 +1,13 @@
 ---
-sidebar_position: 6
+sidebar_position: 8
 ---
 
-# Lấy thông tin tất cả vấn đề trong dự án
+# Xoá một vấn đề
 
-Method **`GET`**
+Method **`DELETE`**
 
 ```shell
-https://hrmadmin.herokuapp.com/api/projects/<pid>/issues
+https://hrmadmin.herokuapp.com/issues/<iid>
 ```
 
 ### Header
