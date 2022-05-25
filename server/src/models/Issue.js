@@ -40,7 +40,19 @@ const Issue = new Schema({
         },
         attachment : [],
         status : [],
-        history : [],
+        history : [
+            {
+                time: { type: Number, required: true },
+                user: { type: mongoose.Schema.Types.ObjectId, ref: "Staff" },
+                action: {
+                    type: String,
+                    required: true,
+                    enum: {
+                        values: [ "create" ]
+                    }
+                }
+            }
+        ],
         createdAt : { type : Number, default :Date.now(), required : true },
         updateAt : { type : Number, default: Date.now(), required: true }
 })

@@ -47,6 +47,11 @@ module.exports = async (req, res, next) => {
         },
         description: description,
         priority: priority,
+        history: {
+          time: Date.now(),
+          user: uid,
+          action: "create"
+        }
     })
     //Save to project
     existProject.issue.push({ iid: newIssue.id });
