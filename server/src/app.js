@@ -133,6 +133,8 @@ const routersIssue = require("./routers/users/issue.router")
 
 app.use("/api", routersIssue.apiGetAllIssueInProject)
 app.use("/api", routersIssue.apiGetOneIssueInProject)
+app.use("/api", routersIssue.apiDeleteOneIssue)
+app.use("/api", routersIssue.apiUpdateOneIssue)
 app.use("/api", routersIssue.apiPostIssue);
 app.use("/api", routersIssue.apiPostFile);
 
