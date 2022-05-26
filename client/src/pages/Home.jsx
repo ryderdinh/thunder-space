@@ -24,14 +24,12 @@ export default function Home() {
         <ViewMain>
           <ViewBox>
             <ViewBoxName name={'Attendance'} />
-            <TimeKeeping variants={variantGlobal({ type: 1, addValue: 0 })} />
-            <ListTimeKeeping
-              variants={variantGlobal({ type: 1, addValue: 0.3 })}
-            />
+            <TimeKeeping variants={variantGlobal(1, 0)} />
+            <ListTimeKeeping variants={variantGlobal(1, 0.3)} />
           </ViewBox>
           <ViewBox>
             <ViewBoxName name={'Event'} />
-            <Event variants={variantGlobal({ type: 1, addValue: 0.6 })} />
+            <Event variants={variantGlobal(1, 0.6)} />
           </ViewBox>
         </ViewMain>
       </Main>

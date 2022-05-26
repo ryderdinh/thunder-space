@@ -1,5 +1,5 @@
 const initState = {
-  data: [],
+  _data: [],
   isLoadding: false,
   error: ''
 }
@@ -8,7 +8,9 @@ export default function events(state = initState, action) {
   switch (action.type) {
     case 'SET_EVENTS_LOADING':
       return { ...state, isLoadding: action.payload }
-    case 'SET_EVENTS':
+    case 'SET_EVENTS_ERROR':
+      return { ...state, isLoadding: false, error: action.payload }
+    case 'SET_EVENTS_DATA':
       let events = action.payload
       let listEvent = []
 
@@ -30,7 +32,7 @@ export default function events(state = initState, action) {
         }
       }
 
-      return { ...state, data: listEvent, isLoadding: false }
+      return { ...state, _data: listEvent, isLoadding: false }
     default:
       return { ...state }
   }

@@ -15,7 +15,9 @@ export default function HeaderContainer({ pathName }) {
       workflow: 'Mission Overview',
       work: 'Workflow Overview',
       project: 'Project Overview',
+      'project-setting': 'Project Setting',
       issue: 'Issue Overview',
+      'issue-setting': 'Issue Setting',
       account: 'Account'
     }
 

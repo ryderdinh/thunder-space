@@ -20,9 +20,7 @@ export default function Account() {
         <HeaderContainer pathName={path} />
         <ViewMain>
           <ViewBox>
-            <AccountContainer
-              variants={variantGlobal({ type: 2, addValue: 0 })}
-            />
+            <AccountContainer variants={variantGlobal(2, 0)} />
           </ViewBox>
         </ViewMain>
       </Main>

@@ -1,75 +1,33 @@
-import React, { useEffect, useRef } from "react";
-
-export const IssueHistory = () => {
-  //? Create Ref
-  const scrollEnd = useRef(null);
-
-  //? Create Effect
-  useEffect(() => {
-    scrollToBottom();
-  }, []);
-
-  //? Create Function
-  const scrollToBottom = () => {
-    scrollEnd.current.scrollTo(
-      0,
-      scrollEnd.current.scrollHeight - scrollEnd.current.clientHeight
-    );
-  };
-
+const IssueHistory = ({ className = '', data = [] }) => {
   return (
-    <div className="issue__item issue-main-history">
-      <div className="title">Lịch sử</div>
-      <div
-        className="issue__item-box issue-history-box fl-col eb-scroll"
-        ref={scrollEnd}
-      >
-        <div className="issue-history__item">
-          <div className="user fl-row">
-            <div className="user-avatar">
-              <img
-                src={require("assets/images/icons/user.svg").default}
-                alt="avatar"
-              />
+    <div className={`${className} w-full text-sm text-neutral-50`}>
+      {(!data || !data.length) && (
+        <p className='w-full py-14 text-center text-xs text-neutral-500'>
+          No history
+        </p>
+      )}
+
+      {(data || data.length) &&
+        data.map((item, index) => (
+          <div className='grid grid-cols-2 text-neutral-500' key={index}>
+            <div className='flex items-center gap-2'>
+              <img src={item.users[0].avatar} alt='Avatar user 1' />
+              <p>{`${item.users[0].name} :`}</p>
             </div>
-            <p className="user-name">{`${"Dinh Quang Anh"}:`}</p>
-          </div>
-          <div className="content">
-            <div className="row">create issue - 12:20 CH 05/06/2021</div>
-            <div className="row"></div>
-          </div>
-        </div>
-        <div className="issue-history__item">
-          <div className="user fl-row">
-            <div className="user-avatar">
-              <img
-                src={require("assets/images/icons/user.svg").default}
-                alt="avatar"
-              />
+
+            <div className='font-bold'>
+              <p>{`${item.action} `}</p>
             </div>
-            <p className="user-name">{`${"Dinh Quang Anh"}:`}</p>
+
+            {item.users[1] && (
+              <div className='font-bold'>
+                <p>{`${item.users[1].name} `}</p>
+              </div>
+            )}
           </div>
-          <div className="content">
-            <div className="row">change status - 12:30 CH 05/06/2021</div>
-            <div className="row">-{">"} progress</div>
-          </div>
-        </div>
-        <div className="issue-history__item">
-          <div className="user fl-row">
-            <div className="user-avatar">
-              <img
-                src={require("assets/images/icons/user.svg").default}
-                alt="avatar"
-              />
-            </div>
-            <p className="user-name">{`${"Dinh Quang Anh"}:`}</p>
-          </div>
-          <div className="content">
-            <div className="row">change status - 12:30 CH 05/06/2021</div>
-            <div className="row">progress -{">"} testing </div>
-          </div>
-        </div>
-      </div>
+        ))}
     </div>
-  );
-};
+  )
+}
+
+export default IssueHistory

@@ -5,19 +5,25 @@ import Main from 'components/Main/Main'
 import ViewBox from 'components/Main/ViewMain/ViewBox'
 import ViewMain from 'components/Main/ViewMain/ViewMain'
 import ProjectDetail from 'components/Project/ProjectDetail'
+import { ProjectSetting } from 'components/Project/ProjectSetting'
 import ProjectsOverview from 'components/Project/ProjectsOverview'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import variantGlobal from 'units/variantGlobal'
 
-export default function Project() {
-  const [path] = useState('project')
+const defaultPath = 'project'
+
+export default function ProjectPage({ type = '' }) {
+  const [path, setPath] = useState(defaultPath)
 
   const pathName = useParams()
 
   useEffect(() => {
-    document.title = 'Project'
-  }, [])
+    document.title = 'Project ' + type
+  }, [type])
+
+  useEffect(() => {
+    type && setPath(`${defaultPath}-${type}`)
+  }, [type])
 
   return (
     <Layout>
@@ -25,17 +31,11 @@ export default function Project() {
         <HeaderContainer pathName={path} />
         <ViewMain>
           <ViewBox>
-            {pathName?.pid && (
-              <ProjectDetail
-                variants={variantGlobal({ type: 2, addValue: 0 })}
-              />
-            )}
+            {pathName?.pid && !type && <ProjectDetail />}
 
-            {!pathName?.pid && (
-              <ProjectsOverview
-                variants={variantGlobal({ type: 2, addValue: 0 })}
-              />
-            )}
+            {pathName?.pid && type === 'setting' && <ProjectSetting />}
+
+            {!pathName?.pid && <ProjectsOverview />}
           </ViewBox>
         </ViewMain>
       </Main>

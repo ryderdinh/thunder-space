@@ -1,5 +1,12 @@
 //* IMPORT =============================================
-import { authApi, issueApi, projectApi, timekeepingApi, userApi } from 'api'
+import {
+  authApi,
+  eventApi,
+  issueApi,
+  projectApi,
+  timekeepingApi,
+  userApi
+} from 'api'
 import toast from 'react-hot-toast'
 import callAPI from '../api/callAPI'
 import { getCookie, removeCookie, setCookie } from '../units/cookieWeb'
@@ -158,14 +165,15 @@ export const actSendLocationToServer = (location) => {
 }
 
 export const actFetchEvents = () => {
-  const { token } = getCookie()
-
   return async (dispatch) => {
-    const res = await callAPI(`event`, 'GET', null, {
-      authorization: `Bearer ${token}`
-    })
+    await dispatch(setEventsLoading(true))
 
-    res && dispatch(setEvents(res))
+    try {
+      const res = await eventApi.get()
+      dispatch(setEventsData(res.data))
+    } catch (error) {
+      await dispatch(setEventsError(error.response.error))
+    }
   }
 }
 
@@ -217,7 +225,6 @@ export const actRefreshPage = () => {
       Promise.all([
         await dispatch(setStaffInfomation(res.data)),
         await dispatch(actFetchTimeKeeping())
-        // await dispatch(actFetchEvents())
       ]).then(async () => {
         setCookie([
           { key: 'id', value: res.data._id.toString() },
@@ -285,7 +292,7 @@ export const actCreateProject = (data, uMail, callback) => {
       const res = await projectApi.create(sbData)
 
       removeToast()
-      
+
       await dispatch(
         setInitialProject({
           name: data.name
@@ -309,7 +316,10 @@ export const actFetchProject = (pid) => {
 
       await dispatch(setDataProject({ ...res.data, issue: issueSorted }))
     } catch (error) {
-      await dispatch(setProjectError(error.response.error))
+      Promise.all([
+        await dispatch(setDataProject(null)),
+        await dispatch(setProjectError(error.message))
+      ])
     }
   }
 }
@@ -320,8 +330,7 @@ export const actDeleteProject = (pid, callback) => {
       await projectApi.delete(pid)
       callback()
     } catch (error) {
-      console.log(error)
-      errorToast(error.response.error)
+      errorToast(error.message)
     }
   }
 }
@@ -336,7 +345,7 @@ export const actQueryProject = (query = null) => {
 
       await dispatch(setDataProjects(sortData))
     } catch (error) {
-      await dispatch(setProjectError(true))
+      await dispatch(setProjectError(error.message))
     }
   }
 }
@@ -347,7 +356,7 @@ export const actCreateIssue = (pid, data, callback) => {
       const res = await issueApi.create(pid, data)
       callback(res.data._id)
     } catch (error) {
-      errorToast(error.response?.error || 'Something went wrong')
+      errorToast(error.message)
     }
   }
 }
@@ -361,7 +370,40 @@ export const actQueryIssue = (pid, iid, callback) => {
 
       await dispatch(setDataIssue(res.data))
     } catch (error) {
-      const err = error.response?.error || 'Something went wrong'
+      const err = error.message
+
+      errorToast(err)
+      dispatch(setIssueError(err))
+    }
+  }
+}
+
+export const actUpdateIssue = (iid, data, callback) => {
+  return async (dispatch) => {
+    try {
+      const res = await issueApi.update(iid, data)
+
+      successToast('Issue updated')
+      await dispatch(setDataIssue(res.data))
+    } catch (error) {
+      const err = error.message
+
+      errorToast(err)
+      dispatch(setIssueError(err))
+    }
+  }
+}
+
+export const actDeleteIssue = (iid, callback) => {
+  return async (dispatch) => {
+    try {
+      const res = await issueApi.delete(iid)
+
+      successToast('Issue deleted')
+      await dispatch(setDataIssue(res.data))
+      callback()
+    } catch (error) {
+      const err = error.message
 
       errorToast(err)
       dispatch(setIssueError(err))
@@ -378,7 +420,6 @@ export const actGetAllUsers = () => {
 
       await dispatch(setUsersData(res.data))
     } catch (error) {
-      console.log(error)
       dispatch(setUsersLoading(false))
     }
   }
@@ -437,8 +478,18 @@ export const setStaffInfomation = (payload) => ({
   payload
 })
 
-export const setEvents = (payload) => ({
-  type: 'SET_EVENTS',
+export const setEventsData = (payload) => ({
+  type: 'SET_EVENTS_DATA',
+  payload
+})
+
+export const setEventsLoading = (payload) => ({
+  type: 'SET_EVENTS_LOADING',
+  payload
+})
+
+export const setEventsError = (payload) => ({
+  type: 'SET_EVENTS_ERROR',
   payload
 })
 

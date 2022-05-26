@@ -12,22 +12,10 @@ import 'react-date-range/dist/theme/default.css' // theme css file
 import Avatar, { genConfig } from 'react-nice-avatar'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useHistory } from 'react-router-dom'
+import variantGlobal from 'units/variantGlobal'
 import MenuComponent from './MenuComponent'
 import MenuItem from './MenuItem'
 import SearchBox from './SearchBox'
-
-const transition = { duration: 0.5, ease: [0.43, 0.13, 0.23, 0.96], delay: 0 }
-const variants = (delay) => {
-  return {
-    initial: { scale: 0.8, opacity: 0 },
-    enter: { scale: 1, opacity: 1, transition: { ...transition, delay } },
-    exit: {
-      scale: 0.7,
-      opacity: 0,
-      transition: { duration: 1, ...transition }
-    }
-  }
-}
 
 export default function ProjectsOverview() {
   const { openDialog } = useContext(LayoutContext)
@@ -141,7 +129,7 @@ export default function ProjectsOverview() {
                   key={project._id}
                   config={config}
                   projectOverview={project}
-                  variants={variants(index * 0.1)}
+                  variants={variantGlobal(3, index * 0.1)}
                 />
               ))}
             </div>
@@ -199,7 +187,7 @@ function ProjectItemGrid({ config, projectOverview, variants }) {
 
           <div className='flex w-4/5 flex-col justify-between space-y-2'>
             <div className='h-3/4 space-y-2'>
-              <h5 className='font-medium text-neutral-200'>
+              <h5 className='font-medium text-neutral-200 line-clamp-1'>
                 {projectOverview.name}
               </h5>
               <p className='text-sm text-neutral-500 line-clamp-2'>

@@ -1,13 +1,23 @@
+import { actFetchEvents } from 'actions'
 import LoadingCard from 'components/Loading/LoadingCard'
 import { motion } from 'framer-motion'
-import { useSelector } from 'react-redux'
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 
 export default function Event({ variants }) {
   const {
     data: events,
-    isLoading
-    // error
+    isLoading,
+    error
   } = useSelector((state) => state._events)
+
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(actFetchEvents())
+  }, [dispatch])
+
+  console.log(error)
 
   return (
     <motion.div
@@ -31,8 +41,6 @@ export default function Event({ variants }) {
 }
 
 function EventItem({ dataEvent }) {
-  // const dispatch = useDispatch()
-
   return (
     <div className='event_item'>
       <div className='event-time'>{dataEvent[0].date}</div>

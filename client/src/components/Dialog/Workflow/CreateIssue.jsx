@@ -16,11 +16,11 @@ const typeOfIssues = ['task', 'bug']
 const typeOfPriority = ['low', 'medium', 'high', 'highest']
 
 const schema = Joi.object({
-  name: Joi.string().required(),
-  description: Joi.string().allow(''),
+  name: Joi.string().min(2).max(60).required(),
   type: Joi.string().allow('task', 'bug').required(),
   priority: Joi.string().allow('low', 'medium', 'high', 'highest').required(),
   assigned: Joi.string().allow('')
+  // description: Joi.string().allow(''),
 })
 
 const getTimeStamp = (y, m, d, h, min, s, meridiem) => {
@@ -380,7 +380,7 @@ export default function CreateIssue({ closeModal }) {
                         />
                       </div>
                     </div>
-
+                    {/* 
                     <div className='col-span-12'>
                       <label
                         htmlFor='project-description'
@@ -397,7 +397,7 @@ export default function CreateIssue({ closeModal }) {
                           p-1 shadow-sm focus:border-emerald-500  focus:outline-none 
                           focus:ring-2 focus:ring-emerald-500 sm:text-sm'
                       />
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               </div>

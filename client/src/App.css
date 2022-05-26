@@ -272,7 +272,7 @@ main.onblur {
   margin: 0 auto;
 }
 
-.view-container .view_main .view-box .col {
+.view-container .view_main .view-box > .col {
   display: flex;
   flex-flow: row wrap;
 }

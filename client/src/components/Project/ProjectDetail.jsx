@@ -11,28 +11,17 @@ import 'react-date-range/dist/styles.css'
 import 'react-date-range/dist/theme/default.css'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useHistory, useParams } from 'react-router-dom'
+import variantGlobal from 'units/variantGlobal'
 import MenuComponent from './MenuComponent'
 import MenuItem from './MenuItem'
 import SearchBox from './SearchBox'
 
-const transition = { duration: 0.5, ease: [0.43, 0.13, 0.23, 0.96], delay: 0 }
-const variants = (delay) => {
-  return {
-    initial: { scale: 0.8, opacity: 0 },
-    enter: { scale: 1, opacity: 1, transition: { ...transition, delay } },
-    exit: {
-      scale: 0.7,
-      opacity: 0,
-      transition: { duration: 1, ...transition }
-    }
-  }
-}
 export default function ProjectDetail() {
   //? Connect context
   const { openDialog } = useContext(LayoutContext)
 
   //? Connect redux
-  const { _dataProject, _dataProjects, isLoading } = useSelector(
+  const { _dataProject, isLoading, error } = useSelector(
     (state) => state._project
   )
   const dispatch = useDispatch()
@@ -42,11 +31,9 @@ export default function ProjectDetail() {
   const history = useHistory()
 
   //? State
-  const [selected, setSelected] = useState({})
-  const [query, setQuery] = useState('')
   const [searchValue, setSearchValue] = useState('')
   const [defaultSearchValue, setDefaultSearchValue] = useState('')
-  const [issues, setIssues] = useState(_dataProject.issue)
+  const [issues, setIssues] = useState(_dataProject?.issue || [])
   const [breadcumbs, setBreadcumbs] = useState([])
 
   //? Variable
@@ -85,11 +72,6 @@ export default function ProjectDetail() {
 
   //? Effect
   useEffect(() => {
-    let { _id, code, name } = _dataProject
-    setSelected({ _id, code, name })
-  }, [_dataProject])
-
-  useEffect(() => {
     Promise.all([dispatch(actQueryProject()), dispatch(actFetchProject(pid))])
   }, [dispatch, pid])
 
@@ -102,8 +84,9 @@ export default function ProjectDetail() {
   }, [history.location.search])
 
   useEffect(() => {
+    let dataIssue = _dataProject?.issue
     if (searchValue) {
-      let data = _dataProject.issue.filter((issue) => {
+      let data = dataIssue.filter((issue) => {
         let optimizeTextValue = optimizeText(searchValue)
         let optimizeProjectName = optimizeText(issue.name)
         let optimizeProjectCode = optimizeText(issue.code)
@@ -116,9 +99,9 @@ export default function ProjectDetail() {
 
       setIssues(data)
     } else {
-      setIssues(_dataProject.issue)
+      setIssues(dataIssue)
     }
-  }, [_dataProject.issue, searchValue])
+  }, [_dataProject?.issue, searchValue])
 
   useEffect(() => {
     setBreadcumbs(() => [
@@ -127,18 +110,42 @@ export default function ProjectDetail() {
         link: '/projects'
       },
       {
-        name: _dataProject.name,
-        link: `/projects/${_dataProject._id}`
+        name: _dataProject?.code,
+        link: `/projects/${_dataProject?._id}`
       }
     ])
-  }, [_dataProject.name, _dataProject._id])
+  }, [_dataProject?.code, _dataProject?._id])
 
   return (
-    <div className='view-item project w-full space-y-3'>
-      <Row className='md:flex'>
-        <Col className='mb-2 w-full md:mb-0 md:w-1/2'>
-          <Breadcumb list={breadcumbs} />
-          {/* <div className='flex items-center gap-2'>
+    <div className='view-item project w-full space-y-5'>
+      {(!_dataProject || error === 'something went wrong') && (
+        <motion.div
+          variants={variantGlobal(4, 0.1)}
+          initial='initial'
+          animate='enter'
+          exit='exit'
+        >
+          <p className='w-full pt-14 pb-5 text-center text-lg text-neutral-500'>
+            The project does not exist.
+          </p>
+          <Link to={'/projects'}>
+            <button
+              className='m-auto block 
+              rounded-md bg-emerald-500 px-4 py-2 text-sm font-semibold 
+              leading-6 text-neutral-50 shadow'
+            >
+              Return to projects
+            </button>
+          </Link>
+        </motion.div>
+      )}
+
+      {_dataProject && (
+        <>
+          <Row className='md:flex'>
+            <Col className='mb-2 w-full md:mb-0 md:w-1/2'>
+              <Breadcumb list={breadcumbs} />
+              {/* <div className='flex items-center gap-2'>
             <WorkflowBreadcumbItemSelector
               list={getListProjects()}
               current={_dataProject}
@@ -148,25 +155,25 @@ export default function ProjectDetail() {
               setQuery={setQuery}
             />
           </div> */}
-        </Col>
-        <Col className='w-full md:w-1/2'>
-          <div className='flex w-full justify-end gap-2'>
-            <SearchBox
-              placeholder={'Filter issues'}
-              handleSearch={handleSearch}
-              defaultValue={defaultSearchValue}
-            />
-            <Menu openDialog={openDialog} dataProject={_dataProject} />
-          </div>
-        </Col>
-      </Row>
-      <Row>
+            </Col>
+            <Col className='w-full md:w-1/2'>
+              <div className='flex w-full justify-end gap-2'>
+                <SearchBox
+                  placeholder={'Filter issues'}
+                  handleSearch={handleSearch}
+                  defaultValue={defaultSearchValue}
+                />
+                <Menu openDialog={openDialog} dataProject={_dataProject} />
+              </div>
+            </Col>
+          </Row>
+          {/* <Row>
         <Col>
           <div
             className='grid grid-cols-1 gap-3 md:grid-cols-2
               xl:grid-cols-3 2xl:grid-cols-4'
           >
-            {/* <DefinedRange
+            <DefinedRange
                 onChange={(item) => setState([item.selection])}
                 ranges={state}
               />
@@ -175,41 +182,43 @@ export default function ProjectDetail() {
                 onChange={(item) => setState([item.selection])}
                 moveRangeOnFirstSelection={false}
                 ranges={state}
-              /> */}
+              />
           </div>
         </Col>
-      </Row>
-      <Row>
-        <Col className='w-full'>
-          {isLoading && (
-            <p className='w-full py-14 text-center text-xs text-neutral-500'>
-              Loading issues...
-            </p>
-          )}
+      </Row> */}
+          <Row>
+            <Col className='w-full'>
+              {isLoading && (
+                <p className='w-full py-14 text-center text-xs text-neutral-500'>
+                  Loading issues...
+                </p>
+              )}
 
-          {!isLoading && !issues?.length && (
-            <p className='w-full py-14 text-center text-xs text-neutral-500'>
-              No data
-            </p>
-          )}
+              {!isLoading && !issues?.length && (
+                <p className='w-full py-14 text-center text-xs text-neutral-500'>
+                  No data
+                </p>
+              )}
 
-          {!isLoading && issues?.length > 0 && (
-            <div
-              className='grid w-full grid-cols-1 gap-3 md:grid-cols-2
+              {!isLoading && issues?.length > 0 && (
+                <div
+                  className='grid w-full grid-cols-1 gap-3 md:grid-cols-2
               xl:grid-cols-3'
-            >
-              {issues.map((item, index) => (
-                <IssueGridItem
-                  key={item._id.toString()}
-                  pid={pid}
-                  data={item}
-                  variants={variants(index * 0.1)}
-                />
-              ))}
-            </div>
-          )}
-        </Col>
-      </Row>
+                >
+                  {issues.map((item, index) => (
+                    <IssueGridItem
+                      key={item._id.toString()}
+                      pid={pid}
+                      data={item}
+                      variants={variantGlobal(3, index * 0.1)}
+                    />
+                  ))}
+                </div>
+              )}
+            </Col>
+          </Row>
+        </>
+      )}
     </div>
   )
 }
@@ -241,23 +250,22 @@ function IssueGridItem({ data, pid, variants }) {
         </div>
         <div className='flex w-4/5 flex-col justify-between space-y-2'>
           <div className='h-3/4 space-y-2'>
-            <h5 className='font-medium text-zinc-200'>{data.name}</h5>
-            <p className='text-sm text-zinc-500 line-clamp-2'>
-              {data.description ? data.description : 'No description'}
-            </p>
+            <h5 className='font-medium text-neutral-200 line-clamp-2'>
+              {data.name}
+            </h5>
           </div>
           <div className=''>
             <code
               className={`${
                 data.type === 'task' ? 'bg-emerald-500' : 'bg-red-500'
-              } text-xs text-white`}
+              } text-xs text-neutral-50`}
             >
               {data.type}
             </code>
           </div>
         </div>
         <div
-          className='6duration-200 absolute right-4 top-4 w-6 text-zinc-500 
+          className='6duration-200 absolute right-4 top-4 w-6 text-neutral-500 
           transition-all group-hover:right-3'
         >
           <ChevronRightIcon className='' />

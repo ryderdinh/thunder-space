@@ -21,9 +21,9 @@ export default function TimeSheets() {
         <HeaderContainer pathName={path} />
         <ViewMain>
           <ViewBox>
-            <Timesheets variants={variantGlobal({ type: 1, addValue: 0 })} />
+            <Timesheets variants={variantGlobal(1,0)} />
             <TimesheetDetail
-              variants={variantGlobal({ type: 1, addValue: 0.3 })}
+              variants={variantGlobal(1,0.3)}
             />
           </ViewBox>
         </ViewMain>

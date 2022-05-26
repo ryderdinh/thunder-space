@@ -23,7 +23,7 @@ export default function Report() {
           <ViewBox>
             <ViewBoxName
               name={'Form xin nghỉ phép'}
-              variants={variantGlobal({ type: 2, addValue: 0 })}
+              variants={variantGlobal(2,0)}
             />
             <ReportForm />
           </ViewBox>
