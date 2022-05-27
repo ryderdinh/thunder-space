@@ -1,6 +1,7 @@
 const mongoose = require("mongoose")
 const bcrypt = require("bcrypt")
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
+const { func } = require("joi");
 const Schema = mongoose.Schema ;
 
 const Staff  = new Schema({
@@ -70,6 +71,7 @@ const Staff  = new Schema({
          userObject.avatar = userObject.avatar.url
          return userObject
     }
+
 
     Staff.methods.generateToken = async function(password){
         try {

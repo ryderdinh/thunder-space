@@ -32,14 +32,12 @@ module.exports = async (req, res, next) => {
     }
     if((!userAssignedBelongtoProject) && (assigned!="")) return res.status(400).send(new Response(400, "user is assgined is not valid"));
 
-    const existCreator = await Staff.findById(uid);
-    const creator = { id : existCreator, name: existCreator.name, email: existCreator.email, avatar: existCreator.avatar.url };
-    const assign = assigned === "" ? null : { id : existUserAssigned.id, name: existUserAssigned.name, email: existUserAssigned.email, avatar: existUserAssigned.avatar.url }
+    const assign = assigned === "" ? null : existUserAssigned.id
     const newIssue = await Issue.create({
         name: name,
         code: existProject.seqcode === 0 ? `${existProject.code}-${existProject.issue.length + 1}` : `${existProject.code}${existProject.seqcode}-${existProject.issue.length + 1}`,
         type: type,
-        creator: creator,
+        creator: uid,
         assign: assign,
         estimate: {
             start: null,
@@ -49,16 +47,20 @@ module.exports = async (req, res, next) => {
         priority: priority,
         history: {
           time: Date.now(),
-          user: uid,
-          action: "create"
-        }
+          action: "created an issue",
+          user: [
+            {
+              uid: uid
+            }
+          ]
+        },
+        project: pid
     })
     //Save to project
     existProject.issue.push({ iid: newIssue.id });
     await existProject.save();
     return res.status(200).send(new Response(200, "success", newIssue))
   }catch(err){
-    console.log(err);
     return res.status(400).send(new Response(400, err.message));
   }
 

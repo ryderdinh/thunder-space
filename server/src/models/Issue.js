@@ -12,19 +12,9 @@ const Issue = new Schema({
                 message : '{VALUE}  is not supported'
             }
         },
-        // project: { type: mongoose.Schema.Types.ObjectId, ref: "Issue", required: true },
-        creator :{
-          id :  { type : mongoose.Schema.Types.ObjectId , ref : "Staff", required : true},
-          name: { type: String },
-          email: { type: String },
-          avatar: { type: String }
-        },
-        assign : {
-          id :  { type : mongoose.Schema.Types.ObjectId, ref: "Staff" },
-          name: { type: String },
-          email: { type: String },
-          avatar: { type: String }
-        },
+        project: { type: mongoose.Schema.Types.ObjectId, ref: "Project", required: true },
+        creator : { type : mongoose.Schema.Types.ObjectId , ref : "Staff ", required : true },
+        assign : { type : mongoose.Schema.Types.ObjectId, ref: "Staff " },
         estimate : {
             start :{ type : Number }, 
             end : { type: Number}
@@ -42,36 +32,46 @@ const Issue = new Schema({
         status : [],
         history : [
             {
+                user: [{
+                    uid: { type: mongoose.Schema.Types.ObjectId, required: true, ref: "Staff" }
+                }],
                 time: { type: Number, required: true },
-                user: { type: mongoose.Schema.Types.ObjectId, ref: "Staff" },
-                action: {
-                    type: String,
-                    required: true,
-                    enum: {
-                        values: [ "create" ]
-                    }
-                }
+                action: { type: String, required: true }
             }
         ],
         createdAt : { type : Number, default :Date.now(), required : true },
         updateAt : { type : Number, default: Date.now(), required: true }
 })
-//te
-Issue.virtual("creators", {
-    ref : "Staff",
-     localField : "creator.id",
-     foreignField : "_id"
+
+Issue.virtual('creators', {
+    ref : 'Staff ',
+    localField : 'creator',
+    foreignField : '_id'
 })
 
 Issue.virtual("assigns", {
-    ref : "Staff",
-    localField : "assign.id",
-    foreignField : "_id"
+    ref : 'Staff ',
+    localField : 'assign',
+    foreignField : '_id'
 })
+
+Issue.methods.getIssueDetails = function(creator, assign){
+    const objectIssue = this.toObject();
+    objectIssue.creator = creator;
+    objectIssue.assign = assign;
+    console.log(objectIssue);
+    return objectIssue
+}
+// Issue.virtual("actionUsers", {
+//     ref: "Staff ",
+//     localField : "history.user.id",
+//     foreignField: "_id"
+// })
 
 Issue.pre("save", function(next){
     const issue = this;
     issue.updateAt = Date.now();
     next();
 })
-    module.exports = mongoose.model("Issue", Issue)
+
+module.exports = mongoose.model("Issue", Issue)

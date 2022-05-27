@@ -167,6 +167,7 @@ app.use("/api", routersProject.apiGetProject);
 app.use("/api", routersProject.apiPostProject);
 app.use("/api", routersProject.apiGetFindProject);
 app.use("/api", routersProject.apiDeleteProject)
+app.use("/api", routersProject.apiPutUpdateProject)
 
 app.use("/table", authenticateToken, apiGetTable);
 

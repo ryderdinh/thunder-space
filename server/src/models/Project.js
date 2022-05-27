@@ -13,9 +13,6 @@ const Project = new Schema({
         {
             uid: {type: mongoose.Schema.Types.ObjectId, ref: 'Staff'},
             role: { type: String, enum: ['manager', 'normal'] , required: true},
-            name: {type: String, required: true},
-            email: { type: String, required: true },
-            avatar: {type: String, required: true}
         }
     ],
     issue: [
@@ -56,15 +53,17 @@ Project.methods.getProjectDetailsWithIssues= async function(issues){
     objectProject.issue = issues
     return objectProject
 }
-Project.methods.getProjectDetails = function(){
+Project.methods.getProjectDetails =  function(members){
     let objectProject = this.toObject();
     if(objectProject.seqcode !== 0){
         objectProject.code = objectProject.code + objectProject.seqcode
-    }
+    };
     delete objectProject.__v
     delete objectProject.deleted
     delete objectProject.seqcode
+    objectProject.member = members
     return objectProject
+
 }
 
 Project.methods.getManagers = function() {
