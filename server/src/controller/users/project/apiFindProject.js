@@ -23,7 +23,6 @@ module.exports = async (req, res, next) => {
     }
     return res.status(400).send(new Response(400, "you are not in this project"))
   } catch (err) {
-    console.log(err);
     res.status(400).send(new Response(400, "something went wrong"));
   }
 };

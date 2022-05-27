@@ -7,7 +7,7 @@ const apiUpdateOneIssue = require("../../controller/users/issue/apiUpdateOneIssu
 const apiPostIssue = require("../../controller/users/issue/apiPostIssue")
 const apiPostFile = require("../../controller/users/issue/apiUploadFIle")
 //Get one issue
-exports.apiGetOneIssueInProject = router.get('/projects/:pid/issues/:iid', authenticateToken, apiGetOneIssueInProject)
+exports.apiGetOneIssueInProject = router.get('/issues/:iid', authenticateToken, apiGetOneIssueInProject)
 //Get all issues in a project
 exports.apiGetAllIssueInProject = router.get("/projects/:pid/issues", authenticateToken, apiGetAllIssueInProject)
 //Delete one issue
