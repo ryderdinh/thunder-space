@@ -1,3 +1,4 @@
+const { object } = require("joi")
 const mongoose = require("mongoose")
 const Schema = mongoose.Schema
 
@@ -33,7 +34,7 @@ const Issue = new Schema({
         history : [
             {
                 user: [{
-                    uid: { type: mongoose.Schema.Types.ObjectId, required: true, ref: "Staff" }
+                    uid: { type: mongoose.Schema.Types.ObjectId, required: true, ref: "Staff " }
                 }],
                 time: { type: Number, required: true },
                 action: { type: String, required: true }
@@ -59,14 +60,23 @@ Issue.methods.getIssueDetails = function(creator, assign){
     const objectIssue = this.toObject();
     objectIssue.creator = creator;
     objectIssue.assign = assign;
-    console.log(objectIssue);
     return objectIssue
 }
-// Issue.virtual("actionUsers", {
-//     ref: "Staff ",
-//     localField : "history.user.id",
-//     foreignField: "_id"
-// })
+
+
+
+Issue.methods.getIssueDetailsWithHistory = function(creator, assign, history){
+    const objectIssue = this.toObject();
+    objectIssue.history = history;
+    objectIssue.creator = creator;
+    objectIssue.assign = assign;
+    return objectIssue
+}
+Issue.virtual("actionUsers", {
+    ref: "Staff ",
+    localField : "history.user.uid",
+    foreignField: "_id"
+})
 
 Issue.pre("save", function(next){
     const issue = this;
