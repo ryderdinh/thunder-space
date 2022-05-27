@@ -4,7 +4,6 @@ const Issue = require("../../../models/Issue")
 const Project = require("../../../models/Project")
 module.exports = async (req, res, next) => {
     try {
-        const pid = req.params.pid;
         const iid = req.params.iid
         const uid = req.user.id
         // //Check exist project
@@ -19,13 +18,24 @@ module.exports = async (req, res, next) => {
         if(!existProject) {
             return res.status(400).send(new Response(400, "project is not available"))
         }else{
+            const populateHistory = (await issue.populate("history.user.uid")).history
+            const history = [];
+            for (let his of populateHistory) {
+                const usersToView = his.user.map(user => user.uid.getProfileToCreateProject())
+                history.push({
+                    user: usersToView,
+                    time: his.time,
+                    action: his.action
+                })
+            }
             const creator = (await issue.populate("creators")).creators
             const assign = (await issue.populate("assigns")).assigns
             const creatorToView = creator.map(creator => creator.getProfileToCreateProject())
             const assignToView = assign.map(assign => assign.getProfileToCreateProject())
-            return res.status(200).send(new Response(200, 'success',  issue.getIssueDetails(creatorToView[0], assignToView[0])))
+            return res.status(200).send(new Response(200, 'success',  issue.getIssueDetailsWithHistory(creatorToView[0], assignToView[0], history)))
         }
     } catch (err) {
+        console.log(err);
         return res.status(400).send(new Response(400, "something went wrong"))
     }
 }

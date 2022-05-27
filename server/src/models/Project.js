@@ -42,7 +42,7 @@ Project.virtual("issues", {
     localField : 'issue.iid',
     foreignField : '_id'
 })
-Project.methods.getProjectDetailsWithIssues= async function(issues){
+Project.methods.getProjectDetailsWithIssues= async function(members, issues){
     let objectProject = this.toObject();
     if(objectProject.seqcode !== 0){
         objectProject.code = objectProject.code + objectProject.seqcode
@@ -51,6 +51,7 @@ Project.methods.getProjectDetailsWithIssues= async function(issues){
     delete objectProject.deleted
     delete objectProject.seqcode
     objectProject.issue = issues
+    objectProject.member = members
     return objectProject
 }
 Project.methods.getProjectDetails =  function(members){

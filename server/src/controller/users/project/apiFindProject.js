@@ -1,5 +1,6 @@
 const router = require("express").Router();
-const Project = require("../../../models/Pro\ject");
+const ObjectId = require('mongoose').Types.ObjectId
+const Project = require("../../../models/Project");
 const Staff = require("../../../models/Staff")
 const Response = require("../../../models/Response")
 module.exports = async (req, res, next) => {
@@ -18,11 +19,22 @@ module.exports = async (req, res, next) => {
       }
     });
     const issues = (await project.populate("issues")).issues
+    const issuesToView = []
+    for (const issue of issues) {
+      let creator = null;
+      let assign = null; 
+      ObjectId.isValid(issue.creator) ? creator = (((await issue.populate("creators")).creators)[0]).getProfileToCreateProject() : null;
+      ObjectId.isValid(issue.assign) ? assign = (((await issue.populate("assigns")).creators)[0]).getProfileToCreateProject() : null;
+      issuesToView.push(issue.getIssueDetails(creator, assign));
+    }
     if(checkUserInProject){
-      return res.status(200).send(new Response(200, "success",await project.getProjectDetailsWithIssues(issues)))
+      const members = (await project.populate("members")).members;
+      const membersToView = members.map(member => member.getProfileToCreateProject());
+      return res.status(200).send(new Response(200, "success",await project.getProjectDetailsWithIssues(membersToView, issuesToView)))
     }
     return res.status(400).send(new Response(400, "you are not in this project"))
   } catch (err) {
+    console.log(err);
     res.status(400).send(new Response(400, "something went wrong"));
   }
 };
