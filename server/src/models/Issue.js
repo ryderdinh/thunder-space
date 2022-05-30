@@ -3,7 +3,7 @@ const mongoose = require("mongoose")
 const Schema = mongoose.Schema
 
 const Issue = new Schema({
-        name : { type : String, required : true },
+        name : { type : String, required : true, minlength: [ 2, "name length must be more than 2 characters" ], maxlength: [ 60, "name length must be less than 60 characters" ] },
         code : { type : String , required : true, unique : true },
         type : {
             type : String,

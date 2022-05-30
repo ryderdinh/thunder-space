@@ -33,7 +33,7 @@ module.exports = async (req, res, next) => {
     if((!userAssignedBelongtoProject) && (assigned!="")) return res.status(400).send(new Response(400, "user is assgined is not valid"));
 
     const assign = assigned === "" ? null : existUserAssigned.id
-    const newIssue = await Issue.create({
+    const newIssue = new Issue({
         name: name,
         code: existProject.seqcode === 0 ? `${existProject.code}-${existProject.issue.length + 1}` : `${existProject.code}${existProject.seqcode}-${existProject.issue.length + 1}`,
         type: type,
@@ -45,21 +45,46 @@ module.exports = async (req, res, next) => {
         },
         description: description,
         priority: priority,
-        history: {
-          time: Date.now(),
-          action: "created an issue",
-          user: [
-            {
-              uid: uid
-            }
-          ]
-        },
+        history: assign == null ? [
+          {
+            time: Date.now(),
+            action: "created an issue",
+            user: [
+              {
+                uid: uid
+              }
+            ]
+          }
+        ] : [
+          {
+            time: Date.now(),
+            action: "created an issue",
+            user: [
+              {
+                uid: uid
+              }
+            ]
+          },
+          {
+            time: Date.now(),
+            action: "assigned an issue to",
+            user: [
+              {
+                uid: uid
+              }, {
+                uid: assign
+              }
+            ]
+          }
+        ],
         project: pid
     })
+    const err = newIssue.validateSync();
+    if(err) return res.status(400).send(new Response(400, err.message))
     //Save to project
     existProject.issue.push({ iid: newIssue.id });
     await existProject.save();
-    return res.status(200).send(new Response(200, "success", newIssue))
+    return res.status(200).send(new Response(200, "success", await newIssue.save()))
   }catch(err){
     return res.status(400).send(new Response(400, err.message));
   }
