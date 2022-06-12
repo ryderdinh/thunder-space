@@ -13,7 +13,7 @@ const priorityColor = {
 const IssueDetail = ({ data }) => {
   return (
     <motion.div
-      className='w-full pt-4'
+      className='w-full'
       variants={variantGlobal(3, 0.5)}
       initial='initial'
       animate='enter'
@@ -138,4 +138,3 @@ const IssueDetail = ({ data }) => {
 }
 
 export default IssueDetail
-

@@ -1,8 +1,9 @@
 import axios from 'axios'
+import { env } from 'config/environment'
 import queryString from 'query-string'
 import { getCookie } from 'units/cookieWeb'
 
-const API_URL = process.env.REACT_APP_API_URL
+const API_URL = env.apiUrl
 
 // Set up default config for http requests
 const axiosClient = axios.create({
@@ -34,6 +35,13 @@ axiosClient.interceptors.response.use(
   },
   (error) => {
     //Handle error
+    const originalRequest = error.response.data
+
+    // if (originalRequest.message === 'jwt expired') {
+    //   window.location.href = '/login'
+    //   return Promise.reject(error)
+    // }
+
     throw error.response.data
   }
 )

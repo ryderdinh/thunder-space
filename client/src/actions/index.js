@@ -361,12 +361,12 @@ export const actCreateIssue = (pid, data, callback) => {
   }
 }
 
-export const actQueryIssue = (pid, iid, callback) => {
+export const actQueryIssue = (iid, callback) => {
   return async (dispatch) => {
     await dispatch(setIssueLoading(true))
 
     try {
-      const res = await issueApi.get(pid, iid)
+      const res = await issueApi.get(iid)
 
       await dispatch(setDataIssue(res.data))
     } catch (error) {

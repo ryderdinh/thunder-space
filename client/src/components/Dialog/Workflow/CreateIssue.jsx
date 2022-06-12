@@ -24,11 +24,6 @@ const schema = Joi.object({
 })
 
 const getTimeStamp = (y, m, d, h, min, s, meridiem) => {
-  // let year = new Date(date).getFullYear()
-  // let month = new Date(date).getDate() - 1
-  // let day = date.slice(0, date.indexOf('/'))
-  // let hour = time.slice(0, time.indexOf(':'))
-  // let minute = time.slice(time.indexOf(':') + 1)
   let hours = h
 
   if (hours === '12') {
@@ -41,25 +36,9 @@ const getTimeStamp = (y, m, d, h, min, s, meridiem) => {
   return new Date(y, m, d, hours, min, s).getTime()
 }
 
-// const now = () => {
-//   let hour = new Date().getHours()
-//   let minute = new Date().getMinutes()
-//   let date = new Date().toLocaleDateString()
-
-//   if (Number(Math.ceil10(minute, 1)) > 50) {
-//     hour++
-//     minute = '00'
-//   }
-
-//   return { time: `${hour}:${Math.ceil10(minute, 1)}`, date }
-// }
-
 export default function CreateIssue({ closeModal }) {
   //? Connect Redux store============================
   const { _dataProject } = useSelector((state) => state._project)
-  // const { email: yourMail } = useSelector(
-  //   (state) => state._staffInfomation._staffInfomation
-  // )
 
   const dispatch = useDispatch()
 
@@ -77,7 +56,6 @@ export default function CreateIssue({ closeModal }) {
     second: new Date().getSeconds(),
     meridiem: 'PM'
   })
-  // const [selectedAssignedPerson, setSelectedAssignedPerson] = useState([])
 
   //? Hook Form======================================
   const {
@@ -112,7 +90,6 @@ export default function CreateIssue({ closeModal }) {
   }
 
   const onSuccessCreate = (iid) => {
-    console.log(true, iid)
     history.push(`/projects/${_dataProject._id}/${iid}`)
     closeModal()
   }
@@ -245,14 +222,14 @@ export default function CreateIssue({ closeModal }) {
                 <div className='py-5 sm:py-6'>
                   <div className='grid grid-cols-12 gap-6'>
                     <div className='col-span-12 sm:col-span-12'>
-                      <label className='block text-sm font-medium text-zinc-200'>
+                      <label className='block text-sm font-medium text-neutral-200'>
                         Name
                       </label>
                       <input
                         {...register('name')}
                         type='text'
                         autoComplete='none'
-                        className='mt-1 block w-full rounded-md border border-gray-300 
+                        className='mt-1 block w-full rounded-md border border-neutral-300 
                         py-[7px] pl-3 shadow-sm focus:border-emerald-500 focus:outline-none 
                         focus:ring-2 focus:ring-emerald-500 sm:text-sm'
                       />
@@ -265,10 +242,7 @@ export default function CreateIssue({ closeModal }) {
                     </div>
 
                     <div className='col-span-12 md:col-span-4'>
-                      <label
-                        htmlFor='last-name'
-                        className='block text-sm font-medium text-zinc-200'
-                      >
+                      <label className='block text-sm font-medium text-neutral-200'>
                         Project{' '}
                         <span className='text-xs italic text-neutral-500'>
                           (current)
@@ -278,15 +252,15 @@ export default function CreateIssue({ closeModal }) {
                         disabled
                         type='text'
                         defaultValue={_dataProject.name}
-                        className='mt-1 block w-full rounded-md border border-gray-300
+                        className='mt-1 block w-full rounded-md border border-neutral-300
                         p-1 py-[7px] pl-3 shadow-sm focus:outline-none 
-                        disabled:border-slate-200 disabled:bg-slate-50 
-                        disabled:text-slate-500 sm:text-sm'
+                        disabled:border-neutral-200 disabled:bg-neutral-50 
+                        disabled:text-neutral-500 sm:text-sm'
                       />
                     </div>
 
                     <div className='col-span-12 md:col-span-4'>
-                      <label className='block text-sm font-medium text-zinc-200'>
+                      <label className='block text-sm font-medium text-neutral-200'>
                         Type
                       </label>
                       <ListBoxNonMultiple
@@ -303,7 +277,7 @@ export default function CreateIssue({ closeModal }) {
                     </div>
 
                     <div className='col-span-12 md:col-span-4'>
-                      <label className='block text-sm font-medium text-zinc-200'>
+                      <label className='block text-sm font-medium text-neutral-200'>
                         Priority
                       </label>
                       <ListBoxNonMultiple
@@ -320,7 +294,7 @@ export default function CreateIssue({ closeModal }) {
                     </div>
 
                     <div className='col-span-12 md:col-span-4'>
-                      <label className='block text-sm font-medium text-zinc-200'>
+                      <label className='block text-sm font-medium text-neutral-200'>
                         Assignee
                       </label>
                       <ListBoxImageNonMultiple
@@ -340,14 +314,14 @@ export default function CreateIssue({ closeModal }) {
                     </div>
 
                     <div className='col-span-12 md:col-span-8'>
-                      <label className='block text-sm font-medium text-zinc-200'>
+                      <label className='block text-sm font-medium text-neutral-200'>
                         Estimate
                       </label>
 
                       <input
                         type='text'
                         autoComplete='none'
-                        className='mt-1 block w-full rounded-md border border-gray-300 
+                        className='mt-1 block w-full rounded-md border border-neutral-300 
                         py-[7px] pl-3 shadow-sm focus:border-emerald-500 focus:outline-none 
                         focus:ring-2 focus:ring-emerald-500 sm:text-sm'
                         value={`${estimate.date}/${estimate.month}/${estimate.year} ${estimate.hour}:${estimate.minute}:${estimate.second} ${estimate.meridiem}`}
@@ -384,7 +358,7 @@ export default function CreateIssue({ closeModal }) {
                     <div className='col-span-12'>
                       <label
                         htmlFor='project-description'
-                        className='block text-sm font-medium text-zinc-200'
+                        className='block text-sm font-medium text-neutral-200'
                       >
                         Description
                       </label>
@@ -393,7 +367,7 @@ export default function CreateIssue({ closeModal }) {
                         {...register('description')}
                         autoComplete='off'
                         rows={3}
-                        className='mt-1 block w-full rounded-md border border-gray-300 
+                        className='mt-1 block w-full rounded-md border border-neutral-300 
                           p-1 shadow-sm focus:border-emerald-500  focus:outline-none 
                           focus:ring-2 focus:ring-emerald-500 sm:text-sm'
                       />

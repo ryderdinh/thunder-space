@@ -1,43 +1,24 @@
 import { Dialog, Transition } from '@headlessui/react'
-import { joiResolver } from '@hookform/resolvers/joi'
-import { actDeleteProject } from 'actions'
-import Joi from 'joi'
-import { Fragment, useEffect, useState } from 'react'
-import { useForm } from 'react-hook-form'
+import { actDeleteIssue } from 'actions'
+import { Fragment } from 'react'
 import { useDispatch } from 'react-redux'
-import { useHistory } from 'react-router-dom'
+import { useHistory, useParams } from 'react-router-dom'
 
-const schema = Joi.object({
-  name: Joi.string().required()
-})
-
-export default function DeleteProject({
-  closeModal,
-  data: { projectName, pid }
-}) {
+export default function DeleteIssue({ closeModal, data: { id } }) {
+  //? Connect router
   const history = useHistory()
+  const { pid } = useParams()
 
   const dispatch = useDispatch()
 
-  const { register, handleSubmit, watch } = useForm({
-    resolver: joiResolver(schema)
-  })
-
-  const [allowDelete, setAllowDelete] = useState(false)
-
-  const handleDeleteSuccessfully = () => {
+  const handleSuccessfully = () => {
     closeModal()
-    history.push('/projects')
+    history.push(`/projects/${pid}`)
   }
 
-  const onSubmit = (data) => {
-    allowDelete && dispatch(actDeleteProject(pid, handleDeleteSuccessfully))
+  const onSubmit = () => {
+    dispatch(actDeleteIssue(id, handleSuccessfully))
   }
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(() => {
-    setAllowDelete(watch('name') === projectName.trim())
-  })
 
   return (
     <div className='min-h-screen px-4 text-center'>
@@ -75,19 +56,13 @@ export default function DeleteProject({
             as='h3'
             className='text-center text-lg font-bold leading-6 text-neutral-200'
           >
-            Remove project
+            Remove issue
           </Dialog.Title>
           <div className='mt-5'>
             <div className='mt-2 space-y-6'>
               <p className='space-y-2 text-sm text-neutral-200'>
                 <span className='block'>
-                  Are you absolutely sure you want to delete{' '}
-                  <span className='font-bold'>{projectName}</span>?
-                </span>
-                <span className='block'>
-                  If you have submitted a support request about this site, it
-                  will be difficult for ThunderSpace’s Support team to help you
-                  debug the situation if you delete it.
+                  Are you absolutely sure you want to delete issue?
                 </span>
               </p>
 
@@ -96,39 +71,16 @@ export default function DeleteProject({
                 reversible. Please be certain.
               </p>
             </div>
-            <form>
-              <div className=''>
-                <div className='py-5 sm:py-6'>
-                  <div className='col-span-12'>
-                    <input
-                      {...register('name')}
-                      type='text'
-                      autoComplete='off'
-                      placeholder='Type in the name of the project'
-                      className='mt-1 mb-2 block w-full rounded-md border 
-                      border-gray-300 p-1 shadow-sm focus:border-emerald-500
-                      focus:outline-none focus:ring-2 focus:ring-emerald-500
-                      sm:text-sm'
-                    />
-                    <code className='m-0 italic text-white'>{projectName}</code>
-                  </div>
-                </div>
-              </div>
-            </form>
           </div>
 
           <div className='mt-4 flex justify-end gap-2'>
             <button
               type='submit'
-              className={`inline-flex justify-center rounded-md border 
+              className='cursor-pointer justify-center rounded-md border 
               border-transparent bg-emerald-600 py-2 px-4 text-sm font-medium 
-              text-white shadow-sm focus:outline-none 
-              ${
-                !allowDelete
-                  ? 'cursor-not-allowed opacity-50'
-                  : 'cursor-pointer hover:bg-emerald-700'
-              }`}
-              onClick={handleSubmit(onSubmit)}
+              text-white shadow-sm selection:inline-flex 
+              hover:bg-emerald-700 focus:outline-none'
+              onClick={onSubmit}
             >
               Remove
             </button>

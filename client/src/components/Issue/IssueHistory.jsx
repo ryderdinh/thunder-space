@@ -1,6 +1,6 @@
 const IssueHistory = ({ className = '', data = [] }) => {
   return (
-    <div className={`${className} w-full text-sm text-neutral-50`}>
+    <div className={`${className} w-full space-y-2 text-sm text-neutral-50`}>
       {(!data || !data.length) && (
         <p className='w-full py-14 text-center text-xs text-neutral-500'>
           No history
@@ -9,21 +9,27 @@ const IssueHistory = ({ className = '', data = [] }) => {
 
       {(data || data.length) &&
         data.map((item, index) => (
-          <div className='grid grid-cols-2 text-neutral-500' key={index}>
-            <div className='flex items-center gap-2'>
-              <img src={item.users[0].avatar} alt='Avatar user 1' />
-              <p>{`${item.users[0].name} :`}</p>
+          <div className='grid grid-cols-4 text-neutral-500' key={index}>
+            <div className='col-span-1 flex items-center font-bold'>
+              <p>{`${new Date(item.time).toLocaleString()} `}</p>
             </div>
-
-            <div className='font-bold'>
-              <p>{`${item.action} `}</p>
-            </div>
-
-            {item.users[1] && (
+            <div className='col-span-3 flex items-center gap-2'>
+              <img
+                src={item.user[0].avatar}
+                alt='Avatar user 1'
+                className='h-7 w-7 rounded-full'
+              />
+              <p>{`${item.user[0].name} :`}</p>
               <div className='font-bold'>
-                <p>{`${item.users[1].name} `}</p>
+                <p>{`${item.action} `}</p>
               </div>
-            )}
+
+              {item.user[1] && (
+                <div className='font-bold'>
+                  <p>{`${item.user[1].name} `}</p>
+                </div>
+              )}
+            </div>
           </div>
         ))}
     </div>

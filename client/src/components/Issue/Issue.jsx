@@ -27,7 +27,11 @@ import IssuePreview from './IssuePreview'
 export default function Issue() {
   //? Connect redux
   const { _dataProject } = useSelector((state) => state._project)
-  const { _data: _dataIssue, isLoading } = useSelector((state) => state._issue)
+  const {
+    _data: _dataIssue,
+    isLoading,
+    error
+  } = useSelector((state) => state._issue)
   const dispatch = useDispatch()
 
   //? Connect router
@@ -56,7 +60,6 @@ export default function Issue() {
   }
 
   const handleAttachmentChange = (newFile) => {
-    console.log(newFile)
     setAttachments([...attachments, newFile])
   }
 
@@ -83,10 +86,7 @@ export default function Issue() {
 
   //? Effect
   useEffect(() => {
-    Promise.all([
-      dispatch(actFetchProject(pid)),
-      dispatch(actQueryIssue(pid, iid))
-    ])
+    Promise.all([dispatch(actFetchProject(pid)), dispatch(actQueryIssue(iid))])
   }, [pid, iid, dispatch])
 
   useEffect(() => {
@@ -107,8 +107,8 @@ export default function Issue() {
   }, [_dataProject?.code, _dataIssue?.code, pid, iid])
 
   return (
-    <div className='w-full space-y-5'>
-      {!_dataIssue && (
+    <div className='h-full w-full space-y-5'>
+      {error === 'issue does not exist' && (
         <motion.div
           variants={variantGlobal(4, 0.1)}
           initial='initial'
@@ -130,9 +130,9 @@ export default function Issue() {
         </motion.div>
       )}
 
-      {_dataIssue && (
+      {error !== 'issue does not exist' && (
         <>
-          <Row className='md:flex'>
+          <Row className='max-h-10 md:flex'>
             <Col className='mb-2 w-full md:mb-0 md:w-1/2'>
               <Breadcumb list={breadcumbs} />
             </Col>
@@ -144,8 +144,8 @@ export default function Issue() {
             </Col>
           </Row>
 
-          <Row className='md:grid md:grid-cols-3 md:gap-5'>
-            <Col className='col-span-3 md:col-span-1'>
+          <Row className='h-[calc(100%-40px)] md:grid md:grid-cols-3 md:gap-5'>
+            <Col className='col-span-3 space-y-5 md:col-span-1'>
               {isLoading && (
                 <p className='w-full py-14 text-center text-xs text-neutral-500'>
                   Loading preview...
@@ -156,7 +156,10 @@ export default function Issue() {
 
               {!isLoading && <IssueDetail data={_dataIssue} />}
             </Col>
-            <Col className='col-span-3 block md:col-span-2'>
+            <Col
+              className='custom-scrollbar col-span-3 block h-full overflow-y-scroll 
+              pr-2 md:col-span-2'
+            >
               {isLoading && (
                 <p className='w-full py-14 text-center text-xs text-neutral-500'>
                   Loading panels...
@@ -164,7 +167,7 @@ export default function Issue() {
               )}
 
               {!isLoading && (
-                <div className='space-y-3'>
+                <div className='space-y-5'>
                   <DisclosureCustom
                     delayShow={0.2}
                     title={'Description'}
@@ -194,7 +197,7 @@ export default function Issue() {
                         w-full items-center justify-center space-x-1 
                         rounded-lg bg-neutral-500/50 opacity-0
                         transition-all duration-300 ease-linear 
-                        group-hover:z-10 group-hover:cursor-pointer 
+                        group-hover:z-[1] group-hover:cursor-pointer 
                         group-hover:opacity-100'
                         onClick={() => handleDescriptionPanel(false)}
                       >
@@ -229,7 +232,7 @@ export default function Issue() {
   )
 }
 
-function Menu({ data, deleteAction }) {
+function Menu({ data }) {
   const history = useHistory()
   const location = useLocation()
 
@@ -253,9 +256,6 @@ function Menu({ data, deleteAction }) {
             openDialog('archive-issue')
           }}
         />
-      </div>
-      <div className='px-1 py-1'>
-        <MenuItem type='delete' onClick={deleteAction} />
       </div>
     </MenuComponent>
   )
@@ -285,7 +285,7 @@ function DisclosureCustom({
       animate='enter'
       exit='exit'
     >
-      <Disclosure>
+      <Disclosure defaultOpen={true}>
         {({ open }) => (
           <>
             <Disclosure.Button

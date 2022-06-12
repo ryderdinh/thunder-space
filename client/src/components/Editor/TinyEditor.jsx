@@ -1,5 +1,6 @@
 import { Editor } from '@tinymce/tinymce-react'
-import React, { useMemo, useRef, useState } from 'react'
+import { env } from 'config/environment'
+import React, { useMemo, useRef } from 'react'
 
 const image_upload_handler = (blobInfo, progress) =>
   new Promise((resolve, reject) => {
@@ -47,9 +48,12 @@ const image_upload_handler = (blobInfo, progress) =>
     xhr.send(formData)
   })
 
-export default function TinyEditor({ className, dataEditor, setDataEditor }) {
-  const [readonly] = useState(false)
-
+export default function TinyEditor({
+  className,
+  dataEditor,
+  setDataEditor,
+  readonly = false
+}) {
   const config = useMemo(
     () => ({
       skin: 'oxide-dark',
@@ -112,7 +116,7 @@ export default function TinyEditor({ className, dataEditor, setDataEditor }) {
   return (
     <div className={`${className}`}>
       <Editor
-        apiKey='qagffr3pkuv17a8on1afax661irst1hbr4e6tbv888sz91jc'
+        apiKey={env.tinyKey}
         onInit={(evt, editor) => (editorRef.current = editor)}
         initialValue={dataEditor}
         init={config}

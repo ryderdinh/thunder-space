@@ -42,7 +42,6 @@ export default function CreateProject({ closeModal }) {
   }
 
   const handleWhenSuccessCreate = (pid) => {
-    console.log(pid)
     history.push(`/projects/${pid}`)
     closeModal()
   }

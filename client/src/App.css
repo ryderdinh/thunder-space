@@ -504,7 +504,7 @@ main.onblur {
   -ms-border-radius: 20px;
   -o-border-radius: 20px;
 }
-.view-container
+/* .view-container
   .view_main
   .list-time-keeping
   .list-time-keeping_box
@@ -512,7 +512,7 @@ main.onblur {
   .icon_timeline
   .rect {
   display: none;
-}
+} */
 .view-container
   .view_main
   .list-time-keeping

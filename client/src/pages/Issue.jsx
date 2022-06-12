@@ -24,7 +24,9 @@ export default function IssuePage({ type = '' }) {
       <Main>
         <HeaderContainer pathName={path} />
         <ViewMain>
-          <ViewBox>{!type ? <Issue /> : <IssueSetting />}</ViewBox>
+          <ViewBox className='h-full' classNameCol='h-full'>
+            {!type ? <Issue /> : <IssueSetting />}
+          </ViewBox>
         </ViewMain>
       </Main>
     </Layout>

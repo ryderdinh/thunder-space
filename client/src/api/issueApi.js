@@ -1,8 +1,8 @@
 import axiosClient from './http-common'
 
 const issueApi = {
-  get: (pid, iid) => {
-    const url = `/projects/${pid}/issues/${iid}`
+  get: (iid) => {
+    const url = `/issues/${iid}`
     return axiosClient.get(url)
   },
   create: (pid, data) => {

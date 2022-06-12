@@ -3,6 +3,7 @@ import { LayoutContext } from 'context/LayoutContext'
 import { Fragment, useContext } from 'react'
 import CreateIssue from './Workflow/CreateIssue'
 import CreateProject from './Workflow/CreateProject'
+import DeleteIssue from './Workflow/DeleteIssue'
 import DeleteProject from './Workflow/DeleteProject'
 
 function Dialog() {
@@ -28,6 +29,10 @@ function Dialog() {
 
         {nameDialog === 'create-issue' && (
           <CreateIssue closeModal={closeDialog} />
+        )}
+
+        {nameDialog === 'remove-issue' && (
+          <DeleteIssue closeModal={closeDialog} data={data} />
         )}
       </DialogHeadlessui>
     </Transition>
