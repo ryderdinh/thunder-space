@@ -1,37 +1,47 @@
-import { toggleActiveSidebar } from 'actions';
-import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import NameContainer from './NameContainer';
+import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/solid'
+import { LayoutContext } from 'context/LayoutContext'
+import { useContext, useEffect, useState } from 'react'
+import { NameContainer } from './NameContainer'
 
 export default function HeaderContainer({ pathName }) {
-	const [name, setName] = useState('');
+  const { sidebar } = useContext(LayoutContext)
+  const [name, setName] = useState('')
 
-	const sidebar = useSelector(state => state._sidebar);
+  useEffect(() => {
+    const list = {
+      home: 'Home',
+      timesheets: 'Timesheets',
+      report: 'Report',
+      workflow: 'Mission Overview',
+      work: 'Workflow Overview',
+      project: 'Project Overview',
+      'project-setting': 'Project Setting',
+      issue: 'Issue Overview',
+      'issue-setting': 'Issue Setting',
+      account: 'Account'
+    }
 
-	const dispatch = useDispatch();
+    setName(list[pathName])
+  }, [pathName])
 
-	useEffect(() => {
-		const list = {
-			home: 'Trang chủ',
-			timesheets: 'Bảng công',
-			report: 'Báo cáo',
-			workflow: 'Không gian làm việc',
-			work: 'Quản lý công việc',
-			project: 'Quản lý dự án',
-			account: 'Tài khoản'
-		};
+  const toggleSidebar = () => {
+    sidebar.toggle()
+  }
 
-		setName(list[pathName]);
-	}, [pathName]);
-
-	const activeSidebar = () => {
-		dispatch(toggleActiveSidebar(!sidebar.active));
-	};
-
-	return (
-		<div className='view_name'>
-			<i className='bx bx-menu' onClick={activeSidebar}></i>
-			<NameContainer name={name} />
-		</div>
-	);
+  return (
+    <div className='view_name'>
+      {sidebar.active ? (
+        <ChevronLeftIcon
+          className='relative -left-3 h-8 w-8 cursor-pointer'
+          onClick={toggleSidebar}
+        />
+      ) : (
+        <ChevronRightIcon
+          className='relative -left-3 h-8 w-8 cursor-pointer'
+          onClick={toggleSidebar}
+        />
+      )}
+      <NameContainer name={name} />
+    </div>
+  )
 }

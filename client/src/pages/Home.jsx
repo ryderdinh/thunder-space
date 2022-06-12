@@ -10,11 +10,11 @@ import ViewMain from 'components/Main/ViewMain/ViewMain'
 import { useEffect } from 'react'
 import variantGlobal from 'units/variantGlobal'
 
-export default function Home() {
-  const path = 'home'
+const path = 'home'
 
+export default function Home() {
   useEffect(() => {
-    document.title = 'Trang chủ'
+    document.title = 'Home'
   }, [])
 
   return (
@@ -23,15 +23,13 @@ export default function Home() {
         <HeaderContainer pathName={path} />
         <ViewMain>
           <ViewBox>
-            <ViewBoxName name={'Chấm công'} />
-            <TimeKeeping variants={variantGlobal({ type: 1, addValue: 0 })} />
-            <ListTimeKeeping
-              variants={variantGlobal({ type: 1, addValue: 0.3 })}
-            />
+            <ViewBoxName name={'Attendance'} />
+            <TimeKeeping variants={variantGlobal(1, 0)} />
+            <ListTimeKeeping variants={variantGlobal(1, 0.3)} />
           </ViewBox>
           <ViewBox>
-            <ViewBoxName name={'Sự kiện'} />
-            <Event variants={variantGlobal({ type: 1, addValue: 0.6 })} />
+            <ViewBoxName name={'Event'} />
+            <Event variants={variantGlobal(1, 0.6)} />
           </ViewBox>
         </ViewMain>
       </Main>

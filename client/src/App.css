@@ -19,6 +19,10 @@
   --secondary: #707070;
 }
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 * {
   padding: 0;
   margin: 0;
@@ -59,7 +63,7 @@ body::-webkit-scrollbar {
   display: none !important;
 }
 
-.container {
+.container-app {
   position: relative;
 
   display: flex;
@@ -190,11 +194,13 @@ main.onblur {
 }
 
 .sidebar.close ~ main {
-  left: 78px;
-  width: calc(100% - 78px);
+  left: 65px;
+  width: calc(100% - 65px);
 }
 
 .view-container {
+  position: relative;
+
   width: 100%;
   height: 100%;
 }
@@ -266,7 +272,7 @@ main.onblur {
   margin: 0 auto;
 }
 
-.view-container .view_main .view-box .col {
+.view-container .view_main .view-box > .col {
   display: flex;
   flex-flow: row wrap;
 }
@@ -440,7 +446,7 @@ main.onblur {
   font-weight: 500;
   font-size: 24px;
   color: #ffffff;
-  margin-bottom: 44px;
+  margin-bottom: 20px;
 }
 .view-container .view_main .list-time-keeping .list-time-keeping_box {
   display: flex;
@@ -489,7 +495,7 @@ main.onblur {
   .list-time-keeping_item
   .icon_timeline
   .rect {
-  height: 20px;
+  height: 40px;
   width: 1px;
   background: linear-gradient(180deg, #ffffff 0%, rgba(255, 255, 255, 0) 100%);
   border-radius: 20px;
@@ -498,7 +504,7 @@ main.onblur {
   -ms-border-radius: 20px;
   -o-border-radius: 20px;
 }
-.view-container
+/* .view-container
   .view_main
   .list-time-keeping
   .list-time-keeping_box
@@ -506,7 +512,7 @@ main.onblur {
   .icon_timeline
   .rect {
   display: none;
-}
+} */
 .view-container
   .view_main
   .list-time-keeping
@@ -1499,12 +1505,33 @@ main.onblur {
     left: 0;
     width: calc(100%);
   }
+
   .view-container {
-    width: 90%;
     margin: 0 auto;
-  }
-  .view-container .view_main {
+
     width: 100%;
+    height: auto;
+  }
+
+  .view-container .view_name {
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: auto;
+  }
+
+  .view-container .view_main {
+    padding: 40px 20px;
+
+    width: 100%;
+    height: max-content;
+    max-height: none;
+    min-height: 100vh;
+
+    overflow-y: visible;
   }
   .view-container .view_main .event_item .name {
     width: 300px;
@@ -1554,8 +1581,22 @@ main.onblur {
   .account-container .row .col .account__btn.signout {
     display: flex;
   }
+  .footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+
+    height: auto;
+    width: 100%;
+    padding: 10px var(--pad);
+
+    font-size: 14px;
+  }
 }
 @media only screen and (max-width: 520px) {
+  .view-container {
+    width: 100%;
+  }
   .view-container .view_name {
     font-size: 25px;
   }
@@ -1577,9 +1618,6 @@ main.onblur {
   .timesheets h2 {
     font-size: 2rem;
   }
-  .view-container .view_main {
-    padding: 20px 20px 60px;
-  }
   .report-form {
     padding: 25px 15px;
   }
@@ -1591,18 +1629,24 @@ main.onblur {
     width: 110px;
   }
 }
+
 @media only screen and (max-width: 468px) {
+  .footer {
+    font-size: 12px;
+  }
 }
+
 @media only screen and (max-width: 320px) {
   main {
     width: 100%;
     /* padding: 0 1% 85px; */
     padding: 0 0 85px;
   }
+  .view-container .view_name {
+    padding: 0 15px;
+  }
   .view-container .view_main {
-    width: 100%;
-    height: 95%;
-    padding: 15px;
+    padding: 40px 15px;
   }
   .view-container .view_main .time-keeping {
     width: 100%;

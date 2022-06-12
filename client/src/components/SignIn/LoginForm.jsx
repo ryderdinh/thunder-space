@@ -1,7 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { actSignIn } from 'actions'
 import GoogleIcon from 'components/Icon/GoogleIcon'
-import ThunderSpaceIcon from 'components/Icon/ThunderSpaceIcon'
 import { useState } from 'react'
 import toast from 'react-hot-toast'
 import { useDispatch } from 'react-redux'
@@ -43,7 +42,9 @@ export default function LoginForm() {
 
   const handleSignIn = () => {
     if (email && password.text) {
-      dispatch(actSignIn({ email, password: password.text }))
+      dispatch(
+        actSignIn({ email: email.trim(), password: password.text.trim() })
+      )
       return
     }
 
@@ -60,20 +61,23 @@ export default function LoginForm() {
     <div className='login-form'>
       <div className='login-form-inner'>
         <div className='logo'>
-          <ThunderSpaceIcon />
+          <img
+            src={require('assets/images/icons/newlogo-logo.svg').default}
+            alt='logo'
+          />
         </div>
-        <h1>Đăng nhập</h1>
-        <p className='body-text'>Gia nhập không gian của bạn!</p>
+        <h1 className='text-2xl font-bold'>Login</h1>
+        <p className='body-text'>Come join your space!</p>
 
         <div className='rounded-button google-login-button'>
           <span className='google-icon'>
             <GoogleIcon />
           </span>
-          <span>Đăng nhập với Google (Development)</span>
+          <span>Login with Google (Developing)</span>
         </div>
 
         <div className='sign-in-seperator'>
-          <span>hoặc đăng nhập bằng Email của bạn</span>
+          <span>or Login with Email</span>
         </div>
 
         <div className='login-form-group'>
@@ -129,7 +133,7 @@ export default function LoginForm() {
         </div>
 
         <div className='rounded-button login-cta' onClick={handleSignIn}>
-          Đi vào không gian
+          Go
         </div>
 
         {/* <div className='register-div'>

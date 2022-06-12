@@ -14,6 +14,10 @@ const userApi = {
 		return axiosClient.put(url, data, {
 			header: { 'content-type': 'multipart/form-data' }
 		});
+	},
+	getAllUsers: () => {
+		const url = '/users/to-create-project'
+		return axiosClient.get(url);
 	}
 };
 

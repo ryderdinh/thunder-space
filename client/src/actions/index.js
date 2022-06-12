@@ -1,25 +1,31 @@
 //* IMPORT =============================================
-import authApi from 'api/authApi'
-import timekeepingApi from 'api/timekeepingApi'
-import axios from 'axios'
+import {
+  authApi,
+  eventApi,
+  issueApi,
+  projectApi,
+  timekeepingApi,
+  userApi
+} from 'api'
 import toast from 'react-hot-toast'
 import callAPI from '../api/callAPI'
-import { getCookie, setCookie } from '../units/cookieWeb'
+import { getCookie, removeCookie, setCookie } from '../units/cookieWeb'
 
 //? CALL API============================================
 export const actSignIn = (dataUser) => {
-  loadingToast('Đang đăng nhập')
+  removeToast()
+  loadingToast('Checking account...')
 
   return async (dispatch) => {
     let token = ''
 
     try {
       const res = await authApi.authentication(dataUser)
-      res?.accessToken && (token = res.accessToken)
+      res?.data?.accessToken && (token = res.data.accessToken)
     } catch (error) {
-      console.log(error)
       removeToast()
-      toast.error('Vào không gian thất bại, vui lòng thử lại sau !')
+      toast.error('Failed, try again later!')
+      await dispatch(setCheckLogin(false))
     }
 
     if (token) {
@@ -31,7 +37,7 @@ export const actSignIn = (dataUser) => {
         removeToast()
 
         //? Login success
-        successToast('Đang dọn dẹp không gian...')
+        successToast('Cleaning up the space...')
 
         setCookie([
           { key: 'id', value: res.data?._id.toString() },
@@ -47,11 +53,37 @@ export const actSignIn = (dataUser) => {
         })
       } catch (error) {
         removeToast()
-        errorToast('Thất bại, kiểm tra lại tên đăng nhập hoặc mật khẩu của bạn')
+        errorToast('Failed, double-check your login information')
       }
     } else {
       removeToast()
-      errorToast('Thất bại, kiểm tra lại tên đăng nhập hoặc mật khẩu của bạn')
+      errorToast('Failed, double-check your login information')
+    }
+  }
+}
+
+export const actLogout = (type) => {
+  loadingToast('Logging out...')
+
+  return async (dispatch) => {
+    try {
+      const res = await authApi.logout(type)
+      console.log(res)
+
+      if (res.message === 'success') {
+        removeToast()
+        removeCookie('all')
+        successToast('Successful logout!')
+
+        setTimeout(() => {
+          dispatch(setCheckLogin(false))
+          window.location.href = window.location.origin
+        }, 1000)
+      }
+    } catch (error) {
+      console.log(error)
+      removeToast()
+      errorToast('Failed, logout failed!')
     }
   }
 }
@@ -63,6 +95,12 @@ export const actFetchStaffInfomation = () => {
     const res = await callAPI(`users/${id}`, 'GET', null, {
       authorization: `Bearer ${token}`
     })
+
+    // try {
+    //   userApi.getUser(res.data.userId)
+    // } catch (error) {
+
+    // }
 
     res && dispatch(setStaffInfomation(res.staffInfo))
   }
@@ -127,14 +165,15 @@ export const actSendLocationToServer = (location) => {
 }
 
 export const actFetchEvents = () => {
-  const { token } = getCookie()
-
   return async (dispatch) => {
-    const res = await callAPI(`event`, 'GET', null, {
-      authorization: `Bearer ${token}`
-    })
+    await dispatch(setEventsLoading(true))
 
-    res && dispatch(setEvents(res))
+    try {
+      const res = await eventApi.get()
+      dispatch(setEventsData(res.data))
+    } catch (error) {
+      await dispatch(setEventsError(error.response.error))
+    }
   }
 }
 
@@ -171,7 +210,7 @@ export const actSendReport = (data) => {
 export const actRefreshPage = () => {
   const { id, token } = getCookie()
 
-  id && token && loadingToast('Đang đăng nhập lại...')
+  id && token && loadingToast('Logging in again...')
 
   if (!id && !token) {
     return (dispatch) => {
@@ -186,7 +225,6 @@ export const actRefreshPage = () => {
       Promise.all([
         await dispatch(setStaffInfomation(res.data)),
         await dispatch(actFetchTimeKeeping())
-        // await dispatch(actFetchEvents())
       ]).then(async () => {
         setCookie([
           { key: 'id', value: res.data._id.toString() },
@@ -238,119 +276,160 @@ export const actChangePassword = (data) => {
   }
 }
 
-export const actCreateProject = (data) => {
-  loadingToast('Đang xử lí yêu cầu...')
-  const { id, token } = getCookie()
-  return async (dispatch) => {
-    try {
-      const res = await axios({
-        method: 'POST',
-        url: `https://hrmadmin.herokuapp.com/api/createProject/${id}`,
-        headers: {
-          'Content-Type': 'application/json',
-          authorization: `Bearer ${token}`
-        },
-        data
-      })
-      removeToast()
-      if (res?.data?.data) {
-        successToast('Tạo dự án thành công')
-        dispatch(closePopup())
-      } else {
-        errorToast('Tạo dự án thất bại')
-        throw new Error('Failed')
-      }
-    } catch (error) {
-      removeToast()
-      errorToast('Tạo dự án thất bại')
+export const actCreateProject = (data, uMail, callback) => {
+  loadingToast('Processing...')
+  let sbData = data
+
+  if (data?.managers)
+    sbData = {
+      ...data,
+      managers: data.managers.filter((item) => item !== uMail)
     }
-  }
-}
-
-export const actFetchProject = (data) => {
-  // loadingToast("Đang lấy dữ liệu...");
-  const { id, token } = getCookie()
-  let _param = ''
-  if (data) {
-    for (const item of data) {
-      _param = `projectCode=${item}`
-    }
-    _param = '?' + _param
-  }
-  return async (dispatch) => {
-    try {
-      const res = await axios({
-        method: 'GET',
-        url: `https://hrmadmin.herokuapp.com/api/projectInfo/${id}${_param}`,
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`
-        }
-      })
-      let data = res.data
-
-      if (data?.status) {
-        errorToast(`${data.status}`)
-      } else {
-        dispatch(setDataProject(data))
-
-        if (!data) {
-          dispatch(
-            setWorkflow({
-              workflowName: 'Tất cả',
-              workflowType: 'project',
-              workflowId: ''
-            })
-          )
-        } else {
-          dispatch(
-            setWorkflow({
-              workflowName: data[0].projectName,
-              workflowType: 'project',
-              workflowId: data[0].projectCode
-            })
-          )
-        }
-      }
-    } catch (error) {
-      errorToast(`Lỗi không xác định`)
-    }
-  }
-}
-
-export const actCreateIssue = (wid, data) => {
-  loadingToast('Đang xử lí yêu cầu...')
-  const { id, token } = getCookie()
+  else sbData = { ...data, managers: [] }
 
   return async (dispatch) => {
     try {
-      const res = await axios({
-        method: 'POST',
-        url: `https://hrmadmin.herokuapp.com/api/createIssue/${id}/${wid}`,
-        headers: {
-          'Content-Type': 'application/json',
-          authorization: `Bearer ${token}`
-        },
-        data
-      })
+      const res = await projectApi.create(sbData)
 
       removeToast()
 
-      if (res?.data?.data) {
-        successToast('Tạo issue thành công')
-        dispatch(closePopup())
-      } else errorToast('Tạo issue thất bại')
+      await dispatch(
+        setInitialProject({
+          name: data.name
+        })
+      )
+      callback(res.data._id)
     } catch (error) {
-      errorToast('Tạo issue thất bại')
+      removeToast()
+      console.log(error)
     }
   }
 }
 
-export const toggleTest = () => {
-  return (dispatch) => {
-    dispatch(toggleActiveSidebar())
+export const actFetchProject = (pid) => {
+  return async (dispatch) => {
+    await dispatch(setProjectLoading(true))
+
+    try {
+      const res = await projectApi.get(pid)
+      const issueSorted = res.data.issue.sort((a, b) => b.updateAt - a.updateAt)
+
+      await dispatch(setDataProject({ ...res.data, issue: issueSorted }))
+    } catch (error) {
+      Promise.all([
+        await dispatch(setDataProject(null)),
+        await dispatch(setProjectError(error.message))
+      ])
+    }
   }
 }
+
+export const actDeleteProject = (pid, callback) => {
+  return async () => {
+    try {
+      await projectApi.delete(pid)
+      callback()
+    } catch (error) {
+      errorToast(error.message)
+    }
+  }
+}
+
+export const actQueryProject = (query = null) => {
+  return async (dispatch) => {
+    await dispatch(setProjectLoading(true))
+
+    try {
+      const res = await projectApi.gets(query)
+      const sortData = res.data.sort((a, b) => b.updateAt - a.updateAt)
+
+      await dispatch(setDataProjects(sortData))
+    } catch (error) {
+      await dispatch(setProjectError(error.message))
+    }
+  }
+}
+
+export const actCreateIssue = (pid, data, callback) => {
+  return async () => {
+    try {
+      const res = await issueApi.create(pid, data)
+      callback(res.data._id)
+    } catch (error) {
+      errorToast(error.message)
+    }
+  }
+}
+
+export const actQueryIssue = (iid, callback) => {
+  return async (dispatch) => {
+    await dispatch(setIssueLoading(true))
+
+    try {
+      const res = await issueApi.get(iid)
+
+      await dispatch(setDataIssue(res.data))
+    } catch (error) {
+      const err = error.message
+
+      errorToast(err)
+      dispatch(setIssueError(err))
+    }
+  }
+}
+
+export const actUpdateIssue = (iid, data, callback) => {
+  return async (dispatch) => {
+    try {
+      const res = await issueApi.update(iid, data)
+
+      successToast('Issue updated')
+      await dispatch(setDataIssue(res.data))
+    } catch (error) {
+      const err = error.message
+
+      errorToast(err)
+      dispatch(setIssueError(err))
+    }
+  }
+}
+
+export const actDeleteIssue = (iid, callback) => {
+  return async (dispatch) => {
+    try {
+      const res = await issueApi.delete(iid)
+
+      successToast('Issue deleted')
+      await dispatch(setDataIssue(res.data))
+      callback()
+    } catch (error) {
+      const err = error.message
+
+      errorToast(err)
+      dispatch(setIssueError(err))
+    }
+  }
+}
+
+export const actGetAllUsers = () => {
+  return async (dispatch) => {
+    await dispatch(setUsersLoading(true))
+
+    try {
+      const res = await userApi.getAllUsers()
+
+      await dispatch(setUsersData(res.data))
+    } catch (error) {
+      dispatch(setUsersLoading(false))
+    }
+  }
+}
+
+// export const toggleTest = () => {
+//   return (dispatch) => {
+//     dispatch(toggleActiveSidebar())
+//   }
+// }
 
 //? TOAST
 const errorToast = toast.error
@@ -361,11 +440,6 @@ const loadingToast = (content) => {
 const removeToast = () => toast.remove(loadingToast())
 
 //TODO: ACTION TO REDUCER ================================
-export const toggleActiveSidebar = (payload) => ({
-  type: 'TOGGLE_ACTIVE_SIDEBAR',
-  payload
-})
-
 export const getLocation = () => ({
   type: 'TIME_KEEPING'
 })
@@ -404,44 +478,75 @@ export const setStaffInfomation = (payload) => ({
   payload
 })
 
-export const setEvents = (payload) => ({
-  type: 'SET_EVENTS',
+export const setEventsData = (payload) => ({
+  type: 'SET_EVENTS_DATA',
   payload
 })
 
-export const setPopup = (payload) => ({
-  type: 'SET_POPUP',
+export const setEventsLoading = (payload) => ({
+  type: 'SET_EVENTS_LOADING',
   payload
 })
 
-export const closePopup = () => ({
-  type: 'CLOSE_POPUP'
-})
-
-export const setLoading = (payload) => ({
-  type: 'SET_LOADING',
+export const setEventsError = (payload) => ({
+  type: 'SET_EVENTS_ERROR',
   payload
 })
 
-export const finishLoading = () => ({
-  type: 'FINISH_LOADING'
+// PROJECT ACTION ================================
+export const setProjectLoading = (payload) => ({
+  type: 'SET_PROJECT_LOADING',
+  payload
+})
+export const setProjectError = (payload) => ({
+  type: 'SET_PROJECT_ERROR',
+  payload
 })
 
+export const setInitialProject = (payload) => ({
+  type: 'SET_INITIAL_PROJECT',
+  payload
+})
+//? Detail project
 export const setDataProject = (payload) => ({
   type: 'SET_DATA_PROJECT',
   payload
 })
-
-export const setInitalProject = () => ({
-  type: 'SET_INITAL_PROJECT'
+//? All project
+export const setDataProjects = (payload) => ({
+  type: 'SET_DATA_PROJECTS',
+  payload
 })
 
+export const setIssueLoading = (payload) => ({
+  type: 'SET_ISSUE_LOADING',
+  payload
+})
+export const setIssueError = (payload) => ({
+  type: 'SET_ISSUE_ERROR',
+  payload
+})
 export const setDataIssue = (payload) => ({
   type: 'SET_DATA_ISSUE',
+  payload
+})
+export const setInitialIssue = (payload) => ({
+  type: 'SET_INITIAL_ISSUE',
   payload
 })
 
 export const setWorkflow = (payload) => ({
   type: 'SET_WORKFLOW',
+  payload
+})
+
+// USERS ACTION ======================================
+export const setUsersLoading = (payload) => ({
+  type: 'SET_USERS_LOADING',
+  payload
+})
+
+export const setUsersData = (payload) => ({
+  type: 'SET_USERS_DATA',
   payload
 })

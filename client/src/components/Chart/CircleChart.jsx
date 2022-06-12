@@ -17,7 +17,7 @@ function CircleChart({ label, value }) {
           size: '80%'
         },
         track: {
-          background: '',
+          background: '#fff',
           strokeWidth: '100%',
           margin: 0
         },

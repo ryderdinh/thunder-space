@@ -1,22 +1,34 @@
-import Layout from 'components/Layouts/Layout';
-import HeaderContainer from 'components/Main/HeaderContainer/HeaderContainer';
-import Main from 'components/Main/Main';
-import IssueContainer from 'components/Issue/IssueContainer';
-import ViewBox from 'components/Main/ViewMain/ViewBox';
-import ViewMain from 'components/Main/ViewMain/ViewMain';
+import Issue from 'components/Issue/Issue'
+import { IssueSetting } from 'components/Issue/IssueSetting'
+import Layout from 'components/Layouts/Layout'
+import HeaderContainer from 'components/Main/HeaderContainer/HeaderContainer'
+import Main from 'components/Main/Main'
+import ViewBox from 'components/Main/ViewMain/ViewBox'
+import ViewMain from 'components/Main/ViewMain/ViewMain'
+import { useEffect, useState } from 'react'
 
-export default function Issue() {
-	const path = 'issue';
-	return (
-		<Layout>
-			<Main>
-				<HeaderContainer pathName={path} />
-				<ViewMain>
-					<ViewBox>
-						<IssueContainer />
-					</ViewBox>
-				</ViewMain>
-			</Main>
-		</Layout>
-	);
+const defaultPath = 'issue'
+
+export default function IssuePage({ type = '' }) {
+  const [path, setPath] = useState(defaultPath)
+
+  useEffect(() => {
+    document.title = `Issue ${type}`
+  }, [type])
+
+  useEffect(() => {
+    type && setPath(`${defaultPath}-${type}`)
+  }, [type])
+  return (
+    <Layout>
+      <Main>
+        <HeaderContainer pathName={path} />
+        <ViewMain>
+          <ViewBox className='h-full' classNameCol='h-full'>
+            {!type ? <Issue /> : <IssueSetting />}
+          </ViewBox>
+        </ViewMain>
+      </Main>
+    </Layout>
+  )
 }

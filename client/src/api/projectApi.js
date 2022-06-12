@@ -2,10 +2,9 @@ import axiosClient from './http-common'
 
 const projectApi = {
   get: (id) => {
-    const url = '/project'
-    let params = { id }
+    const url = `/projects/${id}`
 
-    return axiosClient.get(url, { params })
+    return axiosClient.get(url)
   },
   gets: (search = null) => {
     const url = '/projects'
@@ -14,8 +13,16 @@ const projectApi = {
     return axiosClient.get(url, { params })
   },
   create: (data) => {
-    const url = '/project/create'
+    const url = '/projects/create'
     return axiosClient.post(url, data)
+  },
+  update: (data) => {
+    const url = '/projects'
+    return axiosClient.put(url, data)
+  },
+  delete: (id) => {
+    const url = `/projects/${id}`
+    return axiosClient.delete(url)
   }
 }
 

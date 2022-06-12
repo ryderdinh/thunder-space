@@ -1,84 +1,66 @@
-import React, { useEffect, useRef, useState } from "react";
-import TextareaAutosize from "react-autosize-textarea";
+import React, { useEffect, useRef, useState } from 'react'
 
-function IssueComment({ issueComment }) {
-  //? Create State
-  const [inputComment, setInputComment] = useState("");
-  const [rowComment, setRowComment] = useState(1);
+function IssueComment({ className = '', data = [] }) {
+  //? State
+  const [inputComment, setInputComment] = useState('')
+  const [rowComment, setRowComment] = useState(1)
 
   //? Create Ref
-  const scrollEnd = useRef(null);
+  const scrollEnd = useRef(null)
 
   //? Create Effect
   useEffect(() => {
-    scrollToBottom();
-  }, []);
+    scrollToBottom()
+  }, [])
 
   //? Create Fction
   const handleInput = (e) => {
-    if (e.key === "Enter") {
+    if (e.key === 'Enter') {
       if (!e.shiftKey) {
-        setInputComment("");
-        setRowComment(1);
+        setInputComment('')
+        setRowComment(1)
       }
     }
-  };
+  }
   const scrollToBottom = () => {
     scrollEnd.current.scrollTo(
       0,
       scrollEnd.current.scrollHeight - scrollEnd.current.clientHeight
-    );
-  };
+    )
+  }
 
   return (
-    <div className="issue__item issue-main-comment">
-      <div className="title">Bình luận</div>
-      <div
-        className="issue__item-box issue-comment-box fl-col eb-scroll"
-        ref={scrollEnd}
-      >
-        {issueComment.map((item, index) => (
-          <div key={index} className="issue-comment__item">
-            <div className="user fl-row">
-              <div className="user-avatar">
-                <img
-                  src={require("assets/images/icons/user.svg").default}
-                  alt="avatar"
-                />
-              </div>
-              <p className="user-name">{`${item.username}:`}</p>
+    <div
+      className={`${className} w-full text-sm text-neutral-50`}
+      ref={scrollEnd}
+    >
+      {(!data || !data?.length) && (
+        <p className='w-full py-14 text-center text-xs text-neutral-500'>
+          No comment
+        </p>
+      )}
+
+      {(data || data.length) &&
+        data.map((item, index) => (
+          <div className='grid grid-cols-2 text-neutral-500' key={index}>
+            <div className='flex items-center gap-2'>
+              <img src={item.users[0].avatar} alt='Avatar user 1' />
+              <p>{`${item.users[0].name} :`}</p>
             </div>
-            <div className="content">{item.comment}</div>
+
+            <div className='font-bold'>
+              <p>{`${item.action} `}</p>
+            </div>
+
+            {item.users[1] && (
+              <div className='font-bold'>
+                <p>{`${item.users[1].name} `}</p>
+              </div>
+            )}
           </div>
         ))}
-      </div>
-      <div className="issue__item-box issue-send-box">
-        <div className="issue-comment__item">
-          <TextareaAutosize
-            rows={rowComment}
-            maxRows={6}
-            placeholder="Nhập vào đây ..."
-            value={inputComment}
-            onKeyUp={handleInput}
-            onChange={(e) => {
-              console.log(e.target.value);
-              setInputComment(e.target.value);
-            }}
-            className="eb-scroll"
-            maxLength="600"
-          />
-          <div className="btn-send-box">
-            <div className="btn-send">
-              <img
-                src={require("assets/images/icons/send.svg").default}
-                alt="send"
-              />
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
-  );
+  )
 }
 
-export default IssueComment;
+export default IssueComment

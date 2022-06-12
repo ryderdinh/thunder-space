@@ -15,11 +15,15 @@ export default function ListTimeKeeping({ variants }) {
       exit='exit'
     >
       <div className='label'>
-        <p> Lịch sử chấm công</p>
+        <p>History</p>
       </div>
-      {isLoading ? (
-        <LoadingCard text={'Đang tải dữ liệu chấm công...'} />
-      ) : (
+      {isLoading && <LoadingCard text={'Loading data...'} />}
+
+      {!isLoading && !timeOfAttendance.length && (
+        <LoadingCard text={'No data'} />
+      )}
+
+      {!isLoading && timeOfAttendance.length > 0 && (
         <div className='list-time-keeping_box custom-scrollbar'>
           {!timeOfAttendance.length ? (
             <LoadingCard text={'Không có dữ liệu'} />
@@ -58,7 +62,7 @@ function ListTimeKeepingItem({ time, rangeMetter }) {
           <p>{convertTime(time)}</p>
         </div>
         <div className='range'>
-          <p>{`Cách công ty ${rangeMetter}m`}</p>
+          <p>{`From the company: ${rangeMetter} meters`}</p>
         </div>
       </div>
     </div>

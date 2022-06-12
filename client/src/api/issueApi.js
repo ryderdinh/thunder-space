@@ -1,14 +1,21 @@
 import axiosClient from './http-common'
 
 const issueApi = {
-  get: (id) => {
-    const url = `/issue`
-    const params = { id }
-    return axiosClient.get(url, { params })
+  get: (iid) => {
+    const url = `/issues/${iid}`
+    return axiosClient.get(url)
   },
-  create: (data) => {
-    const url = `/issue/create`
+  create: (pid, data) => {
+    const url = `/projects/${pid}/issues/create`
     return axiosClient.post(url, data)
+  },
+  update: (iid, data) => {
+    const url = `/issues/${iid}`
+    return axiosClient.put(url, data)
+  },
+  delete: (iid) => {
+    const url = `/issues/${iid}`
+    return axiosClient.delete(url)
   }
 }
 

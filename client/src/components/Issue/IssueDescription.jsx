@@ -1,19 +1,21 @@
-import React from "react";
-import QuillEditor from "../Editor/QuillEditor";
+import EditorPreview from 'components/Editor/EditorPreview'
+import TinyEditor from 'components/Editor/TinyEditor'
 
-function IssueDescription(props) {
+export default function IssueDescription({
+  content,
+  className = '',
+  onChange,
+  show
+}) {
   return (
-    <div className="issue__item issue-main-description">
-      <div className="title">Mô tả</div>
-      <div className="issue__item-box issue-description-box">
-        <QuillEditor
-          description={props.description}
-          handleDescription={props.handleDescription}
-          placeholder="Nhập vào đây..."
-        />
-      </div>
-    </div>
-  );
-}
+    <div className={`${className} w-full text-sm text-neutral-50`}>
+      <TinyEditor
+        dataEditor={content}
+        setDataEditor={onChange}
+        className={`${show ? 'block' : 'hidden'}`}
+      />
 
-export default IssueDescription;
+      {!show && <EditorPreview content={content} />}
+    </div>
+  )
+}

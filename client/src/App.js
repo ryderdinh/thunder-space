@@ -2,11 +2,12 @@ import { actRefreshPage } from 'actions'
 import 'animate.css'
 import { AnimatePresence } from 'framer-motion'
 import NotFound from 'pages/404'
-import Account from 'pages/Account'
 import Home from 'pages/Home'
-import Issue from 'pages/Issue'
+import IssuePage from 'pages/Issue'
+import Landing from 'pages/Landing'
 import Login from 'pages/Login'
-import Project from 'pages/Project'
+import Profile from 'pages/Profile'
+import ProjectPage from 'pages/Project'
 import Report from 'pages/Report'
 import TimeSheets from 'pages/TimeSheets'
 import Work from 'pages/Work'
@@ -16,7 +17,7 @@ import { useDispatch } from 'react-redux'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
 export default function App() {
-  //? Connect Redux
+  //? Connect Redux store
   const dispatch = useDispatch()
 
   //? Create Effect
@@ -33,38 +34,49 @@ export default function App() {
               <Route exact path='/'>
                 <Home />
               </Route>
+
               <Route exact path='/timesheets'>
                 <TimeSheets />
               </Route>
+
               <Route exact path='/report'>
                 <Report />
               </Route>
+
               <Route path='/workflow'>
-                <Route exact path='/works'>
-                  <Work />
-                </Route>
-                <Route exact path='/projects'>
-                  <Project />
-                </Route>
                 <Route component={Workflow} />
               </Route>
+
               <Route exact path='/works'>
                 <Work />
               </Route>
+
               <Route exact path='/projects'>
-                <Project />
+                <ProjectPage />
               </Route>
               <Route exact path='/projects/:pid'>
-                <Project />
+                <ProjectPage />
+              </Route>
+              <Route exact path='/projects/:pid/settings'>
+                <ProjectPage type='setting' />
               </Route>
               <Route exact path='/projects/:pid/:iid'>
-                <Issue />
+                <IssuePage />
               </Route>
+              <Route exact path='/projects/:pid/:iid/settings'>
+                <IssuePage type='setting' />
+              </Route>
+
               <Route exact path='/account'>
-                <Account />
+                <Profile />
               </Route>
+
               <Route exact path='/login'>
                 <Login />
+              </Route>
+
+              <Route exact path='/landing'>
+                <Landing />
               </Route>
               <Route component={NotFound} />
             </Switch>

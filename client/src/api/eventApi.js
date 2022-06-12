@@ -2,9 +2,10 @@ import axiosClient from './http-common';
 
 const eventApi = {
 	get: () => {
-		const url = '/event';
+		const url = '/events';
 		return axiosClient.get(url);
 	}
 };
 
 export default eventApi;
+	
