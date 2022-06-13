@@ -11,6 +11,7 @@ import { useForm } from 'react-hook-form'
 import { useCopyClipboard } from 'react-recipes'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useHistory, useLocation, useParams } from 'react-router-dom'
+import { successToast } from 'utilities/toast'
 
 const subTabs = [
   { name: 'General', tab: 'general' },
@@ -254,6 +255,7 @@ function IssueID({ id }) {
 
   const copyToClipboard = () => {
     setIsCopied(id)
+    successToast('Copied to clipboard')
   }
 
   return (
