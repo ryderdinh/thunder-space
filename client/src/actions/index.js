@@ -378,15 +378,17 @@ export const actQueryIssue = (iid, callback) => {
   }
 }
 
-export const actUpdateIssue = (iid, data, callback) => {
+export const actUpdateIssue = (iid, data, onSuccess, onError) => {
   return async (dispatch) => {
     try {
       const res = await issueApi.update(iid, data)
 
       successToast('Issue updated')
       await dispatch(setDataIssue(res.data))
+      onSuccess()
     } catch (error) {
       const err = error.message
+      onError()
 
       errorToast(err)
       dispatch(setIssueError(err))

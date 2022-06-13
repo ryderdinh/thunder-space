@@ -19,16 +19,15 @@ const IssueHistory = ({ className = '', data = [] }) => {
                 alt='Avatar user 1'
                 className='h-7 w-7 rounded-full'
               />
-              <p>{`${item.user[0].name} :`}</p>
-              <div className='font-bold'>
+              <p>{`${item.user[0].name}:`}</p>
+              <div className='flex flex-wrap gap-1 font-bold'>
                 <p>{`${item.action} `}</p>
+                {item.user[1] && (
+                  <div className='font-bold'>
+                    <p>{`${item.user[1].name} `}</p>
+                  </div>
+                )}
               </div>
-
-              {item.user[1] && (
-                <div className='font-bold'>
-                  <p>{`${item.user[1].name} `}</p>
-                </div>
-              )}
             </div>
           </div>
         ))}

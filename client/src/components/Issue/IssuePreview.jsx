@@ -57,15 +57,18 @@ const IssuePreview = ({ data, className = '' }) => {
             </span>
 
             {data?.assign && (
-              <div
-                className='relative h-8 w-8 overflow-hidden rounded-full
-                        ring-2 ring-neutral-50'
-              >
-                <img
-                  src={data?.assign?.avatar}
-                  alt='Avatar user'
-                  className='relative z-10 h-full w-full object-cover'
-                />
+              <div className='flex items-center gap-2'>
+                <div
+                  className='relative h-8 w-8 
+                         overflow-hidden rounded-full ring-2 ring-neutral-50'
+                >
+                  <img
+                    src={data?.assign?.avatar}
+                    alt='Avatar user'
+                    className='relative z-10 h-full w-full object-cover'
+                  />
+                </div>
+                <p className='text-sm text-neutral-50'>{data?.assign?.name}</p>
               </div>
             )}
           </div>

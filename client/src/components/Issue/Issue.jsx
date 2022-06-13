@@ -66,14 +66,34 @@ export default function Issue() {
   const uploadAttachments = () => {}
 
   const handleDescriptionPanel = (type) => {
-    type &&
-      _dataIssue.description === description &&
-      dispatch(actUpdateIssue(iid, { description: description.data }))
+    !type &&
+      setDescriptionPanel({
+        ...descriptionPanel,
+        edit: !descriptionPanel.edit
+      })
 
-    setDescriptionPanel({
-      ...descriptionPanel,
-      edit: !descriptionPanel.edit
-    })
+    const onSuccess = () =>
+      setDescriptionPanel({
+        ...descriptionPanel,
+        edit: !descriptionPanel.edit
+      })
+
+    const onError = () =>
+      setDescriptionPanel({
+        ...descriptionPanel,
+        edit: descriptionPanel.edit
+      })
+
+    type &&
+      _dataIssue.description !== description &&
+      dispatch(
+        actUpdateIssue(
+          iid,
+          { description: description.data },
+          onSuccess,
+          onError
+        )
+      )
   }
 
   const deleteIssue = () => {
@@ -158,7 +178,7 @@ export default function Issue() {
             </Col>
             <Col
               className='custom-scrollbar col-span-3 block h-full overflow-y-scroll 
-              pr-2 md:col-span-2'
+              pr-0 md:col-span-2 md:pr-2'
             >
               {isLoading && (
                 <p className='w-full py-14 text-center text-xs text-neutral-500'>
@@ -168,22 +188,7 @@ export default function Issue() {
 
               {!isLoading && (
                 <div className='space-y-5'>
-                  <DisclosureCustom
-                    delayShow={0.2}
-                    title={'Description'}
-                    customTitlePanel={
-                      <div className='flex items-center gap-2'>
-                        {descriptionPanel.edit && (
-                          <Tag
-                            bg={'bg-emerald-600'}
-                            onClick={() => handleDescriptionPanel(true)}
-                          >
-                            <p className='select-none'>Success</p>
-                          </Tag>
-                        )}
-                      </div>
-                    }
-                  >
+                  <DisclosureCustom delayShow={0.2} title={'Description'}>
                     <IssueDescription
                       content={_dataIssue.description}
                       show={descriptionPanel.edit}
@@ -203,6 +208,17 @@ export default function Issue() {
                       >
                         <PencilIcon className='h-6 w-6 text-neutral-200' />
                         <span className='text-neutral-200'>Edit</span>
+                      </div>
+                    )}
+
+                    {descriptionPanel.edit && (
+                      <div className='flex items-center justify-end pt-3'>
+                        <Tag
+                          bg={'bg-emerald-600'}
+                          onClick={() => handleDescriptionPanel(true)}
+                        >
+                          <p className='select-none'>Success</p>
+                        </Tag>
                       </div>
                     )}
                   </DisclosureCustom>

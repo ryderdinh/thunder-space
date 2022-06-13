@@ -20,8 +20,8 @@ const IssueDetail = ({ data }) => {
       exit='exit'
     >
       <div
-        className='mx-auto w-full max-w-md rounded-md border 
-        border-[#282828] bg-[#1f1f1f] p-2'
+        className='mx-0 w-full rounded-md border border-[#282828] bg-[#1f1f1f] 
+        p-2 md:mx-auto md:max-w-md'
       >
         <Disclosure as='div'>
           {({ open }) => (

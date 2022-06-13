@@ -135,7 +135,7 @@ export const IssueSetting = () => {
                 </div>
               </div>
 
-              <section className='h-full pt-6 pb-6'>
+              <section className='h-full pt-3'>
                 <div className='grid h-full grid-cols-1 grid-rows-1 gap-x-8 gap-y-10 lg:grid-cols-4'>
                   <form className='hidden lg:row-span-1 lg:block'>
                     <h3 className='sr-only'>Tab</h3>
