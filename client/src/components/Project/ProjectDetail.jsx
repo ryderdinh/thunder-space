@@ -10,7 +10,7 @@ import { useContext, useEffect, useState } from 'react'
 import 'react-date-range/dist/styles.css'
 import 'react-date-range/dist/theme/default.css'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link, useHistory, useParams } from 'react-router-dom'
+import { Link, useHistory, useLocation, useParams } from 'react-router-dom'
 import variantGlobal from 'units/variantGlobal'
 import MenuComponent from './MenuComponent'
 import MenuItem from './MenuItem'
@@ -145,16 +145,6 @@ export default function ProjectDetail() {
           <Row className='md:flex'>
             <Col className='mb-2 w-full md:mb-0 md:w-1/2'>
               <Breadcumb list={breadcumbs} />
-              {/* <div className='flex items-center gap-2'>
-            <WorkflowBreadcumbItemSelector
-              list={getListProjects()}
-              current={_dataProject}
-              selected={selected}
-              setSelected={setSelected}
-              query={query}
-              setQuery={setQuery}
-            />
-          </div> */}
             </Col>
             <Col className='w-full md:w-1/2'>
               <div className='flex w-full justify-end gap-2'>
@@ -276,6 +266,9 @@ function IssueGridItem({ data, pid, variants }) {
 }
 
 function Menu({ openDialog, dataProject }) {
+  const history = useHistory()
+  const location = useLocation()
+
   return (
     <MenuComponent>
       <div className='px-1 py-1'>
@@ -303,12 +296,9 @@ function Menu({ openDialog, dataProject }) {
       </div>
       <div className='px-1 py-1'>
         <MenuItem
-          type='delete'
+          type='setting'
           onClick={() => {
-            openDialog('remove-project', {
-              projectName: dataProject?.name,
-              pid: dataProject?._id
-            })
+            history.push(`${location.pathname}/settings`)
           }}
         />
       </div>
