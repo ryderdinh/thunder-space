@@ -1,4 +1,3 @@
-
 const express = require("express");
 const app = express();
 const db = require("../config/db/database");
@@ -168,7 +167,8 @@ app.use("/api", routersProject.apiPostProject);
 app.use("/api", routersProject.apiGetFindProject);
 app.use("/api", routersProject.apiDeleteProject)
 app.use("/api", routersProject.apiPutUpdateProject)
-
+app.use("/api", routersProject.apiPatchDeleteMemberOfProject)
+app.use("/api", routersProject.apiPatchAddMemberToProject)
 app.use("/table", authenticateToken, apiGetTable);
 
 //Event

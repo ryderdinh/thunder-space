@@ -34,7 +34,22 @@ module.exports = async (req, res, next) => {
         description !== "" ? issue.description = description : null
         assigned !== "" ? issue.assign = existUserAssigned.id : null
         priority !== "" ? issue.priority = priority : null
-        return res.status(200).send(new Response(200, "success", await issue.save()))
+        const updatedIssue = await issue.save();
+        const populateHistory = (await updatedIssue.populate("history.user.uid")).history
+            const history = [];
+            for (let his of populateHistory) {
+                const usersToView = his.user.map(user => user.uid.getProfileToCreateProject())
+                history.push({
+                    user: usersToView,
+                    time: his.time,
+                    action: his.action
+                })
+            }
+            const creator = (await updatedIssue.populate("creators")).creators
+            const assign = (await updatedIssue.populate("assigns")).assigns
+            const creatorToView = creator.map(creator => creator.getProfileToCreateProject())
+            const assignToView = assign.map(assign => assign.getProfileToCreateProject())
+            return res.status(200).send(new Response(200, 'success',  updatedIssue.getIssueDetailsWithHistory(creatorToView[0], assignToView[0], history)))
     } catch (err) {
         console.log(err);
         return res.status(400).send(new Response(400, "something went wrong"))
