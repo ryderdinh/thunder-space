@@ -1,0 +1,395 @@
+{
+	"info": {
+		"_postman_id": "acfedf97-732d-4e6a-8a63-158be1c30f0f",
+		"name": "Api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Details about a user",
+					"id": "2d9a6dbb-85fe-4660-ad97-0d1fdcf665fe",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/user?id=-90506807",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "-90506807",
+									"description": "(Required) ID of the user"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "25b1fdec-1742-4985-ba83-e8fdf94ba5e3",
+							"name": "Details about a user",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"description": "Added as a part of security scheme: basic",
+										"key": "Authorization",
+										"value": "Basic <credentials>"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/user?id=-90506807",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"user"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "-90506807"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"disabled": false,
+									"description": "A link to the next page of responses",
+									"key": "x-next",
+									"value": "id culpa Lorem cillum"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n  \"id\": -3649074,\n  \"name\": \"labore elit dolore\",\n  \"tag\": \"eu Ut magna\"\n}"
+						},
+						{
+							"id": "81dc0fea-8273-4f5f-92e1-f511f77b7b0b",
+							"name": "unexpected error",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"description": "Added as a part of security scheme: basic",
+										"key": "Authorization",
+										"value": "Basic <credentials>"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/user?id=-90506807",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"user"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "-90506807"
+										}
+									]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n  \"code\": 65428470,\n  \"message\": \"enim sit ea\"\n}"
+						}
+					]
+				}
+			],
+			"id": "1487e0a7-7758-4d9a-88dd-00cc1b9295c3"
+		},
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Access token",
+					"id": "f361b1f6-e451-422d-964c-f370110cc237",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"ryderdinh@gmail.com\",\r\n    \"password\": \"123457\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/token",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"token"
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "25073c37-0070-4a2a-b01e-e51c8d12b2ee",
+							"name": "Success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"ryderdinh@gmail.com\",\r\n    \"password\": \"123456\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api_url}}/token",
+									"host": [
+										"{{api_url}}"
+									],
+									"path": [
+										"token"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "x-powered-by",
+									"value": "Express"
+								},
+								{
+									"key": "access-control-allow-origin",
+									"value": "*"
+								},
+								{
+									"key": "content-type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "content-length",
+									"value": "232"
+								},
+								{
+									"key": "etag",
+									"value": "W/\"e8-QBzuT76ukSggOTDWNpMD/2td9Os\""
+								},
+								{
+									"key": "date",
+									"value": "Wed, 15 Jun 2022 15:29:24 GMT"
+								},
+								{
+									"key": "x-envoy-upstream-service-time",
+									"value": "457"
+								},
+								{
+									"key": "server",
+									"value": "railway"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"status\": 200,\n    \"message\": \"success\",\n    \"data\": {\n        \"accessToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjMwOGU1YTFmZDg3YjhiMDdiYjU5YWEiLCJpYXQiOjE2NTUzMDY5NjQsImV4cCI6MTY1NTMxMDU2NH0.KXolBqhV0hlYcJQjqVOPnhXn7Dc_R0UiOVGYqnKnbDU\"\n    }\n}"
+						},
+						{
+							"id": "5a31b3cb-9134-4e6f-9b87-859bc98bd935",
+							"name": "wrong email or password",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"ryderdinh@gmail.com\",\r\n    \"password\": \"123457\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api_url}}/token",
+									"host": [
+										"{{api_url}}"
+									],
+									"path": [
+										"token"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "x-powered-by",
+									"value": "Express"
+								},
+								{
+									"key": "access-control-allow-origin",
+									"value": "*"
+								},
+								{
+									"key": "content-type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "content-length",
+									"value": "50"
+								},
+								{
+									"key": "etag",
+									"value": "W/\"32-mKGyXERWmKvji1ab6VM1Ngg1YwM\""
+								},
+								{
+									"key": "date",
+									"value": "Wed, 15 Jun 2022 15:30:04 GMT"
+								},
+								{
+									"key": "x-envoy-upstream-service-time",
+									"value": "435"
+								},
+								{
+									"key": "server",
+									"value": "railway"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"status\": 400,\n    \"message\": \"wrong email or password\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Login",
+					"id": "8ebbed21-cbec-4995-90d2-b82c0df40dbb",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			],
+			"id": "676807c3-0895-45ed-8d47-52f8ae5d2d2a"
+		},
+		{
+			"name": "New Request",
+			"id": "09b8b2d8-6b02-4c1e-a209-5f091a793f9a",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "070a48d9-4f66-4f71-8dfa-75e9e48f821b",
+				"type": "text/javascript",
+				"exec": [
+					"const options = {",
+					"  url:  'https://hrmadmin.up.railway.app/api/token', ",
+					"  method: 'POST',",
+					"  header: {",
+					"    'Accept': '*/*',",
+					"    'Content-Type': 'application/x-www-form-urlencoded',",
+					"  },",
+					"  body: {",
+					"    mode: 'urlencoded',",
+					"    urlencoded : [",
+					"      { key: 'email', value: 'ryderdinh@gmail.com'},",
+					"      { key: 'password', value: '123456'},",
+					"    ]",
+					"  }",
+					"};",
+					"",
+					"const token = pm.sendRequest(options, function (err, response) {",
+					"    pm.collectionVariables.set(\"token\", response.json().data.accessToken);",
+					"});",
+					"",
+					"",
+					"",
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "397badf2-b830-4e0b-914e-d8a74c0868ce",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "67b95b67-f924-4bce-a96c-a96dbfbee207",
+			"key": "api_url",
+			"value": "https://hrmadmin.up.railway.app/api",
+			"type": "string"
+		},
+		{
+			"id": "f80630b0-2e37-4ace-8283-a645846e53b6",
+			"key": "token",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjMwOGU1YTFmZDg3YjhiMDdiYjU5YWEiLCJpYXQiOjE2NTUzMDQ3NzAsImV4cCI6MTY1NTMwODM3MH0.VKpUJbe4LRRtpww8oXPRPKf0SI3dssf6-f6aXCCZLLI",
+			"type": "string"
+		}
+	]
+}
