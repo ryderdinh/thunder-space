@@ -5,6 +5,8 @@ const apiGetFindProject = require('../../controller/users/project/apiFindProject
 const apiDeleteProject = require("../../controller/users/project/apiDeleteProject")
 const apiPutUpdateProject = require("../../controller/users/project/apiPutUpdateProject")
 const apiPatchAddMemberToProject = require("../../controller/users/project/apiPatchAddMemberToProject")
+const apiPatchDeleteMemberOfProject = require("../../controller/users/project/apiPatchDeleteMemberOfProject")
+const apiPatchChangeRole =  require("../../controller/users/project/apiPatchChangeRole")
 const router = require('express').Router()
 
 //Get all project
@@ -19,3 +21,7 @@ exports.apiGetFindProject = router.get('/projects/:id', authenticateToken, apiGe
 exports.apiDeleteProject = router.delete('/projects/:id', authenticateToken, apiDeleteProject)
 //Update project
 exports.apiPutUpdateProject = router.put("/projects/:id", authenticateToken, apiPutUpdateProject)
+//Delete member 
+exports.apiPatchDeleteMemberOfProject = router.delete("/projects/:pid/members/:uid", authenticateToken, apiPatchDeleteMemberOfProject)
+//Change role 
+exports.apiPatchChangeRole = router.patch("/projects/:pid/members/:uid", authenticateToken, apiPatchChangeRole)

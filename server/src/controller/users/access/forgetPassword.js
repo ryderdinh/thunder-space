@@ -101,6 +101,7 @@ module.exports =  async (req, res, next) => {
         const staff = await Staff.findOneAndUpdate({ email : email }, update , { new : true })
          return res.status(200).send(new Response(200, 'success'))
     }catch(err){
+        console.log(err);
         res.status(400).send(new Response(400, "something went wrong"))
     }
 }
