@@ -6,8 +6,8 @@ module.exports = async (req, res, next) => {
         const uid = req.user.id;
         const pid = req.params.pid;
         const mid = req.params.uid;
-        const existProject = await Project.findOne({ _id: pid }).elemMatch("member",  { uid: uid, role:  "manager" });
-        if(!existProject) return res.status(400).send(new Response(400, "project is not available"));
+        const existProject = await Project.findOne({ _id: pid }).elemMatch("member",  { uid: uid, $or: [{ role: "manager"}, { role: "admin" }] });
+        if(!existProject) return res.status(400).send(new Response(400, "project is not available or you are not allowed to do this action"));
         const member = await Staff.findById(mid);
         if(!member) return res.status(400).send(400, "user does not exist");
         let existMember = existProject.member.find(member => member.uid.toString() === mid.toString());

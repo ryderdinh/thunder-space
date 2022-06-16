@@ -42,7 +42,7 @@ module.exports = async (req, res, next) => {
       (e) =>
         (e = {
           uid: e._id,
-          role: "manager",
+          role: e._id.toString() === userId.toString() ? "admin" : "manager",
         })
     );
     const members = [...existMember].map(

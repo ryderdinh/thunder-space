@@ -7,8 +7,8 @@ module.exports = async (req, res, next) => {
         const pid = req.params.id;
         const description = req.body.description || "";
         const name = req.body.name || "";
-        const existProject = await Project.findOne({ _id: pid }).elemMatch("member", { uid: uid, role: "manager" })
-        if(!existProject) return res.status(400).send(new Response(400, "project does not exist or you are not allow to edit this project"))
+        const existProject = await Project.findOne({ _id: pid }).elemMatch("member", { uid: uid, $or: [{ role: "manager"}, { role: "admin" }] })
+        if(!existProject) return res.status(400).send(new Response(400, "project is not available or you are not allowed to do this action"))
         description!=="" ? existProject.description = description : null;
         name !== "" ? existProject.name = name : null;
         const savedProject = await existProject.save();

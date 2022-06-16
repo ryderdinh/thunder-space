@@ -6,7 +6,7 @@ module.exports = async (req, res, next) => {
         const uid = req.user.id;
         const project = await Project.findById(pid);
         const members = (await project.populate("members")).member
-        const check = members.find(member => (member.uid.toString() == uid && member.role === "manager"));
+        const check = members.find(member => (member.uid.toString() == uid && member.role === "admin"));
         if(check){
             project.deleted = true;
             await project.save()
