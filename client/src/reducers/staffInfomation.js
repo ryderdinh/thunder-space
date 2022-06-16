@@ -1,22 +1,23 @@
 const initState = {
   _staffInfomation: {
-    name: ".",
-    birthday: ".",
-    phonenumber: ".",
-    position: ".",
-    department: ".",
-    email: ".",
-  },
-};
+    name: '.',
+    birthday: '.',
+    phonenumber: '.',
+    position: '.',
+    department: '.',
+    email: '.',
+    _id: null
+  }
+}
 export default function staffInfomation(state = initState, action) {
   switch (action.type) {
-    case "SET_STAFF_INFOMATION": {
+    case 'SET_STAFF_INFOMATION': {
       return {
         ...state,
-        _staffInfomation: action.payload,
-      };
+        _staffInfomation: action.payload
+      }
     }
     default:
-      return { ...state };
+      return { ...state }
   }
 }
