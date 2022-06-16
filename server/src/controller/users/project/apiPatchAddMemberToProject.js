@@ -8,7 +8,7 @@ module.exports = async(req, res, next) => {
         const uid = req.user.id;
         const pid = req.params.id;
         const emails = req.body.members;
-        const existProject = await Project.findOne({ id: pid }).elemMatch("member",  { uid: uid, role:  "manager" });
+        const existProject = await Project.findOne({ _id: pid }).elemMatch("member",  { uid: uid, role:  "manager" });
         const removeDuplicateEmails = [...new Set(emails)]
         if(removeDuplicateEmails.length !== emails.length) return res.send(new Response(400, "Your emails are duplicate"))
         if(!existProject) 

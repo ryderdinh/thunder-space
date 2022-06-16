@@ -11,7 +11,6 @@ module.exports = async (req, res, next) => {
         if(!existProject) return res.status(400).send(new Response(400, "project is not available"));
         const member = await Staff.findById(mid);
         if(!member) return res.status(400).send(new Response(400, "user does not exist"));
-        console.log(existProject.member);
         let existMember = existProject.member.find(member => member.uid.toString() === mid.toString());
         if(!existMember) return res.status(400).send(new Response(400, "can not change role user not in project"));
         for (let i = 0; i < existProject.member.length; i++) {

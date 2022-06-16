@@ -30,6 +30,9 @@ module.exports = async (req, res, next) => {
     if(checkUserInProject){
       const members = (await project.populate("members")).members;
       const membersToView = members.map(member => member.getProfileToCreateProject());
+      for (let i = 0; i < project.member.length; i++) {
+          membersToView[i].role = project.member[i].role;
+      }
       return res.status(200).send(new Response(200, "success",await project.getProjectDetailsWithIssues(membersToView, issuesToView)))
     }
     return res.status(400).send(new Response(400, "you are not in this project"))
