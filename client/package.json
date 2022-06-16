@@ -1,5 +1,6 @@
 {
   "name": "thunder-space",
+  "main": "index.js",
   "description": "",
   "author": {
     "name": "Ryder",
@@ -45,6 +46,7 @@
     "react-lottie": "^1.2.3",
     "react-lottie-player": "^1.4.1",
     "react-nice-avatar": "^1.2.4",
+    "react-otp-input": "^2.4.0",
     "react-picky-date-time": "^2.0.5",
     "react-quill": "^1.3.5",
     "react-recipes": "^1.4.0",

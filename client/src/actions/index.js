@@ -81,7 +81,6 @@ export const actLogout = (type) => {
         }, 1000)
       }
     } catch (error) {
-      console.log(error)
       removeToast()
       errorToast('Failed, logout failed!')
     }

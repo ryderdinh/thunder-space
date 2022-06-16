@@ -2,6 +2,7 @@ import { actRefreshPage } from 'actions'
 import 'animate.css'
 import { AnimatePresence } from 'framer-motion'
 import NotFound from 'pages/404'
+import ForgotPassword from 'pages/ForgotPassword'
 import Home from 'pages/Home'
 import IssuePage from 'pages/Issue'
 import Landing from 'pages/Landing'
@@ -73,6 +74,10 @@ export default function App() {
 
               <Route exact path='/login'>
                 <Login />
+              </Route>
+
+              <Route exact path='/forgot-password'>
+                <ForgotPassword />
               </Route>
 
               <Route exact path='/landing'>

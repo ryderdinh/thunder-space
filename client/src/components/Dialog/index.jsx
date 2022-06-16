@@ -1,6 +1,7 @@
 import { Dialog as DialogHeadlessui, Transition } from '@headlessui/react'
 import { LayoutContext } from 'context/LayoutContext'
 import { Fragment, useContext } from 'react'
+import WarningDialog from './WarningDialog'
 import CreateIssue from './Workflow/CreateIssue'
 import CreateProject from './Workflow/CreateProject'
 import DeleteIssue from './Workflow/DeleteIssue'
@@ -33,6 +34,10 @@ function Dialog() {
 
         {nameDialog === 'remove-issue' && (
           <DeleteIssue closeModal={closeDialog} data={data} />
+        )}
+
+        {nameDialog === 'denied-action' && (
+          <WarningDialog closeModal={closeDialog} data={data} />
         )}
       </DialogHeadlessui>
     </Transition>
