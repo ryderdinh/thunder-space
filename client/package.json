@@ -1,5 +1,6 @@
 {
   "name": "thunder-space",
+  "main": "index.js",
   "description": "",
   "author": {
     "name": "Ryder",

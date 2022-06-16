@@ -23,6 +23,10 @@ const projectApi = {
   delete: (id) => {
     const url = `/projects/${id}`
     return axiosClient.delete(url)
+  },
+  updateRole: (pid, uid, role) => {
+    const url = `/projects/${pid}/members/${uid}`
+    return axiosClient.patch(url, { role: role === 1 ? 'manager' : 'normal' })
   }
 }
 
