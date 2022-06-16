@@ -16,7 +16,6 @@ module.exports = async (req, res, next) => {
         const membersToView = members.map(member => member.getProfileToCreateProject())
         return res.status(200).send(new Response(200, "success", savedProject.getProjectDetails(membersToView)))
     } catch (error) {
-        console.log(error);
         return res.status(400).send(new Response(400, "something went wrong"))
     }
 }
