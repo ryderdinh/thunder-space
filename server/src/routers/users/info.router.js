@@ -1,14 +1,14 @@
 const router = require("express").Router()
 const authenticateToken = require("../../middleware/user/login/authenticateToken")
 const apiGetUserInfo = require('../../controller/users/info/apiGetUserInfo')
-const apiGetSearchUser = require('../../controller/users/info/searchUser')
+const apiGetAllUser = require('../../controller/users/info/apiGetAllUser')
 const apiPutUploadAvatar = require('../../controller/users/info/uploadAvatar')
-const apiGetAllUserToCreateProject = require('../../controller/users/info/apiGetAllUserToCreateProject')
-//Get current user's infor
-// exports.apiGetUserInfo = router.get('/users/:id', authenticateToken, apiGetUserInfo)
+const apiGetSearchUser = require('../../controller/users/info/apiGetSearchUser')
+//Get one user
+exports.apiGetUserInfo = router.get('/users/:uid', authenticateToken, apiGetUserInfo),
 //Get any user's info
-exports.apiGetSearchUser = router.get("/search/user", authenticateToken, apiGetSearchUser)
+exports.apiGetAllUser = router.get("/users", authenticateToken, apiGetAllUser)
 //Change avatar for current user
 exports.apiPutUploadAvatar = router.put('/upload/avatar', authenticateToken, apiPutUploadAvatar)
-///Get all user to create project
-exports.apiGetAllUserToCreateProject = router.get('/users/to-create-project', authenticateToken, apiGetAllUserToCreateProject)
+///Search user with contain value in email
+exports.apiGetSearchUser = router.get('/search/users', authenticateToken, apiGetSearchUser)

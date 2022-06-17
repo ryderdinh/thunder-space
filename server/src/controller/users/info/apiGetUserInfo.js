@@ -1,28 +1,12 @@
 const Staff = require("../../../models/Staff");
-const convertDate = require("../../../utils/convertDate");
-const express = require("express");
-const router = express.Router();
-const { convert } = require("../../../utils/dateFormat");
-
-module.exports = async (req, res) => {
+const Response = require("../../../models/Response");
+module.exports = async (req, res, next) => {
   try {
-    const userId = req.user.id;
-    const staff = await Staff.findById(userId);
-    if (staff) {
-      return await res.status(200).send({
-        status: 200,
-        data: staff.getProfile(),
-      });
-    } else {
-      return res.status(401).send({
-        status: 401,
-        error: "unauthorized",
-      });
-    }
+    const uid = req.params.uid;
+    const user = await Staff.findById(uid);
+    if(!user) return res.status(400).send(new Response(400, "user not found"))
+    return res.status(200).send(new Response(200, "success", user.getProfileToCreateProject()))
   } catch (error) {
-    res.status(400).send({
-      status: 400,
-      error: "something went wrong",
-    });
+    return res.status(400).send(new Response(400, error.message))
   }
 };

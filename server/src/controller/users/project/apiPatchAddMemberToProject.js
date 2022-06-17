@@ -8,12 +8,15 @@ module.exports = async(req, res, next) => {
         const uid = req.user.id;
         const pid = req.params.id;
         const emails = req.body.members;
+        console.log(req.headers);
         const existProject = await Project.findOne({ _id: pid }).elemMatch("member",  { uid: uid, $or: [{ role: "manager"}, { role: "admin" }] });
+       
         const removeDuplicateEmails = [...new Set(emails)]
-        if(removeDuplicateEmails.length !== emails.length) return res.send(new Response(400, "Your emails are duplicate"))
+        if(removeDuplicateEmails.length !== emails.length) return res.status(400).send(new Response(400, "request is not allowed"))
         if(!existProject) 
             return res.status(400).send(new Response(400, "project is not available or you are not allowed to do this action"));
         const newMembers = await Staff.find({ email: emails });
+        if(newMembers.length  === 0) return res.status(400).send(new Response(400, "can not add user"))
         const newDataMembers = newMembers.map(member => member = {
                 uid: member._id,
                 role: "normal"
