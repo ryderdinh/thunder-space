@@ -12,6 +12,7 @@ module.exports = async (req, res, next) => {
         if(!member) return res.status(400).send(400, "user does not exist");
         let existMember = existProject.member.find(member => member.uid.toString() === mid.toString());
         if(!existMember) return res.status(400).send(new Response(400, "can not delete user not in project"));
+        if(existMember.role === "admin") return res.status(400).send(new Response(400, "you are not allowed to do this action"));
         for (let i = 0; i < existProject.member.length; i++) {
             if(existProject.member[i].uid.toString() === mid.toString()){
                 existProject.member.splice(i, 1)
