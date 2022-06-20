@@ -2,6 +2,7 @@ import { Dialog as DialogHeadlessui, Transition } from '@headlessui/react'
 import { LayoutContext } from 'context/LayoutContext'
 import { Fragment, useContext } from 'react'
 import WarningDialog from './WarningDialog'
+import AddMemberToProject from './Workflow/AddMemberToProject'
 import CreateIssue from './Workflow/CreateIssue'
 import CreateProject from './Workflow/CreateProject'
 import DeleteIssue from './Workflow/DeleteIssue'
@@ -38,6 +39,10 @@ function Dialog() {
 
         {nameDialog === 'denied-action' && (
           <WarningDialog closeModal={closeDialog} data={data} />
+        )}
+
+        {nameDialog === 'add-member-to-project' && (
+          <AddMemberToProject closeModal={closeDialog} data={data} />
         )}
       </DialogHeadlessui>
     </Transition>

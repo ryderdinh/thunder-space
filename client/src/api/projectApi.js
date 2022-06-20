@@ -3,13 +3,11 @@ import axiosClient from './http-common'
 const projectApi = {
   get: (id) => {
     const url = `/projects/${id}`
-
     return axiosClient.get(url)
   },
   gets: (search = null) => {
     const url = '/projects'
     let params = { search }
-
     return axiosClient.get(url, { params })
   },
   create: (data) => {
@@ -22,6 +20,14 @@ const projectApi = {
   },
   delete: (id) => {
     const url = `/projects/${id}`
+    return axiosClient.delete(url)
+  },
+  addUser: (pid, email) => {
+    const url = `/projects/${pid}/members/add`
+    return axiosClient.patch(url, [email])
+  },
+  removeUser: (pid, uid) => {
+    const url = `/projects/${pid}/members/${uid}`
     return axiosClient.delete(url)
   },
   updateRole: (pid, uid, role) => {
