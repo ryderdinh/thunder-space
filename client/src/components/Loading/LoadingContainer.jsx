@@ -1,17 +1,9 @@
-import ThreeDot from './ThreeDot';
+import BallTriangle from './BallTriangle'
 
 export default function LoadingContainer() {
-	const style = {
-		position: 'absolute',
-		top: '50%',
-		left: '50%',
-		transform: 'translate(-50%, -50%)',
-		width: '50px',
-		height: 'auto'
-	};
-	return (
-		<div className='loading-container' style={style}>
-			<ThreeDot />
-		</div>
-	);
+  return (
+    <div className='loading-container flex h-screen w-full items-center justify-center'>
+      <BallTriangle w={40} h={40} stroke={'#059669'} />
+    </div>
+  )
 }

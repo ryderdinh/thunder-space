@@ -9,16 +9,16 @@ import {
 } from '@heroicons/react/solid'
 import { joiResolver } from '@hookform/resolvers/joi'
 import { actFetchProject, actUpdateIssue } from 'actions'
-import { projectApi } from 'api'
+import { projectApi, userApi } from 'api'
 import { Col, Dropdown, Row } from 'components/Layouts'
 import BallTriangle from 'components/Loading/BallTriangle'
 import { LayoutContext } from 'context/LayoutContext'
 import { useInput } from 'hooks'
 import Joi from 'joi'
 import queryString from 'query-string'
-import { Fragment, useContext, useEffect, useState } from 'react'
+import { Fragment, useContext, useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { useCopyClipboard } from 'react-recipes'
+import { useCopyClipboard, useDebounce } from 'react-recipes'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useHistory, useLocation, useParams } from 'react-router-dom'
 import { successToast } from 'utilities/toast'
@@ -237,6 +237,14 @@ const typeOfUser = [
 
 const typeOfMember = ['Manager', 'Member']
 
+function searchUsers(keyword) {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(keyword)
+    }, 1000)
+  }).then((data) => data)
+}
+
 function CollaboratorTab({
   dataProject,
   isLoading,
@@ -244,28 +252,56 @@ function CollaboratorTab({
   permissions,
   ownId
 }) {
-  //? Context
+  //? Context & Redux
   const { openDialog } = useContext(LayoutContext)
-
   const dispatch = useDispatch()
 
+  //? State
   const [selected, setSelected] = useState(typeOfUser[0])
   const [memberId, setMemberId] = useState('')
+  const [searchFuncAddUser, setSearchFuncAddUser] = useState({
+    isLoading: false,
+    data: [],
+    error: null
+  })
 
-  const { value: valueAddUser, bind: bindAddUser } = useInput('')
+  const previousSearchAddMember = useRef(null)
+
+  //? Hooks
+  const {
+    value: valueAddUser,
+    setValue: setValueAddUser,
+    bind: bindAddUser
+  } = useInput('')
   const { value: valueSearchMember, bind } = useInput('')
+
+  const debouncedSearchTerm = useDebounce(valueAddUser, 400)
 
   const handleFindEmail = () => {
     if (!valueAddUser) return
 
     permissionsAccept('addMember')
 
-    console.log(valueAddUser)
+    openDialog('add-member-to-project', {
+      pid: dataProject._id,
+      email: valueAddUser
+    })
+  }
+
+  const getUniqueUser = (arr1, arr2) => {
+    return arr1.filter((item) => {
+      for (const _ of arr2) {
+        if (_.email === item.email) return false
+      }
+
+      return true
+    })
   }
 
   const handleSelectedFilter = (value) => {
     setSelected(value)
   }
+
   const handleChangeRole = async (value) => {
     try {
       await projectApi.updateRole(
@@ -347,9 +383,51 @@ function CollaboratorTab({
     return string.charAt(0).toUpperCase() + string.slice(1)
   }
 
+  const handleSelectWhenSearchUser = (email) => {
+    setValueAddUser(email)
+    previousSearchAddMember.current = email
+  }
+
+  //? Effect
+  useEffect(() => {
+    const searchEmail = async (keyword) => {
+      try {
+        const resp = await userApi.searchByEmail(keyword)
+        setSearchFuncAddUser({
+          isLoading: false,
+          data: getUniqueUser(resp.message, dataProject.member || []),
+          error: null
+        })
+      } catch (error) {
+        setSearchFuncAddUser({
+          isLoading: false,
+          data: [],
+          error: error.message
+        })
+      }
+    }
+
+    if (debouncedSearchTerm) {
+      setSearchFuncAddUser((prev) => ({
+        ...prev,
+        isLoading: true,
+        error: null
+      }))
+      searchUsers(debouncedSearchTerm).then((result) => {
+        searchEmail(result)
+      })
+    } else {
+      setSearchFuncAddUser({
+        isLoading: false,
+        data: [],
+        error: null
+      })
+    }
+  }, [dataProject.member, debouncedSearchTerm])
+
   return (
     <div className='h-full'>
-      <div className='space-y-7 p-6 pr-0'>
+      <div className='space-y-7 p-6 pb-0 pr-0'>
         <div className='space-y-3'>
           <div className='space-y-2'>
             <h5 className='text-xl font-bold text-neutral-100'>
@@ -379,34 +457,88 @@ function CollaboratorTab({
           </div>
         </div>
 
-        <div className='relative flex items-center gap-3'>
-          <input
-            type='email'
-            className='block w-full rounded-md border 
-            border-neutral-300 py-[7px] pl-3 text-sm 
-            text-neutral-700 shadow-sm focus:border-emerald-500 
-            focus:outline-none focus:ring-2 focus:ring-emerald-500'
-            placeholder='Enter email address'
-            {...bindAddUser}
-          />
+        <div className='relative space-y-1'>
+          <div className='relative flex items-center gap-3'>
+            <input
+              type='email'
+              className='block w-full rounded-md border 
+              border-neutral-300 py-[7px] pl-3 text-sm 
+              text-neutral-700 shadow-sm focus:border-emerald-500 
+              focus:outline-none focus:ring-2 focus:ring-emerald-500'
+              placeholder='Enter email address'
+              {...bindAddUser}
+            />
 
-          <button
-            type='submit'
-            className='min-w-[100px] rounded-md border 
-            border-emerald-600 bg-emerald-600 px-3 py-[7px]
-            text-sm text-neutral-100 transition-all 
-            duration-150 
-            ease-linear 
-            hover:bg-transparent
-            hover:text-emerald-600  
-            disabled:cursor-not-allowed
-            disabled:border-neutral-400
-            disabled:bg-transparent
-            disabled:text-neutral-400 disabled:opacity-50'
-            onClick={handleFindEmail}
-          >
-            Add
-          </button>
+            <button
+              type='submit'
+              className='min-w-[100px] rounded-md border 
+              border-emerald-600 bg-emerald-600 px-3 py-[7px]
+              text-sm text-neutral-100 transition-all 
+              duration-150 
+              ease-linear 
+              hover:bg-transparent
+              hover:text-emerald-600  
+              disabled:cursor-not-allowed
+              disabled:border-neutral-400
+              disabled:bg-transparent
+              disabled:text-neutral-400 disabled:opacity-50'
+              onClick={handleFindEmail}
+            >
+              Add
+            </button>
+          </div>
+
+          {valueAddUser !== '' &&
+            valueAddUser !== previousSearchAddMember.current && (
+              <div
+                className='absolute z-10 max-h-60 w-full 
+              overflow-y-auto rounded-md bg-neutral-800 py-4
+              text-sm drop-shadow-lg'
+              >
+                {searchFuncAddUser.isLoading && (
+                  <div
+                    className='flex w-full items-center justify-center
+                  border-t-2 border-[#282828] px-6 py-6'
+                  >
+                    <BallTriangle w={30} h={30} stroke={'#059669'} />
+                  </div>
+                )}
+
+                {!searchFuncAddUser.isLoading &&
+                  !searchFuncAddUser.data?.length && (
+                    <div className='px-4 py-2'>0 result</div>
+                  )}
+
+                {!searchFuncAddUser.isLoading &&
+                  searchFuncAddUser.data?.map((user) => (
+                    <div
+                      key={user._id}
+                      className='flex cursor-pointer items-center gap-2 px-4 
+                      py-2 transition-all duration-75 ease-linear 
+                      hover:bg-emerald-600/70'
+                      onClick={() => handleSelectWhenSearchUser(user.email)}
+                    >
+                      <img
+                        src={user.avatar}
+                        alt='user avatar'
+                        className='h-9 w-9 rounded-full object-cover'
+                      />
+
+                      <div className='space-y-1'>
+                        <div className='text-xs font-medium text-neutral-50'>
+                          <span>{user.name}</span>
+                        </div>
+                        <div
+                          className='text-xs font-light italic 
+                          text-neutral-50'
+                        >
+                          <span>{user.email}</span>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+              </div>
+            )}
         </div>
 
         <div
@@ -524,7 +656,7 @@ function CollaboratorTab({
               </div>
             )}
 
-            {!isLoading && !dataProject?.member?.length && (
+            {/* {!isLoading && !dataProject?.member?.length && (
               <div
                 className='flex w-full items-center justify-center
                   border-t-2 border-[#282828] px-6 py-10'
@@ -536,7 +668,7 @@ function CollaboratorTab({
                   No collaborator
                 </p>
               </div>
-            )}
+            )} */}
 
             {!isLoading &&
               dataProject?.member?.length &&

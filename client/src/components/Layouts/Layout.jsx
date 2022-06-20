@@ -29,10 +29,6 @@ export default function Layout({ children }) {
       toast.error('Không có kết nối mạng')
     }
 
-    // if (checkId) {
-    //   history.push('/')
-    // }
-
     if (!auth) history.push('/login')
   }, [auth, history, isOnline])
 

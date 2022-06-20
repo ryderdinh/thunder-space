@@ -30,7 +30,7 @@ export default function ProjectPage({ type = '' }) {
       <Main>
         <HeaderContainer pathName={path} />
         <ViewMain>
-          <ViewBox>
+          <ViewBox className='h-full' classNameCol='h-full'>
             {pathName?.pid && !type && <ProjectDetail />}
 
             {pathName?.pid && type === 'setting' && <ProjectSetting />}

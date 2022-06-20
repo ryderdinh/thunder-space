@@ -417,7 +417,7 @@ export const actGetAllUsers = () => {
     await dispatch(setUsersLoading(true))
 
     try {
-      const res = await userApi.getAllUsers()
+      const res = await userApi.getUsers()
 
       await dispatch(setUsersData(res.data))
     } catch (error) {
