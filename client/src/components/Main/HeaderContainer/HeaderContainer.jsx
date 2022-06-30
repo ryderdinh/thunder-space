@@ -4,7 +4,7 @@ import { useContext, useEffect, useState } from 'react'
 import { NameContainer } from './NameContainer'
 
 export default function HeaderContainer({ pathName }) {
-  const { sidebar } = useContext(LayoutContext)
+  const { sidebar, setPreviousPath } = useContext(LayoutContext)
   const [name, setName] = useState('')
 
   useEffect(() => {
@@ -22,6 +22,7 @@ export default function HeaderContainer({ pathName }) {
     }
 
     setName(list[pathName])
+    setPreviousPath(`/${pathName}`)
   }, [pathName])
 
   const toggleSidebar = () => {

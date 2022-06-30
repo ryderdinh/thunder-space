@@ -1,5 +1,6 @@
 import { actRefreshPage } from 'actions'
 import 'animate.css'
+import LayoutContextProvider from 'context/LayoutContext'
 import { AnimatePresence } from 'framer-motion'
 import NotFound from 'pages/404'
 import ForgotPassword from 'pages/ForgotPassword'
@@ -7,7 +8,7 @@ import Home from 'pages/Home'
 import IssuePage from 'pages/Issue'
 import Landing from 'pages/Landing'
 import Login from 'pages/Login'
-import Profile from 'pages/Profile'
+import Notification from 'pages/Notification'
 import ProjectPage from 'pages/Project'
 import Report from 'pages/Report'
 import TimeSheets from 'pages/TimeSheets'
@@ -27,67 +28,81 @@ export default function App() {
   }, [dispatch])
 
   return (
-    <Router>
-      <Route
-        render={({ location }) => (
-          <AnimatePresence exitBeforeEnter>
-            <Switch location={location} key={location.pathname}>
-              <Route exact path='/'>
-                <Home />
-              </Route>
+    <LayoutContextProvider>
+      <Router>
+        <Route
+          render={({ location }) => (
+            <AnimatePresence exitBeforeEnter>
+              <Switch location={location} key={location.pathname}>
+                {/* Landing page */}
+                <Route exact path='/'>
+                  <Landing />
+                </Route>
 
-              <Route exact path='/timesheets'>
-                <TimeSheets />
-              </Route>
+                {/* Home pages */}
+                <Route exact path='/home'>
+                  <Home />
+                </Route>
 
-              <Route exact path='/report'>
-                <Report />
-              </Route>
+                {/* Timesheet page */}
+                <Route exact path='/timesheets'>
+                  <TimeSheets />
+                </Route>
 
-              <Route path='/workflow'>
-                <Route component={Workflow} />
-              </Route>
+                {/* Report page */}
+                <Route exact path='/report'>
+                  <Report />
+                </Route>
 
-              <Route exact path='/works'>
-                <Work />
-              </Route>
+                {/* Overview works and projects */}
+                <Route path='/workflow'>
+                  <Route component={Workflow} />
+                </Route>
 
-              <Route exact path='/projects'>
-                <ProjectPage />
-              </Route>
-              <Route exact path='/projects/:pid'>
-                <ProjectPage />
-              </Route>
-              <Route exact path='/projects/:pid/settings'>
-                <ProjectPage type='setting' />
-              </Route>
-              <Route exact path='/projects/:pid/:iid'>
-                <IssuePage />
-              </Route>
-              <Route exact path='/projects/:pid/:iid/settings'>
-                <IssuePage type='setting' />
-              </Route>
+                {/* Work pages */}
+                <Route exact path='/works'>
+                  <Work />
+                </Route>
 
-              <Route exact path='/account'>
-                <Profile />
-              </Route>
+                {/* Project pages */}
+                <Route exact path='/projects'>
+                  <ProjectPage />
+                </Route>
+                <Route exact path='/projects/:pid'>
+                  <ProjectPage />
+                </Route>
+                <Route exact path='/projects/:pid/settings'>
+                  <ProjectPage type='setting' />
+                </Route>
+                <Route exact path='/projects/:pid/:iid'>
+                  <IssuePage />
+                </Route>
+                <Route exact path='/projects/:pid/:iid/settings'>
+                  <IssuePage type='setting' />
+                </Route>
 
-              <Route exact path='/login'>
-                <Login />
-              </Route>
+                {/* Notification page*/}
+                <Route exact path='/account'>
+                  <Notification />
+                </Route>
 
-              <Route exact path='/forgot-password'>
-                <ForgotPassword />
-              </Route>
+                {/* Login page */}
+                <Route exact path='/login'>
+                  <Login />
+                </Route>
 
-              <Route exact path='/landing'>
-                <Landing />
-              </Route>
-              <Route component={NotFound} />
-            </Switch>
-          </AnimatePresence>
-        )}
-      />
-    </Router>
+                {/* Forgot password page */}
+                <Route exact path='/forgot-password'>
+                  <ForgotPassword />
+                </Route>
+
+                {/* 404 */}
+                <Route component={NotFound} />
+              </Switch>
+            </AnimatePresence>
+          )}
+        />
+      </Router>
+    </LayoutContextProvider>
   )
 }

@@ -1,4 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react'
+/* eslint-disable no-unused-vars */
+import { useEffect, useRef, useState } from 'react'
 
 function IssueComment({ className = '', data = [] }) {
   //? State

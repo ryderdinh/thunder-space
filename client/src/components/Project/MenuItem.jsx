@@ -125,53 +125,53 @@ function EditActiveIcon(props) {
   )
 }
 
-function DuplicateInactiveIcon(props) {
-  return (
-    <svg
-      {...props}
-      viewBox='0 0 20 20'
-      fill='none'
-      xmlns='http://www.w3.org/2000/svg'
-    >
-      <path
-        d='M4 4H12V12H4V4Z'
-        fill='#d1fae5'
-        stroke='#059669'
-        strokeWidth='2'
-      />
-      <path
-        d='M8 8H16V16H8V8Z'
-        fill='#d1fae5'
-        stroke='#059669'
-        strokeWidth='2'
-      />
-    </svg>
-  )
-}
+// function DuplicateInactiveIcon(props) {
+//   return (
+//     <svg
+//       {...props}
+//       viewBox='0 0 20 20'
+//       fill='none'
+//       xmlns='http://www.w3.org/2000/svg'
+//     >
+//       <path
+//         d='M4 4H12V12H4V4Z'
+//         fill='#d1fae5'
+//         stroke='#059669'
+//         strokeWidth='2'
+//       />
+//       <path
+//         d='M8 8H16V16H8V8Z'
+//         fill='#d1fae5'
+//         stroke='#059669'
+//         strokeWidth='2'
+//       />
+//     </svg>
+//   )
+// }
 
-function DuplicateActiveIcon(props) {
-  return (
-    <svg
-      {...props}
-      viewBox='0 0 20 20'
-      fill='none'
-      xmlns='http://www.w3.org/2000/svg'
-    >
-      <path
-        d='M4 4H12V12H4V4Z'
-        fill='#059669'
-        stroke='#34d399'
-        strokeWidth='2'
-      />
-      <path
-        d='M8 8H16V16H8V8Z'
-        fill='#059669'
-        stroke='#34d399'
-        strokeWidth='2'
-      />
-    </svg>
-  )
-}
+// function DuplicateActiveIcon(props) {
+//   return (
+//     <svg
+//       {...props}
+//       viewBox='0 0 20 20'
+//       fill='none'
+//       xmlns='http://www.w3.org/2000/svg'
+//     >
+//       <path
+//         d='M4 4H12V12H4V4Z'
+//         fill='#059669'
+//         stroke='#34d399'
+//         strokeWidth='2'
+//       />
+//       <path
+//         d='M8 8H16V16H8V8Z'
+//         fill='#059669'
+//         stroke='#34d399'
+//         strokeWidth='2'
+//       />
+//     </svg>
+//   )
+// }
 
 function ArchiveInactiveIcon(props) {
   return (
@@ -235,35 +235,35 @@ function ArchiveActiveIcon(props) {
   )
 }
 
-function MoveInactiveIcon(props) {
-  return (
-    <svg
-      {...props}
-      viewBox='0 0 20 20'
-      fill='none'
-      xmlns='http://www.w3.org/2000/svg'
-    >
-      <path d='M10 4H16V10' stroke='#059669' strokeWidth='2' />
-      <path d='M16 4L8 12' stroke='#059669' strokeWidth='2' />
-      <path d='M8 6H4V16H14V12' stroke='#059669' strokeWidth='2' />
-    </svg>
-  )
-}
+// function MoveInactiveIcon(props) {
+//   return (
+//     <svg
+//       {...props}
+//       viewBox='0 0 20 20'
+//       fill='none'
+//       xmlns='http://www.w3.org/2000/svg'
+//     >
+//       <path d='M10 4H16V10' stroke='#059669' strokeWidth='2' />
+//       <path d='M16 4L8 12' stroke='#059669' strokeWidth='2' />
+//       <path d='M8 6H4V16H14V12' stroke='#059669' strokeWidth='2' />
+//     </svg>
+//   )
+// }
 
-function MoveActiveIcon(props) {
-  return (
-    <svg
-      {...props}
-      viewBox='0 0 20 20'
-      fill='none'
-      xmlns='http://www.w3.org/2000/svg'
-    >
-      <path d='M10 4H16V10' stroke='#34d399' strokeWidth='2' />
-      <path d='M16 4L8 12' stroke='#34d399' strokeWidth='2' />
-      <path d='M8 6H4V16H14V12' stroke='#34d399' strokeWidth='2' />
-    </svg>
-  )
-}
+// function MoveActiveIcon(props) {
+//   return (
+//     <svg
+//       {...props}
+//       viewBox='0 0 20 20'
+//       fill='none'
+//       xmlns='http://www.w3.org/2000/svg'
+//     >
+//       <path d='M10 4H16V10' stroke='#34d399' strokeWidth='2' />
+//       <path d='M16 4L8 12' stroke='#34d399' strokeWidth='2' />
+//       <path d='M8 6H4V16H14V12' stroke='#34d399' strokeWidth='2' />
+//     </svg>
+//   )
+// }
 
 function DeleteInactiveIcon(props) {
   return (

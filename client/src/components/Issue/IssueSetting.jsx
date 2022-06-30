@@ -41,7 +41,7 @@ export const IssueSetting = () => {
   const [tab, setTab] = useState(
     queryString.parse(location.search)?.opt || 'general'
   )
-  const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
+  const [, setMobileFiltersOpen] = useState(false)
   const [allowActionForm, setAllowActionForm] = useState({
     issueName: false
   })

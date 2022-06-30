@@ -2,7 +2,7 @@ import { useInput } from 'hooks'
 import { useEffect } from 'react'
 
 function SearchBox({ defaultValue, placeholder, handleSearch }) {
-  const { value, bind, reset, setValue } = useInput('')
+  const { value, bind, setValue } = useInput('')
 
   useEffect(() => {
     setValue(defaultValue)
