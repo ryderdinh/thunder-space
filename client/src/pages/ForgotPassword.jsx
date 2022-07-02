@@ -1,6 +1,6 @@
 import { AnimatePresence, motion } from 'framer-motion'
 import { useInput } from 'hooks'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Toaster } from 'react-hot-toast'
 import OtpInput from 'react-otp-input'
 import { useInterval, useQueryParams } from 'react-recipes'
@@ -9,13 +9,17 @@ import { successToast } from 'utilities/toast'
 const ForgotPassword = () => {
   const { getParams, setParams } = useQueryParams()
   const { step } = getParams()
+  const idxUpdateRef = useRef(0)
 
   const handleStep = (stepNumber) => {
-    setParams({ step: stepNumber })
+    stepNumber < 4 && setParams({ step: stepNumber })
   }
 
   useEffect(() => {
     !step && setParams({ step: 1 })
+    idxUpdateRef.current === 0 && setParams({ step: 1 })
+
+    idxUpdateRef.current++
   }, [step, setParams])
 
   return (
@@ -203,28 +207,42 @@ const Step3 = ({ handleStep }) => {
     confirmPassword: null
   })
 
+  const handleError = () => {
+    let errorUpdate = { ...error }
+
+    let checkError = false
+    if (password.length < 6) {
+      errorUpdate = { ...errorUpdate, password: 'At least 6 characters' }
+      checkError = true
+    } else errorUpdate = { ...errorUpdate, password: null }
+
+    if (confirmPassword.length < 6) {
+      errorUpdate = { ...errorUpdate, confirmPassword: 'At least 6 characters' }
+      checkError = true
+    } else errorUpdate = { ...errorUpdate, confirmPassword: '' }
+
+    if (!checkError && password !== confirmPassword) {
+      checkError = true
+      errorUpdate = {
+        ...errorUpdate,
+        confirmPassword: 'Confirm password does not match'
+      }
+    } else if (!checkError) {
+      errorUpdate = { ...errorUpdate, confirmPassword: null }
+    }
+
+    setError({ ...errorUpdate })
+    return checkError
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault()
-
-    if (password.length < 6) {
-      setError({ ...error, password: 'At least 6 characters' })
-      return
-    }
-    if (confirmPassword.length < 6) {
-      setError({ ...error, confirmPassword: 'At least 6 characters' })
-      return
-    }
-
-    if (password !== confirmPassword) {
-      setError({ ...error, confirmPassword: 'Confirm password does not match' })
-      return
-    }
-
-    setError({
-      password: null,
-      confirmPassword: null
-    })
+    !handleError() && handleStep(4)
   }
+
+  useEffect(() => {
+    return () => {}
+  })
 
   return (
     <motion.form
@@ -290,6 +308,7 @@ const Step3 = ({ handleStep }) => {
         bg-emerald-600 py-3 px-5 text-neutral-50
         transition-all
         duration-150 ease-in-out hover:bg-emerald-700'
+        onClick={handleSubmit}
       >
         Submit
       </button>

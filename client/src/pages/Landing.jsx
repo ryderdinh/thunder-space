@@ -1,12 +1,13 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import Logo from 'components/Icon/Logo'
-import { LayoutContext } from 'context/LayoutContext'
-import { useContext } from 'react'
+import { useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 
 export default function Landing() {
   const history = useHistory()
-  const { setPreviousPath } = useContext(LayoutContext)
+  useEffect(() => {
+    localStorage.setItem('previousPath', '/')
+  }, [])
 
   return (
     <>
@@ -31,7 +32,6 @@ export default function Landing() {
                   font-medium text-white hover:bg-transparent hover:text-white 
                   focus:outline-none focus:ring active:text-opacity-75 sm:w-auto'
                   onClick={() => {
-                    setPreviousPath('/')
                     history.push('/login')
                   }}
                 >

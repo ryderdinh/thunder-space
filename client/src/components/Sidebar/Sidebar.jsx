@@ -23,7 +23,7 @@ export default function Sidebar() {
       </div>
       <ul className='nav-links'>
         <SidebarItem
-          path='/'
+          path='/home'
           title='Home'
           type='sub-menu blank'
           icon='bx bx-grid-alt'

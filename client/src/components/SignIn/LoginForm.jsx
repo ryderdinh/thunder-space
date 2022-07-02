@@ -4,6 +4,7 @@ import GoogleIcon from 'components/Icon/GoogleIcon'
 import { useState } from 'react'
 import toast from 'react-hot-toast'
 import { useDispatch } from 'react-redux'
+import { useHistory } from 'react-router-dom'
 
 export default function LoginForm() {
   // Create state
@@ -13,6 +14,8 @@ export default function LoginForm() {
     isShow: false,
     isReadOnly: true
   })
+
+  const history = useHistory()
 
   // Create dispatch
   const dispatch = useDispatch()
@@ -55,6 +58,10 @@ export default function LoginForm() {
     if (event.key === 'Enter') {
       handleSignIn()
     }
+  }
+
+  const redirectToForgotPassword = () => {
+    history.push('/forgot-password')
   }
 
   return (
@@ -129,7 +136,9 @@ export default function LoginForm() {
 								<input autoComplete='off' type='checkbox' id='remember' />
 								<label htmlFor='remember'>Remember me</label>
 							</div> */}
-          <div className='link forgot-link'>Forgot Password ?</div>
+          <div className='link forgot-link' onClick={redirectToForgotPassword}>
+            Forgot Password ?
+          </div>
         </div>
 
         <div className='rounded-button login-cta' onClick={handleSignIn}>
