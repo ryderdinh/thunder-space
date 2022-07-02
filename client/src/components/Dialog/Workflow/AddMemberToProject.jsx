@@ -4,11 +4,11 @@ import { Fragment, useState } from 'react'
 import { errorToast, successToast } from 'utilities/toast'
 
 function AddMemberToProject({ closeModal, data: { pid, email } }) {
-  const [role, setRole] = useState('member')
+  const [role] = useState('member')
 
   const handleSubmit = async () => {
     try {
-      const resp = await projectApi.addUser(pid, email)
+      await projectApi.addUser(pid, email)
       successToast('Added user successfully')
     } catch (error) {
       console.log(error)

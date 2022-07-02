@@ -60,7 +60,7 @@ export const ProjectSetting = () => {
   const [tab, setTab] = useState(
     queryString.parse(location.search)?.opt || 'general'
   )
-  const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
+  const [, setMobileFiltersOpen] = useState(false)
   const [own, setOwn] = useState({})
 
   //? Function

@@ -42,7 +42,7 @@ axiosClient.interceptors.response.use(
     //   return Promise.reject(error)
     // }
 
-    throw error.response.data
+    throw originalRequest
   }
 )
 

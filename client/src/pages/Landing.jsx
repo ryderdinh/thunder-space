@@ -1,7 +1,13 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import Logo from 'components/Icon/Logo'
+import { LayoutContext } from 'context/LayoutContext'
+import { useContext } from 'react'
+import { useHistory } from 'react-router-dom'
 
-function Landing() {
+export default function Landing() {
+  const history = useHistory()
+  const { setPreviousPath } = useContext(LayoutContext)
+
   return (
     <>
       <div className='flex w-full flex-col'>
@@ -19,21 +25,29 @@ function Landing() {
               </p>
 
               <div className='mt-8 flex flex-wrap justify-center gap-4'>
-                <a
-                  className='block w-full rounded border border-emerald-600 bg-emerald-600 px-12 py-3 text-sm font-medium text-white hover:bg-transparent hover:text-white focus:outline-none focus:ring active:text-opacity-75 sm:w-auto'
-                  href='/get-started'
+                <div
+                  className='block w-full cursor-pointer rounded border 
+                  border-emerald-600 bg-emerald-600 px-12 py-3 text-sm 
+                  font-medium text-white hover:bg-transparent hover:text-white 
+                  focus:outline-none focus:ring active:text-opacity-75 sm:w-auto'
+                  onClick={() => {
+                    setPreviousPath('/')
+                    history.push('/login')
+                  }}
                 >
-                  Get Started
-                </a>
+                  Login
+                </div>
 
                 <a
-                  className='block w-full rounded border border-emerald-600 px-12 py-3 text-sm font-medium text-white hover:bg-emerald-600 focus:outline-none focus:ring active:bg-emerald-500 sm:w-auto'
+                  className='block w-full rounded border border-emerald-600 px-12 
+                  py-3 text-sm font-medium text-white hover:bg-emerald-600 
+                  focus:outline-none focus:ring active:bg-emerald-500 sm:w-auto'
                   href='/about'
                 >
                   Learn More
                 </a>
               </div>
-            </div>  
+            </div>
           </div>
         </section>
 
@@ -61,7 +75,7 @@ function Landing() {
 
                 <form>
                   <div className='relative max-w-lg'>
-                    <label className='sr-only' for='email'>
+                    <label className='sr-only' htmlFor='email'>
                       Email
                     </label>
 
@@ -84,9 +98,9 @@ function Landing() {
                         stroke='currentColor'
                       >
                         <path
-                          stroke-linecap='round'
-                          stroke-linejoin='round'
-                          stroke-width='2'
+                          strokeLinecap='round'
+                          strokeLinejoin='round'
+                          strokeWidth='2'
                           d='M12 6v6m0 0v6m0-6h6m-6 0H6'
                         />
                       </svg>
@@ -176,5 +190,3 @@ function Landing() {
     </>
   )
 }
-
-export default Landing
