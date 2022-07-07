@@ -62,24 +62,18 @@ export const actSignIn = (dataUser) => {
   }
 }
 
-export const actLogout = (type) => {
+export const actLogout = (type, onSuccess) => {
   loadingToast('Logging out...')
 
-  return async (dispatch) => {
+  return async () => {
     try {
-      const res = await authApi.logout(type)
-      console.log(res)
+      await authApi.logout(type)
 
-      if (res.message === 'success') {
-        removeToast()
-        removeCookie('all')
-        successToast('Successful logout!')
+      removeToast()
+      removeCookie('all')
+      successToast('Successful logout!')
 
-        setTimeout(() => {
-          dispatch(setCheckLogin(false))
-          window.location.href = window.location.origin
-        }, 1000)
-      }
+      onSuccess()
     } catch (error) {
       removeToast()
       errorToast('Failed, logout failed!')
@@ -417,7 +411,7 @@ export const actGetAllUsers = () => {
     await dispatch(setUsersLoading(true))
 
     try {
-      const res = await userApi.getAllUsers()
+      const res = await userApi.getUsers()
 
       await dispatch(setUsersData(res.data))
     } catch (error) {

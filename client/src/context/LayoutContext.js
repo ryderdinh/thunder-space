@@ -10,6 +10,9 @@ export default function LayoutContextProvider({ children }) {
   const [nameDialog, setNameDialog] = useState('')
   const [data, setData] = useState({})
 
+  const [auth,setAuth] = useState(false)
+  const [previousPath,setPreviousPath] = useState('/')
+
   const openDialog = (nameDialog, dataDialog) => {
     setNameDialog(nameDialog)
     setData(dataDialog)
@@ -57,7 +60,9 @@ export default function LayoutContextProvider({ children }) {
         closeDialog,
         dialog,
         sidebar,
-        data
+        data,
+        previousPath,
+        setPreviousPath
       }}
     >
       {children}

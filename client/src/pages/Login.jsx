@@ -15,8 +15,13 @@ export default function Login() {
   }, [])
 
   useEffect(() => {
-    // console.log(history.goBack())
-    auth && history.goBack()
+    let previousPath = localStorage.getItem('previousPath')
+
+    if (previousPath !== '/home' && previousPath !== '/') {
+      auth && history.goBack()
+    } else {
+      auth && history.push('/home')
+    }
   }, [auth, history])
 
   return (

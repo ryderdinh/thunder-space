@@ -35,21 +35,6 @@ export default function OnBoardingSlide() {
         <SwiperSlide className='color-1'>
           <div className='slide-image'>
             <img
-              src='https://raw.githubusercontent.com/ismailvtl/ismailvtl.github.io/master/images/startup-launch.png'
-              loading='lazy'
-              alt='Slide'
-            />
-          </div>
-          <div className='slide-content'>
-            <h2>Turn your ideas into reality.</h2>
-            <p>
-              Consistent quality and eperience across all platform and devices
-            </p>
-          </div>
-        </SwiperSlide>
-        <SwiperSlide className='color-1'>
-          <div className='slide-image'>
-            <img
               src='https://raw.githubusercontent.com/ismailvtl/ismailvtl.github.io/master/images/cloud-storage.png'
               loading='lazy'
               alt='Slide'
