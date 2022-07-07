@@ -1,6 +1,6 @@
-import { actLogout } from 'actions'
-import Puff from 'assets/bower_components/SVG-Loaders/svg-loaders/puff.svg'
-import React, { useState } from 'react'
+import { actLogout, setCheckLogin } from 'actions'
+import Puff from 'components/Loading/Puff'
+import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { NavLink } from 'react-router-dom'
 
@@ -32,7 +32,13 @@ export default function Account(props) {
   }
 
   const signOut = () => {
-    dispatch(actLogout())
+    const signOutSuccess = () => {
+      setTimeout(() => {
+        dispatch(setCheckLogin(false))
+        window.location.href = `${window.location.origin}/login`
+      }, 1000)
+    }
+    dispatch(actLogout(null, signOutSuccess))
   }
 
   return (
