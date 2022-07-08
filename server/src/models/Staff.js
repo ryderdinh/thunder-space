@@ -40,6 +40,11 @@ const Staff  = new Schema({
         foreignField : 'member.uid'
     })
 
+    Staff.virtual('notifications', {
+        ref : 'Notification',
+        localField : '_id',
+        foreignField : 'owner'
+    })
     Staff.methods.getProfile = function(){
         let userObject = this.toObject()
         delete userObject.password

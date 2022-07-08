@@ -7,6 +7,8 @@ const apiPutUpdateProject = require("../../controller/users/project/apiPutUpdate
 const apiPatchAddMemberToProject = require("../../controller/users/project/apiPatchAddMemberToProject")
 const apiPatchDeleteMemberOfProject = require("../../controller/users/project/apiPatchDeleteMemberOfProject")
 const apiPatchChangeRole =  require("../../controller/users/project/apiPatchChangeRole")
+const apiPatchAcceptInvitation =  require("../../controller/users/project/apiPatchAcceptInvitation")
+const apiPatchRejectInvitation =  require("../../controller/users/project/apiPatchRejectInvitation")
 const router = require('express').Router()
 
 //Get all project
@@ -25,3 +27,7 @@ exports.apiPutUpdateProject = router.put("/projects/:id", authenticateToken, api
 exports.apiPatchDeleteMemberOfProject = router.delete("/projects/:pid/members/:uid", authenticateToken, apiPatchDeleteMemberOfProject)
 //Change role 
 exports.apiPatchChangeRole = router.patch("/projects/:pid/members/:uid", authenticateToken, apiPatchChangeRole)
+//Accept Invitation
+exports.apiPatchAcceptInvitation = router.patch("/projects/:pid/invitations/accept", authenticateToken, apiPatchAcceptInvitation)
+//Reject Invitation
+exports.apiPatchRejectInvitation = router.patch("/projects/:pid/invitations/reject", authenticateToken, apiPatchRejectInvitation)

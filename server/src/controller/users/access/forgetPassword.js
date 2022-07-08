@@ -18,7 +18,8 @@ module.exports =  async (req, res, next) => {
         if(!user){
             return res.status(401).send(new Response(401, "your email does not exist"))
         }
-        const info = await transporter.sendMail({
+        
+        const mailOptions = {
         from: '"HRM Thunder Space 👻" <tempmailfc2@gmail.com>', // sender address
         to: email, // list of receivers
         subject: "RESET PASSWORD ✔", // Subject line
@@ -95,13 +96,12 @@ module.exports =  async (req, res, next) => {
         
         </html>
         `
-        });
+        };
+        await transporter(mailOptions)
         const update = { otp : hashOtp, otpExpiration : Date.now() + 120000}
-        console.log(Date.now());
         const staff = await Staff.findOneAndUpdate({ email : email }, update , { new : true })
          return res.status(200).send(new Response(200, 'success'))
     }catch(err){
-        console.log(err);
-        res.status(400).send(new Response(400, "something went wrong"))
+        res.status(400).send(new Response(400, err.message))
     }
 }

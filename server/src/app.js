@@ -170,6 +170,12 @@ app.use("/api", routersProject.apiPatchDeleteMemberOfProject)
 app.use("/api", routersProject.apiPatchAddMemberToProject)
 app.use("/table", authenticateToken, apiGetTable);
 
+
+/* -------------------------------------------
+                          NOTIFICATIONS
+---------------------------------------------*/ 
+const routersNotifications = require('./routers/users/notification.router');
+app.use("/api", routersNotifications.apiGetNotifications);
 //Event
 
 //———————————————————————————ADMIN ROUTES—————————————————————————————//

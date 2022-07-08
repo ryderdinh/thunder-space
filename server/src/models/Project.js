@@ -15,6 +15,12 @@ const Project = new Schema({
             role: { type: String, enum: ['manager', 'normal', "admin"] , required: true},
         }
     ],
+    guest: [
+        {
+            uid: {type: mongoose.Schema.Types.ObjectId, ref: 'Staff'},
+            role: { type: String, enum: ['manager', 'normal'] , required: false},
+        }
+    ],
     issue: [
         {
             iid : { type: Schema.Types.ObjectId, ref: "Issue" }
@@ -34,7 +40,7 @@ Project.pre("save", function(next){
 Project.virtual('members', {
     ref : 'Staff ',
     localField : 'member.uid',
-    foreignField : '_id'
+    foreignField : '_id',
 })
 
 Project.virtual("issues", {
@@ -62,6 +68,7 @@ Project.methods.getProjectDetails =  function(members){
     delete objectProject.__v
     delete objectProject.deleted
     delete objectProject.seqcode
+    delete objectProject.guest
     objectProject.member = members
     return objectProject
 
