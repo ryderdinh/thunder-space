@@ -5,7 +5,6 @@ const { comparePassword } = require("../../../utils/comparePassword")
 module.exports = async (req, res, next) => {
   try {
     const { otp, email, password, confirmPassword } = req.body;
-    console.log(Date.now());
     const staff = await Staff.findOne({
       email: email,
       otpExpiration: { $gte: Date.now() },

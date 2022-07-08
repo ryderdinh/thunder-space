@@ -1,6 +1,7 @@
 const Project = require("../../../models/Project");
 const Staff = require("../../../models/Staff");
 const Response = require("../../../models/Response")
+const Notification = require("../../../models/Notification")
 module.exports = async (req, res, next) => {
   try {
     const userId = req.user._id;
@@ -8,7 +9,7 @@ module.exports = async (req, res, next) => {
     let seqcode = 0;
     const name = req.body.name.trim();
     const description = req.body.description || "";
-    const existCreater = await Staff.findById({ _id: userId });
+    const existCreator = await Staff.findById({ _id: userId });
     
     //Valid name
     if(!(name.length >= 2 && name.length <=25)){
@@ -32,17 +33,18 @@ module.exports = async (req, res, next) => {
 
     if (removeDuplicate.length != maybeDuplicate.length)
       return res.status(400).send(new Response(400, "wrong data form"));
-    if (!removeDuplicate.every((e) => e !== existCreater.email))
+    if (!removeDuplicate.every((e) => e !== existCreator.email))
       return res.status(400).send(new Response(400, "wrong data form"));
     //Valid exsit member
     const existManager = await Staff.find({ email: req.body.managers });
     const existMember = await Staff.find({ email: req.body.members });
     //Map value
-    const managers = [...existManager, existCreater].map(
+    const managers =existManager.map(
       (e) =>
         (e = {
           uid: e._id,
-          role: e._id.toString() === userId.toString() ? "admin" : "manager",
+          role: "manager",
+          status: "pending"
         })
     );
     const members = [...existMember].map(
@@ -50,18 +52,36 @@ module.exports = async (req, res, next) => {
         (e = {
           uid: e._id,
           role: "normal",
+          status: "pending"
         })
     );
-
+      const admin = [{
+        uid: existCreator._id,
+        role: "admin"
+      }]
     // Create
     const result = await Project.create({
       code: code,
       name: name,
       description : description,
-      member: [...managers, ...members],
+      member: admin,
+      guest: [...managers, ...members],
       seqcode: seqcode
     });
-    
+    const membersToInvite = [...managers, ...members]; 
+    const notifications = [];
+    for (let i = 0; i < membersToInvite.length; i++) {
+        notifications.push(
+          {
+            content: `you have received an invitation to join project '${name}' by ${existCreator.name}`,
+            type: "invitation",
+            status: "pending",
+            owner: membersToInvite[i].uid,
+            pid: result._id
+          }
+        )
+    }
+    await Notification.create(notifications)
     return res.status(200).send(new Response(200, "success", await result.getProjectDetails()));
   } catch (err) {
     res.status(400).send(new Response(400, err.message));
