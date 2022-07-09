@@ -3,6 +3,7 @@ import 'animate.css'
 import LayoutContextProvider from 'context/LayoutContext'
 import { AnimatePresence } from 'framer-motion'
 import NotFound from 'pages/404'
+import Documentation from 'pages/Documentation'
 import ForgotPassword from 'pages/ForgotPassword'
 import Home from 'pages/Home'
 import IssuePage from 'pages/Issue'
@@ -89,6 +90,11 @@ export default function App() {
                 {/* Login page */}
                 <Route exact path='/login'>
                   <Login />
+                </Route>
+
+                {/* Documentation */}
+                <Route path='/documentation'>
+                  <Documentation />
                 </Route>
 
                 {/* Forgot password page */}
