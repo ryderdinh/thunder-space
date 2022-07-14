@@ -1,97 +1,97 @@
 /** @type {import('@docusaurus/types').DocusaurusConfig} */
 module.exports = {
-  title: "HRM - Zelios Sea",
-  tagline: "Welcome to documentation HRM - Zelios Sea",
-  url: "https://zelios-sea.netlify.app",
-  baseUrl: "/",
-  onBrokenLinks: "ignore",
-  onBrokenMarkdownLinks: "ignore",
-  favicon: "img/favicon.ico",
-  organizationName: "dinhquanganh", // Usually your GitHub org/user name.
-  projectName: "HRM_ZeliosSea", // Usually your repo name.
+  title: 'Home',
+  tagline: 'Thunder Space',
+  url: 'https://thunderspace.netlify.app/',
+  baseUrl: '/',
+  onBrokenLinks: 'ignore',
+  onBrokenMarkdownLinks: 'ignore',
+  favicon: 'img/favicon.ico',
+  organizationName: 'ryderdinh', // Usually your GitHub org/user name.
+  projectName: 'thunder-space', // Usually your repo name.
   themeConfig: {
     navbar: {
-      title: "HRM - Zelios Sea",
+      title: 'Thunder Space',
       logo: {
-        alt: "logo",
-        src: "img/logo.svg",
+        alt: 'logo',
+        src: 'img/logo.svg'
       },
       items: [
         {
-          type: "doc",
-          docId: "intro",
-          position: "left",
-          label: "Documentation",
+          type: 'doc',
+          docId: 'intro',
+          position: 'left',
+          label: 'Documentation'
         },
-        { to: "/blog", label: "Blog", position: "left" },
+        { to: '/blog', label: 'Blog', position: 'left' },
         {
-          href: "https://github.com/dinhquanganh/HRM_ZeliosSea",
-          label: "GitHub",
-          position: "right",
+          href: 'https://github.com/ryderdinh/thunder-space',
+          label: 'GitHub',
+          position: 'right'
         },
         {
-          type: "localeDropdown",
-        },
-      ],
+          type: 'localeDropdown'
+        }
+      ]
     },
     footer: {
-      style: "light",
+      style: 'light',
       links: [
         {
-          title: "Docs",
+          title: 'Docs',
           items: [
             {
-              label: "Documentation",
-              to: "/docs/intro",
-            },
-          ],
+              label: 'Documentation',
+              to: '/docs/intro'
+            }
+          ]
         },
         {
-          title: "Community",
+          title: 'Community',
           items: [
             {
-              label: "Stack Overflow",
-              href: "https://stackoverflow.com/questions/tagged/docusaurus",
+              label: 'Stack Overflow',
+              href: 'https://stackoverflow.com/questions/tagged/docusaurus'
             },
             {
-              label: "Discord",
-              href: "https://discordapp.com/invite/docusaurus",
+              label: 'Discord',
+              href: 'https://discordapp.com/invite/docusaurus'
             },
             {
-              label: "Twitter",
-              href: "https://twitter.com/docusaurus",
-            },
-          ],
+              label: 'Twitter',
+              href: 'https://twitter.com/docusaurus'
+            }
+          ]
         },
         {
-          title: "More",
+          title: 'More',
           items: [
             {
-              label: "Blog",
-              to: "/blog",
+              label: 'Blog',
+              to: '/blog'
             },
             {
-              label: "GitHub",
-              href: "https://github.com/dinhquanganh/HRM_ZeliosSea",
-            },
-          ],
-        },
+              label: 'GitHub',
+              href: 'https://github.com/ryderdinh/thunder-space'
+            }
+          ]
+        }
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} HRM - Zelios Sea, Inc. Built with ZS Team.`,
-    },
+      copyright: `Copyright © ${new Date().getFullYear()} Thunder Space, Inc. Built with Thunder Team.`
+    }
   },
   presets: [
     [
-      "@docusaurus/preset-classic",
+      '@docusaurus/preset-classic',
       {
         theme: {
-          customCss: require.resolve("./src/css/custom.css"),
-        },
-      },
-    ],
-  ],
+          customCss: require.resolve('./src/css/custom.css')
+        }
+      }
+    ]
+  ]
   // i18n: {
   //   defaultLocale: "vi",
   //   locales: ["vi", "en"],
   // },
-};
+}
