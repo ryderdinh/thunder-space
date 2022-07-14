@@ -83,7 +83,7 @@ export default function App() {
                 </Route>
 
                 {/* Notification page*/}
-                <Route exact path='/account'>
+                <Route exact path='/notifications'>
                   <Notification />
                 </Route>
 

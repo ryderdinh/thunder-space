@@ -18,7 +18,9 @@ export default function Notification() {
       <Main>
         <HeaderContainer pathName={path} />
         <ViewMain>
-          <ViewBox className='h-full' classNameCol='h-full'></ViewBox>
+          <ViewBox className='h-full' classNameCol='h-full'>
+            
+          </ViewBox>
         </ViewMain>
       </Main>
     </Layout>

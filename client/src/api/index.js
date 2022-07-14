@@ -1,6 +1,7 @@
 import authApi from './authApi'
 import eventApi from './eventApi'
 import issueApi from './issueApi'
+import notificationApi from './notificationApi'
 import projectApi from './projectApi'
 import reportApi from './reportApi'
 import timekeepingApi from './timekeepingApi'
@@ -15,5 +16,6 @@ export {
   reportApi,
   timekeepingApi,
   timesheetsApi,
-  userApi
+  userApi,
+  notificationApi
 }

@@ -17,8 +17,6 @@ export default function Event({ variants }) {
     dispatch(actFetchEvents())
   }, [dispatch])
 
-  console.log(error)
-
   return (
     <motion.div
       className='view_item panel event'

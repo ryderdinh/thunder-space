@@ -3,6 +3,7 @@ import {
   authApi,
   eventApi,
   issueApi,
+  notificationApi,
   projectApi,
   timekeepingApi,
   userApi
@@ -420,6 +421,22 @@ export const actGetAllUsers = () => {
   }
 }
 
+export const actGetNotification = (p, onSuccess, onError) => {
+  return async (dispatch) => {
+    await dispatch(setNotificationsLoading(true))
+
+    try {
+      const res = await notificationApi.get(p)
+
+      await dispatch(setNotificationsData(res.message))
+      onSuccess()
+    } catch (error) {
+      dispatch(setNotificationsError(error.message))
+      onError && onError()
+    }
+  }
+}
+
 // export const toggleTest = () => {
 //   return (dispatch) => {
 //     dispatch(toggleActiveSidebar())
@@ -543,5 +560,21 @@ export const setUsersLoading = (payload) => ({
 
 export const setUsersData = (payload) => ({
   type: 'SET_USERS_DATA',
+  payload
+})
+
+// NOTIFICATIONS ACTION ======================================
+export const setNotificationsLoading = (payload) => ({
+  type: 'SET_NOTIFICATION_LOADING',
+  payload
+})
+
+export const setNotificationsData = (payload) => ({
+  type: 'SET_NOTIFICATION_DATA',
+  payload
+})
+
+export const setNotificationsError = (payload) => ({
+  type: 'SET_NOTIFICATION_ERROR',
   payload
 })
