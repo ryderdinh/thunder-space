@@ -7,7 +7,7 @@ module.exports = async(req, res, next) => {
         const uid = req.user.id;
         const user = await Staff.findById(uid);
         const notifications = (await user.populate('notifications')).notifications
-        return res.status(200).send(new Response(200, notifications))
+        return res.status(200).send(new Response(200, "success", notifications))
     } catch (error) {
         if(error) return res.status(400).send(new Response(400, error.message))
     }
