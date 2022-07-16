@@ -7,8 +7,6 @@ module.exports = async(req, res, next) => {
     try {
         const uid = req.user.id;
         const page = parseInt(req.query.page);
-        // const user = await Staff.findById(uid);
-        // const notifications = (await user.populate('notifications')).notifications
         const notifications = (await Staff.findOne({ _id: uid }).populate({
             path: "notifications",
             options: {

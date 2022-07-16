@@ -1,7 +1,9 @@
 import axios from 'axios';
 import toast from 'react-hot-toast';
-//mock API
-let API_URL = 'https://hrmadmin.herokuapp.com/api';
+
+//BASE URL
+const API_URL = 'https://hrmadmin.herokuapp.com/api';
+
 export default async function callAPI(endpoint, method, body, header) {
 	if (header === null)
 		try {

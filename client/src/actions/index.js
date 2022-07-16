@@ -1,425 +1,547 @@
 //* IMPORT =============================================
-import callAPI from '../api/callAPI';
-import { getAllCookie, setCookie } from '../units/cookieWeb';
-import toast from 'react-hot-toast';
-import axios from 'axios';
+import {
+  authApi,
+  eventApi,
+  issueApi,
+  projectApi,
+  timekeepingApi,
+  userApi
+} from 'api'
+import toast from 'react-hot-toast'
+import callAPI from '../api/callAPI'
+import { getCookie, removeCookie, setCookie } from '../units/cookieWeb'
 
 //? CALL API============================================
-export const actSignIn = dataUser => {
-	loadingToast('Đang đăng nhập');
-	return async dispatch => {
-		const res = await callAPI('token', 'POST', dataUser, null);
-		if (res) {
-			const res_1 = await callAPI('login', 'GET', null, {
-				authorization: `Bearer ${res?.accessToken}`
-			});
-			removeToast();
-			if (res_1) {
-				//? check login success
-				if (res_1?.data?.status === 'Login succesfully') {
-					successToast('Đăng nhập thành công');
-					Promise.all([
-						setCookie(res_1.data?.id, res.accessToken),
-						await dispatch(actFetchStaffInfomation()),
-						await dispatch(actFetchEvents()),
-						await dispatch(actFetchDataTableOfWork()),
-						await dispatch(actFetchTimeKeeping())
-					]).then(() => {
-						dispatch(setCheckLogin(true));
-					});
-				} else {
-					errorToast(
-						'Đăng nhập thất bại, kiểm tra lại tên đăng nhập hoặc mật khẩu của bạn'
-					);
-				}
-			} else {
-				errorToast(
-					'Đăng nhập thất bại, kiểm tra lại tên đăng nhập hoặc mật khẩu của bạn'
-				);
-			}
-		} else {
-			errorToast(
-				'Đăng nhập thất bại, kiểm tra lại tên đăng nhập hoặc mật khẩu của bạn'
-			);
-		}
-	};
-};
+export const actSignIn = (dataUser) => {
+  removeToast()
+  loadingToast('Checking account...')
+
+  return async (dispatch) => {
+    let token = ''
+
+    try {
+      const res = await authApi.authentication(dataUser)
+      res?.data?.accessToken && (token = res.data.accessToken)
+    } catch (error) {
+      removeToast()
+      toast.error('Failed, try again later!')
+      await dispatch(setCheckLogin(false))
+    }
+
+    if (token) {
+      setCookie([{ key: 'token', value: token }])
+
+      try {
+        const res = await authApi.authorization(token)
+
+        removeToast()
+
+        //? Login success
+        successToast('Cleaning up the space...')
+
+        setCookie([
+          { key: 'id', value: res.data?._id.toString() },
+          { key: 'token', value: token }
+        ])
+
+        Promise.all([
+          await dispatch(setStaffInfomation(res.data)),
+          await dispatch(actFetchTimeKeeping())
+          // await dispatch(actFetchEvents())
+        ]).then(() => {
+          dispatch(setCheckLogin(true))
+        })
+      } catch (error) {
+        removeToast()
+        errorToast('Failed, double-check your login information')
+      }
+    } else {
+      removeToast()
+      errorToast('Failed, double-check your login information')
+    }
+  }
+}
+
+export const actLogout = (type, onSuccess) => {
+  loadingToast('Logging out...')
+
+  return async () => {
+    try {
+      await authApi.logout(type)
+
+      removeToast()
+      removeCookie('all')
+      successToast('Successful logout!')
+
+      onSuccess()
+    } catch (error) {
+      removeToast()
+      errorToast('Failed, logout failed!')
+    }
+  }
+}
 
 export const actFetchStaffInfomation = () => {
-	const { id, token } = getAllCookie();
-	return async dispatch => {
-		const res = await callAPI(`users/${id}`, 'GET', null, {
-			authorization: `Bearer ${token}`
-		});
-		res && dispatch(setStaffInfomation(res.staffInfo));
-	};
-};
+  const { id, token } = getCookie()
+
+  return async (dispatch) => {
+    const res = await callAPI(`users/${id}`, 'GET', null, {
+      authorization: `Bearer ${token}`
+    })
+
+    // try {
+    //   userApi.getUser(res.data.userId)
+    // } catch (error) {
+
+    // }
+
+    res && dispatch(setStaffInfomation(res.staffInfo))
+  }
+}
 
 export const actFetchDataTableOfWork = () => {
-	const { id, token } = getAllCookie();
-	return async dispatch => {
-		const res = await callAPI(`table/${id}`, 'GET', null, {
-			authorization: `Bearer ${token}`
-		});
-		res && dispatch(getDataTimesheets(res.data));
-	};
-};
+  const { id, token } = getCookie()
+
+  return async (dispatch) => {
+    const res = await callAPI(`table/${id}`, 'GET', null, {
+      authorization: `Bearer ${token}`
+    })
+
+    res && dispatch(getDataTimesheets(res.data))
+  }
+}
 
 export const actFetchTimeKeeping = () => {
-	const { id, token } = getAllCookie();
-	return async dispatch => {
-		await dispatch(setLoadingTimeKeeping());
-		const res = await callAPI(`timeline/${id}`, 'GET', null, {
-			authorization: `Bearer ${token}`
-		});
-		if (res?.data) {
-			await dispatch(setDataTimeKeeping(res.data));
-			await dispatch(setTimeKeeping(res.data));
-		}
-	};
-};
+  return async (dispatch) => {
+    await dispatch(setLoadingTimeKeeping())
 
-export const actSendLocationToServer = location => {
-	loadingToast('Đang chấm công');
-	const { id, token } = getAllCookie();
-	return async dispatch => {
-		const res = await callAPI(
-			`location/${id}?lat=${location[0]}&lon=${location[1]}`,
-			'PUT',
-			null,
-			{
-				authorization: `Bearer ${token}`
-			}
-		);
-		if (res) {
-			dispatch(actFetchTimeKeeping());
-		} else {
-			removeToast();
-			errorToast('Chấm công thất bại');
-		}
-		console.log(res);
-		if (res?.status) {
-			removeToast();
-			switch (res.status) {
-				case 'check in complete': {
-					successToast('Chấm công thành công');
-					break;
-				}
-				case 'try after 5 minutes': {
-					errorToast('Bạn vừa chấm công, thử lại sau');
-					break;
-				}
-				case 'you are far from company': {
-					errorToast('Khoảng cách chấm công quá xa');
-					break;
-				}
-				default:
-					break;
-			}
-		}
-	};
-};
+    const res = await timekeepingApi.get()
+
+    res.status === 200 &&
+      Promise.all([
+        await dispatch(setDataTimeKeeping(res.data)),
+        await dispatch(setTimeKeeping(res.data))
+      ])
+  }
+}
+
+export const actSendLocationToServer = (location) => {
+  loadingToast('Đang chấm công')
+
+  return async (dispatch) => {
+    try {
+      await timekeepingApi.sendLocation(location)
+
+      removeToast()
+
+      dispatch(actFetchTimeKeeping())
+      successToast('Chấm công thành công')
+    } catch (error) {
+      removeToast()
+
+      const errorResult = await JSON.parse(error.request.response)
+      switch (errorResult.error) {
+        case 'try after 5 minutes': {
+          errorToast('Bạn vừa chấm công, thử lại sau!')
+          break
+        }
+        case 'you are far from company': {
+          errorToast('Khoảng cách chấm công quá xa!')
+          break
+        }
+        default:
+          errorToast('Lỗi')
+          break
+      }
+    }
+  }
+}
 
 export const actFetchEvents = () => {
-	const { token } = getAllCookie();
-	return async dispatch => {
-		const res = await callAPI(`event`, 'GET', null, {
-			authorization: `Bearer ${token}`
-		});
-		res && dispatch(setEvents(res));
-	};
-};
+  return async (dispatch) => {
+    await dispatch(setEventsLoading(true))
 
-export const actSendReport = data => {
-	const { id, token } = getAllCookie();
-	loadingToast('Đang gửi yêu cầu');
-	return async () => {
-		const res = await callAPI(`user/storeReport/${id}`, 'POST', data, {
-			authorization: `Bearer ${token}`
-		});
+    try {
+      const res = await eventApi.get()
+      dispatch(setEventsData(res.data))
+    } catch (error) {
+      await dispatch(setEventsError(error.response.error))
+    }
+  }
+}
 
-		if (!res) {
-			removeToast();
-			errorToast('Gửi thất bại, vui lòng thử lại sau!');
-		}
-		switch (res?.data?.status) {
-			case 'Report complete': {
-				successToast('Gửi thành công');
-				break;
-			}
-			case 'Canot report': {
-				errorToast('Gửi thất bại, vui lòng thử lại sau!');
-				break;
-			}
-			default:
-				break;
-		}
-	};
-};
+export const actSendReport = (data) => {
+  const { id, token } = getCookie()
+
+  loadingToast('Đang gửi yêu cầu')
+
+  return async () => {
+    const res = await callAPI(`user/storeReport/${id}`, 'POST', data, {
+      authorization: `Bearer ${token}`
+    })
+
+    if (!res) {
+      removeToast()
+      errorToast('Gửi thất bại, vui lòng thử lại sau!')
+    } else {
+      switch (res?.data?.status) {
+        case 'Report complete': {
+          successToast('Gửi thành công')
+          break
+        }
+        case 'Canot report': {
+          errorToast('Gửi thất bại, vui lòng thử lại sau!')
+          break
+        }
+        default:
+          break
+      }
+    }
+  }
+}
 
 export const actRefreshPage = () => {
-	loadingToast('Đang đăng nhập lại');
-	const { id, token } = getAllCookie();
-	if (!id || !token)
-		return dispatch => {
-			dispatch(setCheckLogin(false));
-			removeToast();
-			errorToast('Bạn cần đăng nhập lại');
-		};
-	return async dispatch => {
-		const res_1 = await callAPI('login', 'GET', null, {
-			authorization: `Bearer ${token}`
-		});
-		if (res_1) {
-			if (res_1?.data?.status === 'Login succesfully') {
-				Promise.all([
-					await dispatch(actFetchStaffInfomation()),
-					await dispatch(actFetchDataTableOfWork()),
-					await dispatch(actFetchTimeKeeping()),
-					await dispatch(actFetchEvents())
-				])
-					.then(() => {
-						setCookie(res_1.data?.id, token);
-					})
-					.then(() => {
-						removeToast();
-						successToast('Chào mừng quay trở lại');
-						dispatch(setCheckLogin(true));
-					});
-			} else {
-				removeToast();
-				errorToast('Bạn cần đăng nhập lại');
-			}
-		} else {
-			removeToast();
-			errorToast('Bạn cần đăng nhập lại');
-		}
-	};
-};
+  const { id, token } = getCookie()
 
-export const actChangePassword = data => {
-	loadingToast('Đang xử lí yêu cầu...');
-	const { id, token } = getAllCookie();
-	return async () => {
-		const res = await callAPI(`change-password/${id}`, 'PUT', data, {
-			authorization: `Bearer ${token}`
-		});
-		removeToast();
+  id && token && loadingToast('Logging in again...')
 
-		if (res) {
-			switch (res?.data?.status) {
-				case 'Change password successfully': {
-					successToast('Đổi mật khẩu thành công');
-					break;
-				}
-				case 'New password is invalid': {
-					errorToast('Mật khẩu mới phải trên 5 kí tự');
-					break;
-				}
-				case 'Wrong old password': {
-					errorToast('Mật khẩu cũ không đúng');
-					break;
-				}
-				case 'New password is same your current password': {
-					errorToast('Mật khẩu mới không được trùng với mật khẩu cũ');
-					break;
-				}
-				default:
-					break;
-			}
-		}
-	};
-};
+  if (!id && !token) {
+    return (dispatch) => {
+      dispatch(setCheckLogin(false))
+    }
+  }
 
-export const actCreateProject = data => {
-	loadingToast('Đang xử lí yêu cầu...');
-	const { id, token } = getAllCookie();
-	return async dispatch => {
-		try {
-			const res = await axios({
-				method: 'POST',
-				url: `https://hrmadmin.herokuapp.com/api/createProject/${id}`,
-				headers: {
-					'Content-Type': 'application/json',
-					authorization: `Bearer ${token}`
-				},
-				data
-			});
-			removeToast();
-			if (res?.data?.data) {
-				successToast('Tạo dự án thành công');
-				dispatch(closePopup());
-			} else {
-				errorToast('Tạo dự án thất bại');
-				throw new Error('Failed');
-			}
-		} catch (error) {
-			removeToast();
-			errorToast('Tạo dự án thất bại');
-		}
-	};
-};
+  return async (dispatch) => {
+    try {
+      const res = await authApi.authorization(token)
 
-export const actFetchProject = data => {
-	// loadingToast("Đang lấy dữ liệu...");
-	const { id, token } = getAllCookie();
-	let _param = '';
-	if (data) {
-		for (const item of data) {
-			_param = `projectCode=${item}`;
-		}
-		_param = '?' + _param;
-	}
-	return async dispatch => {
-		try {
-			const res = await axios({
-				method: 'GET',
-				url: `https://hrmadmin.herokuapp.com/api/projectInfo/${id}${_param}`,
-				headers: {
-					'Content-Type': 'application/json',
-					Authorization: `Bearer ${token}`
-				}
-			});
-			// removeToast();
-			let dataResult = res.data;
-			if (dataResult?.status) {
-				errorToast(`${dataResult.status}`);
-			} else {
-				dispatch(setDataProject(dataResult));
-				if (data === undefined) {
-					dispatch(
-						setWorkflow({
-							workflowName: 'Tất cả',
-							workflowType: 'project',
-							workflowId: ''
-						})
-					);
-				} else {
-					dispatch(
-						setWorkflow({
-							workflowName: dataResult[0].projectName,
-							workflowType: 'project',
-							workflowId: dataResult[0].projectCode
-						})
-					);
-				}
-			}
-		} catch (error) {
-			errorToast(`Lỗi không xác định`);
-		}
-	};
-};
+      Promise.all([
+        await dispatch(setStaffInfomation(res.data)),
+        await dispatch(actFetchTimeKeeping())
+      ]).then(async () => {
+        setCookie([
+          { key: 'id', value: res.data._id.toString() },
+          { key: 'token', value: token }
+        ])
+        removeToast()
+        await dispatch(setCheckLogin(true))
+        successToast('Chào mừng quay trở lại')
+      })
+    } catch (error) {
+      removeToast()
+      await dispatch(setCheckLogin(false))
+      errorToast('Bạn cần đăng nhập lại')
+    }
+  }
+}
 
-export const actCreateIssue = (wid, data) => {
-	loadingToast('Đang xử lí yêu cầu...');
-	const { id, token } = getAllCookie();
-	return async dispatch => {
-		try {
-			const res = await axios({
-				method: 'POST',
-				url: `https://hrmadmin.herokuapp.com/api/createIssue/${id}/${wid}`,
-				headers: {
-					'Content-Type': 'application/json',
-					authorization: `Bearer ${token}`
-				},
-				data
-			});
-			removeToast();
-			if (res?.data?.data) {
-				successToast('Tạo issue thành công');
-				dispatch(closePopup());
-			} else errorToast('Tạo issue thất bại');
-		} catch (error) {
-			errorToast('Tạo issue thất bại');
-		}
-	};
-};
+export const actChangePassword = (data) => {
+  loadingToast('Đang xử lí yêu cầu...')
+  const { id, token } = getCookie()
+  return async () => {
+    const res = await callAPI(`change-password/${id}`, 'PUT', data, {
+      authorization: `Bearer ${token}`
+    })
+    removeToast()
+
+    if (res) {
+      switch (res?.data?.status) {
+        case 'Change password successfully': {
+          successToast('Đổi mật khẩu thành công')
+          break
+        }
+        case 'New password is invalid': {
+          errorToast('Mật khẩu mới phải trên 5 kí tự')
+          break
+        }
+        case 'Wrong old password': {
+          errorToast('Mật khẩu cũ không đúng')
+          break
+        }
+        case 'New password is same your current password': {
+          errorToast('Mật khẩu mới không được trùng với mật khẩu cũ')
+          break
+        }
+        default:
+          break
+      }
+    }
+  }
+}
+
+export const actCreateProject = (data, uMail, callback) => {
+  loadingToast('Processing...')
+  let sbData = data
+
+  if (data?.managers)
+    sbData = {
+      ...data,
+      managers: data.managers.filter((item) => item !== uMail)
+    }
+  else sbData = { ...data, managers: [] }
+
+  return async (dispatch) => {
+    try {
+      const res = await projectApi.create(sbData)
+
+      removeToast()
+
+      await dispatch(
+        setInitialProject({
+          name: data.name
+        })
+      )
+      callback(res.data._id)
+    } catch (error) {
+      removeToast()
+      console.log(error)
+    }
+  }
+}
+
+export const actFetchProject = (pid) => {
+  return async (dispatch) => {
+    await dispatch(setProjectLoading(true))
+
+    try {
+      const res = await projectApi.get(pid)
+      const issueSorted = res.data.issue.sort((a, b) => b.updateAt - a.updateAt)
+
+      await dispatch(setDataProject({ ...res.data, issue: issueSorted }))
+    } catch (error) {
+      Promise.all([
+        await dispatch(setDataProject(null)),
+        await dispatch(setProjectError(error.message))
+      ])
+    }
+  }
+}
+
+export const actDeleteProject = (pid, callback) => {
+  return async () => {
+    try {
+      await projectApi.delete(pid)
+      callback()
+    } catch (error) {
+      errorToast(error.message)
+    }
+  }
+}
+
+export const actQueryProject = (query = null) => {
+  return async (dispatch) => {
+    await dispatch(setProjectLoading(true))
+
+    try {
+      const res = await projectApi.gets(query)
+      const sortData = res.data.sort((a, b) => b.updateAt - a.updateAt)
+
+      await dispatch(setDataProjects(sortData))
+    } catch (error) {
+      await dispatch(setProjectError(error.message))
+    }
+  }
+}
+
+export const actCreateIssue = (pid, data, callback) => {
+  return async () => {
+    try {
+      const res = await issueApi.create(pid, data)
+      callback(res.data._id)
+    } catch (error) {
+      errorToast(error.message)
+    }
+  }
+}
+
+export const actQueryIssue = (iid, callback) => {
+  return async (dispatch) => {
+    await dispatch(setIssueLoading(true))
+
+    try {
+      const res = await issueApi.get(iid)
+
+      await dispatch(setDataIssue(res.data))
+    } catch (error) {
+      const err = error.message
+
+      errorToast(err)
+      dispatch(setIssueError(err))
+    }
+  }
+}
+
+export const actUpdateIssue = (iid, data, onSuccess, onError) => {
+  return async (dispatch) => {
+    try {
+      const res = await issueApi.update(iid, data)
+
+      successToast('Issue updated')
+      await dispatch(setDataIssue(res.data))
+      onSuccess()
+    } catch (error) {
+      const err = error.message
+      onError()
+
+      errorToast(err)
+      dispatch(setIssueError(err))
+    }
+  }
+}
+
+export const actDeleteIssue = (iid, callback) => {
+  return async (dispatch) => {
+    try {
+      const res = await issueApi.delete(iid)
+
+      successToast('Issue deleted')
+      await dispatch(setDataIssue(res.data))
+      callback()
+    } catch (error) {
+      const err = error.message
+
+      errorToast(err)
+      dispatch(setIssueError(err))
+    }
+  }
+}
+
+export const actGetAllUsers = () => {
+  return async (dispatch) => {
+    await dispatch(setUsersLoading(true))
+
+    try {
+      const res = await userApi.getUsers()
+
+      await dispatch(setUsersData(res.data))
+    } catch (error) {
+      dispatch(setUsersLoading(false))
+    }
+  }
+}
+
+// export const toggleTest = () => {
+//   return (dispatch) => {
+//     dispatch(toggleActiveSidebar())
+//   }
+// }
 
 //? TOAST
-const errorToast = toast.error;
-const successToast = toast.success;
-const loadingToast = content => {
-	toast.loading(content);
-};
-const removeToast = () => toast.remove(loadingToast());
+const errorToast = toast.error
+const successToast = toast.success
+const loadingToast = (content) => {
+  toast.loading(content)
+}
+const removeToast = () => toast.remove(loadingToast())
 
-//TODO: TYPE AND PAYLOAD OF ACTION ================================
-export const fetchMenus = () => ({
-	type: 'FETCH_MENUS'
-});
-export const setActiveSideBar = payload => ({
-	type: 'SET_ACTIVE_SIDEBAR',
-	payload
-});
-export const getNameContainer = () => ({
-	type: 'GET_NAME_CONTAINER'
-});
-export const changeNameContainer = payload => ({
-	type: 'CHANGE_NAME_CONTAINER',
-	payload
-});
-export const getLocation = () => dispatch => {
-	dispatch({
-		type: 'TIME_KEEPING'
-	});
-};
-export const getDataTimesheets = payload => ({
-	type: 'GET_DATA_TIMESHEETS',
-	payload
-});
-export const getDataTimesheetsDetail = payload => ({
-	type: 'GET_DATA_TIMESHEETS_DETAIL',
-	payload
-});
+//TODO: ACTION TO REDUCER ================================
+export const getLocation = () => ({
+  type: 'TIME_KEEPING'
+})
+
+export const getDataTimesheets = (payload) => ({
+  type: 'GET_DATA_TIMESHEETS',
+  payload
+})
+
+export const setDataTimesheetsDetail = (payload) => ({
+  type: 'SET_DATA_TIMESHEETS_DETAIL',
+  payload
+})
+
 export const setLoadingTimeKeeping = () => ({
-	type: 'SET_TIME_KEEPING_LOADING'
-});
-export const setDataTimeKeeping = payload => ({
-	type: 'SET_DATA_TIME_KEEPING',
-	payload
-});
-export const setTimeKeeping = payload => ({
-	type: 'SET_TIME_KEEPING',
-	payload
-});
-export const setCheckLogin = payload => ({
-	type: 'SET_CHECK_ID',
-	payload
-});
-export const setStaffInfomation = payload => ({
-	type: 'SET_STAFF_INFOMATION',
-	payload
-});
-export const setEvents = payload => ({
-	type: 'SET_EVENTS',
-	payload
-});
-export const setPopup = payload => ({
-	type: 'SET_POPUP',
-	payload
-});
-export const closePopup = () => ({
-	type: 'CLOSE_POPUP'
-});
-export const setLoading = payload => ({
-	type: 'SET_LOADING',
-	payload
-});
-export const finishLoading = () => ({
-	type: 'FINISH_LOADING'
-});
-export const setDataProject = payload => ({
-	type: 'SET_DATA_PROJECT',
-	payload
-});
-export const setInitalProject = () => ({
-	type: 'SET_INITAL_PROJECT'
-});
-export const setDataIssue = payload => ({
-	type: 'SET_DATA_ISSUE',
-	payload
-});
-export const setWorkflow = payload => ({
-	type: 'SET_WORKFLOW',
-	payload
-});
+  type: 'SET_TIME_KEEPING_LOADING'
+})
+
+export const setDataTimeKeeping = (payload) => ({
+  type: 'SET_DATA_TIME_KEEPING',
+  payload
+})
+
+export const setTimeKeeping = (payload) => ({
+  type: 'SET_TIME_KEEPING',
+  payload
+})
+
+export const setCheckLogin = (payload) => ({
+  type: 'SET_CHECK_ID',
+  payload
+})
+
+export const setStaffInfomation = (payload) => ({
+  type: 'SET_STAFF_INFOMATION',
+  payload
+})
+
+export const setEventsData = (payload) => ({
+  type: 'SET_EVENTS_DATA',
+  payload
+})
+
+export const setEventsLoading = (payload) => ({
+  type: 'SET_EVENTS_LOADING',
+  payload
+})
+
+export const setEventsError = (payload) => ({
+  type: 'SET_EVENTS_ERROR',
+  payload
+})
+
+// PROJECT ACTION ================================
+export const setProjectLoading = (payload) => ({
+  type: 'SET_PROJECT_LOADING',
+  payload
+})
+export const setProjectError = (payload) => ({
+  type: 'SET_PROJECT_ERROR',
+  payload
+})
+
+export const setInitialProject = (payload) => ({
+  type: 'SET_INITIAL_PROJECT',
+  payload
+})
+//? Detail project
+export const setDataProject = (payload) => ({
+  type: 'SET_DATA_PROJECT',
+  payload
+})
+//? All project
+export const setDataProjects = (payload) => ({
+  type: 'SET_DATA_PROJECTS',
+  payload
+})
+
+export const setIssueLoading = (payload) => ({
+  type: 'SET_ISSUE_LOADING',
+  payload
+})
+export const setIssueError = (payload) => ({
+  type: 'SET_ISSUE_ERROR',
+  payload
+})
+export const setDataIssue = (payload) => ({
+  type: 'SET_DATA_ISSUE',
+  payload
+})
+export const setInitialIssue = (payload) => ({
+  type: 'SET_INITIAL_ISSUE',
+  payload
+})
+
+export const setWorkflow = (payload) => ({
+  type: 'SET_WORKFLOW',
+  payload
+})
+
+// USERS ACTION ======================================
+export const setUsersLoading = (payload) => ({
+  type: 'SET_USERS_LOADING',
+  payload
+})
+
+export const setUsersData = (payload) => ({
+  type: 'SET_USERS_DATA',
+  payload
+})
