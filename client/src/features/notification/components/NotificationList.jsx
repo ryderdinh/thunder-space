@@ -24,7 +24,7 @@ const NotificationList = ({ data, setRead }) => {
   return (
     <ul ref={parent} className='divide-y-2 divide-[#282828] py-2'>
       {checkTag()?.map((noti) => (
-        <NotificationItem key={noti.id} data={noti} setRead={setRead} />
+        <NotificationItem key={noti._id} data={noti} setRead={setRead} />
       ))}
 
       {checkTag().length === 0 && (

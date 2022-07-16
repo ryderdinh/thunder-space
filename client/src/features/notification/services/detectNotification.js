@@ -6,11 +6,18 @@ import {
 } from '@heroicons/react/solid'
 
 const notificationLink = (data) => ({
-  'invite-to-project': `/projects/invitation?pid=${data?.pid}`,
+  'invitation-project': `/projects/invitation?pid=${data?.pid}`,
   'assign-to-issue': `/projects/issues/invitation?pid=${data?.pid}&iid=${data?.iid}`,
   'change-project': `/projects/${data?.pid}`,
   'change-issue': `/projects/${data?.pid}/${data?.iid}`
 })
+
+const notificationTitle = {
+  'invitation-project': `Invite to join`,
+  'assign-to-issue': `Assign to issue`,
+  'change-project': `New updated in project`,
+  'change-issue': `New updated in issue`
+}
 
 const notificationIcon = (type) => {
   const iconProps = {
@@ -18,7 +25,7 @@ const notificationIcon = (type) => {
   }
 
   switch (type) {
-    case 'invite-to-project': {
+    case 'invitation-project': {
       return <UserGroupIcon {...iconProps} />
     }
 
@@ -39,7 +46,8 @@ const notificationIcon = (type) => {
 const detectNotification = (type, data) => {
   return {
     icon: notificationIcon(type),
-    link: notificationLink(data)[type]
+    link: notificationLink(data)[type],
+    title: notificationTitle[type] || 'Notification'
   }
 }
 

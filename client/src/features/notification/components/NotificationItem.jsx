@@ -1,5 +1,6 @@
 import { BellIcon } from '@heroicons/react/solid'
 import ButtonNormal from 'components/Button/ButtonNormal'
+import ButtonSuccess from 'components/Button/ButtonSuccess'
 import moment from 'moment'
 import { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
@@ -8,10 +9,31 @@ import detectNotification from '../services/detectNotification'
 const NotificationItem = ({ data, setRead }) => {
   const [icon, setIcon] = useState(<BellIcon className='w-5' />)
   const [link, setLink] = useState(null)
+  const [title, setTitle] = useState('Notification')
   const [mouseEnter, setMouseEnter] = useState(false)
 
   const history = useHistory()
 
+  moment.updateLocale('vi', {
+    relativeTime: {
+      future: 'in %s',
+      past: '%s ago',
+      s: 'a few seconds',
+      ss: '%d seconds',
+      m: 'a minute',
+      mm: '%d minutes',
+      h: 'an hour',
+      hh: '%d hours',
+      d: 'a day',
+      dd: '%d days',
+      w: 'a week',
+      ww: '%d weeks',
+      M: 'a month',
+      MM: '%d months',
+      y: 'a year',
+      yy: '%d years'
+    }
+  })
   const onClick = () => {
     if (link) {
       history.push(link, data)
@@ -26,11 +48,20 @@ const NotificationItem = ({ data, setRead }) => {
     setMouseEnter(false)
   }
 
+  // console.log(moment(data.time).fromNow())
+  // console.log(
+  //   new Date(data.time).toLocaleString(),
+  //   true,
+  //   moment(data.time).format()
+  // )
+  // console.log(new Date().toLocaleString(), true, moment().format())
+
   useEffect(() => {
-    const { icon, link } = detectNotification(data.type, data.data)
+    const { icon, link, title } = detectNotification(data.type, data.data)
 
     setIcon(icon)
     setLink(link)
+    setTitle(title)
   }, [data.data, data.type])
 
   return (
@@ -50,7 +81,7 @@ const NotificationItem = ({ data, setRead }) => {
       <div className='flex items-center space-x-2'>
         {icon}
         <div className=''>
-          <p className='text-xs font-bold line-clamp-1'>{data.title}</p>
+          <p className='text-xs font-bold line-clamp-1'>{title}</p>
           <p className='text-sm line-clamp-1'>{data.content}</p>
         </div>
       </div>
@@ -60,14 +91,14 @@ const NotificationItem = ({ data, setRead }) => {
       )}
 
       {!data?.read && mouseEnter && (
-        <ButtonNormal
+        <ButtonSuccess
           onClick={(e) => {
             e.stopPropagation()
             setRead(data.id)
           }}
         >
           Read
-        </ButtonNormal>
+        </ButtonSuccess>
       )}
     </li>
   )

@@ -1,27 +1,20 @@
 import { Popover, Transition } from '@headlessui/react'
 import { actGetNotification, setNotificationsReadAll } from 'actions'
-import ButtonNormal from 'components/Button/ButtonNormal'
+import ButtonSuccess from 'components/Button/ButtonSuccess'
 import BallTriangle from 'components/Loading/BallTriangle'
 // import { useFetch } from 'hooks'
 import { Fragment, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { io } from 'socket.io-client'
 import { getCookie } from 'units/cookieWeb'
 import { errorToast } from 'utilities/toast'
-
-const socket = io.connect('https://hrmadmin.up.railway.app?', {
-  query: {
-    token: getCookie().token
-  }
-})
 
 const NotificationOverview = () => {
   const { _data, isLoading, error } = useSelector(
     (state) => state._notification
   )
   const dispatch = useDispatch()
-
+  console.log(getCookie().token)
   // const fetchData = useFetch()
   // useEffect(() => {
   //   const onSuccess = (data) => {
@@ -37,7 +30,7 @@ const NotificationOverview = () => {
 
   useEffect(() => {
     const onSuccess = (data) => {
-      console.log(data?.message)
+      console.log(data)
     }
 
     const onError = (error) => {
@@ -62,8 +55,8 @@ const NotificationOverview = () => {
     >
       <Popover.Panel
         className='lg:max-w-3 absolute right-0 
-        z-10 mt-1 w-screen max-w-sm
-        px-4 sm:px-0'
+        z-10 z-20 mt-1 w-screen
+        max-w-sm px-4 sm:px-0'
       >
         <div
           className='divide-y divide-neutral-600/50 rounded-md border 
@@ -72,13 +65,13 @@ const NotificationOverview = () => {
         >
           <div className='flex items-center justify-between px-5 py-2'>
             <h5 className='text-base text-neutral-50/75'>Notifications</h5>
-            <ButtonNormal
+            <ButtonSuccess
               onClick={() => {
                 dispatch(setNotificationsReadAll())
               }}
             >
               Read all
-            </ButtonNormal>
+            </ButtonSuccess>
           </div>
 
           <div>

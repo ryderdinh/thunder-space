@@ -1,31 +1,5 @@
 const initialState = {
-  _data: [
-    {
-      id: 1,
-      title: 'Invite to join',
-      content: "You have been invited to join the Thunder's project",
-      time: 1657853474056,
-      read: false,
-      type: 'invite-to-project',
-      tab: 'project',
-      data: {
-        pid: '1'
-      }
-    },
-    {
-      id: 2,
-      title: 'Issue change',
-      content: "Pham Huu Thang has changed the issue's status to In Progress",
-      time: 1657894203163,
-      read: true,
-      type: 'change-issue',
-      tab: 'issue',
-      data: {
-        iid: '1',
-        pid: '2'
-      }
-    }
-  ],
+  _data: [],
   isLoading: false,
   error: ''
 }
@@ -34,6 +8,17 @@ export default function notification(state = initialState, action) {
   switch (action.type) {
     case 'SET_NOTIFICATION_DATA':
       return { ...state, _data: action.payload, isLoading: false, error: '' }
+    case 'ADD/MODIFIED_NOTIFICATION_DATA':
+      let newData = [...state._data]
+      for (let item of action.payload) {
+        let index = newData.findIndex((x) => x._id === item._id)
+        if (index > -1) {
+          newData[index] = item
+        } else {
+          newData.push(item)
+        }
+      }
+      return { ...state, _data: newData, isLoading: false, error: '' }
     case 'SET_NOTIFICATION_LOADING':
       return { ...state, isLoading: action.payload }
     case 'SET_NOTIFICATION_ERROR':

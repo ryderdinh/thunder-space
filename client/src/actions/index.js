@@ -428,10 +428,10 @@ export const actGetNotification = (p, onSuccess, onError) => {
       const res = await notificationApi.get(p)
 
       await dispatch(setNotificationsData(res?.data || []))
-      onSuccess()
+      onSuccess(res?.data)
     } catch (error) {
       dispatch(setNotificationsError(error?.message || 'Error'))
-      onError && onError()
+      onError && onError(error?.message)
     }
   }
 }
@@ -570,6 +570,11 @@ export const setNotificationsLoading = (payload) => ({
 
 export const setNotificationsData = (payload) => ({
   type: 'SET_NOTIFICATION_DATA',
+  payload
+})
+
+export const addOrModifiedNotificationsData = (payload) => ({
+  type: 'ADD/MODIFIED_NOTIFICATION_DATA',
   payload
 })
 

@@ -1,6 +1,8 @@
-export const formatResponse = (res) => {
-  return JSON.stringify(res, null, 2)
-}
+import capitalizeFirstLetter from './capitalizeFirstLetter'
 import decimalAdjust from './decimalAdjust'
 
-export { formatResponse, decimalAdjust }
+const formatResponse = (res) => {
+  return JSON.stringify(res, null, 2)
+}
+
+export { formatResponse, decimalAdjust, capitalizeFirstLetter }

@@ -1,5 +1,10 @@
 import { TagIcon } from '@heroicons/react/solid'
-import { setNotificationsRead, setNotificationsReadAll } from 'actions'
+import {
+  actGetNotification,
+  setNotificationsRead,
+  setNotificationsReadAll
+} from 'actions'
+import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import NotificationAction from './components/NotificationAction'
 import NotificationList from './components/NotificationList'
@@ -15,6 +20,17 @@ const Notification = () => {
       ? dispatch(setNotificationsRead(id))
       : dispatch(setNotificationsReadAll())
   }
+
+  useEffect(() => {
+    const onSuccess = (data) => {
+      console.log(data)
+    }
+
+    const onError = (error) => {
+      console.log(error)
+    }
+    dispatch(actGetNotification(null, onSuccess, onError))
+  }, [dispatch])
 
   // const { value, bind } = useInput()
 
