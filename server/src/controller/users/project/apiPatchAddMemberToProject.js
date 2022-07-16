@@ -27,18 +27,21 @@ module.exports = async(req, res, next) => {
         }    
         existProject.guest.push(newDataMember);
         const owner = await Staff.findById(uid);
-        const notification = {
+        const dataNoti = {
             content: `you have received an invitation to join project '${existProject.name}' by ${owner.name}`,
             type: "invitation-project",
             owner: newDataMember.uid,
             read: false,
             data: {
                 pid: pid
-            }
+            },
+            time: Date.now()
         }
         const io = req.app.get("socketio")
-        const notifications = await Notification.create(notification)
-        io.to(newDataMember.uid).emit("invitation-project", notifications)
+        const notification = await Notification.create(dataNoti)
+        if(notification){
+            io.to(newDataMember.uid).emit("invitation-project", notification)
+        }
         const updatedProject = await existProject.save();
         const members = (await updatedProject.populate("members")).members;
         const membersToView = members.map(member => member.getProfileToCreateProject())
