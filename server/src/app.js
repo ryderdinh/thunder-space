@@ -5,7 +5,7 @@ const server = require("http").Server(app);
 const { Server } = require("socket.io");
 const io = new Server(server, {
   cors: {
-    origin: process.env.BASE_URL,
+    origin: "*",
     methods: ["GET", "POST"]
   }
 });

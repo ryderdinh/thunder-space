@@ -2,7 +2,7 @@ const { io } = require("../src/app")
 const jwt = require("jsonwebtoken");
 const Staff = require("../src/models/Staff")
 let room = null;
-io.use( async(socket, next) => {
+module.exports = io.use( async(socket, next) => {
     if (socket.handshake.query && socket.handshake.query.token){
       const user = await Staff.findOne({ 'tokens.token' : socket.handshake.query.token });
       if(!user) return next(new Error("Authenticate token error"))
