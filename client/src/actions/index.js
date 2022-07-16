@@ -120,14 +120,14 @@ export const actFetchTimeKeeping = () => {
 
     res.status === 200 &&
       Promise.all([
-        await dispatch(setDataTimeKeeping(res.data)),
+        await dispatch(setDataTimeKeeping(res.data?.reverse())),
         await dispatch(setTimeKeeping(res.data))
       ])
   }
 }
 
 export const actSendLocationToServer = (location) => {
-  loadingToast('Đang chấm công')
+  loadingToast('Waiting...')
 
   return async (dispatch) => {
     try {
@@ -136,12 +136,11 @@ export const actSendLocationToServer = (location) => {
       removeToast()
 
       dispatch(actFetchTimeKeeping())
-      successToast('Chấm công thành công')
+      successToast('Successful!')
     } catch (error) {
       removeToast()
 
-      const errorResult = await JSON.parse(error.request.response)
-      switch (errorResult.error) {
+      switch (error.response) {
         case 'try after 5 minutes': {
           errorToast('Bạn vừa chấm công, thử lại sau!')
           break
@@ -428,10 +427,10 @@ export const actGetNotification = (p, onSuccess, onError) => {
     try {
       const res = await notificationApi.get(p)
 
-      await dispatch(setNotificationsData(res.message))
+      await dispatch(setNotificationsData(res?.data || []))
       onSuccess()
     } catch (error) {
-      dispatch(setNotificationsError(error.message))
+      dispatch(setNotificationsError(error?.message || 'Error'))
       onError && onError()
     }
   }
@@ -577,4 +576,13 @@ export const setNotificationsData = (payload) => ({
 export const setNotificationsError = (payload) => ({
   type: 'SET_NOTIFICATION_ERROR',
   payload
+})
+
+export const setNotificationsRead = (payload) => ({
+  type: 'SET_NOTIFICATION_READ',
+  payload
+})
+
+export const setNotificationsReadAll = () => ({
+  type: 'SET_NOTIFICATION_READ_ALL'
 })

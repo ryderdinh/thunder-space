@@ -24,7 +24,10 @@ const projectApi = {
   },
   addUser: (pid, email) => {
     const url = `/projects/${pid}/members/add`
-    return axiosClient.patch(url, [email])
+    return axiosClient.patch(url, {
+      email,
+      role: 'normal'
+    })
   },
   removeUser: (pid, uid) => {
     const url = `/projects/${pid}/members/${uid}`
@@ -33,6 +36,14 @@ const projectApi = {
   updateRole: (pid, uid, role) => {
     const url = `/projects/${pid}/members/${uid}`
     return axiosClient.patch(url, { role: role === 1 ? 'manager' : 'normal' })
+  },
+  acceptInvite: (pid) => {
+    const url = `/projects/${pid}/invitations/accept`
+    return axiosClient.patch(url)
+  },
+  rejectInvite: (pid) => {
+    const url = `/projects/${pid}/invitations/reject`
+    return axiosClient.patch(url)
   }
 }
 

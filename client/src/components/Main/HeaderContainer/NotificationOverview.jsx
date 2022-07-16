@@ -1,15 +1,26 @@
 import { Popover, Transition } from '@headlessui/react'
-import { notificationApi } from 'api'
+import { actGetNotification, setNotificationsReadAll } from 'actions'
+import ButtonNormal from 'components/Button/ButtonNormal'
 import BallTriangle from 'components/Loading/BallTriangle'
-import { useFetch } from 'hooks'
-import React, { Fragment, useEffect } from 'react'
-import { useSelector } from 'react-redux'
+// import { useFetch } from 'hooks'
+import { Fragment, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { io } from 'socket.io-client'
+import { getCookie } from 'units/cookieWeb'
+import { errorToast } from 'utilities/toast'
+
+const socket = io.connect('https://hrmadmin.up.railway.app?', {
+  query: {
+    token: getCookie().token
+  }
+})
 
 const NotificationOverview = () => {
   const { _data, isLoading, error } = useSelector(
     (state) => state._notification
   )
+  const dispatch = useDispatch()
 
   // const fetchData = useFetch()
   // useEffect(() => {
@@ -24,6 +35,21 @@ const NotificationOverview = () => {
   //   fetchData(notificationApi.get, onSuccess, onError)
   // }, [fetchData])
 
+  useEffect(() => {
+    const onSuccess = (data) => {
+      console.log(data?.message)
+    }
+
+    const onError = (error) => {
+      console.log(error)
+    }
+    dispatch(actGetNotification(null, onSuccess, onError))
+  }, [dispatch])
+
+  useEffect(() => {
+    if (error) errorToast(error)
+  }, [error])
+
   return (
     <Transition
       as={Fragment}
@@ -36,7 +62,7 @@ const NotificationOverview = () => {
     >
       <Popover.Panel
         className='lg:max-w-3 absolute right-0 
-        z-10 mt-2 w-screen max-w-sm
+        z-10 mt-1 w-screen max-w-sm
         px-4 sm:px-0'
       >
         <div
@@ -44,9 +70,17 @@ const NotificationOverview = () => {
           border-neutral-600/50
           bg-neutral-800/80'
         >
-          <div className='px-5 py-2'>
+          <div className='flex items-center justify-between px-5 py-2'>
             <h5 className='text-base text-neutral-50/75'>Notifications</h5>
+            <ButtonNormal
+              onClick={() => {
+                dispatch(setNotificationsReadAll())
+              }}
+            >
+              Read all
+            </ButtonNormal>
           </div>
+
           <div>
             {isLoading && (
               <div
@@ -67,7 +101,7 @@ const NotificationOverview = () => {
                 </div>
               ))}
 
-            {!isLoading && !_data && (
+            {!isLoading && (!_data || _data.length < 1) && (
               <p className='p-3 text-center text-xs font-light text-neutral-500'>
                 No notifictions available.
               </p>

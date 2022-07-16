@@ -4,7 +4,7 @@ import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/solid'
 import { LayoutContext } from 'context/LayoutContext'
 import { useContext, useEffect, useState } from 'react'
 import NotificationOverview from './NotificationOverview'
-import { NameContainer, PageName } from './PageName'
+import { PageName } from './PageName'
 
 export default function HeaderContainer({ pathName }) {
   const { sidebar } = useContext(LayoutContext)
@@ -19,6 +19,7 @@ export default function HeaderContainer({ pathName }) {
       work: 'Workflow Overview',
       project: 'Project Overview',
       'project-setting': 'Project Setting',
+      'project-invitation': 'Project Invitation',
       issue: 'Issue Overview',
       'issue-setting': 'Issue Setting',
       account: 'Account',
