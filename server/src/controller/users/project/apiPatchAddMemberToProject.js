@@ -3,7 +3,6 @@ const Project = require("../../../models/Project")
 const Response = require("../../../models/Response");
 const Notification = require("../../../models/Notification");
 const transporter = require("../../../../config/nodeMailer/email")
-const mongoose = require("mongoose");
 const { update } = require("../../../models/Project");
 module.exports = async(req, res, next) => {
      try {
@@ -30,12 +29,16 @@ module.exports = async(req, res, next) => {
         const owner = await Staff.findById(uid);
         const notification = {
             content: `you have received an invitation to join project '${existProject.name}' by ${owner.name}`,
-            type: "invitation",
-            status: "pending",
+            type: "invitation-project",
             owner: newDataMember.uid,
-            pid: pid
+            read: false,
+            data: {
+                pid: pid
+            }
         }
-        await Notification.create(notification)
+        const io = req.app.get("socketio")
+        const notifications = await Notification.create(notification)
+        io.to(newDataMember.uid).emit("invitation-project", notifications)
         const updatedProject = await existProject.save();
         const members = (await updatedProject.populate("members")).members;
         const membersToView = members.map(member => member.getProfileToCreateProject())

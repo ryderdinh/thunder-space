@@ -10,16 +10,17 @@ module.exports = async(req, res, next) => {
         let checkInvitation = false
         let indexGuest
         for (let i = 0; i < project.guest.length; i++) {
-            if(project.guest[i].uid.toString() === uid.toString()){
-                checkInvitation = true;
-                indexGuest = i;
-                i = project.guest.length;
-            }
-        }
-        if(!checkInvitation) return res.status(400).send(new Response(400, 'action is not valid'));
-        project.guest.splice(indexGuest, 1);
-        await project.save()
-        return res.status(200).send(new Response(200, 'success'));
+                if(project.guest[i].uid.toString() === uid.toString()){
+                        checkInvitation = true;
+                        indexGuest = i;
+                        i = project.guest.length;
+                    }
+                }
+                if(!checkInvitation) return res.status(400).send(new Response(400, 'action is not valid'));
+                project.guest.splice(indexGuest, 1);
+                await project.save()
+                await Notification.deleteOne({ owner: uid, "data.pid" : pid})
+                return res.status(200).send(new Response(200, 'success'));
     } catch (error) {
         if(error) return res.status(400).send(new Response(400, error.message))
     }

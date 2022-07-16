@@ -1,5 +1,15 @@
 const express = require("express");
 const app = express();
+const server = require("http").Server(app);
+
+const { Server } = require("socket.io");
+const io = new Server(server, {
+  cors: {
+    origin: "http://localhost:3001",
+    methods: ["GET", "POST"]
+  }
+});
+app.set("socketio", io)
 const db = require("../config/db/database");
 const flash = require("express-flash");
 const session = require("express-session");
@@ -222,7 +232,7 @@ app.use((req, res, next) => {
 });
 
 
-module.exports = app
+module.exports = { server, io }
 // const Project = require('./app/models/project');
 // const { exist } = require("joi");
 //  const func = (async () => {
