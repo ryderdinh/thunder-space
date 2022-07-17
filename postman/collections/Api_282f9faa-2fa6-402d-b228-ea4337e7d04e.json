@@ -1,0 +1,2110 @@
+{
+	"info": {
+		"_postman_id": "acfedf97-732d-4e6a-8a63-158be1c30f0f",
+		"name": "Api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Access token",
+					"id": "f361b1f6-e451-422d-964c-f370110cc237",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"ryderdinh@gmail.com\",\r\n    \"password\": \"123457\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/token",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"token"
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "25073c37-0070-4a2a-b01e-e51c8d12b2ee",
+							"name": "Success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"ryderdinh@gmail.com\",\r\n    \"password\": \"123456\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api_url}}/token",
+									"host": [
+										"{{api_url}}"
+									],
+									"path": [
+										"token"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "x-powered-by",
+									"value": "Express"
+								},
+								{
+									"key": "access-control-allow-origin",
+									"value": "*"
+								},
+								{
+									"key": "content-type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "content-length",
+									"value": "232"
+								},
+								{
+									"key": "etag",
+									"value": "W/\"e8-QBzuT76ukSggOTDWNpMD/2td9Os\""
+								},
+								{
+									"key": "date",
+									"value": "Wed, 15 Jun 2022 15:29:24 GMT"
+								},
+								{
+									"key": "x-envoy-upstream-service-time",
+									"value": "457"
+								},
+								{
+									"key": "server",
+									"value": "railway"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"status\": 200,\n    \"message\": \"success\",\n    \"data\": {\n        \"accessToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjMwOGU1YTFmZDg3YjhiMDdiYjU5YWEiLCJpYXQiOjE2NTUzMDY5NjQsImV4cCI6MTY1NTMxMDU2NH0.KXolBqhV0hlYcJQjqVOPnhXn7Dc_R0UiOVGYqnKnbDU\"\n    }\n}"
+						},
+						{
+							"id": "5a31b3cb-9134-4e6f-9b87-859bc98bd935",
+							"name": "wrong email or password",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"ryderdinh@gmail.com\",\r\n    \"password\": \"123457\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api_url}}/token",
+									"host": [
+										"{{api_url}}"
+									],
+									"path": [
+										"token"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "x-powered-by",
+									"value": "Express"
+								},
+								{
+									"key": "access-control-allow-origin",
+									"value": "*"
+								},
+								{
+									"key": "content-type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "content-length",
+									"value": "50"
+								},
+								{
+									"key": "etag",
+									"value": "W/\"32-mKGyXERWmKvji1ab6VM1Ngg1YwM\""
+								},
+								{
+									"key": "date",
+									"value": "Wed, 15 Jun 2022 15:30:04 GMT"
+								},
+								{
+									"key": "x-envoy-upstream-service-time",
+									"value": "435"
+								},
+								{
+									"key": "server",
+									"value": "railway"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"status\": 400,\n    \"message\": \"wrong email or password\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Login",
+					"id": "8ebbed21-cbec-4995-90d2-b82c0df40dbb",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "{{api_url}}/login",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"id": "d93a8f0f-0407-4662-80e8-229ed9a9f08c",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{api_url}}/logout",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"logout"
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "e518dec7-2efc-45d5-a0c7-ad08046bd34e",
+							"name": "success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{api_url}}/logout",
+									"host": [
+										"{{api_url}}"
+									],
+									"path": [
+										"logout"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "x-powered-by",
+									"value": "Express"
+								},
+								{
+									"key": "access-control-allow-origin",
+									"value": "*"
+								},
+								{
+									"key": "content-type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "content-length",
+									"value": "34"
+								},
+								{
+									"key": "etag",
+									"value": "W/\"22-1tXUXqbxVJHL4XPzq9u/xGk2nVk\""
+								},
+								{
+									"key": "date",
+									"value": "Wed, 15 Jun 2022 15:37:12 GMT"
+								},
+								{
+									"key": "x-envoy-upstream-service-time",
+									"value": "955"
+								},
+								{
+									"key": "server",
+									"value": "railway"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"status\": 200,\n    \"message\": \"success\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Logout all",
+					"id": "f52b25ef-cf21-45f8-b24e-ba20c938d1cc",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{api_url}}/logout-all",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"logout-all"
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "8b9fb8f0-4357-4b93-97f0-f3cc60bff630",
+							"name": "success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{api_url}}/logout-all",
+									"host": [
+										"{{api_url}}"
+									],
+									"path": [
+										"logout-all"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "x-powered-by",
+									"value": "Express"
+								},
+								{
+									"key": "access-control-allow-origin",
+									"value": "*"
+								},
+								{
+									"key": "content-type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "content-length",
+									"value": "34"
+								},
+								{
+									"key": "etag",
+									"value": "W/\"22-1tXUXqbxVJHL4XPzq9u/xGk2nVk\""
+								},
+								{
+									"key": "date",
+									"value": "Wed, 15 Jun 2022 15:38:05 GMT"
+								},
+								{
+									"key": "x-envoy-upstream-service-time",
+									"value": "544"
+								},
+								{
+									"key": "server",
+									"value": "railway"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"status\": 200,\n    \"message\": \"success\"\n}"
+						}
+					]
+				}
+			],
+			"id": "676807c3-0895-45ed-8d47-52f8ae5d2d2a"
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Details about a user",
+					"id": "2d9a6dbb-85fe-4660-ad97-0d1fdcf665fe",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{api_url}}/user",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Timekeeping",
+					"id": "2182d934-91bd-4792-b62c-40f8a39283e7",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "lat",
+									"value": "20.992343833476482",
+									"description": "latitude",
+									"type": "text"
+								},
+								{
+									"key": "lon",
+									"value": "105.87801874609205",
+									"description": "longitude",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{api_url}}/location",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"location"
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "be718ed1-1795-488c-919a-fca59777541c",
+							"name": "success",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "lat",
+											"value": "20.992343833476482",
+											"description": "latitude",
+											"type": "text"
+										},
+										{
+											"key": "lon",
+											"value": "105.87801874609205",
+											"description": "longitude",
+											"type": "text"
+										}
+									],
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api_url}}/location",
+									"host": [
+										"{{api_url}}"
+									],
+									"path": [
+										"location"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "x-powered-by",
+									"value": "Express"
+								},
+								{
+									"key": "access-control-allow-origin",
+									"value": "*"
+								},
+								{
+									"key": "content-type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "content-length",
+									"value": "44"
+								},
+								{
+									"key": "etag",
+									"value": "W/\"2c-daJ+4XYotf0ql2v9i//TV+p4Fbk\""
+								},
+								{
+									"key": "date",
+									"value": "Wed, 15 Jun 2022 16:35:47 GMT"
+								},
+								{
+									"key": "x-envoy-upstream-service-time",
+									"value": "321"
+								},
+								{
+									"key": "server",
+									"value": "railway"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"status\": 200,\n    \"message\": \"check in complete\"\n}"
+						}
+					]
+				},
+				{
+					"name": "List timekeeping",
+					"id": "4aa6fc15-c2f6-45fa-8a35-512a84b4ec8f",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api_url}}/timeline",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"timeline"
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "247888f8-1164-49fc-b7bc-283f17df1a12",
+							"name": "success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{api_url}}/timeline",
+									"host": [
+										"{{api_url}}"
+									],
+									"path": [
+										"timeline"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "x-powered-by",
+									"value": "Express"
+								},
+								{
+									"key": "access-control-allow-origin",
+									"value": "*"
+								},
+								{
+									"key": "content-type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "content-length",
+									"value": "413"
+								},
+								{
+									"key": "etag",
+									"value": "W/\"19d-qW5sa+7+5RKxTBL0AFBrEg/hU+4\""
+								},
+								{
+									"key": "date",
+									"value": "Wed, 15 Jun 2022 15:43:28 GMT"
+								},
+								{
+									"key": "x-envoy-upstream-service-time",
+									"value": "341"
+								},
+								{
+									"key": "server",
+									"value": "railway"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"status\": 200,\n    \"message\": \"success\",\n    \"data\": [\n        [\n            1647423243084,\n            8060\n        ],\n        [\n            1647423618028,\n            8060\n        ],\n        [\n            1647423942785,\n            8060\n        ],\n        [\n            1647424250265,\n            8060\n        ],\n        [\n            1647425045202,\n            8060\n        ],\n        [\n            1647432050106,\n            8060\n        ],\n        [\n            1647432749823,\n            8060\n        ],\n        [\n            1647436799060,\n            8060\n        ],\n        [\n            1648028231231,\n            98323\n        ],\n        [\n            1648188764870,\n            121992\n        ],\n        [\n            1648193143843,\n            119640\n        ],\n        [\n            1650465313772,\n            92384\n        ],\n        [\n            1650878437988,\n            119643\n        ],\n        [\n            1650982952012,\n            91826\n        ],\n        [\n            1651556959151,\n            11647123\n        ],\n        [\n            1652242856382,\n            7912\n        ],\n        [\n            1655280460775,\n            7370\n        ]\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Get all users",
+					"id": "b77aa81b-9459-4458-aaf7-facec329399c",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api_url}}/users/to-create-project",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"users",
+								"to-create-project"
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "7da05810-8eb2-486f-9527-d52410542e1c",
+							"name": "success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{api_url}}/users/to-create-project",
+									"host": [
+										"{{api_url}}"
+									],
+									"path": [
+										"users",
+										"to-create-project"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "x-powered-by",
+									"value": "Express"
+								},
+								{
+									"key": "access-control-allow-origin",
+									"value": "*"
+								},
+								{
+									"key": "content-type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "content-length",
+									"value": "791"
+								},
+								{
+									"key": "etag",
+									"value": "W/\"317-B95F0bxNgvQSUvJasHYRaj12lZY\""
+								},
+								{
+									"key": "date",
+									"value": "Wed, 15 Jun 2022 16:37:00 GMT"
+								},
+								{
+									"key": "x-envoy-upstream-service-time",
+									"value": "471"
+								},
+								{
+									"key": "server",
+									"value": "railway"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"status\": 200,\n    \"message\": \"success\",\n    \"data\": [\n        {\n            \"avatar\": \"https://res.cloudinary.com/dawqbbo2l/image/upload/v1626963206/avatar/avatar-none_byqbnn.svg\",\n            \"_id\": \"62308e5a1fd87b8b07bb59aa\",\n            \"email\": \"ryderdinh@gmail.com\",\n            \"name\": \"Ryder Dinh\"\n        },\n        {\n            \"avatar\": \"https://res.cloudinary.com/dawqbbo2l/image/upload/v1626963206/avatar/avatar-none_byqbnn.svg\",\n            \"_id\": \"6263d3d38d45c3365d13ddfc\",\n            \"email\": \"dinhquanganhdev@gmail.com\",\n            \"name\": \"admin\"\n        },\n        {\n            \"avatar\": \"https://res.cloudinary.com/dawqbbo2l/image/upload/v1626963206/avatar/avatar-none_byqbnn.svg\",\n            \"_id\": \"6263d3da8d45c3365d13de04\",\n            \"email\": \"Xenomorph14@gmail.com\",\n            \"name\": \"Pham Huu Thang\"\n        },\n        {\n            \"avatar\": \"https://res.cloudinary.com/dawqbbo2l/image/upload/v1626963206/avatar/avatar-none_byqbnn.svg\",\n            \"_id\": \"62aa036d60da903321f43bac\",\n            \"email\": \"test@gmail.com\",\n            \"name\": \"test\"\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Forgot password",
+					"id": "0804b9cc-041a-4928-9553-e1016d98a8e3",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"ryderdinh@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/forget-password",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"forget-password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Reset password",
+					"id": "40eee42d-4adc-41ef-8596-5b9b83c6c6a2",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"ryderdinh@gmail.com\",\r\n    \"otp\":\"123456\",\r\n    \"password\":\"123456\",\r\n    \"confirmPassword\":\"123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/reset-password",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"reset-password"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"id": "1487e0a7-7758-4d9a-88dd-00cc1b9295c3"
+		},
+		{
+			"name": "Events",
+			"item": [
+				{
+					"name": "Get all events",
+					"id": "68792067-d698-4d8b-9ae9-7e6d0cc7d077",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api_url}}/events",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"events"
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "14628444-0454-49af-b7c7-f7f8e7cbe677",
+							"name": "success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{api_url}}/events",
+									"host": [
+										"{{api_url}}"
+									],
+									"path": [
+										"events"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "x-powered-by",
+									"value": "Express"
+								},
+								{
+									"key": "access-control-allow-origin",
+									"value": "*"
+								},
+								{
+									"key": "content-type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "content-length",
+									"value": "44"
+								},
+								{
+									"key": "etag",
+									"value": "W/\"2c-PPl6wd7Ylp/6jOUSO/vY+lI58Dg\""
+								},
+								{
+									"key": "date",
+									"value": "Wed, 15 Jun 2022 15:49:31 GMT"
+								},
+								{
+									"key": "x-envoy-upstream-service-time",
+									"value": "163"
+								},
+								{
+									"key": "server",
+									"value": "railway"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"status\": 200,\n    \"message\": \"success\",\n    \"data\": []\n}"
+						}
+					]
+				}
+			],
+			"id": "412a19d3-c32f-4383-82a2-957fbddee4fd"
+		},
+		{
+			"name": "Projects",
+			"item": [
+				{
+					"name": "Create project",
+					"id": "d2416328-e68a-4e36-a1fa-74acce681199",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Test project\",\r\n    \"managers\": [],\r\n    \"members\": []\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/projects/create",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"projects",
+								"create"
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "4321a555-30e4-474d-8633-d96dfa93665b",
+							"name": "success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Test project\",\r\n    \"managers\": [],\r\n    \"members\": []\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api_url}}/projects/create",
+									"host": [
+										"{{api_url}}"
+									],
+									"path": [
+										"projects",
+										"create"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "x-powered-by",
+									"value": "Express"
+								},
+								{
+									"key": "access-control-allow-origin",
+									"value": "*"
+								},
+								{
+									"key": "content-type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "content-length",
+									"value": "189"
+								},
+								{
+									"key": "etag",
+									"value": "W/\"bd-aEypt5f08z4pOgSHjwBLk5VsS6Q\""
+								},
+								{
+									"key": "date",
+									"value": "Wed, 15 Jun 2022 15:53:29 GMT"
+								},
+								{
+									"key": "x-envoy-upstream-service-time",
+									"value": "992"
+								},
+								{
+									"key": "server",
+									"value": "railway"
+								},
+								{
+									"key": "connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"status\": 200,\n    \"message\": \"success\",\n    \"data\": {\n        \"code\": \"TP\",\n        \"name\": \"Test project\",\n        \"description\": \"\",\n        \"createdAt\": 1655306840059,\n        \"updateAt\": 1655308409316,\n        \"_id\": \"62aa007960da903321f4374b\",\n        \"issue\": []\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Get all project",
+					"id": "d8daa426-2185-4aa7-921d-5c17951cbaaa",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api_url}}/projects",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"projects"
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "95a1c60b-4c41-478c-bfcf-a08df09d3254",
+							"name": "success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{api_url}}/projects",
+									"host": [
+										"{{api_url}}"
+									],
+									"path": [
+										"projects"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "x-powered-by",
+									"value": "Express"
+								},
+								{
+									"key": "access-control-allow-origin",
+									"value": "*"
+								},
+								{
+									"key": "content-type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "content-length",
+									"value": "922"
+								},
+								{
+									"key": "etag",
+									"value": "W/\"39a-NBnQdWvbnmewX/yrhokMGa5JW3k\""
+								},
+								{
+									"key": "date",
+									"value": "Wed, 15 Jun 2022 15:58:25 GMT"
+								},
+								{
+									"key": "x-envoy-upstream-service-time",
+									"value": "824"
+								},
+								{
+									"key": "server",
+									"value": "railway"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"status\": 200,\n    \"message\": \"success\",\n    \"data\": [\n        {\n            \"_id\": \"62a994020e32bb53efaf1973\",\n            \"code\": \"H\",\n            \"name\": \"Hello\",\n            \"description\": \"Test\",\n            \"member\": [\n                {\n                    \"avatar\": \"https://res.cloudinary.com/dawqbbo2l/image/upload/v1626963206/avatar/avatar-none_byqbnn.svg\",\n                    \"_id\": \"62308e5a1fd87b8b07bb59aa\",\n                    \"email\": \"ryderdinh@gmail.com\",\n                    \"name\": \"Ryder Dinh\"\n                },\n                {\n                    \"avatar\": \"https://res.cloudinary.com/dawqbbo2l/image/upload/v1626963206/avatar/avatar-none_byqbnn.svg\",\n                    \"_id\": \"6263d3d38d45c3365d13ddfc\",\n                    \"email\": \"dinhquanganhdev@gmail.com\",\n                    \"name\": \"admin\"\n                }\n            ],\n            \"createdAt\": 1655203162539,\n            \"updateAt\": 1655280642402,\n            \"issue\": []\n        },\n        {\n            \"_id\": \"62aa007960da903321f4374b\",\n            \"code\": \"TP\",\n            \"name\": \"Test project\",\n            \"description\": \"\",\n            \"member\": [\n                {\n                    \"avatar\": \"https://res.cloudinary.com/dawqbbo2l/image/upload/v1626963206/avatar/avatar-none_byqbnn.svg\",\n                    \"_id\": \"62308e5a1fd87b8b07bb59aa\",\n                    \"email\": \"ryderdinh@gmail.com\",\n                    \"name\": \"Ryder Dinh\"\n                }\n            ],\n            \"createdAt\": 1655306840059,\n            \"updateAt\": 1655308409316,\n            \"issue\": []\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Detail about a project",
+					"id": "9db9299f-56d7-4e78-9217-02df7a79934d",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api_url}}/projects/62aa007960da903321f4374b",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"projects",
+								"62aa007960da903321f4374b"
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "924ecaa4-c551-4c70-b307-2e008e529d6d",
+							"name": "not found",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{api_url}}/projects/626918cfb3b25ca23e6376dd",
+									"host": [
+										"{{api_url}}"
+									],
+									"path": [
+										"projects",
+										"626918cfb3b25ca23e6376dd"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "x-powered-by",
+									"value": "Express"
+								},
+								{
+									"key": "access-control-allow-origin",
+									"value": "*"
+								},
+								{
+									"key": "content-type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "content-length",
+									"value": "52"
+								},
+								{
+									"key": "etag",
+									"value": "W/\"34-QXkK17Ia5vMA3ZDeL53Y2GDnOn8\""
+								},
+								{
+									"key": "date",
+									"value": "Wed, 15 Jun 2022 15:54:40 GMT"
+								},
+								{
+									"key": "x-envoy-upstream-service-time",
+									"value": "329"
+								},
+								{
+									"key": "server",
+									"value": "railway"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"status\": 400,\n    \"message\": \"project are not available\"\n}"
+						},
+						{
+							"id": "99fd23b4-6b45-43c5-8d40-6d496984ba15",
+							"name": "success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{api_url}}/projects/62aa007960da903321f4374b",
+									"host": [
+										"{{api_url}}"
+									],
+									"path": [
+										"projects",
+										"62aa007960da903321f4374b"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "x-powered-by",
+									"value": "Express"
+								},
+								{
+									"key": "access-control-allow-origin",
+									"value": "*"
+								},
+								{
+									"key": "content-type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "content-length",
+									"value": "388"
+								},
+								{
+									"key": "etag",
+									"value": "W/\"184-PKt/qDUV5IcCxs+Er5aR0+8TtUo\""
+								},
+								{
+									"key": "date",
+									"value": "Wed, 15 Jun 2022 15:56:24 GMT"
+								},
+								{
+									"key": "x-envoy-upstream-service-time",
+									"value": "659"
+								},
+								{
+									"key": "server",
+									"value": "railway"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"status\": 200,\n    \"message\": \"success\",\n    \"data\": {\n        \"_id\": \"62aa007960da903321f4374b\",\n        \"code\": \"TP\",\n        \"name\": \"Test project\",\n        \"description\": \"\",\n        \"member\": [\n            {\n                \"avatar\": \"https://res.cloudinary.com/dawqbbo2l/image/upload/v1626963206/avatar/avatar-none_byqbnn.svg\",\n                \"_id\": \"62308e5a1fd87b8b07bb59aa\",\n                \"email\": \"ryderdinh@gmail.com\",\n                \"name\": \"Ryder Dinh\"\n            }\n        ],\n        \"createdAt\": 1655306840059,\n        \"updateAt\": 1655308409316,\n        \"issue\": []\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Remove project",
+					"id": "32262910-fd8b-4132-98ca-0c9bda8c8cb8",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{api_url}}/projects/62aa007960da903321f4374f",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"projects",
+								"62aa007960da903321f4374f"
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "f76db92e-fdb4-4f80-9345-e219dbba8460",
+							"name": "success",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{api_url}}/projects/62aa007960da903321f4374b",
+									"host": [
+										"{{api_url}}"
+									],
+									"path": [
+										"projects",
+										"62aa007960da903321f4374b"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "x-powered-by",
+									"value": "Express"
+								},
+								{
+									"key": "access-control-allow-origin",
+									"value": "*"
+								},
+								{
+									"key": "content-type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "content-length",
+									"value": "34"
+								},
+								{
+									"key": "etag",
+									"value": "W/\"22-1tXUXqbxVJHL4XPzq9u/xGk2nVk\""
+								},
+								{
+									"key": "date",
+									"value": "Wed, 15 Jun 2022 15:59:53 GMT"
+								},
+								{
+									"key": "x-envoy-upstream-service-time",
+									"value": "660"
+								},
+								{
+									"key": "server",
+									"value": "railway"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"status\": 200,\n    \"message\": \"success\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Add new member",
+					"id": "fbbc2985-e71a-4890-a785-1bb35d2e2d6a",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"managers\": [\"test@gmail.com\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/projects/62a994020e32bb53efaf1973/members/add",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"projects",
+								"62a994020e32bb53efaf1973",
+								"members",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete user",
+					"id": "1653ee46-4a42-49f1-9bc6-4a48b0578512",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{api_url}}/api/projects/626e55ddea2d6e23c4976f86/members/623b376bcf978427d09cd28c",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"api",
+								"projects",
+								"626e55ddea2d6e23c4976f86",
+								"members",
+								"623b376bcf978427d09cd28c"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change role members",
+					"id": "de914859-d362-482e-b3bd-ba4835539ad6",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "role",
+									"value": "normal",
+									"description": "[ \"normal\", \"manager ]",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "api/projects/626e55ddea2d6e23c4976f86/members/623b376bcf978427d09cd28c",
+							"host": [
+								"api"
+							],
+							"path": [
+								"projects",
+								"626e55ddea2d6e23c4976f86",
+								"members",
+								"623b376bcf978427d09cd28c"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create issue",
+					"id": "2ade78ed-aa78-4efb-a98e-99c073f137ea",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "Test issue",
+									"description": "issue name",
+									"type": "text"
+								},
+								{
+									"key": "type",
+									"value": "task",
+									"description": "issue type (task / bug)",
+									"type": "text"
+								},
+								{
+									"key": "estimate",
+									"value": "1658679473000",
+									"description": "estimate time > now",
+									"type": "text"
+								},
+								{
+									"key": "priority",
+									"value": "low",
+									"description": "issue priority (low / medium / hign / highest)",
+									"type": "text"
+								},
+								{
+									"key": "assigned",
+									"value": "ryderdinh@gmail.com",
+									"description": "assignee",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{api_url}}/projects/62a994020e32bb53efaf1973/issues/create",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"projects",
+								"62a994020e32bb53efaf1973",
+								"issues",
+								"create"
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "dec0ec70-8691-438c-9a44-7f173388da1a",
+							"name": "success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "name",
+											"value": "Test issue",
+											"description": "issue name",
+											"type": "text"
+										},
+										{
+											"key": "type",
+											"value": "task",
+											"description": "issue type (task / bug)",
+											"type": "text"
+										},
+										{
+											"key": "estimate",
+											"value": "1658679473000",
+											"description": "estimate time",
+											"type": "text"
+										},
+										{
+											"key": "priority",
+											"value": "low",
+											"description": "issue priority (low / medium / hign / highest)",
+											"type": "text"
+										},
+										{
+											"key": "assigned",
+											"value": "ryderdinh@gmail.com",
+											"description": "assignee",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{api_url}}/projects/62a994020e32bb53efaf1973/issues/create",
+									"host": [
+										"{{api_url}}"
+									],
+									"path": [
+										"projects",
+										"62a994020e32bb53efaf1973",
+										"issues",
+										"create"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "x-powered-by",
+									"value": "Express"
+								},
+								{
+									"key": "access-control-allow-origin",
+									"value": "*"
+								},
+								{
+									"key": "content-type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "content-length",
+									"value": "806"
+								},
+								{
+									"key": "etag",
+									"value": "W/\"326-yaAfEy6J2QMPGkSFFltdmNdCV4I\""
+								},
+								{
+									"key": "date",
+									"value": "Wed, 15 Jun 2022 16:19:05 GMT"
+								},
+								{
+									"key": "x-envoy-upstream-service-time",
+									"value": "1112"
+								},
+								{
+									"key": "server",
+									"value": "railway"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"status\": 200,\n    \"message\": \"success\",\n    \"data\": {\n        \"name\": \"Test issue\",\n        \"code\": \"H-2\",\n        \"type\": \"task\",\n        \"project\": \"62a994020e32bb53efaf1973\",\n        \"creator\": \"62308e5a1fd87b8b07bb59aa\",\n        \"assign\": \"62308e5a1fd87b8b07bb59aa\",\n        \"estimate\": {\n            \"start\": null,\n            \"end\": 1658679473000\n        },\n        \"description\": \"\",\n        \"priority\": \"low\",\n        \"attachment\": [],\n        \"status\": [],\n        \"history\": [\n            {\n                \"user\": [\n                    {\n                        \"uid\": \"62308e5a1fd87b8b07bb59aa\",\n                        \"_id\": \"62aa067960da903321f44089\"\n                    }\n                ],\n                \"time\": 1655309945265,\n                \"action\": \"created an issue\",\n                \"_id\": \"62aa067960da903321f44088\"\n            },\n            {\n                \"user\": [\n                    {\n                        \"uid\": \"62308e5a1fd87b8b07bb59aa\",\n                        \"_id\": \"62aa067960da903321f4408b\"\n                    },\n                    {\n                        \"uid\": \"62308e5a1fd87b8b07bb59aa\",\n                        \"_id\": \"62aa067960da903321f4408c\"\n                    }\n                ],\n                \"time\": 1655309945265,\n                \"action\": \"assigned an issue to\",\n                \"_id\": \"62aa067960da903321f4408a\"\n            }\n        ],\n        \"createdAt\": 1655306839992,\n        \"updateAt\": 1655309945431,\n        \"_id\": \"62aa067960da903321f44087\",\n        \"__v\": 0\n    }\n}"
+						},
+						{
+							"id": "b0402d79-7681-43f8-9bca-9201fd73edd0",
+							"name": "the assignee is not in the project",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "name",
+											"value": "Test issue",
+											"description": "issue name",
+											"type": "text"
+										},
+										{
+											"key": "type",
+											"value": "task",
+											"description": "issue type (task / bug)",
+											"type": "text"
+										},
+										{
+											"key": "estimate",
+											"value": "1658679473000",
+											"description": "estimate time",
+											"type": "text"
+										},
+										{
+											"key": "priority",
+											"value": "low",
+											"description": "issue priority (low / medium / hign / highest)",
+											"type": "text"
+										},
+										{
+											"key": "assigned",
+											"value": "a@gmail.com",
+											"description": "assignee",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{api_url}}/projects/62a994020e32bb53efaf1973/issues/create",
+									"host": [
+										"{{api_url}}"
+									],
+									"path": [
+										"projects",
+										"62a994020e32bb53efaf1973",
+										"issues",
+										"create"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "x-powered-by",
+									"value": "Express"
+								},
+								{
+									"key": "access-control-allow-origin",
+									"value": "*"
+								},
+								{
+									"key": "content-type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "content-length",
+									"value": "56"
+								},
+								{
+									"key": "etag",
+									"value": "W/\"38-EemlYAxvC1Z2lzmBWk4x0BsaF+I\""
+								},
+								{
+									"key": "date",
+									"value": "Wed, 15 Jun 2022 16:19:29 GMT"
+								},
+								{
+									"key": "x-envoy-upstream-service-time",
+									"value": "1210"
+								},
+								{
+									"key": "server",
+									"value": "railway"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"status\": 400,\n    \"message\": \"user is assgined is not valid\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Get all issue",
+					"id": "f2408c50-c984-4843-86d2-fa6a4fd56e5c",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api_url}}/projects/62a994020e32bb53efaf1972/issues",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"projects",
+								"62a994020e32bb53efaf1972",
+								"issues"
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "2c10c349-865b-4834-8586-462036e69b04",
+							"name": "success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{api_url}}/projects/62a994020e32bb53efaf1973/issues",
+									"host": [
+										"{{api_url}}"
+									],
+									"path": [
+										"projects",
+										"62a994020e32bb53efaf1973",
+										"issues"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "x-powered-by",
+									"value": "Express"
+								},
+								{
+									"key": "access-control-allow-origin",
+									"value": "*"
+								},
+								{
+									"key": "content-type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "content-length",
+									"value": "2215"
+								},
+								{
+									"key": "etag",
+									"value": "W/\"8a7-h87LNVVKaqNhHYWxmOu4e4NS/yM\""
+								},
+								{
+									"key": "date",
+									"value": "Wed, 15 Jun 2022 16:23:02 GMT"
+								},
+								{
+									"key": "x-envoy-upstream-service-time",
+									"value": "1104"
+								},
+								{
+									"key": "server",
+									"value": "railway"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"status\": 200,\n    \"message\": \"success\",\n    \"data\": [\n        {\n            \"estimate\": {\n                \"start\": null,\n                \"end\": 1658679473000\n            },\n            \"_id\": \"62aa064760da903321f43e6d\",\n            \"name\": \"admin\",\n            \"code\": \"H-1\",\n            \"type\": \"task\",\n            \"project\": \"62a994020e32bb53efaf1973\",\n            \"creator\": {\n                \"avatar\": \"https://res.cloudinary.com/dawqbbo2l/image/upload/v1626963206/avatar/avatar-none_byqbnn.svg\",\n                \"_id\": \"62308e5a1fd87b8b07bb59aa\",\n                \"email\": \"ryderdinh@gmail.com\",\n                \"name\": \"Ryder Dinh\"\n            },\n            \"assign\": {\n                \"avatar\": \"https://res.cloudinary.com/dawqbbo2l/image/upload/v1626963206/avatar/avatar-none_byqbnn.svg\",\n                \"_id\": \"62308e5a1fd87b8b07bb59aa\",\n                \"email\": \"ryderdinh@gmail.com\",\n                \"name\": \"Ryder Dinh\"\n            },\n            \"description\": \"\",\n            \"priority\": \"medium\",\n            \"attachment\": [],\n            \"status\": [],\n            \"history\": [\n                {\n                    \"user\": [\n                        {\n                            \"uid\": \"62308e5a1fd87b8b07bb59aa\",\n                            \"_id\": \"62aa064760da903321f43e6f\"\n                        }\n                    ],\n                    \"time\": 1655309895251,\n                    \"action\": \"created an issue\",\n                    \"_id\": \"62aa064760da903321f43e6e\"\n                },\n                {\n                    \"user\": [\n                        {\n                            \"uid\": \"62308e5a1fd87b8b07bb59aa\",\n                            \"_id\": \"62aa064760da903321f43e71\"\n                        },\n                        {\n                            \"uid\": \"62308e5a1fd87b8b07bb59aa\",\n                            \"_id\": \"62aa064760da903321f43e72\"\n                        }\n                    ],\n                    \"time\": 1655309895251,\n                    \"action\": \"assigned an issue to\",\n                    \"_id\": \"62aa064760da903321f43e70\"\n                }\n            ],\n            \"createdAt\": 1655306839992,\n            \"updateAt\": 1655309895428,\n            \"__v\": 0\n        },\n        {\n            \"estimate\": {\n                \"start\": null,\n                \"end\": 1658679473000\n            },\n            \"_id\": \"62aa067960da903321f44087\",\n            \"name\": \"Test issue\",\n            \"code\": \"H-2\",\n            \"type\": \"task\",\n            \"project\": \"62a994020e32bb53efaf1973\",\n            \"creator\": {\n                \"avatar\": \"https://res.cloudinary.com/dawqbbo2l/image/upload/v1626963206/avatar/avatar-none_byqbnn.svg\",\n                \"_id\": \"62308e5a1fd87b8b07bb59aa\",\n                \"email\": \"ryderdinh@gmail.com\",\n                \"name\": \"Ryder Dinh\"\n            },\n            \"assign\": {\n                \"avatar\": \"https://res.cloudinary.com/dawqbbo2l/image/upload/v1626963206/avatar/avatar-none_byqbnn.svg\",\n                \"_id\": \"62308e5a1fd87b8b07bb59aa\",\n                \"email\": \"ryderdinh@gmail.com\",\n                \"name\": \"Ryder Dinh\"\n            },\n            \"description\": \"\",\n            \"priority\": \"low\",\n            \"attachment\": [],\n            \"status\": [],\n            \"history\": [\n                {\n                    \"user\": [\n                        {\n                            \"uid\": \"62308e5a1fd87b8b07bb59aa\",\n                            \"_id\": \"62aa067960da903321f44089\"\n                        }\n                    ],\n                    \"time\": 1655309945265,\n                    \"action\": \"created an issue\",\n                    \"_id\": \"62aa067960da903321f44088\"\n                },\n                {\n                    \"user\": [\n                        {\n                            \"uid\": \"62308e5a1fd87b8b07bb59aa\",\n                            \"_id\": \"62aa067960da903321f4408b\"\n                        },\n                        {\n                            \"uid\": \"62308e5a1fd87b8b07bb59aa\",\n                            \"_id\": \"62aa067960da903321f4408c\"\n                        }\n                    ],\n                    \"time\": 1655309945265,\n                    \"action\": \"assigned an issue to\",\n                    \"_id\": \"62aa067960da903321f4408a\"\n                }\n            ],\n            \"createdAt\": 1655306839992,\n            \"updateAt\": 1655309945431,\n            \"__v\": 0\n        }\n    ]\n}"
+						},
+						{
+							"id": "c82a4ba7-1a42-4153-aabe-6dfa1b464923",
+							"name": "project not found",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{api_url}}/projects/62a994020e32bb53efaf1972/issues",
+									"host": [
+										"{{api_url}}"
+									],
+									"path": [
+										"projects",
+										"62a994020e32bb53efaf1972",
+										"issues"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "x-powered-by",
+									"value": "Express"
+								},
+								{
+									"key": "access-control-allow-origin",
+									"value": "*"
+								},
+								{
+									"key": "content-type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "content-length",
+									"value": "51"
+								},
+								{
+									"key": "etag",
+									"value": "W/\"33-bn6kCDiATEWM8WrJppGC6amAE3Q\""
+								},
+								{
+									"key": "date",
+									"value": "Wed, 15 Jun 2022 16:23:41 GMT"
+								},
+								{
+									"key": "x-envoy-upstream-service-time",
+									"value": "314"
+								},
+								{
+									"key": "server",
+									"value": "railway"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"status\": 400,\n    \"message\": \"project is not available\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Detail about a issue",
+					"id": "c35eeee2-ff69-4515-88c6-4ade13b43fdf",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api_url}}/issues/62aa064760da903321f43e6d",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"issues",
+								"62aa064760da903321f43e6d"
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "17754ea6-8aea-4ff4-a3d7-73ae54c5b6e1",
+							"name": "success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{api_url}}/issues/62aa064760da903321f43e6d",
+									"host": [
+										"{{api_url}}"
+									],
+									"path": [
+										"issues",
+										"62aa064760da903321f43e6d"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "x-powered-by",
+									"value": "Express"
+								},
+								{
+									"key": "access-control-allow-origin",
+									"value": "*"
+								},
+								{
+									"key": "content-type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "content-length",
+									"value": "1420"
+								},
+								{
+									"key": "etag",
+									"value": "W/\"58c-uy56oAxW2aRVKRsdKD7xmx7WER8\""
+								},
+								{
+									"key": "date",
+									"value": "Wed, 15 Jun 2022 16:26:29 GMT"
+								},
+								{
+									"key": "x-envoy-upstream-service-time",
+									"value": "962"
+								},
+								{
+									"key": "server",
+									"value": "railway"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"status\": 200,\n    \"message\": \"success\",\n    \"data\": {\n        \"estimate\": {\n            \"start\": null,\n            \"end\": 1658679473000\n        },\n        \"_id\": \"62aa064760da903321f43e6d\",\n        \"name\": \"admin\",\n        \"code\": \"H-1\",\n        \"type\": \"task\",\n        \"project\": \"62a994020e32bb53efaf1973\",\n        \"creator\": {\n            \"avatar\": \"https://res.cloudinary.com/dawqbbo2l/image/upload/v1626963206/avatar/avatar-none_byqbnn.svg\",\n            \"_id\": \"62308e5a1fd87b8b07bb59aa\",\n            \"email\": \"ryderdinh@gmail.com\",\n            \"name\": \"Ryder Dinh\"\n        },\n        \"assign\": {\n            \"avatar\": \"https://res.cloudinary.com/dawqbbo2l/image/upload/v1626963206/avatar/avatar-none_byqbnn.svg\",\n            \"_id\": \"62308e5a1fd87b8b07bb59aa\",\n            \"email\": \"ryderdinh@gmail.com\",\n            \"name\": \"Ryder Dinh\"\n        },\n        \"description\": \"\",\n        \"priority\": \"medium\",\n        \"attachment\": [],\n        \"status\": [],\n        \"history\": [\n            {\n                \"user\": [\n                    {\n                        \"avatar\": \"https://res.cloudinary.com/dawqbbo2l/image/upload/v1626963206/avatar/avatar-none_byqbnn.svg\",\n                        \"_id\": \"62308e5a1fd87b8b07bb59aa\",\n                        \"email\": \"ryderdinh@gmail.com\",\n                        \"name\": \"Ryder Dinh\"\n                    }\n                ],\n                \"time\": 1655309895251,\n                \"action\": \"created an issue\"\n            },\n            {\n                \"user\": [\n                    {\n                        \"avatar\": \"https://res.cloudinary.com/dawqbbo2l/image/upload/v1626963206/avatar/avatar-none_byqbnn.svg\",\n                        \"_id\": \"62308e5a1fd87b8b07bb59aa\",\n                        \"email\": \"ryderdinh@gmail.com\",\n                        \"name\": \"Ryder Dinh\"\n                    },\n                    {\n                        \"avatar\": \"https://res.cloudinary.com/dawqbbo2l/image/upload/v1626963206/avatar/avatar-none_byqbnn.svg\",\n                        \"_id\": \"62308e5a1fd87b8b07bb59aa\",\n                        \"email\": \"ryderdinh@gmail.com\",\n                        \"name\": \"Ryder Dinh\"\n                    }\n                ],\n                \"time\": 1655309895251,\n                \"action\": \"assigned an issue to\"\n            }\n        ],\n        \"createdAt\": 1655306839992,\n        \"updateAt\": 1655309895428,\n        \"__v\": 0\n    }\n}"
+						},
+						{
+							"id": "1d53011e-1caa-400b-95d7-74ecf6b056d9",
+							"name": "not found",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{api_url}}/issues/62aa064760da903321f43e6f",
+									"host": [
+										"{{api_url}}"
+									],
+									"path": [
+										"issues",
+										"62aa064760da903321f43e6f"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "x-powered-by",
+									"value": "Express"
+								},
+								{
+									"key": "access-control-allow-origin",
+									"value": "*"
+								},
+								{
+									"key": "content-type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "content-length",
+									"value": "47"
+								},
+								{
+									"key": "etag",
+									"value": "W/\"2f-wo1OxRQukXFEuwlLRgchR7I+QO8\""
+								},
+								{
+									"key": "date",
+									"value": "Wed, 15 Jun 2022 16:26:58 GMT"
+								},
+								{
+									"key": "x-envoy-upstream-service-time",
+									"value": "312"
+								},
+								{
+									"key": "server",
+									"value": "railway"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"status\": 400,\n    \"message\": \"issue does not exist\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Update issue",
+					"id": "b3395ef6-9b22-4f74-a0ed-69b2383a7b9d",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "Test rename issue",
+									"description": "no require",
+									"type": "text"
+								},
+								{
+									"key": "type",
+									"value": "",
+									"description": "no require",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "assigned",
+									"value": "",
+									"description": "no require",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "estimate",
+									"value": "",
+									"description": "no require",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "priority",
+									"value": "highest",
+									"description": "no require",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "Hello",
+									"description": "no require",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{api_url}}/issues/62aa064760da903321f43e6d",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"issues",
+								"62aa064760da903321f43e6d"
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "2bc92daf-174d-4b3e-b446-ab6d1fb563a7",
+							"name": "success",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "name",
+											"value": "Test rename issue",
+											"description": "no require",
+											"type": "text"
+										},
+										{
+											"key": "type",
+											"value": "",
+											"description": "no require",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "assigned",
+											"value": "",
+											"description": "no require",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "estimate",
+											"value": "",
+											"description": "no require",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "priority",
+											"value": "highest",
+											"description": "no require",
+											"type": "text"
+										},
+										{
+											"key": "description",
+											"value": "Hello",
+											"description": "no require",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{api_url}}/issues/62aa064760da903321f43e6d",
+									"host": [
+										"{{api_url}}"
+									],
+									"path": [
+										"issues",
+										"62aa064760da903321f43e6d"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "x-powered-by",
+									"value": "Express"
+								},
+								{
+									"key": "access-control-allow-origin",
+									"value": "*"
+								},
+								{
+									"key": "content-type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "content-length",
+									"value": "1438"
+								},
+								{
+									"key": "etag",
+									"value": "W/\"59e-yQ2i0CPpDk7UQYitKTBoncyqyhk\""
+								},
+								{
+									"key": "date",
+									"value": "Wed, 15 Jun 2022 16:30:58 GMT"
+								},
+								{
+									"key": "x-envoy-upstream-service-time",
+									"value": "1580"
+								},
+								{
+									"key": "server",
+									"value": "railway"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"status\": 200,\n    \"message\": \"success\",\n    \"data\": {\n        \"estimate\": {\n            \"start\": null,\n            \"end\": 1658679473000\n        },\n        \"_id\": \"62aa064760da903321f43e6d\",\n        \"name\": \"Test rename issue\",\n        \"code\": \"H-1\",\n        \"type\": \"task\",\n        \"project\": \"62a994020e32bb53efaf1973\",\n        \"creator\": {\n            \"avatar\": \"https://res.cloudinary.com/dawqbbo2l/image/upload/v1626963206/avatar/avatar-none_byqbnn.svg\",\n            \"_id\": \"62308e5a1fd87b8b07bb59aa\",\n            \"email\": \"ryderdinh@gmail.com\",\n            \"name\": \"Ryder Dinh\"\n        },\n        \"assign\": {\n            \"avatar\": \"https://res.cloudinary.com/dawqbbo2l/image/upload/v1626963206/avatar/avatar-none_byqbnn.svg\",\n            \"_id\": \"62308e5a1fd87b8b07bb59aa\",\n            \"email\": \"ryderdinh@gmail.com\",\n            \"name\": \"Ryder Dinh\"\n        },\n        \"description\": \"Hello\",\n        \"priority\": \"highest\",\n        \"attachment\": [],\n        \"status\": [],\n        \"history\": [\n            {\n                \"user\": [\n                    {\n                        \"avatar\": \"https://res.cloudinary.com/dawqbbo2l/image/upload/v1626963206/avatar/avatar-none_byqbnn.svg\",\n                        \"_id\": \"62308e5a1fd87b8b07bb59aa\",\n                        \"email\": \"ryderdinh@gmail.com\",\n                        \"name\": \"Ryder Dinh\"\n                    }\n                ],\n                \"time\": 1655309895251,\n                \"action\": \"created an issue\"\n            },\n            {\n                \"user\": [\n                    {\n                        \"avatar\": \"https://res.cloudinary.com/dawqbbo2l/image/upload/v1626963206/avatar/avatar-none_byqbnn.svg\",\n                        \"_id\": \"62308e5a1fd87b8b07bb59aa\",\n                        \"email\": \"ryderdinh@gmail.com\",\n                        \"name\": \"Ryder Dinh\"\n                    },\n                    {\n                        \"avatar\": \"https://res.cloudinary.com/dawqbbo2l/image/upload/v1626963206/avatar/avatar-none_byqbnn.svg\",\n                        \"_id\": \"62308e5a1fd87b8b07bb59aa\",\n                        \"email\": \"ryderdinh@gmail.com\",\n                        \"name\": \"Ryder Dinh\"\n                    }\n                ],\n                \"time\": 1655309895251,\n                \"action\": \"assigned an issue to\"\n            }\n        ],\n        \"createdAt\": 1655306839992,\n        \"updateAt\": 1655310657928,\n        \"__v\": 0\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete issue",
+					"id": "2683d15e-d957-450d-8f47-ad91c5b728eb",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{api_url}}/issues/62aa064760da903321f43e6d",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"issues",
+								"62aa064760da903321f43e6d"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"id": "938e0f72-e70e-467b-9b84-ca8c6159f87e"
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "070a48d9-4f66-4f71-8dfa-75e9e48f821b",
+				"type": "text/javascript",
+				"exec": [
+					"const options = {",
+					"  url:  'https://hrmadmin.up.railway.app/api/token', ",
+					"  method: 'POST',",
+					"  header: {",
+					"    'Accept': '*/*',",
+					"    'Content-Type': 'application/x-www-form-urlencoded',",
+					"  },",
+					"  body: {",
+					"    mode: 'urlencoded',",
+					"    urlencoded : [",
+					"      { key: 'email', value: 'ryderdinh@gmail.com'},",
+					"      { key: 'password', value: '123456'},",
+					"    ]",
+					"  }",
+					"};",
+					"",
+					"const token = pm.sendRequest(options, function (err, response) {",
+					"    pm.collectionVariables.set(\"token\", response.json().data.accessToken);",
+					"});",
+					"",
+					"",
+					"",
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "397badf2-b830-4e0b-914e-d8a74c0868ce",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "93ffadf1-8126-434f-a06c-6b2813a61b5b",
+			"key": "api_url",
+			"value": "https://hrmadmin.up.railway.app/api",
+			"type": "string"
+		},
+		{
+			"id": "ba322b34-abf0-406f-b478-b7d5428fee3c",
+			"key": "token",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjMwOGU1YTFmZDg3YjhiMDdiYjU5YWEiLCJpYXQiOjE2NTUzMDQ3NzAsImV4cCI6MTY1NTMwODM3MH0.VKpUJbe4LRRtpww8oXPRPKf0SI3dssf6-f6aXCCZLLI",
+			"type": "string"
+		}
+	]
+}

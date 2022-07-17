@@ -1,0 +1,74 @@
+.editor-preview-ryder-app h1,
+.editor-preview-ryder-app h2,
+.editor-preview-ryder-app h3,
+.editor-preview-ryder-app h4,
+.editor-preview-ryder-app h5,
+.editor-preview-ryder-app h6 {
+  font-weight: bold;
+}
+
+.editor-preview-ryder-app h1 {
+  font-size: 2.5rem;
+}
+
+.editor-preview-ryder-app h2 {
+  font-size: 2rem;
+}
+
+.editor-preview-ryder-app h3 {
+  font-size: 1.5rem;
+}
+
+.editor-preview-ryder-app h4 {
+  font-size: 1.25rem;
+}
+
+.editor-preview-ryder-app h5 {
+  font-size: 1rem;
+}
+
+.editor-preview-ryder-app h6 {
+  font-size: 0.875rem;
+}
+
+.editor-preview-ryder-app b,
+.editor-preview-ryder-app strong {
+  font-weight: bold;
+}
+
+.editor-preview-ryder-app ol,
+.editor-preview-ryder-app ul,
+.editor-preview-ryder-app menu {
+  margin-left: 16px;
+}
+
+.editor-preview-ryder-app ul {
+  list-style: disc;
+}
+
+.editor-preview-ryder-app ol {
+  list-style: decimal;
+}
+
+.editor-preview-ryder-app menu {
+  list-style: none;
+}
+
+.editor-preview-ryder-app table,
+.editor-preview-ryder-app td,
+.editor-preview-ryder-app th {
+  border: 1px solid gray;
+}
+
+.editor-preview-ryder-app img,
+.editor-preview-ryder-app svg,
+.editor-preview-ryder-app video,
+.editor-preview-ryder-app canvas,
+.editor-preview-ryder-app audio,
+.editor-preview-ryder-app iframe,
+.editor-preview-ryder-app embed,
+.editor-preview-ryder-app object {
+  display: inline;
+  vertical-align: baseline;
+}
+/*# sourceMappingURL=Editor.css.map */

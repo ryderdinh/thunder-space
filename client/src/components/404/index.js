@@ -1,18 +1,21 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import './404.css';
 
 export default function NotFound() {
-	let arrGalaxy = [];
+	const [arrGalaxy, setArrGalaxy] = useState([]);
+
 	const random = arr => {
 		return arr[Math.floor(Math.random() * arr.length)];
 	};
-	for (let i = 0; i < 80; i++) {
-		arrGalaxy.push(random([4, 0]));
-	}
+
 	useEffect(() => {
 		document.title = 'Not found';
-	}, []);
+
+		for (let i = 0; i < 80; i++) {
+			setArrGalaxy([...arrGalaxy, random([4, 0])]);
+		}
+	}, [arrGalaxy]);
 
 	return (
 		<div className='not-found'>

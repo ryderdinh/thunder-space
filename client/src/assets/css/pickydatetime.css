@@ -1,0 +1,12 @@
+.picky-date-time {
+  background-color: white;
+}
+
+[class*=' picky-date-time'],
+[class^='picky-date-time'] {
+  line-height: inherit !important;
+}
+
+.picky-date-time-calendar__table {
+  width: 100%;
+}
