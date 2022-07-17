@@ -56,6 +56,7 @@ Project.methods.getProjectDetailsWithIssues= async function(members, issues){
     delete objectProject.__v
     delete objectProject.deleted
     delete objectProject.seqcode
+    delete objectProject.guest
     objectProject.issue = issues
     objectProject.member = members
     return objectProject

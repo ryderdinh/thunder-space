@@ -6,7 +6,7 @@ const { options } = require("joi");
 module.exports = async(req, res, next) => {
     try {
         const uid = req.user.id;
-        const page = parseInt(req.query.page);
+        const page = parseInt(req.query.page) || 1;
         const notifications = (await Staff.findOne({ _id: uid }).populate({
             path: "notifications",
             options: {

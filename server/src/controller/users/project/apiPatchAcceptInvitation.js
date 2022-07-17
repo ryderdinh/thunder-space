@@ -20,6 +20,7 @@ module.exports = async(req, res, next) => {
         project.member.push(project.guest[indexGuest]);
         project.guest.splice(indexGuest, 1);
         await project.save()
+        await Notification.deleteOne({ owner: uid, "data.pid" : pid})
         return res.status(200).send(new Response(200, 'success'));
     } catch (error) {
         if(error) return res.status(400).send(new Response(400, error.message))
