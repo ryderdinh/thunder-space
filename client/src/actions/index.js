@@ -445,6 +445,7 @@ export const actGetNotification = (p, onSuccess, onError) => {
 //? TOAST
 const errorToast = toast.error
 const successToast = toast.success
+
 const loadingToast = (content) => {
   toast.loading(content)
 }

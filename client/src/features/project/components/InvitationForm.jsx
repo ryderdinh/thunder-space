@@ -16,7 +16,7 @@ const InvitationForm = ({ id, content }) => {
   }
   const onRejectSuccess = () => {
     successToast('Invitation rejected')
-    history.push('/notifications')
+    history.goBack()
   }
   const onError = (error) => {
     errorToast(error)

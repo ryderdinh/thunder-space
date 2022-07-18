@@ -2,11 +2,14 @@ import { Popover, Transition } from '@headlessui/react'
 import { actGetNotification, setNotificationsReadAll } from 'actions'
 import ButtonSuccess from 'components/Button/ButtonSuccess'
 import BallTriangle from 'components/Loading/BallTriangle'
+import detectNotification from 'features/notification/services/detectNotification'
+import moment from 'moment'
 // import { useFetch } from 'hooks'
+import { useAutoAnimate } from '@formkit/auto-animate/react'
 import { Fragment, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
-import { getCookie } from 'units/cookieWeb'
+import { Link, useHistory } from 'react-router-dom'
+import { capitalizeFirstLetter } from 'utilities'
 import { errorToast } from 'utilities/toast'
 
 const NotificationOverview = () => {
@@ -14,7 +17,11 @@ const NotificationOverview = () => {
     (state) => state._notification
   )
   const dispatch = useDispatch()
-  console.log(getCookie().token)
+
+  const history = useHistory()
+
+  const [notificationListRef] = useAutoAnimate()
+
   // const fetchData = useFetch()
   // useEffect(() => {
   //   const onSuccess = (data) => {
@@ -27,6 +34,12 @@ const NotificationOverview = () => {
 
   //   fetchData(notificationApi.get, onSuccess, onError)
   // }, [fetchData])
+
+  const onClick = (link, data) => {
+    if (link) {
+      history.push(link, data)
+    }
+  }
 
   useEffect(() => {
     const onSuccess = (data) => {
@@ -74,32 +87,79 @@ const NotificationOverview = () => {
             </ButtonSuccess>
           </div>
 
-          <div>
+          <ul
+            ref={notificationListRef}
+            className={`custom-scrollbar relative max-h-64 overflow-y-scroll`}
+          >
             {isLoading && (
               <div
                 className='flex w-full items-center justify-center
-                  border-t-2 border-[#282828] px-6 py-10'
+                  border-t-2 border-[#282828] py-5'
               >
                 <BallTriangle w={30} h={30} stroke={'#059669'} />
               </div>
             )}
 
-            {!isLoading &&
-              _data &&
-              _data.map((_, i) => (
-                <div className='px-5 py-2' key={i}>
-                  <p className='text-xs font-light text-neutral-50/75'>
-                    Notification {i + 1}
-                  </p>
+            {_data.map((_, i) => (
+              <li
+                key={_._id}
+                className={`${
+                  _?.read
+                    ? ''
+                    : 'bg-neutral-700/50 before:absolute before:left-0 before:top-0 before:h-full before:w-[2px] before:bg-emerald-600'
+                } 
+                  relative flex w-full cursor-pointer items-center justify-between px-6 py-3
+                  text-neutral-50/80
+                  hover:bg-neutral-700`}
+                onClick={() =>
+                  onClick(detectNotification(_.type, _.data)?.link || null, _)
+                }
+              >
+                <div className='flex items-center'>
+                  <div className='h-5 w-5'>
+                    {detectNotification(_.type, _.data)?.icon || null}
+                  </div>
+                  <div className='pl-6'>
+                    <p className='text-xs'>{moment(_.time).fromNow()}</p>
+                    <p className='text-sm font-light line-clamp-1'>
+                      {capitalizeFirstLetter(_.content)}
+                    </p>
+                  </div>
                 </div>
-              ))}
+              </li>
+            ))}
+
+            {/* {Array.from({ length: 1 }).map((_, i) => (
+              <li
+                key={i}
+                className={`${
+                  true
+                    ? ''
+                    : 'bg-neutral-700/50 before:absolute before:left-0 before:top-0 before:h-full before:w-[2px] before:bg-emerald-600'
+                }
+                  relative flex w-full cursor-pointer items-center justify-between px-6 py-3
+                  text-neutral-50/80
+                  hover:bg-neutral-700`}
+                onClick={() => customToast()}
+              >
+                <div className='flex items-center'>
+                  <BellIcon className='h-5 w-5' />
+                  <div className='pl-6'>
+                    <p className='text-xs'>one time ago</p>
+                    <p className='text-sm font-light line-clamp-1'>
+                      {'You have a new notification'}
+                    </p>
+                  </div>
+                </div>
+              </li>
+            ))} */}
 
             {!isLoading && (!_data || _data.length < 1) && (
               <p className='p-3 text-center text-xs font-light text-neutral-500'>
                 No notifictions available.
               </p>
             )}
-          </div>
+          </ul>
 
           <div className='px-5 py-2'>
             <Link to='/notifications'>

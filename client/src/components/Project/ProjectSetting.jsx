@@ -388,6 +388,12 @@ function CollaboratorTab({
     previousSearchAddMember.current = email
   }
 
+  const kickOffMember = () => {
+    permissionsAccept('changeRoleMember')
+
+    dispatch(projectApi.removeUser(dataProject._id, ownId))
+  }
+
   //? Effect
   useEffect(() => {
     const searchEmail = async (keyword) => {
@@ -707,7 +713,16 @@ function CollaboratorTab({
                         {dropdownChangeRole(member?.role, member._id)}
                       </div>
                     </div>
-                    <div className='action text-xs'>Remove</div>
+
+                    {permissions['changeRoleMember'] &&
+                      member.role !== 'admin' && (
+                        <div
+                          className='action cursor-pointer text-xs'
+                          onClick={kickOffMember}
+                        >
+                          Kick
+                        </div>
+                      )}
                   </div>
                 ))}
           </div>
