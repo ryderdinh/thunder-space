@@ -1,16 +1,19 @@
 import 'assets/css/Wf.css'
-import Layout from 'components/Layouts/Layout'
-import HeaderContainer from 'components/Main/HeaderContainer/HeaderContainer'
-import Main from 'components/Main/Main'
+import ProtectedLayout from 'components/Layouts/ProtectedLayout'
 import ViewBox from 'components/Main/ViewMain/ViewBox'
-import ViewMain from 'components/Main/ViewMain/ViewMain'
 import ProjectDetail from 'components/Project/ProjectDetail'
 import { ProjectSetting } from 'components/Project/ProjectSetting'
 import ProjectsOverview from 'components/Project/ProjectsOverview'
+import { ProjectInvitation } from 'features/project'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
 const defaultPath = 'project'
+const pageName = {
+  setting: 'Setting | Project',
+  invitation: 'Invitation | Project',
+  '': 'Projects'
+}
 
 export default function ProjectPage({ type = '' }) {
   const [path, setPath] = useState(defaultPath)
@@ -18,7 +21,7 @@ export default function ProjectPage({ type = '' }) {
   const pathName = useParams()
 
   useEffect(() => {
-    document.title = 'Project ' + type
+    document.title = pageName[type] || 'Project'
   }, [type])
 
   useEffect(() => {
@@ -26,19 +29,16 @@ export default function ProjectPage({ type = '' }) {
   }, [type])
 
   return (
-    <Layout>
-      <Main>
-        <HeaderContainer pathName={path} />
-        <ViewMain>
-          <ViewBox className='h-full' classNameCol='h-full'>
-            {pathName?.pid && !type && <ProjectDetail />}
+    <ProtectedLayout path={path}>
+      <ViewBox className='h-full' classNameCol='h-full'>
+        {pathName?.pid && !type && <ProjectDetail />}
 
-            {pathName?.pid && type === 'setting' && <ProjectSetting />}
+        {pathName?.pid && type === 'setting' && <ProjectSetting />}
 
-            {!pathName?.pid && <ProjectsOverview />}
-          </ViewBox>
-        </ViewMain>
-      </Main>
-    </Layout>
+        {!pathName?.pid && !type && <ProjectsOverview />}
+
+        {type === 'invitation' && <ProjectInvitation />}
+      </ViewBox>
+    </ProtectedLayout>
   )
 }

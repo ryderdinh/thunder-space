@@ -3,6 +3,7 @@ import {
   authApi,
   eventApi,
   issueApi,
+  notificationApi,
   projectApi,
   timekeepingApi,
   userApi
@@ -119,14 +120,14 @@ export const actFetchTimeKeeping = () => {
 
     res.status === 200 &&
       Promise.all([
-        await dispatch(setDataTimeKeeping(res.data)),
+        await dispatch(setDataTimeKeeping(res.data?.reverse())),
         await dispatch(setTimeKeeping(res.data))
       ])
   }
 }
 
 export const actSendLocationToServer = (location) => {
-  loadingToast('Đang chấm công')
+  loadingToast('Waiting...')
 
   return async (dispatch) => {
     try {
@@ -135,12 +136,11 @@ export const actSendLocationToServer = (location) => {
       removeToast()
 
       dispatch(actFetchTimeKeeping())
-      successToast('Chấm công thành công')
+      successToast('Successful!')
     } catch (error) {
       removeToast()
 
-      const errorResult = await JSON.parse(error.request.response)
-      switch (errorResult.error) {
+      switch (error.response) {
         case 'try after 5 minutes': {
           errorToast('Bạn vừa chấm công, thử lại sau!')
           break
@@ -420,6 +420,22 @@ export const actGetAllUsers = () => {
   }
 }
 
+export const actGetNotification = (p, onSuccess, onError) => {
+  return async (dispatch) => {
+    await dispatch(setNotificationsLoading(true))
+
+    try {
+      const res = await notificationApi.get(p)
+
+      await dispatch(setNotificationsData(res?.data || []))
+      onSuccess(res?.data)
+    } catch (error) {
+      dispatch(setNotificationsError(error?.message || 'Error'))
+      onError && onError(error?.message)
+    }
+  }
+}
+
 // export const toggleTest = () => {
 //   return (dispatch) => {
 //     dispatch(toggleActiveSidebar())
@@ -429,6 +445,7 @@ export const actGetAllUsers = () => {
 //? TOAST
 const errorToast = toast.error
 const successToast = toast.success
+
 const loadingToast = (content) => {
   toast.loading(content)
 }
@@ -544,4 +561,34 @@ export const setUsersLoading = (payload) => ({
 export const setUsersData = (payload) => ({
   type: 'SET_USERS_DATA',
   payload
+})
+
+// NOTIFICATIONS ACTION ======================================
+export const setNotificationsLoading = (payload) => ({
+  type: 'SET_NOTIFICATION_LOADING',
+  payload
+})
+
+export const setNotificationsData = (payload) => ({
+  type: 'SET_NOTIFICATION_DATA',
+  payload
+})
+
+export const addOrModifiedNotificationsData = (payload) => ({
+  type: 'ADD/MODIFIED_NOTIFICATION_DATA',
+  payload
+})
+
+export const setNotificationsError = (payload) => ({
+  type: 'SET_NOTIFICATION_ERROR',
+  payload
+})
+
+export const setNotificationsRead = (payload) => ({
+  type: 'SET_NOTIFICATION_READ',
+  payload
+})
+
+export const setNotificationsReadAll = () => ({
+  type: 'SET_NOTIFICATION_READ_ALL'
 })

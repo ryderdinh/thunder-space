@@ -9,7 +9,7 @@ import Home from 'pages/Home'
 import IssuePage from 'pages/Issue'
 import Landing from 'pages/Landing'
 import Login from 'pages/Login'
-import Notification from 'pages/Notification'
+import NotificationPage from 'pages/NotificationPage'
 import ProjectPage from 'pages/Project'
 import Report from 'pages/Report'
 import TimeSheets from 'pages/TimeSheets'
@@ -69,6 +69,9 @@ export default function App() {
                 <Route exact path='/projects'>
                   <ProjectPage />
                 </Route>
+                <Route exact path='/projects/invitation'>
+                  <ProjectPage type='invitation' />
+                </Route>
                 <Route exact path='/projects/:pid'>
                   <ProjectPage />
                 </Route>
@@ -83,8 +86,8 @@ export default function App() {
                 </Route>
 
                 {/* Notification page*/}
-                <Route exact path='/account'>
-                  <Notification />
+                <Route exact path='/notifications'>
+                  <NotificationPage />
                 </Route>
 
                 {/* Login page */}

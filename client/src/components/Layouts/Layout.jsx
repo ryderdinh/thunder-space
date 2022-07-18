@@ -51,7 +51,7 @@ export default function Layout({ children }) {
       ) : (
         <>
           <Sidebar />
-          <Toaster position='top-right' reverseOrder={true} />
+          <Toaster position='bottom-right' reverseOrder={true} />
           {children}
           <Dialog />
         </>

@@ -208,9 +208,11 @@ main.onblur {
 .view-container .view_name {
   display: flex;
   align-items: center;
+  justify-content: space-between;
 
   height: 5vh;
   padding-left: var(--pad);
+  padding-right: var(--pad);
   /* margin-bottom: 30px; */
 
   color: #fff;
