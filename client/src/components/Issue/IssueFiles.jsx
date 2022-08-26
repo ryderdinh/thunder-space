@@ -1,6 +1,8 @@
+import { useAutoAnimate } from '@formkit/auto-animate/react'
 import { CloudUploadIcon, XIcon } from '@heroicons/react/solid'
 import PropTypes from 'prop-types'
 import { useRef, useState } from 'react'
+import { v4 as uuidv4 } from 'uuid'
 
 const IssueFiles = ({
   className = '',
@@ -11,8 +13,10 @@ const IssueFiles = ({
 }) => {
   const wrapperRef = useRef(null)
   const fileRef = useRef(null)
+  const [parent] = useAutoAnimate()
 
   const [fileList, setFileList] = useState([])
+  console.log(fileList)
 
   const onDragEnter = (e) => {
     wrapperRef.current.classList.add('bg-neutral-600')
@@ -27,10 +31,11 @@ const IssueFiles = ({
     fileRef.current.classList.remove('z-10')
   }
   const onFileDrop = (e) => {
-    const file = e.target.files[0]
+    let file = e.target.files[0]
+    const fileData = { file, id: uuidv4() }
     if (file) {
-      setFileList([...fileList, file])
-      onFileChange([...fileList, file])
+      setFileList([...fileList, fileData])
+      onFileChange([...fileList, fileData])
     }
   }
   const removeFile = (index) => {
@@ -89,10 +94,10 @@ const IssueFiles = ({
             Ready to upload
           </h5>
 
-          <div className='grid grid-cols-2 gap-4'>
-            {fileList.map((file, index) => (
+          <div className='grid grid-cols-2 gap-4' ref={parent}>
+            {fileList.map(({ file, id }, index) => (
               <div
-                key={index}
+                key={id}
                 className='relative col-span-1 rounded-md bg-neutral-700 
                 py-3 px-3'
               >
@@ -106,8 +111,8 @@ const IssueFiles = ({
                   </div>
                   <div className='w-[calc(100%-6rem)] space-y-1'>
                     <p
-                      className='w-full overflow-hidden text-ellipsis text-sm 
-                      text-neutral-400'
+                      className='w-full text-sm text-neutral-400 
+                      line-clamp-1'
                     >
                       {file.name}
                     </p>

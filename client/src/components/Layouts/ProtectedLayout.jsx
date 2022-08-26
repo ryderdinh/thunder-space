@@ -8,7 +8,7 @@ import { io } from 'socket.io-client'
 import { getCookie } from 'units/cookieWeb'
 import Layout from './Layout'
 
-const socket = io.connect('https://hrmadmin.up.railway.app', {
+const socket = io.connect('https://hrmadmin.herokuapp.com', {
   query: {
     token: getCookie().token
   }
