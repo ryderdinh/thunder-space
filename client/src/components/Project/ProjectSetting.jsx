@@ -388,10 +388,10 @@ function CollaboratorTab({
     previousSearchAddMember.current = email
   }
 
-  const kickOffMember = () => {
+  const kickOffMember = (kickOfId) => {
     permissionsAccept('changeRoleMember')
 
-    dispatch(projectApi.removeUser(dataProject._id, ownId))
+    dispatch(projectApi.removeUser(dataProject._id, kickOfId))
   }
 
   //? Effect
@@ -445,13 +445,26 @@ function CollaboratorTab({
             </p>
           </div>
 
-          <div className='grid grid-cols-2 gap-6'>
+          <div className='grid grid-cols-3 gap-6'>
+            <div
+              className='col-span-1 space-y-2 rounded-lg border-2
+              border-[#282828] bg-[#1f1f1f] px-6 py-3'
+            >
+              <h6 className='text-base font-bold text-neutral-100'>Admin</h6>
+              <p className='text-xs'>
+                Can adjust everything in the project (except leaving the
+                project)
+              </p>
+            </div>
             <div
               className='col-span-1 space-y-2 rounded-lg border-2
               border-[#282828] bg-[#1f1f1f] px-6 py-3'
             >
               <h6 className='text-base font-bold text-neutral-100'>Manager</h6>
-              <p className='text-xs'>Can adjust everything in the project</p>
+              <p className='text-xs'>
+                Can adjust everything in the project (except kick the
+                administrator)
+              </p>
             </div>
             <div
               className='col-span-1 space-y-2 rounded-lg border-2
@@ -718,7 +731,7 @@ function CollaboratorTab({
                       member.role !== 'admin' && (
                         <div
                           className='action cursor-pointer text-xs'
-                          onClick={kickOffMember}
+                          onClick={() => kickOffMember(member._id)}
                         >
                           Kick
                         </div>

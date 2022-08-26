@@ -67,14 +67,13 @@ const NotificationOverview = () => {
       leaveTo='opacity-0 translate-y-1'
     >
       <Popover.Panel
-        className='lg:max-w-3 absolute right-0 
-        z-10 z-20 mt-1 w-screen
+        className='lg:max-w-3 absolute right-0 z-20 mt-1 w-screen
         max-w-sm px-4 sm:px-0'
       >
         <div
           className='divide-y divide-neutral-600/50 rounded-md border 
           border-neutral-600/50
-          bg-neutral-800/80'
+          bg-neutral-800'
         >
           <div className='flex items-center justify-between px-5 py-2'>
             <h5 className='text-base text-neutral-50/75'>Notifications</h5>
