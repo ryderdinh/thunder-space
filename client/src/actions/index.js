@@ -299,7 +299,7 @@ export const actCreateProject = (data, uMail, callback) => {
   }
 }
 
-export const actFetchProject = (pid) => {
+export const actFetchProject = (pid, onSuccess, onError) => {
   return async (dispatch) => {
     await dispatch(setProjectLoading(true))
 
@@ -308,11 +308,13 @@ export const actFetchProject = (pid) => {
       const issueSorted = res.data.issue.sort((a, b) => b.updateAt - a.updateAt)
 
       await dispatch(setDataProject({ ...res.data, issue: issueSorted }))
+      onSuccess && onSuccess()
     } catch (error) {
       Promise.all([
         await dispatch(setDataProject(null)),
         await dispatch(setProjectError(error.message))
       ])
+      onError && onError(error)
     }
   }
 }
@@ -365,7 +367,7 @@ export const actQueryIssue = (iid, callback) => {
     } catch (error) {
       const err = error.message
 
-      errorToast(err)
+      console.log(err)
       dispatch(setIssueError(err))
     }
   }

@@ -16,9 +16,19 @@ export default function project(state = initState, action) {
     case 'SET_PROJECT_ERROR':
       return { ...state, error: action.payload, isLoading: false }
     case 'SET_DATA_PROJECT':
-      return { ...state, _dataProject: action.payload, isLoading: false }
+      return {
+        ...state,
+        _dataProject: action.payload,
+        isLoading: false,
+        error: ''
+      }
     case 'SET_DATA_PROJECTS':
-      return { ...state, _dataProjects: action.payload, isLoading: false }
+      return {
+        ...state,
+        _dataProjects: action.payload,
+        isLoading: false,
+        error: ''
+      }
     case 'SET_INITIAL_PROJECT':
       return { ...state, _dataProject: action.payload }
 

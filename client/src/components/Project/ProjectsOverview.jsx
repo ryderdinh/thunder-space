@@ -3,6 +3,7 @@ import { actQueryProject, setInitialProject } from 'actions'
 import 'assets/css/project.css'
 import { Breadcumb } from 'components/Breadcumb/Breadcumb'
 import { Col, Row } from 'components/Layouts'
+import BallTriangle from 'components/Loading/BallTriangle'
 import { LayoutContext } from 'context/LayoutContext'
 import { motion } from 'framer-motion'
 import queryString from 'query-string'
@@ -108,14 +109,17 @@ export default function ProjectsOverview() {
       <Row>
         <Col>
           {isLoading && (
-            <p className='w-full py-14 text-center text-xs text-neutral-500'>
-              Loading projects...
-            </p>
+            // <p className='w-full py-14 text-center text-xs text-neutral-500'>
+            //   Loading projects...
+            // </p>
+            <div className='flex w-full justify-center px-6 py-14'>
+              <BallTriangle w={30} h={30} stroke={'#059669'} />
+            </div>
           )}
 
           {!isLoading && !projects.length && (
             <p className='w-full py-14 text-center text-xs text-neutral-500'>
-              No data
+              Nothing found
             </p>
           )}
 

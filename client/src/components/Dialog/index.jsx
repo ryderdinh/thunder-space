@@ -3,6 +3,7 @@ import { LayoutContext } from 'context/LayoutContext'
 import { Fragment, useContext } from 'react'
 import WarningDialog from './WarningDialog'
 import AddMemberToProject from './Workflow/AddMemberToProject'
+import AssignIssue from './Workflow/AssignIssue'
 import CreateIssue from './Workflow/CreateIssue'
 import CreateProject from './Workflow/CreateProject'
 import DeleteIssue from './Workflow/DeleteIssue'
@@ -29,6 +30,10 @@ function Dialog() {
           <DeleteProject closeModal={closeDialog} data={data} />
         )}
 
+        {nameDialog === 'add-member-to-project' && (
+          <AddMemberToProject closeModal={closeDialog} data={data} />
+        )}
+
         {nameDialog === 'create-issue' && (
           <CreateIssue closeModal={closeDialog} />
         )}
@@ -37,12 +42,12 @@ function Dialog() {
           <DeleteIssue closeModal={closeDialog} data={data} />
         )}
 
-        {nameDialog === 'denied-action' && (
-          <WarningDialog closeModal={closeDialog} data={data} />
+        {nameDialog === 'assign-issue' && (
+          <AssignIssue closeModal={closeDialog} data={data} />
         )}
 
-        {nameDialog === 'add-member-to-project' && (
-          <AddMemberToProject closeModal={closeDialog} data={data} />
+        {nameDialog === 'denied-action' && (
+          <WarningDialog closeModal={closeDialog} data={data} />
         )}
       </DialogHeadlessui>
     </Transition>
