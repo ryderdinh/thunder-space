@@ -6,7 +6,7 @@ const { Server } = require("socket.io");
 const io = new Server(server, {
   cors: {
     origin: "*",
-    methods: ["GET", "POST"]
+    methods: ["POST", "GET", "PUT", "DELETE", "PATCH"],
   }
 });
 app.set("socketio", io)
@@ -127,6 +127,7 @@ const routersInfo = require("./routers/users/info.router");
 app.use("/api", routersInfo.apiGetUserInfo);
 app.use("/api", routersInfo.apiGetSearchUser);
 app.use("/api", routersInfo.apiPutUploadAvatar);
+app.use("/api", routersInfo.apiGetProfile);
 /* -------------------------------------------
                         EVENT
 ---------------------------------------------*/ 
