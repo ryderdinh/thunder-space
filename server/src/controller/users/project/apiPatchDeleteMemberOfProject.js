@@ -19,7 +19,7 @@ module.exports = async (req, res, next) => {
             }
         }
         await existProject.save();
-        return res.status(400).send(new Response(400, "success"))
+        return res.status(200).send(new Response(200, "success"))
     } catch (error) {
         return res.status(400).send(new Response(400, error.message))
     }

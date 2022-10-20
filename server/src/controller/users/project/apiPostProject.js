@@ -74,10 +74,12 @@ module.exports = async (req, res, next) => {
         notifications.push(
           {
             content: `you have received an invitation to join project '${name}' by ${existCreator.name}`,
-            type: "invitation",
+            type: "invitation-project",
             status: "pending",
             owner: membersToInvite[i].uid,
-            pid: result._id
+            data : {
+                pid: result._id
+            }
           }
         )
     }
