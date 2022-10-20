@@ -1,3 +1,4 @@
+import { useAutoAnimate } from '@formkit/auto-animate/react'
 import LoadingCard from 'components/Loading/LoadingCard'
 import { motion } from 'framer-motion'
 import { useSelector } from 'react-redux'
@@ -5,6 +6,8 @@ import { useSelector } from 'react-redux'
 export default function ListTimeKeeping({ variants }) {
   const timeOfAttendance = useSelector((state) => state._timeOfAttendance._list)
   const isLoading = useSelector((state) => state._timeOfAttendance._isLoading)
+
+  const [parent] = useAutoAnimate()
 
   return (
     <motion.div
@@ -17,27 +20,21 @@ export default function ListTimeKeeping({ variants }) {
       <div className='label'>
         <p>History</p>
       </div>
-      {isLoading && <LoadingCard text={'Loading data...'} />}
+      {/* {isLoading && <LoadingCard text={'Loading data...'} />} */}
 
       {!isLoading && !timeOfAttendance.length && (
         <LoadingCard text={'No data'} />
       )}
 
-      {!isLoading && timeOfAttendance.length > 0 && (
-        <div className='list-time-keeping_box custom-scrollbar'>
-          {!timeOfAttendance.length ? (
-            <LoadingCard text={'Không có dữ liệu'} />
-          ) : (
-            timeOfAttendance.map((value, index) => (
-              <ListTimeKeepingItem
-                key={index}
-                time={value[0]}
-                rangeMetter={value[1]}
-              />
-            ))
-          )}
-        </div>
-      )}
+      <div className='list-time-keeping_box custom-scrollbar' ref={parent}>
+        {timeOfAttendance.map((value, index) => (
+          <ListTimeKeepingItem
+            key={`${value[0]}${value[1]}`}
+            time={value[0]}
+            rangeMetter={value[1]}
+          />
+        ))}
+      </div>
     </motion.div>
   )
 }

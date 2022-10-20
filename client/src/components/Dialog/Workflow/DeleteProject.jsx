@@ -110,7 +110,12 @@ export default function DeleteProject({
                       focus:outline-none focus:ring-2 focus:ring-emerald-500
                       sm:text-sm'
                     />
-                    <code className='m-0 italic text-white'>{projectName}</code>
+                    <div className='flex gap-1'>
+                      <p className='text-base'>👉</p>
+                      <code className='m-0 text-sm italic text-white'>
+                        {projectName}
+                      </code>
+                    </div>
                   </div>
                 </div>
               </div>
