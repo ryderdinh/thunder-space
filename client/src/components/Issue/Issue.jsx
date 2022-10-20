@@ -7,11 +7,10 @@ import {
   actUpdateIssue
 } from 'actions'
 import { Breadcumb } from 'components/Breadcumb/Breadcumb'
+import ButtonSuccess from 'components/Button/ButtonSuccess'
 import { Col, Row } from 'components/Layouts'
-import IssueDetail from 'components/Project/IssueDetail'
 import MenuComponent from 'components/Project/MenuComponent'
 import MenuItem from 'components/Project/MenuItem'
-import Tag from 'components/Tag'
 import { LayoutContext } from 'context/LayoutContext'
 import { motion } from 'framer-motion'
 import { useContext, useEffect, useState } from 'react'
@@ -20,6 +19,7 @@ import { Link, useHistory, useLocation, useParams } from 'react-router-dom'
 import variantGlobal from 'units/variantGlobal'
 import IssueComment from './IssueComment'
 import IssueDescription from './IssueDescription'
+import IssueDetail from './IssueDetail'
 import IssueFiles from './IssueFiles'
 import IssueHistory from './IssueHistory'
 import IssuePreview from './IssuePreview'
@@ -53,6 +53,7 @@ export default function Issue() {
     edit: false,
     loading: false
   })
+  const [isErr, setIsErr] = useState(false)
 
   //? Function
   const handleDescriptionDataChange = (data) => {
@@ -106,7 +107,16 @@ export default function Issue() {
 
   //? Effect
   useEffect(() => {
-    Promise.all([dispatch(actFetchProject(pid)), dispatch(actQueryIssue(iid))])
+    Promise.all([
+      dispatch(
+        actFetchProject(
+          pid,
+          () => setIsErr(false),
+          () => setIsErr(true)
+        )
+      ),
+      dispatch(actQueryIssue(iid))
+    ])
   }, [pid, iid, dispatch])
 
   useEffect(() => {
@@ -128,7 +138,7 @@ export default function Issue() {
 
   return (
     <div className='h-full w-full space-y-5'>
-      {error === 'issue does not exist' && (
+      {(error === 'issue does not exist' || isErr) && (
         <motion.div
           variants={variantGlobal(4, 0.1)}
           initial='initial'
@@ -150,7 +160,7 @@ export default function Issue() {
         </motion.div>
       )}
 
-      {error !== 'issue does not exist' && (
+      {error !== 'issue does not exist' && !isErr && (
         <>
           <Row className='max-h-10 md:flex'>
             <Col className='mb-2 w-full md:mb-0 md:w-1/2'>
@@ -213,12 +223,11 @@ export default function Issue() {
 
                     {descriptionPanel.edit && (
                       <div className='flex items-center justify-end pt-3'>
-                        <Tag
-                          bg={'bg-emerald-600'}
+                        <ButtonSuccess
                           onClick={() => handleDescriptionPanel(true)}
                         >
                           <p className='select-none'>Success</p>
-                        </Tag>
+                        </ButtonSuccess>
                       </div>
                     )}
                   </DisclosureCustom>

@@ -1,8 +1,9 @@
-import { AnnotationIcon, ChevronRightIcon } from '@heroicons/react/solid'
+import { ChevronRightIcon } from '@heroicons/react/solid'
 import { actFetchProject, actQueryProject, setInitialIssue } from 'actions'
 import 'assets/css/project.css'
 import { Breadcumb } from 'components/Breadcumb/Breadcumb'
 import { Col, Row } from 'components/Layouts'
+import BallTriangle from 'components/Loading/BallTriangle'
 import { LayoutContext } from 'context/LayoutContext'
 import { motion } from 'framer-motion'
 import queryString from 'query-string'
@@ -179,14 +180,14 @@ export default function ProjectDetail() {
           <Row>
             <Col className='w-full'>
               {isLoading && (
-                <p className='w-full py-14 text-center text-xs text-neutral-500'>
-                  Loading issues...
-                </p>
+                <div className='flex w-full justify-center px-6 py-14'>
+                  <BallTriangle w={30} h={30} stroke={'#059669'} />
+                </div>
               )}
 
               {!isLoading && !issues?.length && (
                 <p className='w-full py-14 text-center text-xs text-neutral-500'>
-                  No data
+                  Nothing found
                 </p>
               )}
 
@@ -236,15 +237,20 @@ function IssueGridItem({ data, pid, variants }) {
         exit='exit'
       >
         <div className='mr-4 flex flex-col'>
-          <AnnotationIcon className='h-8 w-8 transition-all group-hover:scale-110' />
+          <div
+            className='h-8 w-8 overflow-hidden rounded-full transition-all
+            duration-100 group-hover:scale-110'
+          >
+            <img src={data.creator.avatar} alt='' />
+          </div>
         </div>
         <div className='flex w-4/5 flex-col justify-between space-y-2'>
-          <div className='h-3/4 space-y-2'>
+          <div className='h-2/4 space-y-2'>
             <h5 className='font-medium text-neutral-200 line-clamp-2'>
               {data.name}
             </h5>
           </div>
-          <div className=''>
+          <div className='flex h-2/4 items-end'>
             <code
               className={`${
                 data.type === 'task' ? 'bg-emerald-500' : 'bg-red-500'

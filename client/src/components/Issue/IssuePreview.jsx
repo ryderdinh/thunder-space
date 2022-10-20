@@ -1,6 +1,9 @@
 import { ClockIcon } from '@heroicons/react/solid'
+import ArrowPathIcon from 'components/Icon/ArrowPathIcon'
 import Tag from 'components/Tag'
+import { LayoutContext } from 'context/LayoutContext'
 import { motion } from 'framer-motion'
+import { useContext } from 'react'
 import variantGlobal from 'units/variantGlobal'
 
 const priorityColor = {
@@ -11,6 +14,8 @@ const priorityColor = {
 }
 
 const IssuePreview = ({ data, className = '' }) => {
+  const { openDialog } = useContext(LayoutContext)
+
   return (
     <motion.div
       className={`${className} h-max w-full rounded-md bg-[length:100%_auto] 
@@ -41,7 +46,7 @@ const IssuePreview = ({ data, className = '' }) => {
                 <ClockIcon className='w-5 text-neutral-50' />
 
                 <p className='text-neutral-50'>
-                  {new Date(data.createdAt).toLocaleString()}
+                  {new Date(data.estimate?.end).toLocaleString('vi')}
                 </p>
               </div>
             </Tag>
@@ -59,8 +64,8 @@ const IssuePreview = ({ data, className = '' }) => {
             {data?.assign && (
               <div className='flex items-center gap-2'>
                 <div
-                  className='relative h-8 w-8 
-                         overflow-hidden rounded-full ring-2 ring-neutral-50'
+                  className='relative h-5 w-5 overflow-hidden rounded-full 
+                  ring-2 ring-neutral-50'
                 >
                   <img
                     src={data?.assign?.avatar}
@@ -69,6 +74,17 @@ const IssuePreview = ({ data, className = '' }) => {
                   />
                 </div>
                 <p className='text-sm text-neutral-50'>{data?.assign?.name}</p>
+                <div
+                  onClick={() => {
+                    console.log(true)
+                    openDialog('assign-issue', { pid: data._id })
+                  }}
+                >
+                  <ArrowPathIcon
+                    className='h-5 w-5 cursor-pointer text-neutral-50
+                  transition-all duration-200 hover:rotate-180'
+                  />
+                </div>
               </div>
             )}
           </div>
