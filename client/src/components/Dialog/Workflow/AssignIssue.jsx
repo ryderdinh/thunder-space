@@ -1,16 +1,34 @@
-import { Dialog, Transition } from '@headlessui/react'
+import { Dialog, RadioGroup, Transition } from '@headlessui/react'
+import { actUpdateIssue, setDataIssue } from 'actions'
 import SearchBox from 'components/Project/SearchBox'
-import { Fragment } from 'react'
-import { useDispatch } from 'react-redux'
+import { Fragment, useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 
-export default function AssignIssue({ closeModal, data: { pid } }) {
+export default function AssignIssue({
+  closeModal,
+  data: { iid, members, currentAssignee }
+}) {
+  const { _data } = useSelector((state) => state._issue)
   const dispatch = useDispatch()
+
+  const [selected, setSelected] = useState({})
 
   const handleSuccessfully = () => closeModal()
 
-  const onSubmit = () => {}
+  const onSubmit = () => {
+    const onSuccess = () => {
+      dispatch(setDataIssue({ ..._data, assign: selected }))
+      closeModal()
+    }
+
+    dispatch(actUpdateIssue(iid, { assign: selected }, onSuccess))
+  }
 
   const handleSearch = () => {}
+
+  useEffect(() => {
+    setSelected(currentAssignee)
+  }, [currentAssignee])
 
   return (
     <div className='min-h-screen px-4 text-center'>
@@ -67,11 +85,45 @@ export default function AssignIssue({ closeModal, data: { pid } }) {
                 placeholder={'Search member'}
                 handleSearch={handleSearch}
                 defaultValue={''}
+                inputProps={{ onFocus: () => {}, onBlur: () => {} }}
               />
-              <div className='custom-scrollbar mt-3 max-h-32 overflow-y-scroll'>
-                <ul className='w-full'>
-                  <li>.</li>
-                </ul>
+              <div className='mt-3 h-max max-h-96 overflow-y-scroll rounded-md bg-white'>
+                <div
+                  className='custom-scrollbar text-scale-1200 block h-max min-h-[100px] w-full 
+                  py-2 text-xs'
+                >
+                  <RadioGroup value={selected} onChange={setSelected}>
+                    {members.map((member) => (
+                      <RadioGroup.Option
+                        key={member._id}
+                        value={member}
+                        className={({ active, checked }) =>
+                          `${
+                            active
+                              ? 'flex w-full items-center bg-emerald-400'
+                              : ''
+                          }
+                          ${checked ? 'bg-emerald-400 text-white' : 'bg-white'}
+                            relative flex outline-none transition-all
+                            duration-75 ease-linear`
+                        }
+                      >
+                        <div className='flex w-full cursor-pointer items-center px-2.5 py-2'>
+                          <div
+                            className='h-5 w-5 overflow-hidden rounded-full border 
+                            border-neutral-50'
+                          >
+                            <img src={member.avatar} alt='avatar' />
+                          </div>
+                          <div className='ml-2'>
+                            <p className='text-sm font-bold'>{member.name}</p>
+                            <p className='text-xs italic'>{member.role}</p>
+                          </div>
+                        </div>
+                      </RadioGroup.Option>
+                    ))}
+                  </RadioGroup>
+                </div>
               </div>
             </div>
           </div>

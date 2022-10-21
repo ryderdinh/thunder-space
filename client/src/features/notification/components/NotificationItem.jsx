@@ -1,5 +1,4 @@
 import { BellIcon } from '@heroicons/react/solid'
-import ButtonNormal from 'components/Button/ButtonNormal'
 import ButtonSuccess from 'components/Button/ButtonSuccess'
 import moment from 'moment'
 import { useEffect, useState } from 'react'
@@ -10,6 +9,7 @@ const NotificationItem = ({ data, setRead }) => {
   const [icon, setIcon] = useState(<BellIcon className='w-5' />)
   const [link, setLink] = useState(null)
   const [title, setTitle] = useState('Notification')
+  const [content, setContent] = useState('Notification content')
   const [mouseEnter, setMouseEnter] = useState(false)
 
   const history = useHistory()
@@ -57,11 +57,15 @@ const NotificationItem = ({ data, setRead }) => {
   // console.log(new Date().toLocaleString(), true, moment().format())
 
   useEffect(() => {
-    const { icon, link, title } = detectNotification(data.type, data.data)
+    const { icon, link, title, content } = detectNotification(
+      data.type,
+      data.data
+    )
 
     setIcon(icon)
     setLink(link)
     setTitle(title)
+    setContent(content)
   }, [data.data, data.type])
 
   return (
@@ -82,7 +86,7 @@ const NotificationItem = ({ data, setRead }) => {
         {icon}
         <div className=''>
           <p className='text-xs font-bold line-clamp-1'>{title}</p>
-          <p className='text-sm line-clamp-1'>{data.content}</p>
+          <p className='text-sm line-clamp-1'>{content}</p>
         </div>
       </div>
 

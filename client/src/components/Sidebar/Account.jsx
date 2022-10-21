@@ -18,10 +18,7 @@ export default function Account(props) {
   const [windowDimensions] = useState(getWindowDimensions())
 
   //? Connect redux
-  const account = useSelector(
-    (state) => state._staffInfomation._staffInfomation
-  )
-
+  const { _data: account } = useSelector((state) => state._staffInfomation)
   const dispatch = useDispatch()
 
   //? Create function
@@ -47,9 +44,9 @@ export default function Account(props) {
         <NavLink
           to='/account'
           className='profile-content'
-          onClick={() => handleSidebarOnMobile()}
+          onClick={handleSidebarOnMobile}
         >
-          {account.avatar === undefined ? (
+          {!account.avatar ? (
             <img src={Puff} alt='profile' />
           ) : (
             <img src={account.avatar} alt='profile' />

@@ -16,7 +16,7 @@ const schema = Joi.object({
 
 export default function CreateProject({ closeModal }) {
   const { email: yourMail } = useSelector(
-    (state) => state._staffInfomation._staffInfomation
+    (state) => state._staffInfomation._data
   )
   const { data, isLoading } = useSelector((state) => state._users)
   const dispatch = useDispatch()
@@ -114,14 +114,14 @@ export default function CreateProject({ closeModal }) {
                       <div className='col-span-6'>
                         <label
                           htmlFor='name'
-                          className='block text-sm font-medium text-zinc-200'
+                          className='block text-sm font-medium text-neutral-200'
                         >
                           Name
                         </label>
                         <input
                           {...register('name')}
                           autoComplete='off'
-                          className='mt-1 block w-full rounded-md border border-gray-300 
+                          className='mt-1 block w-full rounded-md border border-neutral-300 
                           p-2 shadow-sm focus:border-emerald-500  focus:outline-none 
                           focus:ring-2 focus:ring-emerald-500 sm:text-sm'
                         />
@@ -135,7 +135,7 @@ export default function CreateProject({ closeModal }) {
                       <div className='col-span-6 sm:col-span-3'>
                         <label
                           htmlFor='type-of-issue'
-                          className='block text-sm font-medium text-zinc-200'
+                          className='block text-sm font-medium text-neutral-200'
                         >
                           Managers
                         </label>
@@ -163,7 +163,7 @@ export default function CreateProject({ closeModal }) {
                       <div className='col-span-6 sm:col-span-3'>
                         <label
                           htmlFor='assignee'
-                          className='block text-sm font-medium text-zinc-200'
+                          className='block text-sm font-medium text-neutral-200'
                         >
                           Members
                         </label>
@@ -188,7 +188,7 @@ export default function CreateProject({ closeModal }) {
                       <div className='col-span-6'>
                         <label
                           htmlFor='project-description'
-                          className='block text-sm font-medium text-zinc-200'
+                          className='block text-sm font-medium text-neutral-200'
                         >
                           Description
                         </label>
@@ -197,7 +197,7 @@ export default function CreateProject({ closeModal }) {
                           {...register('description')}
                           autoComplete='off'
                           rows={3}
-                          className='mt-1 block w-full rounded-md border border-gray-300 
+                          className='mt-1 block w-full rounded-md border border-neutral-300 
                           p-1 shadow-sm focus:border-emerald-500  focus:outline-none 
                           focus:ring-2 focus:ring-emerald-500 sm:text-sm'
                         />
@@ -214,7 +214,7 @@ export default function CreateProject({ closeModal }) {
               type='submit'
               className='inline-flex justify-center rounded-md border 
               border-transparent bg-emerald-600 py-2 px-4 text-sm font-medium 
-              text-white shadow-sm hover:bg-emerald-700 focus:outline-none'
+              text-neutral-50 shadow-sm hover:bg-emerald-700 focus:outline-none'
               onClick={handleSubmit(onSubmitForm)}
             >
               Create

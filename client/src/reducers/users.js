@@ -15,17 +15,18 @@ export default function users(state = initState, action) {
     case 'SET_USERS_ERROR': {
       return {
         ...state,
-        error: ''
+        isLoading: false,
+        error: action.payload
       }
     }
     case 'SET_USERS_DATA': {
       return {
         ...state,
         data: action.payload,
-        isLoading: false
+        isLoading: false,
+        error: ''
       }
     }
-
     default:
       return { ...state }
   }

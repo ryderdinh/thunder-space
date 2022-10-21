@@ -46,7 +46,7 @@ export const actSignIn = (dataUser) => {
         ])
 
         Promise.all([
-          await dispatch(setStaffInfomation(res.data)),
+          await dispatch(setStaffData(res.data)),
           await dispatch(actFetchTimeKeeping())
           // await dispatch(actFetchEvents())
         ]).then(() => {
@@ -83,20 +83,16 @@ export const actLogout = (type, onSuccess) => {
 }
 
 export const actFetchStaffInfomation = () => {
-  const { id, token } = getCookie()
-
   return async (dispatch) => {
-    const res = await callAPI(`users/${id}`, 'GET', null, {
-      authorization: `Bearer ${token}`
-    })
+    dispatch(setStaffLoading(true))
 
-    // try {
-    //   userApi.getUser(res.data.userId)
-    // } catch (error) {
+    try {
+      const res = await userApi.getProfile()
 
-    // }
-
-    res && dispatch(setStaffInfomation(res.staffInfo))
+      dispatch(setStaffData(res.data))
+    } catch (error) {
+      console.log(error)
+    }
   }
 }
 
@@ -216,7 +212,7 @@ export const actRefreshPage = () => {
       const res = await authApi.authorization(token)
 
       Promise.all([
-        await dispatch(setStaffInfomation(res.data)),
+        await dispatch(setStaffData(res.data)),
         await dispatch(actFetchTimeKeeping())
       ]).then(async () => {
         setCookie([
@@ -225,46 +221,26 @@ export const actRefreshPage = () => {
         ])
         removeToast()
         await dispatch(setCheckLogin(true))
-        successToast('Chào mừng quay trở lại')
+        successToast('Welcome to back')
       })
     } catch (error) {
       removeToast()
       await dispatch(setCheckLogin(false))
-      errorToast('Bạn cần đăng nhập lại')
+      errorToast('Please log in again')
     }
   }
 }
 
-export const actChangePassword = (data) => {
-  loadingToast('Đang xử lí yêu cầu...')
-  const { id, token } = getCookie()
+export const actChangePassword = (data, onSuccess, onError) => {
+  loadingToast('Pending...')
   return async () => {
-    const res = await callAPI(`change-password/${id}`, 'PUT', data, {
-      authorization: `Bearer ${token}`
-    })
-    removeToast()
-
-    if (res) {
-      switch (res?.data?.status) {
-        case 'Change password successfully': {
-          successToast('Đổi mật khẩu thành công')
-          break
-        }
-        case 'New password is invalid': {
-          errorToast('Mật khẩu mới phải trên 5 kí tự')
-          break
-        }
-        case 'Wrong old password': {
-          errorToast('Mật khẩu cũ không đúng')
-          break
-        }
-        case 'New password is same your current password': {
-          errorToast('Mật khẩu mới không được trùng với mật khẩu cũ')
-          break
-        }
-        default:
-          break
-      }
+    try {
+      await userApi.changePassword(data)
+      onSuccess()
+    } catch (error) {
+      onError(error.message)
+    } finally {
+      removeToast()
     }
   }
 }
@@ -492,6 +468,21 @@ export const setStaffInfomation = (payload) => ({
   payload
 })
 
+export const setStaffData = (payload) => ({
+  type: 'SET_STAFF_DATA',
+  payload
+})
+
+export const setStaffLoading = (payload) => ({
+  type: 'SET_STAFF_LOADING',
+  payload
+})
+
+export const setStaffERROR = (payload) => ({
+  type: 'SET_STAFF_ERROR',
+  payload
+})
+
 export const setEventsData = (payload) => ({
   type: 'SET_EVENTS_DATA',
   payload
@@ -557,6 +548,11 @@ export const setWorkflow = (payload) => ({
 // USERS ACTION ======================================
 export const setUsersLoading = (payload) => ({
   type: 'SET_USERS_LOADING',
+  payload
+})
+
+export const setUsersError = (payload) => ({
+  type: 'SET_USERS_ERROR',
   payload
 })
 

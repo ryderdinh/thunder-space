@@ -36,15 +36,14 @@ const NotificationOverview = () => {
   // }, [fetchData])
 
   const onClick = (link, data) => {
+    console.log(data)
     if (link) {
       history.push(link, data)
     }
   }
 
   useEffect(() => {
-    const onSuccess = (data) => {
-      console.log(data)
-    }
+    const onSuccess = (data) => {}
 
     const onError = (error) => {
       console.log(error)
@@ -111,7 +110,10 @@ const NotificationOverview = () => {
                   text-neutral-50/80
                   hover:bg-neutral-700`}
                 onClick={() =>
-                  onClick(detectNotification(_.type, _.data)?.link || null, _)
+                  onClick(detectNotification(_.type, _.data)?.link || null, {
+                    ..._,
+                    content: detectNotification(_.type, _.data).content
+                  })
                 }
               >
                 <div className='flex items-center'>
@@ -121,7 +123,9 @@ const NotificationOverview = () => {
                   <div className='pl-6'>
                     <p className='text-xs'>{moment(_.time).fromNow()}</p>
                     <p className='text-sm font-light line-clamp-1'>
-                      {capitalizeFirstLetter(_.content)}
+                      {capitalizeFirstLetter(
+                        detectNotification(_.type, _.data).content || ''
+                      )}
                     </p>
                   </div>
                 </div>

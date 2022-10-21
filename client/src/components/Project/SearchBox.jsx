@@ -1,7 +1,7 @@
 import { useInput } from 'hooks'
 import { useEffect } from 'react'
 
-function SearchBox({ defaultValue, placeholder, handleSearch }) {
+function SearchBox({ defaultValue, placeholder, handleSearch, inputProps }) {
   const { value, bind, setValue } = useInput('')
 
   useEffect(() => {
@@ -26,6 +26,7 @@ function SearchBox({ defaultValue, placeholder, handleSearch }) {
           outline-none transition-all focus:shadow-md focus:ring-2 focus:ring-current'
           value={defaultValue}
           {...bind}
+          {...inputProps}
           onKeyUp={(e) => {
             handleSearch(value)
           }}

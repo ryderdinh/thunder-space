@@ -44,7 +44,7 @@ const InvitationForm = ({ id, content }) => {
 
       <div className='space-y-4 px-5 py-2'>
         <p className='text-sm text-neutral-200/90'>
-          {capitalizeFirstLetter(content)}.
+          {capitalizeFirstLetter(content)}
         </p>
 
         <div className='flex items-center justify-end space-x-2'>

@@ -1,6 +1,10 @@
 import axiosClient from './http-common'
 
 const userApi = {
+  getProfile: () => {
+    const url = '/user'
+    return axiosClient.get(url)
+  },
   getUsers: () => {
     const url = '/users'
     return axiosClient.get(url)
@@ -13,8 +17,8 @@ const userApi = {
     const url = `/search/users?email=${keyword}`
     return axiosClient.get(url)
   },
-  updatePassword: (data) => {
-    const url = '/users/update-password'
+  changePassword: (data) => {
+    const url = '/change-password'
     return axiosClient.put(url, data)
   },
   updateAvatar: (data) => {
