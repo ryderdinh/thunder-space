@@ -1,18 +1,20 @@
 import { Dialog, Transition } from '@headlessui/react'
 import { projectApi } from 'api'
-import { Fragment, useState } from 'react'
+import { Fragment } from 'react'
 import { errorToast, successToast } from 'utilities/toast'
 
-function AddMemberToProject({ closeModal, data: { pid, email } }) {
-  const [role] = useState('member')
-
-  const handleSubmit = async () => {
+export default function KickOffMember({
+  closeModal,
+  data: { name, pid, uid, onSuccess }
+}) {
+  const onSubmit = async () => {
     try {
-      await projectApi.addUser(pid, email)
-      successToast('Invitation sent successfully')
+      await projectApi.removeUser(pid, uid)
+      successToast('Kick off successfully')
+      onSuccess()
       closeModal()
     } catch (error) {
-      errorToast(error.message)
+      errorToast('Failed! ' + error.message)
     }
   }
 
@@ -44,24 +46,22 @@ function AddMemberToProject({ closeModal, data: { pid, email } }) {
         leaveTo='opacity-0 scale-95'
       >
         <div
-          className='my-8 inline-block max-w-full transform rounded-md
-          border border-neutral-800 bg-[#232323] p-6 text-left align-middle 
-          shadow-xl transition-all md:max-w-xl'
+          className='my-8 inline-block w-full max-w-md transform
+          rounded-md border border-neutral-800 bg-[#232323] p-6 text-left 
+          align-middle shadow-xl transition-all'
         >
           <Dialog.Title
             as='h3'
-            className='text-lg font-bold leading-6 
-            text-neutral-200'
+            className='text-center text-lg font-bold leading-6 text-neutral-200'
           >
-            Adding new member
+            Kick off member
           </Dialog.Title>
           <div className='mt-5'>
             <div className='mt-2 space-y-6'>
               <p className='space-y-2 text-sm text-neutral-200'>
                 <span className='block'>
-                  Are you sure you want to add{' '}
-                  <span className='text-emerald-500'>{email}</span> to your
-                  project as a <span className='text-emerald-500'>{role}</span>?
+                  Are you sure you want to remove{' '}
+                  <span className='font-bold'>{name}</span> from the project?
                 </span>
               </p>
             </div>
@@ -72,23 +72,24 @@ function AddMemberToProject({ closeModal, data: { pid, email } }) {
               type='submit'
               className='cursor-pointer justify-center rounded-md border 
               border-transparent bg-emerald-600 py-2 px-4 text-sm font-medium 
-              text-neutral-50 shadow-sm transition-all 
-              duration-75 ease-linear selection:inline-flex 
+              text-white shadow-sm selection:inline-flex 
               hover:bg-emerald-700 focus:outline-none'
-              onClick={handleSubmit}
+              onClick={onSubmit}
             >
-              Sure
+              Yes, I'm sure
             </button>
+
             <button
-              type='submit'
-              className='cursor-pointer justify-center rounded-md border 
-              border-transparent bg-red-600 py-2 px-4 text-sm font-medium 
-              text-neutral-50 shadow-sm transition-all 
-              duration-75 ease-linear selection:inline-flex 
-              hover:bg-red-700 focus:outline-none'
+              type='button'
+              className='inline-flex justify-center rounded-md border 
+              border-transparent px-4 py-2 text-sm font-medium
+              text-neutral-400 transition-all duration-300 ease-in-out 
+              hover:bg-neutral-500 hover:text-neutral-200 focus:outline-none 
+              focus-visible:ring-2 focus-visible:ring-neutral-500 
+              focus-visible:ring-offset-2'
               onClick={closeModal}
             >
-              Close
+              Cancel
             </button>
           </div>
         </div>
@@ -96,5 +97,3 @@ function AddMemberToProject({ closeModal, data: { pid, email } }) {
     </div>
   )
 }
-
-export default AddMemberToProject

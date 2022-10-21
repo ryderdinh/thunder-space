@@ -8,7 +8,7 @@ import {
   SearchIcon
 } from '@heroicons/react/solid'
 import { joiResolver } from '@hookform/resolvers/joi'
-import { actFetchProject, actUpdateIssue } from 'actions'
+import { actFetchProject, actUpdateIssue, setDataProject } from 'actions'
 import { projectApi, userApi } from 'api'
 import { Col, Dropdown, Row } from 'components/Layouts'
 import BallTriangle from 'components/Loading/BallTriangle'
@@ -46,9 +46,7 @@ export const ProjectSetting = () => {
   const { _dataProject, isLoading, error } = useSelector(
     (state) => state._project
   )
-  const { _id: ownId } = useSelector(
-    (state) => state._staffInfomation._staffInfomation
-  )
+  const { _id: ownId } = useSelector((state) => state._staffInfomation._data)
   const dispatch = useDispatch()
 
   //? Connect router
@@ -388,10 +386,22 @@ function CollaboratorTab({
     previousSearchAddMember.current = email
   }
 
-  const kickOffMember = (kickOfId) => {
+  const kickOffMember = async (kickOfId, kickOfName) => {
     permissionsAccept('changeRoleMember')
 
-    dispatch(projectApi.removeUser(dataProject._id, kickOfId))
+    openDialog('kick-off-member', {
+      pid: dataProject._id,
+      uid: kickOfId,
+      name: kickOfName,
+      onSuccess: () => {
+        dispatch(
+          setDataProject({
+            ...dataProject,
+            member: dataProject.member.filter((mb) => mb._id !== kickOfId)
+          })
+        )
+      }
+    })
   }
 
   //? Effect
@@ -731,7 +741,7 @@ function CollaboratorTab({
                       member.role !== 'admin' && (
                         <div
                           className='action cursor-pointer text-xs'
-                          onClick={() => kickOffMember(member._id)}
+                          onClick={() => kickOffMember(member._id, member.name)}
                         >
                           Kick
                         </div>

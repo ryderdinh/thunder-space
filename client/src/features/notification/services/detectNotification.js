@@ -19,6 +19,13 @@ const notificationTitle = {
   'change-issue': `New updated in issue`
 }
 
+const notificationContent = {
+  'invitation-project': `You have an invitation to join a new project.`,
+  'assign-to-issue': `A new assigned issue is waiting for your approval.`,
+  'change-project': `Your project has just been changed. Click to see details.`,
+  'change-issue': `Your problem has just been changed. Click to see details.`
+}
+
 const notificationIcon = (type) => {
   const iconProps = {
     className: 'h-5 w-5'
@@ -43,12 +50,11 @@ const notificationIcon = (type) => {
   }
 }
 
-const detectNotification = (type, data) => {
-  return {
-    icon: notificationIcon(type),
-    link: notificationLink(data)[type],
-    title: notificationTitle[type] || 'Notification'
-  }
-}
+const detectNotification = (type, data) => ({
+  icon: notificationIcon(type),
+  link: notificationLink(data)[type],
+  title: notificationTitle[type] || 'Notification',
+  content: notificationContent[type] || 'Notification content'
+})
 
 export default detectNotification

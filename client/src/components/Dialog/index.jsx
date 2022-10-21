@@ -1,6 +1,7 @@
 import { Dialog as DialogHeadlessui, Transition } from '@headlessui/react'
 import { LayoutContext } from 'context/LayoutContext'
 import { Fragment, useContext } from 'react'
+import ChangePassword from './Account/ChangePassword'
 import WarningDialog from './WarningDialog'
 import AddMemberToProject from './Workflow/AddMemberToProject'
 import AssignIssue from './Workflow/AssignIssue'
@@ -8,6 +9,7 @@ import CreateIssue from './Workflow/CreateIssue'
 import CreateProject from './Workflow/CreateProject'
 import DeleteIssue from './Workflow/DeleteIssue'
 import DeleteProject from './Workflow/DeleteProject'
+import KickOffMember from './Workflow/KickOffMember'
 
 function Dialog() {
   const { nameDialog, isDialogOpen, closeDialog, data } =
@@ -34,6 +36,10 @@ function Dialog() {
           <AddMemberToProject closeModal={closeDialog} data={data} />
         )}
 
+        {nameDialog === 'kick-off-member' && (
+          <KickOffMember closeModal={closeDialog} data={data} />
+        )}
+
         {nameDialog === 'create-issue' && (
           <CreateIssue closeModal={closeDialog} />
         )}
@@ -48,6 +54,10 @@ function Dialog() {
 
         {nameDialog === 'denied-action' && (
           <WarningDialog closeModal={closeDialog} data={data} />
+        )}
+
+        {nameDialog === 'change-password' && (
+          <ChangePassword closeModal={closeDialog} />
         )}
       </DialogHeadlessui>
     </Transition>

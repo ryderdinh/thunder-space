@@ -182,7 +182,12 @@ export default function Issue() {
                 </p>
               )}
 
-              {!isLoading && <IssuePreview data={_dataIssue} />}
+              {!isLoading && (
+                <IssuePreview
+                  dataIssue={_dataIssue}
+                  dataProject={_dataProject}
+                />
+              )}
 
               {!isLoading && <IssueDetail data={_dataIssue} />}
             </Col>

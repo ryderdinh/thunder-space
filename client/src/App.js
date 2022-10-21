@@ -10,6 +10,7 @@ import IssuePage from 'pages/Issue'
 import Landing from 'pages/Landing'
 import Login from 'pages/Login'
 import NotificationPage from 'pages/NotificationPage'
+import Profile from 'pages/Profile'
 import ProjectPage from 'pages/Project'
 import Report from 'pages/Report'
 import TimeSheets from 'pages/TimeSheets'
@@ -43,6 +44,11 @@ export default function App() {
                 {/* Home pages */}
                 <Route exact path='/home'>
                   <Home />
+                </Route>
+
+                {/* Home pages */}
+                <Route exact path='/account'>
+                  <Profile />
                 </Route>
 
                 {/* Timesheet page */}
