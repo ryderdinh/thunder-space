@@ -1,12 +1,14 @@
-const Status = require("../../../models/status");
+const TimeSheet = require("../../../models/TimeSheet");
 const Response  = require("../../../models/Response")
-module.exports = (req, res) => {
-  let userId = req.user.id;
-  Status.findById(userId, (err, status) => {
-    if (status !== undefined) {
-      res.status(200).send(new Response(200, "success", status.timeLine));
-    } else {
-      res.status(400).send(new Response(400, "something went wrong"));
+module.exports = async (req, res) => {
+    try {
+        const userId = req.user.id;
+        const existTimeSheet = await TimeSheet.findOne({ owner: userId });
+        if (!existTimeSheet)
+            return res.status(404).send(new Response(400, "data not found"));
+        return res.status(200).send(new Response(200, "success", existTimeSheet.timeline))
+    } catch (err) {
+        if (err)
+            return res.status(400).send(new Response(400, err.message));
     }
-  });
 };

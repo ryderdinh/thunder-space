@@ -33,6 +33,7 @@
     "otp-generator": "^4.0.0",
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
+    "rimraf": "^3.0.2",
     "shelljs": "^0.8.4",
     "socket.io": "^4.5.1",
     "sweetalert2": "^11.0.18",
