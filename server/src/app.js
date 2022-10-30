@@ -17,10 +17,9 @@ const passport = require("passport");
 const methodOverride = require("method-override");
 const initializePassport = require("../config/passport/passport.config");
 const cors = require("cors");
-
 const fileupload = require("express-fileupload");
-app.use(express.json({ limit: "50mb" }));
-app.use(fileupload({ useTempFiles: true }));
+app.use(express.json({ limit: "10mb"}));
+app.use(fileupload({ useTempFiles: true}));
 
 
 //———————————————————————————VIEWS—————————————————————————————//
@@ -28,7 +27,8 @@ const { dirname } = require('path');
 app.set("view engine", "ejs");
 app.set("views", "views/MAIN/pages");
 app.use(express.static(dirname(require.main.filename) + "/views/MAIN"));
-app.use(express.urlencoded({ limit: "50mb", extended: false }));
+app.use(express.urlencoded({ limit: "10mb", extended: false }));
+
 
 //———————————————————————————INIT PASSPORT—————————————————————————————//
 initializePassport(
@@ -157,7 +157,7 @@ app.use("/api", routersCheckin.apiGetTimeLine);
 /* -------------------------------------------
                         STATISTIC
 ---------------------------------------------*/ 
-const apiGetTable = require("./controller/users/statistic/apiGetTable");
+// const apiGetTable = require("./controller/users/statistic/apiGetTable");
 
 /* -------------------------------------------
                         REPORT
@@ -179,7 +179,6 @@ app.use("/api", routersProject.apiDeleteProject)
 app.use("/api", routersProject.apiPutUpdateProject)
 app.use("/api", routersProject.apiPatchDeleteMemberOfProject)
 app.use("/api", routersProject.apiPatchAddMemberToProject)
-app.use("/table", authenticateToken, apiGetTable);
 
 
 /* -------------------------------------------

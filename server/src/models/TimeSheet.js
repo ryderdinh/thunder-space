@@ -1,11 +1,9 @@
   const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
-
 const TimeSheet = new Schema({
-  dateDetails: [],
-  confirmEmail: { type: Boolean, default: false },
-  confirmEmailExpiration: { type: Date, default: Date.now() + 3600000 },
+  owner: { type: mongoose.Schema.Types.ObjectId, ref: 'Staff ', required: true },
+  timeline: { type: Object }
 });
 
-module.exports = mongoose.model("Timesheets", TimeSheet);
+module.exports = mongoose.model("Timesheet", TimeSheet);

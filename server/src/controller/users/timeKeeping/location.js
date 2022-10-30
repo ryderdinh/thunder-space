@@ -1,49 +1,43 @@
-const Status = require("../../../models/status");
 const History = require("../../../models/History");
+const TimeSheet = require("../../../models/TimeSheet")
 const { distance } = require("../../../utils/findDistance");
 const Response = require("../../../models/Response")
 module.exports = async (req, res, next) => {
   try {
     const userId = req.user.id;
-    const existStatus = await Status.findById(userId);
     const { lat, lon } = req.body;
     const currentDistance = Math.round(
       distance(lat, lon, 20.963528714717416, 105.81668138811938)
     );
-
-    if (existStatus && currentDistance) {
-      const currentTime = Date.now();
-      if (!existStatus.timeStart && !existStatus.timeEnd) {
-        existStatus.timeStart = currentTime;
-        existStatus.timeLine.push([currentTime, currentDistance]);
-        existStatus.save();
-        return res.status(200).send(new Response(200, "check in complete"));
-      }
-      if (existStatus.timeStart && !existStatus.timeEnd) {
-        let limitCheckIn = currentTime - existStatus.timeStart;
-        if (limitCheckIn > 300000) {
-          existStatus.timeEnd = currentTime;
-          existStatus.timeLine.push([currentTime, currentDistance]);
-          existStatus.save();
-          return res.status(200).send(new Response(200, "check in complete"));
-        } else {
-          return res.status(400).send(new Response(400, "try after 5 minutes"));
-        }
-      }
-      if (existStatus.timeStart && existStatus.timeEnd) {
-        let limitCheckIn = currentTime - existStatus.timeEnd;
-        if (limitCheckIn > 300000) {
-          existStatus.timeEnd = currentTime;
-          existStatus.timeLine.push([currentTime, currentDistance]);
-          existStatus.save();
-          return res.status(200).send(new Response(200, "check in complete"));
-        } else {
-          return res.status(400).send(new Response(400, "try after 5 minutes"));
-        }
-      }
+    const year = (new Date().getFullYear()).toString();
+    const month = (new Date().getMonth() + 1).toString();
+    const date = (new Date().getDate()).toString();
+    const dataCheckIn = {
+      time: Date.now(),
+      distance: currentDistance
     }
-    return res.status(400).send(new Response(400, "can not check in"));
-  } catch (error) {
-    res.status(400).send(new Response(400, "something went wrong"));
+    const existTimeSheet = await TimeSheet.findOne({ owner: userId });
+    if (!existTimeSheet) {
+      const newTimeSheet = new TimeSheet({ owner: userId, timeline: {} })
+      newTimeSheet.timeline[year] = {
+        [month]: {
+          [date]: [dataCheckIn]
+        }
+      }
+      await newTimeSheet.save();
+      return res.status(200).send(new Response(200, "check in complete"));
+    }
+    const lengthChekIn = existTimeSheet.timeline[year][month][date].length;
+    const limitCheckIn = Date.now() - existTimeSheet.timeline[year][month][date][lengthChekIn - 1].time;
+    if (limitCheckIn < 300000) {
+      return res.status(400).send(new Response(400, "try after 5 minutes"));
+    }
+    (existTimeSheet.timeline[year][month][date]).push(dataCheckIn);
+    existTimeSheet.markModified('timeline');
+    console.log(await existTimeSheet.save());
+    return res.status(200).send(new Response(200, "check in complete"));
+  } catch (err) {
+    if(err)
+    return res.status(400).send(new Response(400, err.message));
   }
 };

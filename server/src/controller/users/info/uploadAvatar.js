@@ -9,6 +9,7 @@ module.exports  = async (req, res) => {
         const user = await Staff.findById(_id)
         if(user && user.avatar.public_id === ""){
             const uploadResponse = await cloudinary.uploader.upload(avatar, {
+                allowed_formats: ['jpg', 'png', 'gif'],
                 resource_type: "image" ,
                 upload_preset : "ml_default",
                 folder : "avatar",
@@ -19,11 +20,12 @@ module.exports  = async (req, res) => {
                             url :uploadResponse.url
                         }
                     }, { new : true })
-            fs.unlinkSync(avatar)
+            await fs.unlinkSync(avatar)
             if(userUpload) return res.status(200).send(new Response(200, "success"))
         }
        if(user && user.avatar.public_id != ""){
-        const uploadResponse = await cloudinary.uploader.upload(avatar, {
+           const uploadResponse = await cloudinary.uploader.upload(avatar, {
+            allowed_formats: ['jpg', 'png', 'gif'],
             resource_type: "image" ,
             upload_preset : "ml_default",
             public_id : user.avatar.public_id,
@@ -35,12 +37,15 @@ module.exports  = async (req, res) => {
                         url :uploadResponse.url
                     }
                 }, { new : true })
-        fs.unlinkSync(avatar)
+        await fs.unlinkSync(avatar)
         if(userUpload) return res.status(200).send(new Response(200, "success"))
        }
-        fs.unlinkSync(avatar)
+        await fs.unlinkSync(avatar)
     } catch (err) {
-        res.status(400).send(new Response(400, "something went wrong"));
+        if (err){
+            await fs.unlinkSync(avatar)
+            return res.status(400).send(new Response(400, err.message));
+        }
     }
 };
 

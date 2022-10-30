@@ -11,13 +11,13 @@ const Project = new Schema({
     description: { type: String },
     member: [
         {
-            uid: {type: mongoose.Schema.Types.ObjectId, ref: 'Staff'},
+            uid: {type: mongoose.Schema.Types.ObjectId, ref: 'Staff '},
             role: { type: String, enum: ['manager', 'normal', "admin"] , required: true},
         }
     ],
     guest: [
         {
-            uid: {type: mongoose.Schema.Types.ObjectId, ref: 'Staff'},
+            uid: {type: mongoose.Schema.Types.ObjectId, ref: 'Staff '},
             role: { type: String, enum: ['manager', 'normal'] , required: false},
         }
     ],

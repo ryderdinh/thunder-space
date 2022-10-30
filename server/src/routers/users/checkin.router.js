@@ -5,6 +5,6 @@ const apiGetTimeLine  = require('../../controller/users/timeKeeping/timeline')
 
 //Checkin
 exports.apiPutLocation = router.put("/location", authenticateToken, apiPutLocation)
-//Get time line
+// //Get time line
 exports.apiGetTimeLine = router.get("/timeline", authenticateToken, apiGetTimeLine)
 
