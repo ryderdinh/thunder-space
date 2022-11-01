@@ -194,7 +194,7 @@ export default function ProjectDetail() {
               {!isLoading && issues?.length > 0 && (
                 <div
                   className='grid w-full grid-cols-1 gap-3 md:grid-cols-2
-              xl:grid-cols-3'
+                  xl:grid-cols-3'
                 >
                   {issues.map((item, index) => (
                     <IssueGridItem

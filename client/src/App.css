@@ -295,11 +295,10 @@ main.onblur {
   display: flex;
   flex-flow: column;
 
-  max-height: 290px;
   padding: 25px 28px;
   margin-bottom: 20px;
 
-  border-radius: 20px;
+  /* border-radius: 20px; */
   transform: translateY(0px);
   transition: all 0.3s linear;
 }
@@ -317,16 +316,8 @@ main.onblur {
   align-items: center;
   justify-content: space-between;
 
-  width: 20%;
-  min-width: 200px;
-  max-width: 200px;
   margin-right: 35px;
 
-  /* background: linear-gradient(
-		211.3deg,
-		#2f36db -4.49%,
-		rgba(47, 54, 219, 0) 102.4%
-	); */
   backdrop-filter: blur(54px);
 
   text-align: center;

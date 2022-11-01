@@ -12,7 +12,7 @@ export default function Landing() {
   return (
     <>
       <div className='flex w-full flex-col'>
-        <section className='w-full bg-neutral-900 text-white'>
+        <section className='w-full bg-neutral-900 text-neutral-50'>
           <div className='mx-auto max-w-screen-xl px-4 py-32 lg:flex lg:h-screen lg:items-center'>
             <div className='mx-auto max-w-3xl text-center'>
               <h1 className='bg-gradient-to-r from-blue-500 via-emerald-500 to-blue-600 bg-clip-text text-3xl font-extrabold text-transparent sm:text-5xl'>
@@ -29,7 +29,7 @@ export default function Landing() {
                 <div
                   className='block w-full cursor-pointer rounded border 
                   border-emerald-600 bg-emerald-600 px-12 py-3 text-sm 
-                  font-medium text-white hover:bg-transparent hover:text-white 
+                  font-medium text-neutral-50 hover:bg-transparent hover:text-neutral-50 
                   focus:outline-none focus:ring active:text-opacity-75 sm:w-auto'
                   onClick={() => {
                     history.push('/login')
@@ -40,7 +40,7 @@ export default function Landing() {
 
                 <a
                   className='block w-full rounded border border-emerald-600 px-12 
-                  py-3 text-sm font-medium text-white hover:bg-emerald-600 
+                  py-3 text-sm font-medium text-neutral-50 hover:bg-emerald-600 
                   focus:outline-none focus:ring active:bg-emerald-500 sm:w-auto'
                   href='/about'
                 >
@@ -62,7 +62,7 @@ export default function Landing() {
                 <span className='block h-1 w-10 rounded bg-emerald-500'></span>
 
                 <div>
-                  <h5 className='text-2xl font-medium text-white'>
+                  <h5 className='text-2xl font-medium text-neutral-50'>
                     Request a Demo
                   </h5>
 
@@ -87,7 +87,7 @@ export default function Landing() {
                     />
 
                     <button
-                      className='absolute top-1/2 right-1.5 -translate-y-1/2 rounded-md bg-emerald-600 p-3 text-white'
+                      className='absolute top-1/2 right-1.5 -translate-y-1/2 rounded-md bg-emerald-600 p-3 text-neutral-50'
                       type='button'
                     >
                       <svg
@@ -172,7 +172,7 @@ export default function Landing() {
               </div>
 
               <div className='mt-12 flex space-x-6 text-xs text-white'>
-                <p> &copy; 2022 Company Name </p>
+                <p> &copy; 2021 Thunder Space </p>
                 <a className='text-inherit underline hover:opacity-75' href='#'>
                   Privacy Policy
                 </a>

@@ -13,15 +13,16 @@ export default function AssignIssue({
 
   const [selected, setSelected] = useState({})
 
-  const handleSuccessfully = () => closeModal()
-
   const onSubmit = () => {
     const onSuccess = () => {
-      dispatch(setDataIssue({ ..._data, assign: selected }))
+      const { name, _id, email, avatar } = selected
+      dispatch(setDataIssue({ ..._data, assign: { name, _id, email, avatar } }))
       closeModal()
     }
 
-    dispatch(actUpdateIssue(iid, { assign: selected }, onSuccess))
+    dispatch(
+      actUpdateIssue(iid, { assigned: selected?.email || '' }, onSuccess)
+    )
   }
 
   const handleSearch = () => {}
@@ -137,7 +138,7 @@ export default function AssignIssue({
               hover:bg-emerald-700 focus:outline-none'
               onClick={onSubmit}
             >
-              Success
+              Update
             </button>
 
             <button

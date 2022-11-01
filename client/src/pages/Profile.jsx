@@ -42,7 +42,6 @@ export default function Profile() {
   const uploadImage = async () => {
     const formData = new FormData()
     formData.append('image', selectedFiles[0])
-    formData.append('upload_preset', 'HRMZeliosSea')
 
     try {
       await userApi.updateAvatar(formData)
@@ -93,6 +92,7 @@ export default function Profile() {
                             />
                             <input
                               type='file'
+                              accept='image/*'
                               ref={imageInputRef}
                               className='hidden'
                               onChange={selectFile}
@@ -166,7 +166,7 @@ export default function Profile() {
                               htmlFor='email'
                               className='block text-sm font-medium text-neutral-300'
                             >
-                              Main
+                              Email
                             </label>
                             <input
                               name='email'
