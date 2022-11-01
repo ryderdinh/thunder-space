@@ -17,7 +17,7 @@ module.exports = async (req, res, next) => {
     const priority = req.body.priority
     const description = req.body.description || ""
     //Check  valid estimate
-    if(end < Date.now()) return res.status(400).send(new Response(400, "estimate value is not valid"))
+    // if(end < Date.now()) return res.status(400).send(new Response(400, "estimate value is not valid"))
     //Check exist project
     const existProject = await Project.findOne({_id: pid, deleted : false }).elemMatch("member", { uid : uid });
     

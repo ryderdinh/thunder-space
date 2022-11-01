@@ -7,6 +7,7 @@ const apiPostLogOut = require('../../controller/users/access/logOut')
 const apiPutChangePassword = require("../../controller/users/access/changePassword")
 const apiPostForgetPassword = require("../../controller/users/access/forgetPassword")
 const apiPostResetPassword = require("../../controller/users/access/resetPassword")
+const validate = require("../../middleware/user/validate")
 //Create a token
 exports.apiPostToken = router.post("/token", apiPostToken)
 //User token to login
@@ -16,8 +17,8 @@ exports.apiPostLogOut = router.post('/logout', authenticateToken, apiPostLogOut)
 //User logoutAll
 exports.apiPostLogOutAll = router.post('/logout-all', authenticateToken, apiPostLogOutAll)
 //Change password for current user
-exports.apiPutChangePassword = router.put("/change-password", authenticateToken, apiPutChangePassword)
+exports.apiPutChangePassword = router.put("/change-password", authenticateToken, validate('userValidation', 'changePassword'), apiPutChangePassword)
 //Forget password
-exports.apiPostForgetPassword = router.post('/forget-password', apiPostForgetPassword)
+exports.apiPostForgetPassword = router.post('/forget-password', validate('userValidation', 'forgetPassword'), apiPostForgetPassword)
 //Reset password
-exports.apiPostResetPassword = router.put('/reset-password', apiPostResetPassword)
+exports.apiPostResetPassword = router.put('/reset-password', validate("userValidation", "resetPassword") , apiPostResetPassword)

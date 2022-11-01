@@ -13,18 +13,12 @@ module.exports = async (req, res, next) => {
     if (staff) {
       const validateOtp = await bcrypt.compare(otp, staff.otp);
       if(!validateOtp) return res.status(401).send(new Response(400, 'OTP is not validate'))
-      if (comparePassword(password, confirmPassword)) {
         staff.password = password;
         staff.otp = "" ;
         staff.tokens = [];
         staff.save();
         return res.status(200).send(new Response(200, "success"));
-      }else{
-        return res.status(400).send(new Response(400, "password not match"))
-      }
-      
     }
-   
   } catch (err) {
     console.log(err);
     res.status(400).send(new Response(400, "something went wrong"));

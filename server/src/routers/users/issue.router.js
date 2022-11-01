@@ -14,9 +14,9 @@ exports.apiGetAllIssueInProject = router.get("/projects/:pid/issues", authentica
 //Delete one issue
 exports.apiDeleteOneIssue = router.delete("/issues/:iid", authenticateToken, apiDeleteOneIssue)
 //Update one isse
-exports.apiUpdateOneIssue = router.put("/issues/:iid", authenticateToken, validate('updateIssue'),  apiUpdateOneIssue)
+exports.apiUpdateOneIssue = router.put("/issues/:iid", authenticateToken, validate('issueValidation', 'updateIssue'),  apiUpdateOneIssue)
 //Assign a issue for a member in project
-exports.apiPostIssue = router.post('/projects/:pid/issues/create', authenticateToken, apiPostIssue)
+exports.apiPostIssue = router.post('/projects/:pid/issues/create', authenticateToken, validate('issueValidation', 'createIssue'), apiPostIssue)
 //Upload attachment
 exports.apiPostFile = router.post("/upload/file", authenticateToken, apiPostFile)
 
