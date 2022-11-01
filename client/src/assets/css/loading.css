@@ -8,3 +8,19 @@
   font-size: 12px;
   color: var(--secondary);
 }
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 6.4px solid;
+  border-color: #dbdcef;
+  border-right-color: #474bff;
+  animation: spinner-d3wgkg 0.6s infinite linear;
+}
+
+@keyframes spinner-d3wgkg {
+  to {
+    transform: rotate(1turn);
+  }
+}

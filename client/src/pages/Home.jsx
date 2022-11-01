@@ -1,30 +1,50 @@
 import ProtectedLayout from 'components/Layouts/ProtectedLayout'
-import Event from 'components/Main/ViewMain/Event'
-import ListTimeKeeping from 'components/Main/ViewMain/ListTimeKeeping'
-import TimeKeeping from 'components/Main/ViewMain/TimeKeeping'
 import ViewBox from 'components/Main/ViewMain/ViewBox'
-import ViewBoxName from 'components/Main/ViewMain/ViewBoxName'
+import OutApisProvider from 'context/OutApisContext'
+import CheckinFeature from 'features/checkin'
+import EventFeature from 'features/event'
+import GreetingFeature from 'features/greeting'
 import { useEffect } from 'react'
+import { useSelector } from 'react-redux'
 import variantGlobal from 'units/variantGlobal'
 
 const path = 'home'
 
 export default function Home() {
+  const {
+    _count,
+    _status,
+    _list: checkinHistory
+  } = useSelector((state) => state._timeOfAttendance)
+
   useEffect(() => {
     document.title = 'Home'
   }, [])
 
   return (
-    <ProtectedLayout path={path}>
-      <ViewBox>
-        <ViewBoxName name={'Attendance'} />
-        <TimeKeeping variants={variantGlobal(1, 0)} />
-        <ListTimeKeeping variants={variantGlobal(1, 0.3)} />
-      </ViewBox>
-      <ViewBox>
-        <ViewBoxName name={'Event'} />
-        <Event variants={variantGlobal(1, 0.6)} />
-      </ViewBox>
-    </ProtectedLayout>
+    <OutApisProvider>
+      <ProtectedLayout path={path}>
+        <ViewBox classNameCol='space-x-2'>
+          <div className='mx-auto w-full max-w-3xl space-y-12'>
+            <GreetingFeature variants={variantGlobal(1, 0)} />
+            <CheckinFeature
+              variants={variantGlobal(1, 0.2)}
+              status={_status}
+              allowCheckin={true}
+              totalHour={_count}
+              history={checkinHistory}
+            />
+            <EventFeature variants={variantGlobal(1, 0.4)} />
+          </div>
+          {/* <div className='w-[50%]'>
+            <ViewBoxName name={'Attendance'} />
+            <div className='flex'>
+              <TimeKeeping variants={variantGlobal(1, 0.2)} />
+              <TimeKeepingHistory variants={variantGlobal(1, 0.4)} />
+            </div>
+          </div> */}
+        </ViewBox>
+      </ProtectedLayout>
+    </OutApisProvider>
   )
 }

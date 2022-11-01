@@ -104,7 +104,7 @@ export const actFetchDataTableOfWork = () => {
       authorization: `Bearer ${token}`
     })
 
-    res && dispatch(getDataTimesheets(res.data))
+    // res && dispatch(getDataTimesheets(res.data))
   }
 }
 
@@ -112,41 +112,54 @@ export const actFetchTimeKeeping = () => {
   return async (dispatch) => {
     await dispatch(setLoadingTimeKeeping())
 
-    const res = await timekeepingApi.get()
-
-    res.status === 200 &&
-      Promise.all([
-        await dispatch(setDataTimeKeeping(res.data?.reverse())),
-        await dispatch(setTimeKeeping(res.data))
-      ])
+    try {
+      const res = await timekeepingApi.get()
+      await dispatch(setDataTimeKeeping(res.data))
+    } catch (error) {
+      console.log(error)
+    }
   }
 }
 
-export const actSendLocationToServer = (location) => {
-  loadingToast('Waiting...')
+export const actFetchTimesheets = () => {
+  return async (dispatch) => {
+    await dispatch(setLoadingTimesheets())
 
+    try {
+      const res = await timekeepingApi.get()
+      await dispatch(setDataTimesheets(res.data))
+    } catch (error) {
+      await dispatch(setErrorTimesheets(error.message))
+
+      console.log(error)
+    }
+  }
+}
+
+export const actSendLocationToServer = (location, onSuccess, onError) => {
   return async (dispatch) => {
     try {
       await timekeepingApi.sendLocation(location)
 
       removeToast()
-
+      onSuccess()
       dispatch(actFetchTimeKeeping())
-      successToast('Successful!')
+      successToast('Success!')
     } catch (error) {
       removeToast()
+      onError()
 
-      switch (error.response) {
+      switch (error.message) {
         case 'try after 5 minutes': {
-          errorToast('Bạn vừa chấm công, thử lại sau!')
+          errorToast('Try after 5 minutes')
           break
         }
         case 'you are far from company': {
-          errorToast('Khoảng cách chấm công quá xa!')
+          errorToast('You are far from company')
           break
         }
         default:
-          errorToast('Lỗi')
+          errorToast('Error')
           break
       }
     }
@@ -224,6 +237,7 @@ export const actRefreshPage = () => {
         successToast('Welcome to back')
       })
     } catch (error) {
+      console.log(error)
       removeToast()
       await dispatch(setCheckLogin(false))
       errorToast('Please log in again')
@@ -430,17 +444,18 @@ const loadingToast = (content) => {
 const removeToast = () => toast.remove(loadingToast())
 
 //TODO: ACTION TO REDUCER ================================
-export const getLocation = () => ({
-  type: 'TIME_KEEPING'
-})
-
-export const getDataTimesheets = (payload) => ({
-  type: 'GET_DATA_TIMESHEETS',
+export const setLoadingTimesheets = (payload) => ({
+  type: 'SET_LOADING_TIMESHEETS',
   payload
 })
 
-export const setDataTimesheetsDetail = (payload) => ({
-  type: 'SET_DATA_TIMESHEETS_DETAIL',
+export const setErrorTimesheets = (payload) => ({
+  type: 'SET_ERROR_TIMESHEETS',
+  payload
+})
+
+export const setDataTimesheets = (payload) => ({
+  type: 'SET_DATA_TIMESHEETS',
   payload
 })
 

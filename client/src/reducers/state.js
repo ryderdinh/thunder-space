@@ -8,12 +8,12 @@ import project from './project'
 import report from './report'
 import staffInfomation from './staffInfomation'
 import timeKeeping from './timeKeeping'
-import getTimesheets from './timesheets'
+import timesheets from './timesheets'
 import users from './users'
 import workflow from './workflow'
 
 export default combineReducers({
-  _timesheets: getTimesheets,
+  _timesheets: timesheets,
   _timeOfAttendance: timeKeeping,
   _checkLogin: checkLogin,
   _staffInfomation: staffInfomation,
