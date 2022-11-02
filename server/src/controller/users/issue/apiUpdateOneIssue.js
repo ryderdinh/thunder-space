@@ -51,7 +51,6 @@ module.exports = async (req, res, next) => {
             const assignToView = assign.map(assign => assign.getProfileToCreateProject())
             return res.status(200).send(new Response(200, 'success',  updatedIssue.getIssueDetailsWithHistory(creatorToView[0], assignToView[0], history)))
     } catch (err) {
-        console.log(err);
-        return res.status(400).send(new Response(400, "something went wrong"))
+        return res.status(400).send(new Response(400, err.message))
     }
 }
