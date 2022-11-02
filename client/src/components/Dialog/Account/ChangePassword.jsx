@@ -16,7 +16,6 @@ const ChangePassword = ({ closeModal }) => {
   const {
     register,
     handleSubmit,
-    watch,
     getValues,
     setError,
     formState: { errors }

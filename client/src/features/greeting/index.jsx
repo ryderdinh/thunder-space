@@ -3,6 +3,7 @@ import { motion } from 'framer-motion'
 import { useContext, useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import RFDate from 'utilities/date'
+import { getSessionName } from './services/getSessionName'
 import { getFahrenheit } from './services/getTemp'
 
 const getNow = () => new RFDate(new Date().getTime()).time
@@ -39,7 +40,7 @@ const GreetingFeature = ({ variants }) => {
       exit='exit'
     >
       <h3 className='text-lg font-bold text-neutral-50 md:text-3xl lg:text-4xl'>
-        Good morning, <span className='text-emerald-500'>{name}</span>
+        {getSessionName()}, <span className='text-emerald-500'>{name}</span>
       </h3>
       <p className='mt-3 mb-2 text-sm text-neutral-300 md:text-[18px]'>
         {now}, {region}

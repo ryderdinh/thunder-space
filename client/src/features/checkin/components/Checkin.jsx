@@ -5,15 +5,13 @@ import { useContext, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import RFDate from 'utilities/date'
 import { errorToast } from 'utilities/toast'
+import { getCheckinStatus } from '../services/getCheckinStatus'
 import { getPercent } from '../services/getPercent'
-import { getStatus } from '../services/getStatus'
 
 const Checkin = ({ date, allowCheckin, totalHour }) => {
   const {
     location: { latitude, longitude, error }
   } = useContext(OutApisContext)
-
-  console.log(latitude, longitude, error)
 
   const [isLoading, setIsLoading] = useState(false)
 
@@ -46,7 +44,7 @@ const Checkin = ({ date, allowCheckin, totalHour }) => {
           Attendance
         </h4>
         <p className='text-xs font-medium text-neutral-400 md:text-sm'>
-          {getStatus(totalHour)}
+          {getCheckinStatus(totalHour)}
         </p>
       </div>
 

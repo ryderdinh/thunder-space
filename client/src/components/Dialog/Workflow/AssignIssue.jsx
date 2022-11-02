@@ -27,9 +27,13 @@ export default function AssignIssue({
 
   const handleSearch = () => {}
 
+  console.log(currentAssignee, members)
+
   useEffect(() => {
-    setSelected(currentAssignee)
-  }, [currentAssignee])
+    setSelected(
+      members[members.findIndex((mem) => mem._id === currentAssignee._id)]
+    )
+  }, [currentAssignee._id, members])
 
   return (
     <div className='min-h-screen px-4 text-center'>
@@ -88,7 +92,8 @@ export default function AssignIssue({
                 defaultValue={''}
                 inputProps={{ onFocus: () => {}, onBlur: () => {} }}
               />
-              <div className='mt-3 h-max max-h-96 overflow-y-scroll rounded-md bg-white'>
+
+              <div className='mt-3 h-max max-h-96 overflow-y-scroll rounded-md bg-neutral-50'>
                 <div
                   className='custom-scrollbar text-scale-1200 block h-max min-h-[100px] w-full 
                   py-2 text-xs'
@@ -104,7 +109,11 @@ export default function AssignIssue({
                               ? 'flex w-full items-center bg-emerald-400'
                               : ''
                           }
-                          ${checked ? 'bg-emerald-400 text-white' : 'bg-white'}
+                          ${
+                            checked
+                              ? 'bg-emerald-400 text-neutral-50'
+                              : 'bg-neutral-50'
+                          }
                             relative flex outline-none transition-all
                             duration-75 ease-linear`
                         }
@@ -118,7 +127,7 @@ export default function AssignIssue({
                           </div>
                           <div className='ml-2'>
                             <p className='text-sm font-bold'>{member.name}</p>
-                            <p className='text-xs italic'>{member.role}</p>
+                            <p className='text-xs italic'>{member.email}</p>
                           </div>
                         </div>
                       </RadioGroup.Option>

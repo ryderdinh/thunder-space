@@ -96,18 +96,6 @@ export const actFetchStaffInfomation = () => {
   }
 }
 
-export const actFetchDataTableOfWork = () => {
-  const { id, token } = getCookie()
-
-  return async (dispatch) => {
-    const res = await callAPI(`table/${id}`, 'GET', null, {
-      authorization: `Bearer ${token}`
-    })
-
-    // res && dispatch(getDataTimesheets(res.data))
-  }
-}
-
 export const actFetchTimeKeeping = () => {
   return async (dispatch) => {
     await dispatch(setLoadingTimeKeeping())
