@@ -3,11 +3,7 @@ import { SCol, SmallTable, SRow } from 'components/Table/SmallTable'
 import { useSelector } from 'react-redux'
 
 const EventTable = () => {
-  const {
-    data: events,
-    isLoading,
-    error
-  } = useSelector((state) => state._events)
+  const { data: events, isLoading } = useSelector((state) => state._events)
 
   return (
     <SmallTable

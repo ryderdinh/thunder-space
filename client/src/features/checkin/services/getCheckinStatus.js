@@ -1,4 +1,4 @@
-export const getStatus = (value) =>
+export const getCheckinStatus = (value) =>
   value <= 0
     ? "You haven't checked in"
     : value > 8

@@ -54,6 +54,7 @@ export default function Issue() {
     loading: false
   })
   const [isErr, setIsErr] = useState(false)
+  const [loadingDescription, setLoadingDescription] = useState(false)
 
   //? Function
   const handleDescriptionDataChange = (data) => {
@@ -73,20 +74,25 @@ export default function Issue() {
         edit: !descriptionPanel.edit
       })
 
-    const onSuccess = () =>
+    const onSuccess = () => {
+      setLoadingDescription(false)
+
       setDescriptionPanel({
         ...descriptionPanel,
         edit: !descriptionPanel.edit
       })
+    }
 
-    const onError = () =>
+    const onError = () => {
+      setLoadingDescription(false)
+
       setDescriptionPanel({
         ...descriptionPanel,
         edit: descriptionPanel.edit
       })
-
-    type &&
-      _dataIssue.description !== description &&
+    }
+    if (type && _dataIssue.description !== description) {
+      setLoadingDescription(true)
       dispatch(
         actUpdateIssue(
           iid,
@@ -95,6 +101,7 @@ export default function Issue() {
           onError
         )
       )
+    }
   }
 
   const deleteIssue = () => {
@@ -229,9 +236,10 @@ export default function Issue() {
                     {descriptionPanel.edit && (
                       <div className='flex items-center justify-end pt-3'>
                         <ButtonSuccess
+                          loading={loadingDescription}
                           onClick={() => handleDescriptionPanel(true)}
                         >
-                          <p className='select-none'>Success</p>
+                          <p className='select-none'>Update</p>
                         </ButtonSuccess>
                       </div>
                     )}

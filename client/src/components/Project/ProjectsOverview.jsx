@@ -109,9 +109,6 @@ export default function ProjectsOverview() {
       <Row>
         <Col>
           {isLoading && (
-            // <p className='w-full py-14 text-center text-xs text-neutral-500'>
-            //   Loading projects...
-            // </p>
             <div className='flex w-full justify-center px-6 py-14'>
               <BallTriangle w={30} h={30} stroke={'#059669'} />
             </div>

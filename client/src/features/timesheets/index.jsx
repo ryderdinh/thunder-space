@@ -1,11 +1,12 @@
 import { actFetchTimesheets } from 'actions'
 import { Motion } from 'components/Layouts'
 import CheckinFeature from 'features/checkin'
-import { getHour } from 'features/checkin/services/getHour'
-import { useEffect, useState } from 'react'
+import { getCheckinHour } from 'features/checkin/services/getCheckinHour'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import TimesheetsHeader from './components/TimesheetsHeader'
 import TimesheetsTable from './components/TimesheetsTable'
+import { getDayEnoughTime } from './services/getDayEnoughTime'
 import { getDayListByMonth } from './services/getDayListByMonth'
 import { getHistoryFromDate } from './services/getHistoryFromDate'
 import { handleMonths } from './services/handleDate'
@@ -50,13 +51,20 @@ const TimesheetsFeature = ({ variants }) => {
     setMonth(month + 1)
   }
 
-  const getHistoryData = () => {
-    return getHistoryFromDate(_data, {
-      year: new Date(tableTitle).getFullYear(),
-      month,
-      day
-    })
-  }
+  const getHistoryData = useCallback(
+    (type = 'day') =>
+      getHistoryFromDate(_data, {
+        year: new Date(tableTitle).getFullYear(),
+        month,
+        day
+      })[type],
+    [_data, day, month, tableTitle]
+  )
+
+  const getDaysComplete = useMemo(
+    () => getDayEnoughTime(getHistoryData('month'), 8),
+    [getHistoryData]
+  )
 
   return (
     <Motion variants={variants} className='space-y-3 overflow-hidden'>
@@ -68,10 +76,11 @@ const TimesheetsFeature = ({ variants }) => {
       />
 
       <TimesheetsTable
-        days={getDayListByMonth(month)}
+        setDay={setDay}
         month={month}
         day={day}
-        setDay={setDay}
+        days={getDayListByMonth(month)}
+        daysComplete={getDaysComplete}
       />
 
       <CheckinFeature
@@ -83,12 +92,8 @@ const TimesheetsFeature = ({ variants }) => {
             `${day}`
           )
         }
-        totalHour={getHour(getHistoryData())}
-        history={getHistoryFromDate(_data, {
-          year: new Date(tableTitle).getFullYear(),
-          month,
-          day
-        })}
+        totalHour={getCheckinHour(getHistoryData())}
+        history={getHistoryData()}
       />
     </Motion>
   )

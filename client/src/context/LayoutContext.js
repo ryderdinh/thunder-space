@@ -10,8 +10,8 @@ export default function LayoutContextProvider({ children }) {
   const [nameDialog, setNameDialog] = useState('')
   const [data, setData] = useState({})
 
-  const [auth,setAuth] = useState(false)
-  const [previousPath,setPreviousPath] = useState('/')
+  // const [auth,setAuth] = useState(false)
+  const [previousPath, setPreviousPath] = useState('/')
 
   const openDialog = (nameDialog, dataDialog) => {
     setNameDialog(nameDialog)
