@@ -10,13 +10,13 @@ const apiPatchChangeRole =  require("../../controller/users/project/apiPatchChan
 const apiPatchAcceptInvitation =  require("../../controller/users/project/apiPatchAcceptInvitation")
 const apiPatchRejectInvitation =  require("../../controller/users/project/apiPatchRejectInvitation")
 const router = require('express').Router()
-
+const validate = require("../../middleware/user/validate")
 //Get all project
 exports.apiGetProject = router.get('/projects', authenticateToken, apiGetProject)
 //Create new project
-exports.apiPostProject = router.post('/projects/create', authenticateToken, apiPostProject)
+exports.apiPostProject = router.post('/projects/create', authenticateToken, validate('projectValidation', 'createProject'), apiPostProject)
 //Add more member to project
-exports.apiPatchAddMemberToProject = router.patch("/projects/:id/members/add", authenticateToken, apiPatchAddMemberToProject)
+exports.apiPatchAddMemberToProject = router.patch("/projects/:id/members/add", authenticateToken, validate('projectValidation', "addMemberToProject"), apiPatchAddMemberToProject)
 //Find one project
 exports.apiGetFindProject = router.get('/projects/:id', authenticateToken, apiGetFindProject)
 //Delete Project
@@ -26,7 +26,7 @@ exports.apiPutUpdateProject = router.put("/projects/:id", authenticateToken, api
 //Delete member 
 exports.apiPatchDeleteMemberOfProject = router.delete("/projects/:pid/members/:uid", authenticateToken, apiPatchDeleteMemberOfProject)
 //Change role 
-exports.apiPatchChangeRole = router.patch("/projects/:pid/members/:uid", authenticateToken, apiPatchChangeRole)
+exports.apiPatchChangeRole = router.patch("/projects/:pid/members/:uid", authenticateToken, validate('projectValidation', "changeRole"), apiPatchChangeRole)
 //Accept Invitation
 exports.apiPatchAcceptInvitation = router.patch("/projects/:pid/invitations/accept", authenticateToken, apiPatchAcceptInvitation)
 //Reject Invitation

@@ -39,8 +39,11 @@ module.exports = async (req, res, next) => {
           [date]: []
       }
     }
+    if (!((existTimeSheet.timeline[year][month]).hasOwnProperty(date))) {
+      existTimeSheet.timeline[year][month][date] = []
+    }
     const lengthChekIn = existTimeSheet.timeline[year][month][date].length;
-    if (lengthChekIn > 1) {
+    if (lengthChekIn > 0) {
       const limitCheckIn = Date.now() - existTimeSheet.timeline[year][month][date][lengthChekIn - 1].time
       if (limitCheckIn < 300000) {
         return res.status(400).send(new Response(400, "try after 5 minutes"));
