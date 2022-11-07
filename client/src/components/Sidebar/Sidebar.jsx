@@ -1,8 +1,9 @@
+import 'assets/css/Sidebar.css'
+
 import Logo from 'components/Icon/Logo'
 import { LayoutContext } from 'context/LayoutContext'
 import { useContext } from 'react'
 import Account from './Account'
-import './Sidebar.css'
 import SidebarItem from './SidebarItem'
 import SidebarItemSubMenu from './SidebarItemSubMenu'
 

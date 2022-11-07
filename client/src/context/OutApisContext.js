@@ -19,7 +19,10 @@ export default function OutApisProvider({ children }) {
           `https://api.opencagedata.com/geocode/v1/json?key=${env.openCageDataKey}&q=${latitude}+${longitude}&language=en&pretty=1&no_annotations=1`
         )
 
-        setRegion(result.data.results[0].components.state)
+        setRegion(
+          result.data.results[0].components.city_district ||
+            result.data.results[0].components.city
+        )
       } catch (error) {
         console.log(error)
       }

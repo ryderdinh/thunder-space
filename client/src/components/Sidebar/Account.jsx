@@ -46,15 +46,17 @@ export default function Account(props) {
           className='profile-content'
           onClick={handleSidebarOnMobile}
         >
-          {!account.avatar ? (
-            <img src={Puff} alt='profile' />
-          ) : (
-            <img src={account.avatar} alt='profile' />
-          )}
+          <div className='avatar-user'>
+            {!account.avatar ? (
+              <img src={Puff} alt='non avatar user' />
+            ) : (
+              <img src={account.avatar} alt='avatar user' />
+            )}
+          </div>
         </NavLink>
         <NavLink
           to='/account'
-          className='name-job'
+          className='name-job transition-all duration-500 ease-in'
           onClick={() => handleSidebarOnMobile()}
         >
           <div className='profile_name'>{account.name}</div>
