@@ -8,9 +8,9 @@ import { useHistory } from 'react-router-dom'
 
 export default function LoginForm() {
   // Create state
-  const [email, setEmail] = useState('')
+  const [email, setEmail] = useState('ryderdinh@gmail.com')
   const [password, setPassword] = useState({
-    text: '',
+    text: '123456',
     isShow: false,
     isReadOnly: true
   })

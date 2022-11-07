@@ -1,7 +1,7 @@
 import { Dialog, Transition } from '@headlessui/react'
-import { actDeleteIssue } from 'actions'
+import { actDeleteIssue, setDataProject } from 'actions'
 import { Fragment } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useHistory, useParams } from 'react-router-dom'
 
 export default function DeleteIssue({ closeModal, data: { id } }) {
@@ -9,15 +9,22 @@ export default function DeleteIssue({ closeModal, data: { id } }) {
   const history = useHistory()
   const { pid } = useParams()
 
+  //? Connect redux store
+  const { _dataProjects } = useSelector((state) => state._project)
   const dispatch = useDispatch()
 
-  const handleSuccessfully = () => {
-    closeModal()
-    history.push(`/projects/${pid}`)
-  }
-
+  //? State
   const onSubmit = () => {
-    dispatch(actDeleteIssue(id, handleSuccessfully))
+    const currentProjectsList = [..._dataProjects]
+    const onSuccess = () => {
+      dispatch(
+        setDataProject(currentProjectsList.filter((item) => item._id !== id))
+      )
+      closeModal()
+      history.push(`/projects/${pid}`)
+    }
+
+    dispatch(actDeleteIssue(id, onSuccess))
   }
 
   return (

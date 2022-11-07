@@ -80,20 +80,24 @@ export const IssueSetting = () => {
     }))
   }, [_dataIssue?.name, issueNameInForm])
 
+  // Set tab/default tab
   useEffect(() => {
     setTab(queryString.parse(location.search)?.opt || 'general')
   }, [location.search])
 
+  // fetch project data & issue data
   useEffect(() => {
     Promise.all([dispatch(actFetchProject(pid)), dispatch(actQueryIssue(iid))])
   }, [pid, iid, dispatch])
 
+  // redirect to project if issue does not exist
   useEffect(() => {
     if (error === 'issue does not exist') {
       history.push(`/projects/${pid}`)
     }
   }, [error, history, pid])
 
+  // auto set issue name (because variable 'issueName' created from react-hook-form)
   useEffect(() => {
     setValueName('issueName', _dataIssue?.name)
   }, [_dataIssue?.name, setValueName])

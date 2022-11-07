@@ -286,13 +286,19 @@ export const actFetchProject = (pid, onSuccess, onError) => {
       const issueSorted = res.data.issue.sort((a, b) => b.updateAt - a.updateAt)
 
       await dispatch(setDataProject({ ...res.data, issue: issueSorted }))
+
       onSuccess && onSuccess()
     } catch (error) {
       Promise.all([
         await dispatch(setDataProject(null)),
         await dispatch(setProjectError(error.message))
       ])
+
       onError && onError(error)
+    } finally {
+      setTimeout(() => {
+        dispatch(setProjectLoading(false))
+      }, 1000)
     }
   }
 }
