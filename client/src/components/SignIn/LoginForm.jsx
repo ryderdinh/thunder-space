@@ -80,7 +80,7 @@ export default function LoginForm() {
           <span className='google-icon'>
             <GoogleIcon />
           </span>
-          <span>Login with Google (Developing)</span>
+          <span>Login with Google (Comming soon)</span>
         </div>
 
         <div className='sign-in-seperator'>

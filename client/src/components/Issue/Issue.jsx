@@ -144,7 +144,7 @@ export default function Issue() {
   }, [_dataProject?.code, _dataIssue?.code, pid, iid])
 
   return (
-    <div className='h-full w-full space-y-5'>
+    <div className='relative h-full w-full space-y-5'>
       {(error === 'issue does not exist' || isErr) && (
         <motion.div
           variants={variantGlobal(4, 0.1)}
@@ -169,19 +169,22 @@ export default function Issue() {
 
       {error !== 'issue does not exist' && !isErr && (
         <>
-          <Row className='max-h-10 md:flex'>
+          <Row
+            className='sticky top-10 z-10 flex rounded-md bg-deepdark p-2 
+            md:static md:p-0'
+          >
             <Col className='mb-2 w-full md:mb-0 md:w-1/2'>
               <Breadcumb list={breadcumbs} />
             </Col>
 
-            <Col className='w-full md:w-1/2'>
-              <div className='flex w-full justify-end gap-2'>
+            <Col className='w-max md:w-1/2'>
+              <div className='z-10 flex w-full justify-end gap-2'>
                 <Menu dataProject={_dataIssue} deleteAction={deleteIssue} />
               </div>
             </Col>
           </Row>
 
-          <Row className='h-[calc(100%-40px)] md:grid md:grid-cols-3 md:gap-5'>
+          <Row className='grid h-[calc(100%-40px)] grid-cols-3 gap-5'>
             <Col className='col-span-3 space-y-5 md:col-span-1'>
               {isLoading && (
                 <p className='w-full py-14 text-center text-xs text-neutral-500'>
@@ -199,8 +202,8 @@ export default function Issue() {
               {!isLoading && <IssueDetail data={_dataIssue} />}
             </Col>
             <Col
-              className='custom-scrollbar col-span-3 block h-full overflow-y-scroll 
-              pr-0 md:col-span-2 md:pr-2'
+              className='custom-scrollbar col-span-3 block h-full overflow-auto pr-0 
+              md:col-span-2 md:overflow-y-scroll md:pr-2'
             >
               {isLoading && (
                 <p className='w-full py-14 text-center text-xs text-neutral-500'>

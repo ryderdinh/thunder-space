@@ -28,7 +28,7 @@ export default function Login() {
     <div className='login-container'>
       <LoginForm />
       <OnBoardingSlide />
-      <Toaster position='top-right' reverseOrder={true} />
+      <Toaster position='top-center' reverseOrder={true} />
     </div>
   )
 }

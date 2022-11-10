@@ -128,13 +128,9 @@ export const actSendLocationToServer = (location, onSuccess, onError) => {
   return async (dispatch) => {
     try {
       await timekeepingApi.sendLocation(location)
-
-      removeToast()
       onSuccess()
       dispatch(actFetchTimeKeeping())
-      successToast('Success!')
     } catch (error) {
-      removeToast()
       onError()
 
       switch (error.message) {

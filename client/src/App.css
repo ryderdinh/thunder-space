@@ -206,6 +206,8 @@ main.onblur {
 }
 
 .view-container .view_name {
+  top: 0;
+
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -216,6 +218,8 @@ main.onblur {
   /* margin-bottom: 30px; */
 
   color: #fff;
+  background: var(--background-view);
+  border-bottom: 1px solid rgba(42, 42, 42, var(--tw-bg-opacity));
 
   font-size: 26px;
   font-weight: 800;
@@ -241,9 +245,9 @@ main.onblur {
   padding: 25px;
   overflow-y: scroll;
 
-  border: 1px solid rgba(42, 42, 42, var(--tw-bg-opacity));
+  /* border: 1px solid rgba(42, 42, 42, var(--tw-bg-opacity));
   border-bottom: none;
-  border-left: none;
+  border-left: none; */
 
   background: var(--background-view);
 }
@@ -1484,6 +1488,10 @@ main.onblur {
 }
 
 @media only screen and (max-width: 768px) {
+  :root {
+    --pad: 20px;
+  }
+
   /* .container .sidebar {
     display: none;
   } */
@@ -1507,9 +1515,9 @@ main.onblur {
   }
 
   .view-container .view_name {
-    position: absolute;
-    z-index: 1;
-    top: 0;
+    position: -webkit-sticky; /* Safari */
+    position: sticky;
+    top: -1;
     left: 0;
 
     width: 100%;
@@ -1517,7 +1525,7 @@ main.onblur {
   }
 
   .view-container .view_main {
-    padding: 40px 20px;
+    padding: 20px 20px 60px;
 
     width: 100%;
     height: max-content;
