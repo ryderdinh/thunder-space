@@ -89,9 +89,9 @@ export default function CreateProject({ closeModal }) {
         leaveTo='opacity-0 scale-95'
       >
         <div
-          className='my-8 inline-block max-h-screen w-4/6 max-w-2xl
-          transform overflow-scroll rounded-md border border-neutral-800 
-          bg-[#232323] p-6 text-left align-middle shadow-xl transition-all'
+          className='my-8 inline-block max-h-screen w-full max-w-2xl transform
+          overflow-scroll rounded-md border border-neutral-800 bg-[#232323] 
+          p-4 text-left align-middle shadow-xl transition-all md:w-4/6 md:p-6'
         >
           <Dialog.Title
             as='h3'
@@ -102,7 +102,7 @@ export default function CreateProject({ closeModal }) {
           <div className='mt-2'>
             {isLoading && (
               <p className='w-full py-16 text-center text-xs text-neutral-500'>
-                loading...
+                Loading...
               </p>
             )}
 
@@ -298,7 +298,7 @@ function ListBoxMultipleUser({
           focus-visible:border-emerald-500 focus-visible:ring-2
           focus-visible:ring-white focus-visible:ring-opacity-75
           focus-visible:ring-offset-2 focus-visible:ring-offset-emerald-300
-          sm:text-sm'
+          md:text-sm'
           open={isOpen}
         >
           <span className='block truncate'>
@@ -334,9 +334,9 @@ function ListBoxMultipleUser({
           leaveTo='opacity-0'
         >
           <Listbox.Options
-            className='absolute z-10 mt-1 max-h-60 w-full
-            overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1
-            ring-neutral-900 ring-opacity-5 focus:outline-none sm:text-sm'
+            className='absolute z-10 mt-1 max-h-36 w-full overflow-auto
+            rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-neutral-900
+            ring-opacity-5 focus:outline-none sm:text-sm md:max-h-60'
           >
             {people.length < 1 && (
               <p className='w-full py-1 text-center text-xs text-neutral-500'>
@@ -359,16 +359,16 @@ function ListBoxMultipleUser({
                       <div
                         className={`${
                           active
-                            ? 'bg-emerald-600 text-white'
+                            ? 'bg-emerald-600 text-neutral-50'
                             : 'text-neutral-900'
-                        } relative cursor-default select-none py-2 pl-14 pr-4
+                        } relative cursor-default select-none py-2 pl-10 pr-4 md:pl-14
                         ${Manager.email === yourMail ? 'opacity-30' : ''}
                         `}
                       >
                         <span
                           className={`${
                             selected ? 'font-semibold' : 'font-normal'
-                          } block truncate`}
+                          } block truncate text-sm md:text-base`}
                         >
                           {`${Manager.name}${
                             Manager.email === yourMail ? ' (You)' : ''
@@ -380,7 +380,7 @@ function ListBoxMultipleUser({
                         >
                           <img
                             src={Manager.avatar}
-                            className='h-8 w-8 transition-all group-hover:scale-110'
+                            className='h-5 w-5 transition-all group-hover:scale-110 md:h-8 md:w-8'
                             alt='avatar'
                           />
                         </span>
@@ -414,11 +414,6 @@ function ListBoxMultipleUser({
             })}
           </Listbox.Options>
         </Transition>
-        {/* <div className='pt-1 text-sm'>
-          {selected.length > 0 && (
-            <>Selected Managers: {selected.join(', ')}</>
-          )}
-        </div> */}
       </div>
     </Listbox>
   )

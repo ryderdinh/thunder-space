@@ -92,7 +92,7 @@ const NotificationOverview = () => {
             {isLoading && (
               <div
                 className='flex w-full items-center justify-center
-                  border-t-2 border-[#282828] py-5'
+                border-t-2 border-[#282828] py-5'
               >
                 <BallTriangle w={30} h={30} stroke={'#059669'} />
               </div>

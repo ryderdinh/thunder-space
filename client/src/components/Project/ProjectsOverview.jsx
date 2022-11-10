@@ -7,7 +7,7 @@ import BallTriangle from 'components/Loading/BallTriangle'
 import { LayoutContext } from 'context/LayoutContext'
 import { motion } from 'framer-motion'
 import queryString from 'query-string'
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect, useLayoutEffect, useState } from 'react'
 import 'react-date-range/dist/styles.css' // main css file
 import 'react-date-range/dist/theme/default.css' // theme css file
 import Avatar, { genConfig } from 'react-nice-avatar'
@@ -61,7 +61,7 @@ export default function ProjectsOverview() {
     }
   }, [history.location.search])
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     dispatch(actQueryProject())
   }, [dispatch])
 

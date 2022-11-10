@@ -34,7 +34,7 @@ export default function HeaderContainer({ pathName }) {
   }
 
   return (
-    <div className='view_name'>
+    <div className='view_name z-20 bg-deepdark'>
       <div className='flex'>
         {sidebar.active ? (
           <ChevronLeftIcon

@@ -112,9 +112,9 @@ export default function CreateIssue({ closeModal }) {
         leaveTo='opacity-0 scale-95'
       >
         <div
-          className='relative my-8 inline-block w-4/5 max-w-5xl
-          transform rounded-md border border-neutral-800 bg-[#232323] p-6 
-          text-left align-middle shadow-xl transition-all'
+          className='relative my-8 inline-block w-full max-w-5xl transform
+          rounded-md border border-neutral-800 bg-[#232323] p-4 text-left align-middle 
+          shadow-xl transition-all md:w-4/5 md:p-6'
         >
           <Dialog.Title
             as='h3'
@@ -126,8 +126,8 @@ export default function CreateIssue({ closeModal }) {
             <form action='#' method='POST'>
               <div className=''>
                 <div className='py-5 sm:py-6'>
-                  <div className='grid grid-cols-12 gap-6'>
-                    <div className='col-span-12 sm:col-span-12'>
+                  <div className='grid grid-cols-6 gap-3 md:grid-cols-12 md:gap-6'>
+                    <div className='col-span-6 md:col-span-12'>
                       <label className='block text-sm font-medium text-neutral-200'>
                         Name
                       </label>
@@ -147,7 +147,7 @@ export default function CreateIssue({ closeModal }) {
                       )}
                     </div>
 
-                    <div className='col-span-12 md:col-span-4'>
+                    <div className='col-span-6 md:col-span-4'>
                       <label className='block text-sm font-medium text-neutral-200'>
                         Project{' '}
                         <span className='text-xs italic text-neutral-500'>
@@ -166,7 +166,7 @@ export default function CreateIssue({ closeModal }) {
                       />
                     </div>
 
-                    <div className='col-span-12 md:col-span-4'>
+                    <div className='col-span-6 md:col-span-4'>
                       <label className='block text-sm font-medium text-neutral-200'>
                         Type
                       </label>
@@ -183,7 +183,7 @@ export default function CreateIssue({ closeModal }) {
                       )}
                     </div>
 
-                    <div className='col-span-12 md:col-span-4'>
+                    <div className='col-span-6 md:col-span-4'>
                       <label className='block text-sm font-medium text-neutral-200'>
                         Priority
                       </label>
@@ -200,7 +200,7 @@ export default function CreateIssue({ closeModal }) {
                       )}
                     </div>
 
-                    <div className='col-span-12 md:col-span-4'>
+                    <div className='col-span-6 md:col-span-4'>
                       <label className='block text-sm font-medium text-neutral-200'>
                         Assignee
                       </label>
@@ -220,7 +220,7 @@ export default function CreateIssue({ closeModal }) {
                       )}
                     </div>
 
-                    <div className='col-span-12 md:col-span-8'>
+                    <div className='col-span-6 md:col-span-8'>
                       <label className='block text-sm font-medium text-neutral-200'>
                         Estimate
                       </label>
@@ -324,7 +324,7 @@ function ListBoxNonMultiple({ selectList, ...props }) {
                 {({ selected }) => (
                   <>
                     <span
-                      className={`block truncate ${
+                      className={`block truncate text-sm md:text-base ${
                         selected ? 'font-medium' : 'font-normal'
                       }`}
                     >
@@ -416,7 +416,7 @@ function ListBoxImageNonMultiple({ people, ...props }) {
                 {({ selected }) => (
                   <>
                     <span
-                      className={`block truncate ${
+                      className={`block truncate text-sm md:text-base ${
                         selected ? 'font-medium' : 'font-normal'
                       }`}
                     >
