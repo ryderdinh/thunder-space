@@ -5,7 +5,6 @@ import { getCookie } from 'units/cookieWeb'
 
 const API_URL = env.apiUrl
 
-// Set up default config for http requests
 const axiosClient = axios.create({
   baseURL: API_URL,
   headers: {
@@ -20,6 +19,7 @@ axiosClient.interceptors.request.use((config) => {
 
   if (token) {
     config.headers.Authorization = `Bearer ${token}`
+    window.localStorage.setItem('thunder-space-login', 'true')
   }
 
   return config
@@ -37,10 +37,9 @@ axiosClient.interceptors.response.use(
     //Handle error
     const originalRequest = error.response.data
 
-    // if (originalRequest.message === 'jwt expired') {
-    //   window.location.href = '/login'
-    //   return Promise.reject(error)
-    // }
+    if (originalRequest.message === 'jwt expired') {
+      window.localStorage.setItem('thunder-space-login', 'false')
+    }
 
     throw originalRequest
   }

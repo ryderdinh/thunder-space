@@ -23,7 +23,7 @@ const IssueDetail = ({ data }) => {
         className='mx-0 w-full rounded-md border border-[#282828] bg-[#1f1f1f] 
         p-2 md:mx-auto md:max-w-md'
       >
-        <Disclosure as='div'>
+        <Disclosure as='div' defaultOpen={true}>
           {({ open }) => (
             <>
               <Disclosure.Button

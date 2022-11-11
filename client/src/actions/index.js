@@ -1,4 +1,6 @@
 //* IMPORT =============================================
+import callAPI from '../api/callAPI'
+import { getCookie, removeCookie, setCookie } from '../units/cookieWeb'
 import {
   authApi,
   eventApi,
@@ -9,8 +11,6 @@ import {
   userApi
 } from 'api'
 import toast from 'react-hot-toast'
-import callAPI from '../api/callAPI'
-import { getCookie, removeCookie, setCookie } from '../units/cookieWeb'
 
 //? CALL API============================================
 export const actSignIn = (dataUser) => {
@@ -50,13 +50,16 @@ export const actSignIn = (dataUser) => {
           await dispatch(actFetchTimeKeeping())
           // await dispatch(actFetchEvents())
         ]).then(() => {
+          window.localStorage.setItem('thunder-space-login', 'true')
           dispatch(setCheckLogin(true))
         })
       } catch (error) {
+        window.localStorage.setItem('thunder-space-login', 'false')
         removeToast()
         errorToast('Failed, double-check your login information')
       }
     } else {
+      window.localStorage.setItem('thunder-space-login', 'false')
       removeToast()
       errorToast('Failed, double-check your login information')
     }

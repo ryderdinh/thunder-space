@@ -1,19 +1,43 @@
-import { TagIcon } from '@heroicons/react/solid'
 import {
   actGetNotification,
   setNotificationsRead,
   setNotificationsReadAll
 } from 'actions'
-import { useEffect } from 'react'
+
+import queryString from 'query-string'
+import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import NotificationAction from './components/NotificationAction'
-import NotificationList from './components/NotificationList'
-import NotificationSearch from './components/NotificationSearch'
-import NotificationTab from './components/NotificationTab'
+import { useLocation } from 'react-router-dom'
+
+import { TagIcon } from '@heroicons/react/solid'
+import {
+  NotificationAction,
+  NotificationList,
+  NotificationTab
+} from './components'
+
+const tags = [
+  {
+    type: 'all',
+    title: 'All'
+  },
+  {
+    type: 'unread',
+    title: 'Unread'
+  }
+]
 
 const Notification = () => {
   const { _data: data } = useSelector((state) => state._notification)
   const dispatch = useDispatch()
+
+  //? Connect router
+  const location = useLocation()
+
+  //? State
+  const [currentTag, setCurrentTag] = useState(
+    queryString.parse(location.search)?.tag || tags[0].type
+  )
 
   const setRead = (id, all = false) => {
     !all
@@ -32,22 +56,29 @@ const Notification = () => {
     dispatch(actGetNotification(null, onSuccess, onError))
   }, [dispatch])
 
-  // const { value, bind } = useInput()
+  useEffect(() => {
+    setCurrentTag(queryString.parse(location.search)?.tag || tags[0].type)
+  }, [location.search])
 
   return (
     <div className='grid w-full grid-cols-5 gap-5'>
-      <div className='col-span-1'>
+      <div className='col-span-1 hidden md:block'>
         <div className='space-y-3'>
           <div className='flex items-center space-x-2 text-neutral-50/80'>
             <TagIcon className='w-4' />
             <p className='text-xs font-bold'>Tags</p>
           </div>
-          <NotificationTab />
+          <NotificationTab tags={tags} currentTag={currentTag} />
         </div>
       </div>
-      <div className='col-span-4 space-y-4'>
-        <div className='flex items-center justify-between'>
-          <NotificationSearch />
+      <div className='col-span-5 space-y-4 md:col-span-4'>
+        <div className='flex items-center justify-end'>
+          {/* <NotificationType
+            tags={tags}
+            currentTag={currentTag}
+            setCurrentTag={setCurrentTag}
+          /> */}
+
           <NotificationAction setRead={setRead} />
         </div>
         <div className='rounded-lg border-2 border-[#282828] bg-[#1f1f1f]'>
