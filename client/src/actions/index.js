@@ -220,11 +220,13 @@ export const actRefreshPage = () => {
           { key: 'token', value: token }
         ])
         removeToast()
+        window.localStorage.setItem('thunder-space-login', 'true')
         await dispatch(setCheckLogin(true))
         successToast('Welcome to back')
       })
     } catch (error) {
       console.log(error)
+      window.localStorage.setItem('thunder-space-login', 'false')
       removeToast()
       await dispatch(setCheckLogin(false))
       errorToast('Please log in again')

@@ -19,7 +19,6 @@ axiosClient.interceptors.request.use((config) => {
 
   if (token) {
     config.headers.Authorization = `Bearer ${token}`
-    window.localStorage.setItem('thunder-space-login', 'true')
   }
 
   return config

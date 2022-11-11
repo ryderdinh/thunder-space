@@ -5,7 +5,7 @@ import Sidebar from 'components/Sidebar/Sidebar'
 import { motion } from 'framer-motion'
 import { useNavigatorStatus } from 'hooks'
 import { useEffect } from 'react'
-import toast, { Toaster } from 'react-hot-toast'
+import toast from 'react-hot-toast'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory, useLocation } from 'react-router'
 
@@ -45,6 +45,7 @@ export default function Layout({ children }) {
       } else {
         dispatch(setCheckLogin(true))
       }
+      console.log(window.localStorage.getItem('thunder-space-login'))
     }
 
     window.addEventListener('storage', checkUserLogin)
@@ -66,7 +67,6 @@ export default function Layout({ children }) {
       ) : (
         <>
           <Sidebar />
-          <Toaster position='top-center' reverseOrder={true} />
           {children}
           <Dialog />
         </>

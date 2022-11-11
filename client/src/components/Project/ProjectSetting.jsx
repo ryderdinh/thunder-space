@@ -134,7 +134,7 @@ export const ProjectSetting = () => {
                     onClick={() => setMobileFiltersOpen(true)}
                   >
                     <span className='sr-only'>Filters</span>
-                    <FilterIcon className='h-5 w-5 ' aria-hidden='true' />
+                    <FilterIcon className='h-5 w-5' aria-hidden='true' />
                   </button>
                 </div>
               </div>
