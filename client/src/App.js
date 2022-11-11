@@ -17,6 +17,7 @@ import TimeSheets from 'pages/TimeSheets'
 import Work from 'pages/Work'
 import Workflow from 'pages/Workflow'
 import { useEffect } from 'react'
+import { Toaster } from 'react-hot-toast'
 import { useDispatch } from 'react-redux'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
@@ -31,6 +32,7 @@ export default function App() {
 
   return (
     <LayoutContextProvider>
+      <Toaster position='top-center' reverseOrder={true} />
       <Router>
         <Route
           render={({ location }) => (

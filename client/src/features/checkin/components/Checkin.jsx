@@ -48,14 +48,22 @@ const Checkin = ({ date, allowCheckin, totalHour }) => {
         </p>
       </div>
 
-      <div className='flex w-1/4 max-w-[231px] flex-col items-end justify-end'>
+      <div
+        className='flex w-full max-w-full flex-row items-end
+        justify-between md:w-1/4 md:max-w-[231px] md:flex-col 
+        md:justify-end'
+      >
         {allowCheckin && (
-          <ButtonSuccess loading={isLoading} onClick={getLocation}>
-            Check in
+          <ButtonSuccess
+            loading={isLoading}
+            onClick={getLocation}
+            className={'w-max'}
+          >
+            <p>Check in</p>
           </ButtonSuccess>
         )}
 
-        <div className='mt-3 w-full'>
+        <div className='mt-3 w-1/2 md:w-full'>
           <div className='mb-[1px] flex items-center justify-between'>
             <p className='text-sm text-neutral-200'>0 h</p>
             <p className='text-sm text-neutral-200'>{`${totalHour}/${8}`} h</p>

@@ -129,8 +129,8 @@ export const ProjectSetting = () => {
                 <div className='flex items-center'>
                   <button
                     type='button'
-                    className='-m-2 ml-4 p-2 text-gray-400 hover:text-gray-500 
-                    sm:ml-6 lg:hidden'
+                    className='p-2 text-neutral-50 hover:text-neitra-500 
+                    sm:ml-6 md:hidden'
                     onClick={() => setMobileFiltersOpen(true)}
                   >
                     <span className='sr-only'>Filters</span>
@@ -174,7 +174,7 @@ export const ProjectSetting = () => {
                   </form>
 
                   <div
-                    className='custom-scrollbar overflow-y-scroll pr-2 
+                    className='custom-scrollbar overflow-y-auto md:overflow-y-scroll pr-0 md:pr-2 
                     text-neutral-400 lg:col-span-3 lg:row-span-1'
                   >
                     <div className='h-full space-y-10'>

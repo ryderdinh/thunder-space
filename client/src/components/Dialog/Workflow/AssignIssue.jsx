@@ -64,7 +64,7 @@ export default function AssignIssue({
       >
         <div
           className='my-8 inline-block w-full max-w-xl transform
-          rounded-md border border-neutral-800 bg-[#232323] p-6 text-left 
+          rounded-md border border-neutral-800 bg-[#232323] p-4 md:p-6 text-left 
           align-middle shadow-xl transition-all'
         >
           <Dialog.Title

@@ -45,7 +45,11 @@ function IssueComment({ className = '', data = [] }) {
         data.map((item, index) => (
           <div className='grid grid-cols-2 text-neutral-500' key={index}>
             <div className='flex items-center gap-2'>
-              <img src={item.users[0].avatar} alt='Avatar user 1' />
+              <img
+                src={item.users[0].avatar}
+                alt='user avatar'
+                className='object-cover'
+              />
               <p>{`${item.users[0].name} :`}</p>
             </div>
 

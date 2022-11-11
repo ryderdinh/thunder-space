@@ -91,7 +91,7 @@ export default function DeleteProject({
                 </span>
               </p>
 
-              <p className='rounded-lg bg-red-600 p-4 text-sm text-white'>
+              <p className='rounded-lg bg-red-600 p-3 md:p-4 text-sm text-neutral-50'>
                 <span className='font-bold'>Warning:</span> This action is not
                 reversible. Please be certain.
               </p>
@@ -106,13 +106,13 @@ export default function DeleteProject({
                       autoComplete='off'
                       placeholder='Type in the name of the project'
                       className='mt-1 mb-2 block w-full rounded-md border 
-                      border-gray-300 p-1 shadow-sm focus:border-emerald-500
+                      border-neutral-300 p-1 shadow-sm focus:border-emerald-500
                       focus:outline-none focus:ring-2 focus:ring-emerald-500
-                      sm:text-sm'
+                      text-sm placeholder:text-sm'
                     />
                     <div className='flex gap-1'>
                       <p className='text-base'>👉</p>
-                      <code className='m-0 text-sm italic text-white'>
+                      <code className='m-0 text-sm italic text-neutral-50'>
                         {projectName}
                       </code>
                     </div>
@@ -127,7 +127,7 @@ export default function DeleteProject({
               type='submit'
               className={`inline-flex justify-center rounded-md border 
               border-transparent bg-emerald-600 py-2 px-4 text-sm font-medium 
-              text-white shadow-sm focus:outline-none 
+              text-neutral-50 shadow-sm focus:outline-none 
               ${
                 !allowDelete
                   ? 'cursor-not-allowed opacity-50'

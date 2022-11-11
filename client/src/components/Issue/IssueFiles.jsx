@@ -1,7 +1,11 @@
 import { useAutoAnimate } from '@formkit/auto-animate/react'
 import { CloudUploadIcon, XIcon } from '@heroicons/react/solid'
+import ButtonSuccess from 'components/Button/ButtonSuccess'
+import { getClassWithColor } from 'file-icons-js'
+import 'file-icons-js/css/style.css'
 import PropTypes from 'prop-types'
 import { useRef, useState } from 'react'
+import formatBytes from 'utilities/formatBytes'
 import { v4 as uuidv4 } from 'uuid'
 
 const IssueFiles = ({
@@ -13,9 +17,10 @@ const IssueFiles = ({
 }) => {
   const wrapperRef = useRef(null)
   const fileRef = useRef(null)
-  const [parent] = useAutoAnimate()
+  const [filesImportRef] = useAutoAnimate()
 
   const [fileList, setFileList] = useState([])
+  console.log(fileList)
 
   const onDragEnter = (e) => {
     wrapperRef.current.classList.add('bg-neutral-600')
@@ -93,7 +98,7 @@ const IssueFiles = ({
             Ready to upload
           </h5>
 
-          <div className='grid grid-cols-2 gap-4' ref={parent}>
+          <div className='grid grid-cols-2 gap-4' ref={filesImportRef}>
             {fileList.map(({ file, id }, index) => (
               <div
                 key={id}
@@ -102,11 +107,22 @@ const IssueFiles = ({
               >
                 <div className='flex items-center space-x-2'>
                   <div className='flex-shrink-0'>
-                    <img
+                    {/* <img
                       src={URL.createObjectURL(file)}
-                      alt='file'
+                      alt='icon file'
                       className='h-9 w-9 object-cover'
-                    />
+                    /> */}
+                    <div className='h-9 w-9'>
+                      <div className='skew-x-2'>
+                        <div className='skew-x-12 text-center'>
+                          <i
+                            className={`!leading-9 before:!text-[30px] ${getClassWithColor(
+                              file.name
+                            )}`}
+                          ></i>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                   <div className='w-[calc(100%-6rem)] space-y-1'>
                     <p
@@ -116,7 +132,7 @@ const IssueFiles = ({
                       {file.name}
                     </p>
                     <p className='text-xs text-neutral-400/80'>
-                      Size: {file.size}
+                      Size: {formatBytes(file.size)}
                     </p>
                   </div>
                 </div>
@@ -143,14 +159,7 @@ const IssueFiles = ({
           </div>
 
           <div className='flex justify-center'>
-            <button
-              className='inline-flex items-center rounded-md 
-              bg-emerald-500 px-4 py-2 text-sm font-semibold leading-6 
-              text-neutral-50 shadow'
-              onClick={upload}
-            >
-              Upload to cloud
-            </button>
+            <ButtonSuccess onClick={upload}>Upload to cloud</ButtonSuccess>
           </div>
         </div>
       )}
