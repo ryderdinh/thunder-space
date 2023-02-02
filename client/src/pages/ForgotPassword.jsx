@@ -1,9 +1,11 @@
+import Logo from 'components/Icon/Logo'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useInput } from 'hooks'
 import { useEffect, useRef, useState } from 'react'
-import { Toaster } from 'react-hot-toast'
 import OtpInput from 'react-otp-input'
 import { useInterval, useQueryParams } from 'react-recipes'
+import { Link } from 'react-router-dom'
+import variantGlobal from 'units/variantGlobal'
 import { successToast } from 'utilities/toast'
 
 const ForgotPassword = () => {
@@ -18,28 +20,80 @@ const ForgotPassword = () => {
   useEffect(() => {
     !step && setParams({ step: 1 })
     idxUpdateRef.current === 0 && setParams({ step: 1 })
-
     idxUpdateRef.current++
   }, [step, setParams])
 
   return (
-    <AnimatePresence>
-      <motion.div className='flex min-h-full w-full flex-col items-center justify-center gap-5'>
-        {Number(step) < 3 && (
-          <Step1 handleStep={handleStep} step={Number(step)} />
-        )}
+    <AnimatePresence exitBeforeEnter>
+      <motion.div
+        className='flex min-h-full w-full flex-col items-center justify-center gap-5'
+        initial='initial'
+        animate='enter'
+        exit='exit'
+        variants={variantGlobal(4, 0.3)}
+      >
+        <Link to='/login'>
+          <motion.div
+            className='flex flex-col items-center gap-1'
+            transition={{ delay: 0.3 }}
+          >
+            <Logo />
+            <h2 className='text-neutral-50 font-bold'>Thunder Space</h2>
+          </motion.div>
+        </Link>
+        <motion.div className='flex h-max w-full flex-col items-center justify-center gap-5'>
+          <AnimatePresence exitBeforeEnter>
+            {Number(step) < 3 && (
+              <Step1
+                handleStep={handleStep}
+                step={Number(step)}
+                key='forgot-password-step-1'
+              />
+            )}
 
-        {Number(step) === 2 && <Step2 handleStep={handleStep} />}
+            {Number(step) === 2 && (
+              <Step2 handleStep={handleStep} key='forgot-password-step-2' />
+            )}
 
-        {Number(step) === 3 && <Step3 handleStep={handleStep} />}
-
-        <Toaster position='top-right' reverseOrder={true} />
+            {Number(step) === 3 && (
+              <Step3 handleStep={handleStep} key='forgot-password-step-3' />
+            )}
+          </AnimatePresence>
+        </motion.div>
       </motion.div>
     </AnimatePresence>
   )
 }
 
 export default ForgotPassword
+
+const StepForm = ({ title, children, onSubmit }) => {
+  return (
+    <motion.form
+      className={`max-w-[90%] space-y-6 rounded-lg border border-[#2a2a2a] 
+      bg-[#1f1f1f] px-8 py-5 pb-8 transition-all duration-300 md:w-[500px]
+      md:max-w-md`}
+      initial={{ scale: 0 }}
+      animate={{
+        scale: 1,
+        transition: { delay: 1 },
+        transformOrigin: 'top'
+      }}
+      exit={{ scale: 0 }}
+      onSubmit={onSubmit}
+    >
+      <motion.div
+        className='space-y-6'
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1, duration: 300, transition: { delay: 2 } }}
+        exit={{ opacity: 0 }}
+      >
+        <h1 className='text-2xl font-bold text-neutral-50'>{title}</h1>
+        {children}
+      </motion.div>
+    </motion.form>
+  )
+}
 
 const Step1 = ({ handleStep, step }) => {
   const [error, setError] = useState(null)
@@ -82,18 +136,7 @@ const Step1 = ({ handleStep, step }) => {
   }, [step])
 
   return (
-    <motion.form
-      className={`max-w-[90%] space-y-6 rounded-lg border border-[#2a2a2a] 
-      bg-[#1f1f1f] px-8 py-5 pb-8 transition-all duration-300 md:w-[500px]
-      md:max-w-md`}
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1, duration: 300 }}
-      exit={{ opacity: 0 }}
-    >
-      <h1 className='text-2xl font-bold text-neutral-50'>
-        Forgot your password?
-      </h1>
-
+    <StepForm title='Forgot your password?'>
       <div className='flex w-full flex-col space-y-3'>
         <label htmlFor='email' className='text-sm text-neutral-50'>
           Email <span className='text-md text-emerald-600'>*</span>
@@ -133,7 +176,7 @@ const Step1 = ({ handleStep, step }) => {
       >
         {btnContent}
       </button>
-    </motion.form>
+    </StepForm>
   )
 }
 
@@ -152,16 +195,7 @@ const Step2 = ({ handleStep }) => {
   }
 
   return (
-    <motion.form
-      className='max-w-[90%] space-y-6 rounded-lg border border-[#2a2a2a] 
-      bg-[#1f1f1f] px-8
-      py-5 pb-8 md:w-[500px] md:max-w-md'
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1, duration: 300 }}
-      exit={{ opacity: 0 }}
-    >
-      <h1 className='text-2xl font-bold text-neutral-50'>Enter OTP number</h1>
-
+    <StepForm title='Enter OTP number'>
       <div className='flex w-full flex-col space-y-3'>
         <OtpInput
           value={otp.data}
@@ -194,7 +228,7 @@ const Step2 = ({ handleStep }) => {
       >
         Submit
       </button>
-    </motion.form>
+    </StepForm>
   )
 }
 
@@ -245,19 +279,7 @@ const Step3 = ({ handleStep }) => {
   })
 
   return (
-    <motion.form
-      className='max-w-[90%] space-y-6 rounded-lg border border-[#2a2a2a] 
-      bg-[#1f1f1f] 
-      px-8 py-5 pb-8 md:w-[500px] md:max-w-md'
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1, duration: 300 }}
-      exit={{ opacity: 0 }}
-      onSubmit={handleSubmit}
-    >
-      <h1 className='text-2xl font-bold text-neutral-50'>
-        Change your password
-      </h1>
-
+    <StepForm title='Change your password' onSubmit={handleSubmit}>
       <div className='flex w-full flex-col space-y-3'>
         <label htmlFor='password' className='text-sm text-neutral-50'>
           New password <span className='text-md text-emerald-600'>*</span>
@@ -312,6 +334,6 @@ const Step3 = ({ handleStep }) => {
       >
         Submit
       </button>
-    </motion.form>
+    </StepForm>
   )
 }
