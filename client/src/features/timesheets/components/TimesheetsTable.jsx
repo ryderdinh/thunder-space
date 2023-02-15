@@ -9,13 +9,15 @@ const TimesheetsTable = ({
   daysComplete = [],
   day,
   month,
+  year,
   setDay
 }) => {
   const [tbRef] = useAutoAnimate()
-  console.log(daysComplete)
 
   const isToday = (value) =>
-    month === new Date().getMonth() + 1 && value === new Date().getDate()
+    month === new Date().getMonth() + 1 &&
+    value === new Date().getDate() &&
+    year === new Date().getFullYear()
 
   const isSelected = (value) => day === value
 
