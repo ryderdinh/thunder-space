@@ -47,25 +47,27 @@ function WorkflowContainer() {
 
   return (
     <div className='wf-container -wf-card'>
-      <div className='row'>
+      <div className='row flex-wrap gap-0'>
         {cards.map((card, i) => (
-          <div className='card' key={i}>
-            <div className='card-body'>
-              <div className='card-row'>
-                <h3 className='card-title'>{card.title}</h3>
-              </div>
+          <div className='!w-full px-3'>
+            <div className='card !w-full' key={i}>
+              <div className='card-body'>
+                <div className='card-row'>
+                  <h3 className='card-title'>{card.title}</h3>
+                </div>
 
-              <div className='card-row'>
-                <ProgressLightStyle now={(card.now / card.max) * 100} />
-              </div>
+                <div className='card-row'>
+                  <ProgressLightStyle now={(card.now / card.max) * 100} />
+                </div>
 
-              <div className='card-row'>
-                {card.data.map((item, j) => (
-                  <div className='card-col' key={j}>
-                    <div className='card-name'>{item.name}</div>
-                    <h4 className='card-value'>{item.value}</h4>
-                  </div>
-                ))}
+                <div className='card-row'>
+                  {card.data.map((item, j) => (
+                    <div className='card-col' key={j}>
+                      <div className='card-name'>{item.name}</div>
+                      <h4 className='card-value'>{item.value}</h4>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </div>

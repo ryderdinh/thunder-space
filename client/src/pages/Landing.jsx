@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import Footer from 'components/Landing/Footer'
 import HeroSection from 'components/Landing/HeroSection'
 import { motion } from 'framer-motion'

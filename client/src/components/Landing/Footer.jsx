@@ -8,7 +8,9 @@ const Footer = () => {
       <div className='mx-auto grid max-w-screen-xl grid-cols-1 lg:grid-cols-2'>
         <div className='border-b border-neutral-800 px-12 py-16 md:border-b-0 md:border-l lg:order-last'>
           <div className='block lg:hidden'>
-            <span className='inline-block h-10 w-32 rounded-lg bg-neutral-700'></span>
+            <span className='h-10 w-32 rounded-lg bg-neutral-700'>
+              <Logo />
+            </span>
           </div>
 
           <div className='mt-12 space-y-4 lg:mt-0'>
@@ -60,7 +62,6 @@ const Footer = () => {
 
               <nav className='mt-2 flex flex-col space-y-1 text-xs text-neutral-400'>
                 <Link className='text-inherit hover:opacity-75'>Contact</Link>
-                <Link className='text-inherit hover:opacity-75'>Live Chat</Link>
                 <Link className='text-inherit hover:opacity-75'>Resources</Link>
               </nav>
             </div>
