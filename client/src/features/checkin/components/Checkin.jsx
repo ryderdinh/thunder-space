@@ -1,3 +1,5 @@
+import { getCheckinStatus } from '../services/getCheckinStatus'
+import { getPercent } from '../services/getPercent'
 import { actSendLocationToServer } from 'actions'
 import ButtonSuccess from 'components/Button/ButtonSuccess'
 import { OutApisContext } from 'context/OutApisContext'
@@ -5,8 +7,6 @@ import { useContext, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import RFDate from 'utilities/date'
 import { errorToast } from 'utilities/toast'
-import { getCheckinStatus } from '../services/getCheckinStatus'
-import { getPercent } from '../services/getPercent'
 
 const Checkin = ({ date, allowCheckin, totalHour }) => {
   const {
@@ -66,7 +66,10 @@ const Checkin = ({ date, allowCheckin, totalHour }) => {
         <div className='mt-3 w-1/2 md:w-full'>
           <div className='mb-[1px] flex items-center justify-between'>
             <p className='text-sm text-neutral-200'>0 h</p>
-            <p className='text-sm text-neutral-200'>{`${totalHour}/${8}`} h</p>
+            <p className='text-sm text-neutral-200'>
+              <span className='text-emerald-500 font-bold'>{totalHour}</span>
+              {`/${8}`} h
+            </p>
           </div>
           <ProgressBar percent={getPercent(totalHour, 8)} />
         </div>

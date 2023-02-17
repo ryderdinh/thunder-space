@@ -1,11 +1,13 @@
 export const getSessionName = () => {
   const now = new Date()
-  const hour = now.getHours()
-  return hour >= 4
+  let hour = now.getHours()
+  return hour < 4
+    ? "It's very late"
+    : hour < 13
     ? 'Good morning'
-    : hour >= 12
+    : hour < 18
     ? 'Good afternoon'
-    : hour >= 18
+    : hour < 22
     ? 'Good evening'
-    : `It's very late`
+    : "It's very late"
 }
