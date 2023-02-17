@@ -1,5 +1,4 @@
 //* IMPORT =============================================
-import callAPI from '../api/callAPI'
 import { getCookie, removeCookie, setCookie } from '../units/cookieWeb'
 import {
   authApi,
@@ -172,15 +171,11 @@ export const actSendReport = (data) => {
   loadingToast('Đang gửi yêu cầu')
 
   return async () => {
-    const res = await callAPI(`user/storeReport/${id}`, 'POST', data, {
-      authorization: `Bearer ${token}`
-    })
-
-    if (!res) {
+    if (true) {
       removeToast()
       errorToast('Gửi thất bại, vui lòng thử lại sau!')
     } else {
-      switch (res?.data?.status) {
+      switch (true) {
         case 'Report complete': {
           successToast('Gửi thành công')
           break

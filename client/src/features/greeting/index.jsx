@@ -1,10 +1,10 @@
+import { getSessionName } from './services/getSessionName'
+import { getFahrenheit } from './services/getTemp'
 import { OutApisContext } from 'context/OutApisContext'
 import { motion } from 'framer-motion'
 import { useContext, useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import RFDate from 'utilities/date'
-import { getSessionName } from './services/getSessionName'
-import { getFahrenheit } from './services/getTemp'
 
 const getNow = () => new RFDate(new Date().getTime()).time
 
@@ -16,6 +16,9 @@ const GreetingFeature = ({ variants }) => {
   } = useSelector((state) => state._staffInfomation)
 
   const [now, setNow] = useState(getNow())
+  const [sesionName, setSesionName] = useState(getSessionName())
+
+  console.log(sesionName)
 
   useEffect(() => {
     let a = setInterval(() => {
@@ -31,6 +34,16 @@ const GreetingFeature = ({ variants }) => {
     getInfoLocation()
   }, [getInfoLocation])
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setSesionName(getSessionName())
+    }, 10000)
+
+    return () => {
+      clearInterval(interval)
+    }
+  }, [])
+
   return (
     <motion.div
       className=''
@@ -40,15 +53,15 @@ const GreetingFeature = ({ variants }) => {
       exit='exit'
     >
       <h3 className='text-lg font-bold text-neutral-50 md:text-3xl lg:text-4xl'>
-        {getSessionName()}, <span className='text-emerald-500'>{name}</span>
+        {sesionName}, <span className='text-emerald-500'>{name}</span>
       </h3>
       <p className='mt-3 mb-2 text-sm text-neutral-300 md:text-[18px]'>
-        {now}, {region}
+        {now}, {region && <>{region}</>}
       </p>
       <p className='text-sm text-neutral-300 md:text-[18px]'>
         Today's temperature:{' '}
         <span
-          className={
+          className={`${
             temp > 16
               ? 'text-emerald-500'
               : temp > 27
@@ -56,7 +69,7 @@ const GreetingFeature = ({ variants }) => {
               : temp > 37
               ? 'text-red-500'
               : 'text-blue-500'
-          }
+          } font-medium`}
         >
           {temp} °C / {getFahrenheit(temp).toFixed(1)} °F
         </span>
