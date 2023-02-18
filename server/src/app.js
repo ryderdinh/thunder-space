@@ -1,54 +1,52 @@
-const express = require("express");
-const app = express();
-const server = require("http").Server(app);
+const express = require('express')
+const app = express()
+const server = require('http').Server(app)
 
-const { Server } = require("socket.io");
+const { Server } = require('socket.io')
 const io = new Server(server, {
   cors: {
-    origin: "*",
-    methods: ["POST", "GET", "PUT", "DELETE", "PATCH"],
+    origin: '*',
+    methods: ['POST', 'GET', 'PUT', 'DELETE', 'PATCH']
   }
-});
-app.set("socketio", io)
-const db = require("../config/db/database");
-const flash = require("express-flash");
-const session = require("express-session");
-const passport = require("passport");
-const methodOverride = require("method-override");
-const initializePassport = require("../config/passport/passport.config");
-const cors = require("cors");
-const fileupload = require("express-fileupload");
-app.use(express.json({ limit: "10mb"}));
-app.use(fileupload({ useTempFiles: true}));
-
+})
+app.set('socketio', io)
+const db = require('../config/db/database')
+const flash = require('express-flash')
+const session = require('express-session')
+const passport = require('passport')
+const methodOverride = require('method-override')
+const initializePassport = require('../config/passport/passport.config')
+const cors = require('cors')
+const fileupload = require('express-fileupload')
+app.use(express.json({ limit: '10mb' }))
+app.use(fileupload({ useTempFiles: true }))
 
 //———————————————————————————VIEWS—————————————————————————————//
-const { dirname } = require('path');
-app.set("view engine", "ejs");
-app.set("views", "views/MAIN/pages");
-app.use(express.static(dirname(require.main.filename) + "/views/MAIN"));
-app.use(express.urlencoded({ limit: "10mb", extended: false }));
-
+const { dirname } = require('path')
+app.set('view engine', 'ejs')
+app.set('views', 'views/MAIN/pages')
+app.use(express.static(dirname(require.main.filename) + '/views/MAIN'))
+app.use(express.urlencoded({ limit: '10mb', extended: false }))
 
 //———————————————————————————INIT PASSPORT—————————————————————————————//
 initializePassport(
   passport,
   (uname) => admins.find((admin) => admin.uname === uname),
   (id) => admins.find((admin) => admin.id === id)
-);
+)
 
-app.use(flash());
+app.use(flash())
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
     resave: false,
-    saveUninitialized: false,
+    saveUninitialized: false
   })
-);
-app.use(passport.initialize());
-app.use(passport.session());
-app.use(methodOverride("_method"));
-app.use(express.json());
+)
+app.use(passport.initialize())
+app.use(passport.session())
+app.use(methodOverride('_method'))
+app.use(express.json())
 
 //———————————————————————————CONNECT DATABASE—————————————————————————————//
 require('../config/db/database')
@@ -56,181 +54,178 @@ require('../config/db/database')
 //———————————————————————————ADMIN INFO—————————————————————————————//
 const admins = [
   {
-    id: "123123",
-    uname: "admin",
-    psw: "admin",
-  },
-];
+    id: '123123',
+    uname: 'admin',
+    psw: 'admin'
+  }
+]
 
 //———————————————————————————CORS—————————————————————————————//
 app.use(
   cors({
-    origin: "*",
-    methods: ["POST", "GET", "PUT", "DELETE", "PATCH"],
+    origin: '*',
+    methods: ['POST', 'GET', 'PUT', 'DELETE', 'PATCH']
   })
-);
+)
 
 //----------------------------------ADMIN CONTROLLER------------------------------------
 // const loginAdmin = require("./app/controller/loginAdmin")
 //ACCESS
-const home = require("./controller/admin/access/getLogin");
-const logoutAdmin = require("./controller/admin/access/logout");
+const home = require('./controller/admin/access/getLogin')
+const logoutAdmin = require('./controller/admin/access/logout')
 
 //DASHBOARD
-const dashBoard = require("./controller/admin/dashBoard/dashBoard");
+const dashBoard = require('./controller/admin/dashBoard/dashBoard')
 
 //USER
-const createUser = require("./controller/admin/users/createUser");
-const postCreateUser = require("./controller/admin/users/postCreateUser");
-const getUpdateUser = require("./controller/admin/users/getUpdateUser");
-const postUpdateUser = require("./controller/admin/users/postUpdateUser");
-const postDeleteUser = require("./controller/admin/users/postDeleteUser");
-const getUserInfo = require("./controller/admin/users/getUserInfo");
-const getUserFilter = require("./controller/admin/users/getUserFilter");
+const createUser = require('./controller/admin/users/createUser')
+const postCreateUser = require('./controller/admin/users/postCreateUser')
+const getUpdateUser = require('./controller/admin/users/getUpdateUser')
+const postUpdateUser = require('./controller/admin/users/postUpdateUser')
+const postDeleteUser = require('./controller/admin/users/postDeleteUser')
+const getUserInfo = require('./controller/admin/users/getUserInfo')
+const getUserFilter = require('./controller/admin/users/getUserFilter')
 
 //EVENT
 // const getUpdateEvent = require("./app/controller/admin/events/getUpdateEvent");
 // const getEventInfo = require("./app/controller/admin/events/getEventInfo");
-const postUpdateEvent = require("./controller/admin/events/postUpdateEvent");
-const getCreateEvent = require("./controller/admin/events/getCreateEvent");
-const postCreateEvent = require("./controller/admin/events/storeEvent");
+const postUpdateEvent = require('./controller/admin/events/postUpdateEvent')
+const getCreateEvent = require('./controller/admin/events/getCreateEvent')
+const postCreateEvent = require('./controller/admin/events/storeEvent')
 
 //REPORT
-const getReportInfo = require("./controller/admin/reports/getReportInfo");
+const getReportInfo = require('./controller/admin/reports/getReportInfo')
 
 //MIDDLE WARE
-const checkAuthenticated = require("./middleware/admin/login/checkAuthenticated");
-const checkNotAuthenticated = require("./middleware/admin/login/checkNotAuthenticated");
-const authenticateToken = require("./middleware/user/login/authenticateToken");
+const checkAuthenticated = require('./middleware/admin/login/checkAuthenticated')
+const checkNotAuthenticated = require('./middleware/admin/login/checkNotAuthenticated')
+const authenticateToken = require('./middleware/user/login/authenticateToken')
 
 //———————————————————————————USER ROUTES—————————————————————————————//
 
 /* -------------------------------------------
                         ACCESS
----------------------------------------------*/ 
-const routersAccess = require("./routers/users/access.router");
+---------------------------------------------*/
+const routersAccess = require('./routers/users/access.router')
 
-
-app.use("/api", routersAccess.apiPostToken)
-app.use("/api", routersAccess.apiGetLogin);
-app.use("/api", routersAccess.apiPutChangePassword);
+app.use('/api', routersAccess.apiPostToken)
+app.use('/api', routersAccess.apiGetLogin)
+app.use('/api', routersAccess.apiPutChangePassword)
 app.use('/api', routersAccess.apiPostLogOutAll)
 app.use('/api', routersAccess.apiPostLogOut)
 app.use('/api', routersAccess.apiPostForgetPassword)
 app.use('/api', routersAccess.apiPostResetPassword)
+app.use('/api', routersAccess.apiPostVerifyOtp)
 
 /* -------------------------------------------
                         INFOR
----------------------------------------------*/ 
-const routersInfo = require("./routers/users/info.router");
+---------------------------------------------*/
+const routersInfo = require('./routers/users/info.router')
 
-app.use("/api", routersInfo.apiGetUserInfo);
-app.use("/api", routersInfo.apiGetSearchUser);
-app.use("/api", routersInfo.apiPutUploadAvatar);
-app.use("/api", routersInfo.apiGetProfile);
+app.use('/api', routersInfo.apiGetUserInfo)
+app.use('/api', routersInfo.apiGetSearchUser)
+app.use('/api', routersInfo.apiPutUploadAvatar)
+app.use('/api', routersInfo.apiGetProfile)
 /* -------------------------------------------
                         EVENT
----------------------------------------------*/ 
-const routersEvent = require("./routers/users/event.router");
+---------------------------------------------*/
+const routersEvent = require('./routers/users/event.router')
 
-app.use("/api", routersEvent.apiGetEvent);
+app.use('/api', routersEvent.apiGetEvent)
 
 /* -------------------------------------------
                         ISSUE
----------------------------------------------*/ 
-const routersIssue = require("./routers/users/issue.router")
+---------------------------------------------*/
+const routersIssue = require('./routers/users/issue.router')
 
-app.use("/api", routersIssue.apiGetAllIssueInProject)
-app.use("/api", routersIssue.apiGetOneIssueInProject)
-app.use("/api", routersIssue.apiDeleteOneIssue)
-app.use("/api", routersIssue.apiUpdateOneIssue)
-app.use("/api", routersIssue.apiPostIssue);
-app.use("/api", routersIssue.apiPostFile);
+app.use('/api', routersIssue.apiGetAllIssueInProject)
+app.use('/api', routersIssue.apiGetOneIssueInProject)
+app.use('/api', routersIssue.apiDeleteOneIssue)
+app.use('/api', routersIssue.apiUpdateOneIssue)
+app.use('/api', routersIssue.apiPostIssue)
+app.use('/api', routersIssue.apiPostFile)
 
 /* -------------------------------------------
                         TIMEKEEPING
----------------------------------------------*/ 
+---------------------------------------------*/
 const routersCheckin = require('./routers/users/checkin.router')
 
-app.use("/api", routersCheckin.apiPutLocation);
-app.use("/api", routersCheckin.apiGetTimeLine);
+app.use('/api', routersCheckin.apiPutLocation)
+app.use('/api', routersCheckin.apiGetTimeLine)
 /* -------------------------------------------
                         STATISTIC
----------------------------------------------*/ 
+---------------------------------------------*/
 // const apiGetTable = require("./controller/users/statistic/apiGetTable");
 
 /* -------------------------------------------
                         REPORT
----------------------------------------------*/ 
+---------------------------------------------*/
 const routersReport = require('./routers/users/report.router')
 
-app.use("/api", routersReport.apiGetReport);
-app.use("/api", routersReport.apiPostReport );
+app.use('/api', routersReport.apiGetReport)
+app.use('/api', routersReport.apiPostReport)
 
 /* -------------------------------------------
                         PROJECT
----------------------------------------------*/ 
-const routersProject = require('./routers/users/project.router');
+---------------------------------------------*/
+const routersProject = require('./routers/users/project.router')
 
-app.use("/api", routersProject.apiGetProject);
-app.use("/api", routersProject.apiPostProject);
-app.use("/api", routersProject.apiGetFindProject);
-app.use("/api", routersProject.apiDeleteProject)
-app.use("/api", routersProject.apiPutUpdateProject)
-app.use("/api", routersProject.apiPatchDeleteMemberOfProject)
-app.use("/api", routersProject.apiPatchAddMemberToProject)
-
+app.use('/api', routersProject.apiGetProject)
+app.use('/api', routersProject.apiPostProject)
+app.use('/api', routersProject.apiGetFindProject)
+app.use('/api', routersProject.apiDeleteProject)
+app.use('/api', routersProject.apiPutUpdateProject)
+app.use('/api', routersProject.apiPatchDeleteMemberOfProject)
+app.use('/api', routersProject.apiPatchAddMemberToProject)
 
 /* -------------------------------------------
                           NOTIFICATIONS
----------------------------------------------*/ 
-const routersNotifications = require('./routers/users/notification.router');
-app.use("/api", routersNotifications.apiGetNotifications);
+---------------------------------------------*/
+const routersNotifications = require('./routers/users/notification.router')
+app.use('/api', routersNotifications.apiGetNotifications)
 //Event
 
 //———————————————————————————ADMIN ROUTES—————————————————————————————//
 
 //ACCESS
-app.use(home);
+app.use(home)
 app.post(
-  "/admin/login",
+  '/admin/login',
   checkNotAuthenticated,
-  passport.authenticate("local", {
-    successRedirect: "/admin/dashboard",
-    failureRedirect: "/",
-    failureFlash: true,
+  passport.authenticate('local', {
+    successRedirect: '/admin/dashboard',
+    failureRedirect: '/',
+    failureFlash: true
   })
-);
-app.use("/admin", logoutAdmin);
+)
+app.use('/admin', logoutAdmin)
 
 //DASHBOARD
-app.use("/admin", dashBoard);
+app.use('/admin', dashBoard)
 
 //USER
-app.use("/admin", createUser);
-app.get("/admin/userInfo/update", checkAuthenticated, getUpdateUser);
-app.use("/admin", checkAuthenticated, postUpdateUser);
-app.use("/admin", postCreateUser);
-app.use("/admin", getUserInfo);
-app.use("/admin", postDeleteUser);
-app.use("/admin", getUserFilter);
+app.use('/admin', createUser)
+app.get('/admin/userInfo/update', checkAuthenticated, getUpdateUser)
+app.use('/admin', checkAuthenticated, postUpdateUser)
+app.use('/admin', postCreateUser)
+app.use('/admin', getUserInfo)
+app.use('/admin', postDeleteUser)
+app.use('/admin', getUserFilter)
 
 //EVENT
-app.get("/admin/eventInfo", checkAuthenticated, getCreateEvent);
-app.post("/admin/createEvent", checkAuthenticated, postCreateEvent);
-app.use("/admin", postUpdateEvent);
+app.get('/admin/eventInfo', checkAuthenticated, getCreateEvent)
+app.post('/admin/createEvent', checkAuthenticated, postCreateEvent)
+app.use('/admin', postUpdateEvent)
 // app.get("/admin/updateEvent", checkAuthenticated, getUpdateEvent);
 // app.use("/admin", getEventInfo);
 
 //REPORT
-app.use("/admin", getReportInfo);
-
+app.use('/admin', getReportInfo)
 
 //———————————————————————————404 ROUTES—————————————————————————————//
 app.use((req, res, next) => {
-  res.status(404).render("404");
-});
-
+  res.status(404).render('404')
+})
 
 module.exports = { server, io }
 // const Project = require('./app/models/project');
@@ -251,7 +246,7 @@ module.exports = { server, io }
 //     },
 //     fileFilter(req, file, cb){
 //         if(file.originalname.match(''))//use regex in match
-//         return 
+//         return
 //         cb(undefined, true)
 //     }
 
@@ -361,4 +356,3 @@ module.exports = { server, io }
 //     })
 //   })
 // })
-

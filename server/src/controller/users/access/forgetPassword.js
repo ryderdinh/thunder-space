@@ -1,30 +1,32 @@
-const Staff = require("../../../models/Staff")
+const Staff = require('../../../models/Staff')
 const transporter = require('../../../../config/nodeMailer/email')
-const { v4: uuidv4 } = require('uuid');
-const otpGenerator = require("otp-generator")
-const bcrypt = require("bcrypt")
-const Response = require("../../../models/Response");
-module.exports =  async (req, res, next) => {
-    try {
-        const otpCode = otpGenerator.generate(6, {
-            upperCaseAlphabets : true,
-            specialChars : false,
-            lowerCaseAlphabets : true,
-            digits : true
-        })
-        const hashOtp = await bcrypt.hash(otpCode, 10)
-        const email = req.body.email
-        const user = await Staff.findOne({ email : email })
-        if(!user){
-            return res.status(401).send(new Response(401, "your email does not exist"))
-        }
-        
-        const mailOptions = {
-        from: '"HRM Thunder Space 👻" <tempmailfc2@gmail.com>', // sender address
-        to: email, // list of receivers
-        subject: "RESET PASSWORD ✔", // Subject line
-        //   text: "Hedfasdfasdfasd", // plain text body
-        html : `
+const { v4: uuidv4 } = require('uuid')
+const otpGenerator = require('otp-generator')
+const bcrypt = require('bcrypt')
+const Response = require('../../../models/Response')
+module.exports = async (req, res, next) => {
+  try {
+    const otpCode = otpGenerator.generate(6, {
+      upperCaseAlphabets: true,
+      specialChars: false,
+      lowerCaseAlphabets: true,
+      digits: true
+    })
+    const hashOtp = await bcrypt.hash(otpCode, 10)
+    const email = req.body.email
+    const user = await Staff.findOne({ email: email })
+    if (!user) {
+      return res
+        .status(401)
+        .send(new Response(401, 'your email does not exist'))
+    }
+
+    const mailOptions = {
+      from: '"HRM Thunder Space 👻" <tempmailfc2@gmail.com>', // sender address
+      to: email, // list of receivers
+      subject: 'RESET PASSWORD ✔', // Subject line
+      //   text: "Hedfasdfasdfasd", // plain text body
+      html: `
         <html lang="en-US">
 
         <head>
@@ -96,12 +98,18 @@ module.exports =  async (req, res, next) => {
         
         </html>
         `
-        };
-        await transporter(mailOptions)
-        const update = { otp : hashOtp, otpExpiration : Date.now() + 120000}
-        const staff = await Staff.findOneAndUpdate({ email : email }, update , { new : true })
-         return res.status(200).send(new Response(200, 'success'))
-    }catch(err){
-        res.status(400).send(new Response(400, err.message))
     }
+    await transporter(mailOptions)
+    const update = {
+      otp: hashOtp,
+      otpExpiration: Date.now() + 120000,
+      verifyOtp: false
+    }
+    const staff = await Staff.findOneAndUpdate({ email: email }, update, {
+      new: true
+    })
+    return res.status(200).send(new Response(200, 'success'))
+  } catch (err) {
+    res.status(400).send(new Response(400, err.message))
+  }
 }
