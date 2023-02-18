@@ -87,8 +87,8 @@ export default function Profile() {
                             <img
                               src={profile.avatar}
                               alt='staff-avatar'
-                              ref={imageElmRef}
                               className='h-full w-full object-cover'
+                              ref={imageElmRef}
                             />
                             <input
                               type='file'

@@ -26,6 +26,21 @@ const userApi = {
     return axiosClient.put(url, data, {
       header: { 'content-type': 'multipart/form-data' }
     })
+  },
+  getOtpInForgotPass: (email) => {
+    const url = '/forget-password'
+    return axiosClient.post(url, { email })
+  },
+  verifyOtpInForgotPass: (email, otp) => {
+    const url = '/verify-otp'
+    return axiosClient.post(url, { email, otp })
+  },
+  resetInForgotPass: (email, password) => {
+    const url = '/reset-password'
+    return axiosClient.put(url, {
+      email,
+      password
+    })
   }
 }
 

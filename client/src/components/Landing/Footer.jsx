@@ -6,7 +6,7 @@ const Footer = () => {
   return (
     <footer className='bg-neutral-900'>
       <div className='mx-auto grid max-w-screen-xl grid-cols-1 lg:grid-cols-2'>
-        <div className='border-b border-neutral-800 px-12 py-16 md:border-b-0 md:border-l lg:order-last'>
+        <div className='border-b border-neutral-800 px-4 lg:px-12 py-16 md:border-b-0 md:border-l lg:order-last'>
           <div className='block lg:hidden'>
             <span className='h-10 w-32 rounded-lg bg-neutral-700'>
               <Logo />
