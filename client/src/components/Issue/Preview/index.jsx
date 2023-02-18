@@ -1,26 +1,46 @@
-import { Menu } from '@headlessui/react'
+import Priority from './Priority'
 import { ClockIcon } from '@heroicons/react/solid'
+import { actUpdateIssue, setDataIssue } from 'actions'
 import ButtonNormal from 'components/Button/ButtonNormal'
 import ArrowPathIcon from 'components/Icon/ArrowPathIcon'
 import { LayoutContext } from 'context/LayoutContext'
 import { motion } from 'framer-motion'
-import { Fragment, useContext } from 'react'
+import { useContext, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import variantGlobal from 'units/variantGlobal'
 
-const priorityColor = {
-  highest: 'bg-orange-600',
-  high: 'bg-amber-600',
-  medium: 'bg-green-500',
-  low: 'bg-blue-500'
-}
-
 const IssuePreview = ({ dataIssue, dataProject, className = '' }) => {
+  const { _data } = useSelector((state) => state._issue)
+  const dispatch = useDispatch()
+
   const { openDialog } = useContext(LayoutContext)
+
+  const [loading, setLoading] = useState({
+    priority: false
+  })
+
+  const handleLoading = (key, value) => {
+    setLoading((prev) => ({ ...prev, [key]: value }))
+  }
+
+  const onPriorityChange = (priority) => {
+    handleLoading('priority', true)
+
+    const onSuccess = () => {
+      dispatch(setDataIssue({ ..._data, priority }))
+      handleLoading('priority', false)
+    }
+    const onError = () => {
+      handleLoading('priority', false)
+    }
+
+    dispatch(actUpdateIssue(dataIssue?._id, { priority }, onSuccess, onError))
+  }
 
   return (
     <motion.div
       className={`${className} h-max w-full rounded-md bg-[length:100%_auto] 
-      bg-no-repeat py-2 px-5 ${
+      bg-no-repeat pt-2 px-5 pb-5 ${
         dataIssue.type === 'task'
           ? "bg-[url('assets/images/card-issue-task.png')]  ring-[#10B99F]"
           : "bg-[url('assets/images/card-issue-bug.png')] ring-[#EA6767]"
@@ -55,42 +75,11 @@ const IssuePreview = ({ dataIssue, dataProject, className = '' }) => {
               </div>
             </div>
 
-            <div className=''>
-              <Menu>
-                <Menu.Button>
-                  <div
-                    className={`group flex cursor-pointer items-center gap-1 rounded-md 
-                  px-2 py-1
-                  ${priorityColor[dataIssue.priority]}`}
-                  >
-                    <p className='text-sm text-neutral-50'>
-                      {dataIssue.priority}
-                    </p>
-                    <ArrowPathIcon
-                      className='w-4 text-neutral-50 transition-all duration-200 
-                    group-hover:rotate-180'
-                    />
-                  </div>
-                </Menu.Button>
-                <Menu.Items className='z-50'>
-                  {['med', 'low'].map((link) => (
-                    <Menu.Item key={link} as={Fragment}>
-                      {({ active }) => (
-                        <div
-                          className={`${
-                            active
-                              ? 'bg-blue-500 text-white'
-                              : 'bg-white text-black'
-                          }`}
-                        >
-                          {link}
-                        </div>
-                      )}
-                    </Menu.Item>
-                  ))}
-                </Menu.Items>
-              </Menu>
-            </div>
+            <Priority
+              priority={dataIssue?.priority}
+              loading={loading.priority}
+              onChange={onPriorityChange}
+            />
           </div>
 
           <div className='mt-3 flex w-full flex-wrap items-center gap-2'>
@@ -119,7 +108,7 @@ const IssuePreview = ({ dataIssue, dataProject, className = '' }) => {
                   <img
                     src={dataIssue?.assign?.avatar}
                     alt='Avatar user'
-                    className='relative z-10 h-full w-full object-cover'
+                    className='relative z-[2] h-full w-full object-cover'
                   />
                 </div>
 

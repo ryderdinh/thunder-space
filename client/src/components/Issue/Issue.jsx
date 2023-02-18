@@ -1,3 +1,9 @@
+import IssueComment from './IssueComment'
+import IssueDescription from './IssueDescription'
+import IssueDetail from './IssueDetail'
+import IssueFiles from './IssueFiles'
+import IssueHistory from './IssueHistory'
+import IssuePreview from './Preview'
 import { Disclosure } from '@headlessui/react'
 import { ChevronUpIcon, PencilIcon } from '@heroicons/react/solid'
 import {
@@ -17,12 +23,6 @@ import { useContext, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useHistory, useLocation, useParams } from 'react-router-dom'
 import variantGlobal from 'units/variantGlobal'
-import IssueComment from './IssueComment'
-import IssueDescription from './IssueDescription'
-import IssueDetail from './IssueDetail'
-import IssueFiles from './IssueFiles'
-import IssueHistory from './IssueHistory'
-import IssuePreview from './IssuePreview'
 
 export default function Issue() {
   //? Connect redux

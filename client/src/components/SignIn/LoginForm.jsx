@@ -1,6 +1,8 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { actSignIn } from 'actions'
+import ButtonSuccess from 'components/Button/ButtonSuccess'
 import GoogleIcon from 'components/Icon/GoogleIcon'
+import Logo from 'components/Icon/Logo'
 import { useState } from 'react'
 import toast from 'react-hot-toast'
 import { useDispatch } from 'react-redux'
@@ -51,7 +53,7 @@ export default function LoginForm() {
       return
     }
 
-    toast.error('Khum được để trống email hoặc mật khẩu')
+    toast.error('Do not leave email or password blank!')
   }
 
   const handleKeyUp = (event) => {
@@ -68,19 +70,21 @@ export default function LoginForm() {
     <div className='login-form'>
       <div className='login-form-inner'>
         <div className='logo'>
-          <img
-            src={require('assets/images/icons/newlogo-logo.svg').default}
-            alt='logo'
-          />
+          <Logo />
         </div>
         <h1 className='text-2xl font-bold'>Login</h1>
-        <p className='body-text'>Come join your space!</p>
+        <p className='body-text'>Join us in your space!</p>
 
         <div className='rounded-button google-login-button'>
           <span className='google-icon'>
             <GoogleIcon />
           </span>
-          <span>Login with Google (Comming soon)</span>
+          <span
+            className='select-none'
+            onClick={() => toast('Comming soon', { id: 'sign-in-with-google' })}
+          >
+            Login with Google
+          </span>
         </div>
 
         <div className='sign-in-seperator'>
@@ -133,22 +137,29 @@ export default function LoginForm() {
 
         <div className='login-form-group single-row'>
           {/* <div className='custom-check'>
-								<input autoComplete='off' type='checkbox' id='remember' />
-								<label htmlFor='remember'>Remember me</label>
-							</div> */}
+            <input autoComplete='off' type='checkbox' id='remember' />
+            <label htmlFor='remember'>Remember me</label>
+          </div> */}
           <div className='link forgot-link' onClick={redirectToForgotPassword}>
-            Forgot Password ?
+            <p className='hover-underline-animation after:bg-emerald-600'>
+              Forgot Password ?
+            </p>
           </div>
         </div>
 
-        <div className='rounded-button login-cta' onClick={handleSignIn}>
-          Go
+        <div className='w-full'>
+          <ButtonSuccess
+            className='w-full rounded-button'
+            onClick={handleSignIn}
+          >
+            Go
+          </ButtonSuccess>
         </div>
 
         {/* <div className='register-div'>
-							Not registered yet?
-							<div className='link create-account'>Create an account ?</div>
-						</div> */}
+          Not registered yet?
+          <div className='link create-account'>Create an account ?</div>
+        </div> */}
       </div>
     </div>
   )
