@@ -8,7 +8,7 @@ module.exports = function (typeValid, validator) {
         req.body = validated
       next()
     } catch (err) {
-      if (err.isJoi) return res.status(400).send(new Response(400, err))
+      if (err.isJoi) return res.status(400).send(new Response(400, err.message))
     }
   }
 }

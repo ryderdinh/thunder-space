@@ -50,7 +50,7 @@
 
 <p align="center">
   <a href="">
-  <img src="./client/src/assets/images/banner-logo.png" alt="Logo">
+  <img src="./client/src/assets/images/banner.png" alt="Banner">
   </a>
 </p>
 

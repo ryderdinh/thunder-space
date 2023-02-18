@@ -206,6 +206,8 @@ main.onblur {
 }
 
 .view-container .view_name {
+  top: 0;
+
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -216,6 +218,8 @@ main.onblur {
   /* margin-bottom: 30px; */
 
   color: #fff;
+  background: var(--background-view);
+  border-bottom: 1px solid rgba(42, 42, 42, var(--tw-bg-opacity));
 
   font-size: 26px;
   font-weight: 800;
@@ -241,9 +245,9 @@ main.onblur {
   padding: 25px;
   overflow-y: scroll;
 
-  border: 1px solid rgba(42, 42, 42, var(--tw-bg-opacity));
+  /* border: 1px solid rgba(42, 42, 42, var(--tw-bg-opacity));
   border-bottom: none;
-  border-left: none;
+  border-left: none; */
 
   background: var(--background-view);
 }
@@ -295,11 +299,10 @@ main.onblur {
   display: flex;
   flex-flow: column;
 
-  max-height: 290px;
   padding: 25px 28px;
   margin-bottom: 20px;
 
-  border-radius: 20px;
+  /* border-radius: 20px; */
   transform: translateY(0px);
   transition: all 0.3s linear;
 }
@@ -317,16 +320,8 @@ main.onblur {
   align-items: center;
   justify-content: space-between;
 
-  width: 20%;
-  min-width: 200px;
-  max-width: 200px;
   margin-right: 35px;
 
-  /* background: linear-gradient(
-		211.3deg,
-		#2f36db -4.49%,
-		rgba(47, 54, 219, 0) 102.4%
-	); */
   backdrop-filter: blur(54px);
 
   text-align: center;
@@ -1409,6 +1404,29 @@ main.onblur {
   background-color: #00ab5e;
 } */
 
+.hover-underline-animation {
+  display: inline-block;
+  position: relative;
+}
+
+.hover-underline-animation:after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  transform: scaleX(0);
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: #0087ca;
+  transform-origin: bottom right;
+  transition: transform 0.25s ease-out;
+}
+
+.hover-underline-animation:hover:after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
 /* ================================== */
 @media only screen and (max-width: 1440px) {
   .account-container .row .col .account_item,
@@ -1493,6 +1511,10 @@ main.onblur {
 }
 
 @media only screen and (max-width: 768px) {
+  :root {
+    --pad: 20px;
+  }
+
   /* .container .sidebar {
     display: none;
   } */
@@ -1516,9 +1538,9 @@ main.onblur {
   }
 
   .view-container .view_name {
-    position: absolute;
-    z-index: 1;
-    top: 0;
+    position: -webkit-sticky; /* Safari */
+    position: sticky;
+    top: -1;
     left: 0;
 
     width: 100%;
@@ -1526,7 +1548,7 @@ main.onblur {
   }
 
   .view-container .view_main {
-    padding: 40px 20px;
+    padding: 20px 20px 60px;
 
     width: 100%;
     height: max-content;

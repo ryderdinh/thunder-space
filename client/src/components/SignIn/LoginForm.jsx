@@ -8,9 +8,9 @@ import { useHistory } from 'react-router-dom'
 
 export default function LoginForm() {
   // Create state
-  const [email, setEmail] = useState('')
+  const [email, setEmail] = useState('ryderdinh@gmail.com')
   const [password, setPassword] = useState({
-    text: '',
+    text: '123456',
     isShow: false,
     isReadOnly: true
   })
@@ -80,7 +80,7 @@ export default function LoginForm() {
           <span className='google-icon'>
             <GoogleIcon />
           </span>
-          <span>Login with Google (Developing)</span>
+          <span>Login with Google (Comming soon)</span>
         </div>
 
         <div className='sign-in-seperator'>

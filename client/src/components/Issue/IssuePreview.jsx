@@ -1,6 +1,5 @@
 import { ClockIcon } from '@heroicons/react/solid'
 import ArrowPathIcon from 'components/Icon/ArrowPathIcon'
-import Tag from 'components/Tag'
 import { LayoutContext } from 'context/LayoutContext'
 import { motion } from 'framer-motion'
 import { useContext } from 'react'
@@ -41,19 +40,30 @@ const IssuePreview = ({ dataIssue, dataProject, className = '' }) => {
           <p className='text-xs italic text-neutral-200'>{dataIssue.code}</p>
 
           <div className='mt-3 flex w-full items-center gap-2'>
-            <Tag bg={'bg-neutral-50/40'}>
+            <div
+              className='flex items-center gap-2 rounded-md bg-neutral-50/40 
+              px-2 py-1'
+            >
               <div className='flex items-center gap-1'>
-                <ClockIcon className='w-5 text-neutral-50' />
+                <ClockIcon className='w-4 text-neutral-50' />
 
-                <p className='text-neutral-50'>
+                <p className='text-sm text-neutral-50'>
                   {new Date(dataIssue.estimate?.end).toLocaleString('vi')}
                 </p>
               </div>
-            </Tag>
+            </div>
 
-            <Tag bg={priorityColor[dataIssue.priority]}>
-              <p className='text-neutral-50'>{dataIssue.priority}</p>
-            </Tag>
+            <div
+              className={`group flex cursor-pointer items-center gap-1 rounded-md 
+              px-2 py-1
+              ${priorityColor[dataIssue.priority]}`}
+            >
+              <p className='text-sm text-neutral-50'>{dataIssue.priority}</p>
+              <ArrowPathIcon
+                className='w-4 text-neutral-50 transition-all duration-200 
+                group-hover:rotate-180'
+              />
+            </div>
           </div>
 
           <div className='mt-3 flex w-full flex-wrap items-center gap-2'>
@@ -62,7 +72,19 @@ const IssuePreview = ({ dataIssue, dataProject, className = '' }) => {
             </span>
 
             {dataIssue?.assign && (
-              <div className='flex items-center gap-2'>
+              <div
+                className='group flex cursor-pointer items-center gap-2'
+                onClick={() => {
+                  openDialog('assign-issue', {
+                    iid: dataIssue._id,
+                    members: dataProject.member.map((mem) => {
+                      delete mem.role
+                      return mem
+                    }),
+                    currentAssignee: dataIssue?.assign || {}
+                  })
+                }}
+              >
                 <div
                   className='relative h-5 w-5 overflow-hidden rounded-full 
                   ring-2 ring-neutral-50'
@@ -73,23 +95,15 @@ const IssuePreview = ({ dataIssue, dataProject, className = '' }) => {
                     className='relative z-10 h-full w-full object-cover'
                   />
                 </div>
+
                 <p className='text-sm text-neutral-50'>
                   {dataIssue?.assign?.name}
                 </p>
-                <div
-                  onClick={() => {
-                    openDialog('assign-issue', {
-                      iid: dataIssue._id,
-                      members: dataProject.member,
-                      currentAssignee: dataIssue?.assign || {}
-                    })
-                  }}
-                >
-                  <ArrowPathIcon
-                    className='h-5 w-5 cursor-pointer text-neutral-50
-                    transition-all duration-200 hover:rotate-180'
-                  />
-                </div>
+
+                <ArrowPathIcon
+                  className='h-5 w-5 text-neutral-50 transition-all 
+                  duration-200 group-hover:rotate-180'
+                />
               </div>
             )}
           </div>

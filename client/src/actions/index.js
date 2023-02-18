@@ -1,4 +1,5 @@
 //* IMPORT =============================================
+import { getCookie, removeCookie, setCookie } from '../units/cookieWeb'
 import {
   authApi,
   eventApi,
@@ -9,8 +10,6 @@ import {
   userApi
 } from 'api'
 import toast from 'react-hot-toast'
-import callAPI from '../api/callAPI'
-import { getCookie, removeCookie, setCookie } from '../units/cookieWeb'
 
 //? CALL API============================================
 export const actSignIn = (dataUser) => {
@@ -50,13 +49,16 @@ export const actSignIn = (dataUser) => {
           await dispatch(actFetchTimeKeeping())
           // await dispatch(actFetchEvents())
         ]).then(() => {
+          window.localStorage.setItem('thunder-space-login', 'true')
           dispatch(setCheckLogin(true))
         })
       } catch (error) {
+        window.localStorage.setItem('thunder-space-login', 'false')
         removeToast()
         errorToast('Failed, double-check your login information')
       }
     } else {
+      window.localStorage.setItem('thunder-space-login', 'false')
       removeToast()
       errorToast('Failed, double-check your login information')
     }
@@ -96,57 +98,54 @@ export const actFetchStaffInfomation = () => {
   }
 }
 
-export const actFetchDataTableOfWork = () => {
-  const { id, token } = getCookie()
-
-  return async (dispatch) => {
-    const res = await callAPI(`table/${id}`, 'GET', null, {
-      authorization: `Bearer ${token}`
-    })
-
-    res && dispatch(getDataTimesheets(res.data))
-  }
-}
-
 export const actFetchTimeKeeping = () => {
   return async (dispatch) => {
     await dispatch(setLoadingTimeKeeping())
 
-    const res = await timekeepingApi.get()
-
-    res.status === 200 &&
-      Promise.all([
-        await dispatch(setDataTimeKeeping(res.data?.reverse())),
-        await dispatch(setTimeKeeping(res.data))
-      ])
+    try {
+      const res = await timekeepingApi.get()
+      await dispatch(setDataTimeKeeping(res.data))
+    } catch (error) {
+      console.log(error)
+    }
   }
 }
 
-export const actSendLocationToServer = (location) => {
-  loadingToast('Waiting...')
+export const actFetchTimesheets = () => {
+  return async (dispatch) => {
+    await dispatch(setLoadingTimesheets())
 
+    try {
+      const res = await timekeepingApi.get()
+      await dispatch(setDataTimesheets(res.data))
+    } catch (error) {
+      await dispatch(setErrorTimesheets(error.message))
+
+      console.log(error)
+    }
+  }
+}
+
+export const actSendLocationToServer = (location, onSuccess, onError) => {
   return async (dispatch) => {
     try {
       await timekeepingApi.sendLocation(location)
-
-      removeToast()
-
+      onSuccess()
       dispatch(actFetchTimeKeeping())
-      successToast('Successful!')
     } catch (error) {
-      removeToast()
+      onError()
 
-      switch (error.response) {
+      switch (error.message) {
         case 'try after 5 minutes': {
-          errorToast('Bạn vừa chấm công, thử lại sau!')
+          errorToast('Try after 5 minutes')
           break
         }
         case 'you are far from company': {
-          errorToast('Khoảng cách chấm công quá xa!')
+          errorToast('You are far from company')
           break
         }
         default:
-          errorToast('Lỗi')
+          errorToast('Error')
           break
       }
     }
@@ -172,15 +171,11 @@ export const actSendReport = (data) => {
   loadingToast('Đang gửi yêu cầu')
 
   return async () => {
-    const res = await callAPI(`user/storeReport/${id}`, 'POST', data, {
-      authorization: `Bearer ${token}`
-    })
-
-    if (!res) {
+    if (true) {
       removeToast()
       errorToast('Gửi thất bại, vui lòng thử lại sau!')
     } else {
-      switch (res?.data?.status) {
+      switch (true) {
         case 'Report complete': {
           successToast('Gửi thành công')
           break
@@ -220,10 +215,13 @@ export const actRefreshPage = () => {
           { key: 'token', value: token }
         ])
         removeToast()
+        window.localStorage.setItem('thunder-space-login', 'true')
         await dispatch(setCheckLogin(true))
         successToast('Welcome to back')
       })
     } catch (error) {
+      console.log(error)
+      window.localStorage.setItem('thunder-space-login', 'false')
       removeToast()
       await dispatch(setCheckLogin(false))
       errorToast('Please log in again')
@@ -284,13 +282,19 @@ export const actFetchProject = (pid, onSuccess, onError) => {
       const issueSorted = res.data.issue.sort((a, b) => b.updateAt - a.updateAt)
 
       await dispatch(setDataProject({ ...res.data, issue: issueSorted }))
+
       onSuccess && onSuccess()
     } catch (error) {
       Promise.all([
         await dispatch(setDataProject(null)),
         await dispatch(setProjectError(error.message))
       ])
+
       onError && onError(error)
+    } finally {
+      setTimeout(() => {
+        dispatch(setProjectLoading(false))
+      }, 1000)
     }
   }
 }
@@ -430,17 +434,18 @@ const loadingToast = (content) => {
 const removeToast = () => toast.remove(loadingToast())
 
 //TODO: ACTION TO REDUCER ================================
-export const getLocation = () => ({
-  type: 'TIME_KEEPING'
-})
-
-export const getDataTimesheets = (payload) => ({
-  type: 'GET_DATA_TIMESHEETS',
+export const setLoadingTimesheets = (payload) => ({
+  type: 'SET_LOADING_TIMESHEETS',
   payload
 })
 
-export const setDataTimesheetsDetail = (payload) => ({
-  type: 'SET_DATA_TIMESHEETS_DETAIL',
+export const setErrorTimesheets = (payload) => ({
+  type: 'SET_ERROR_TIMESHEETS',
+  payload
+})
+
+export const setDataTimesheets = (payload) => ({
+  type: 'SET_DATA_TIMESHEETS',
   payload
 })
 

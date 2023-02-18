@@ -4,13 +4,16 @@ import { joiResolver } from '@hookform/resolvers/joi'
 import { actCreateIssue } from 'actions'
 import 'assets/css/pickydatetime.css'
 import Joi from 'joi'
-import { Fragment, useState } from 'react'
+import { forwardRef, Fragment, useState } from 'react'
 import 'react-date-range/dist/styles.css' // main css file
 import 'react-date-range/dist/theme/default.css' // theme css file
+import ReactDatePicker from 'react-datepicker'
 import { useController, useForm } from 'react-hook-form'
-import ReactPickyDateTime from 'react-picky-date-time'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
+
+import { addMonths } from 'date-fns'
+import 'react-datepicker/dist/react-datepicker.css'
 
 const typeOfIssues = ['task', 'bug']
 const typeOfPriority = ['low', 'medium', 'high', 'highest']
@@ -20,24 +23,10 @@ const schema = Joi.object({
   type: Joi.string().allow('task', 'bug').required(),
   priority: Joi.string().allow('low', 'medium', 'high', 'highest').required(),
   assigned: Joi.string().allow('')
-  // description: Joi.string().allow(''),
 })
 
-const getTimeStamp = (y, m, d, h, min, s, meridiem) => {
-  let hours = h
-
-  if (hours === '12') {
-    hours = '00'
-  }
-  if (meridiem === 'PM') {
-    hours = parseInt(hours, 10) + 12
-  }
-
-  return new Date(y, m, d, hours, min, s).getTime()
-}
-
 export default function CreateIssue({ closeModal }) {
-  //? Connect Redux store============================
+  //? Connect redux store============================
   const { _dataProject } = useSelector((state) => state._project)
 
   const dispatch = useDispatch()
@@ -46,16 +35,7 @@ export default function CreateIssue({ closeModal }) {
   const history = useHistory()
 
   //? State==========================================
-  const [estimate, setEstimate] = useState({
-    showPickyDateTime: false,
-    date: new Date().getDate(),
-    month: new Date().getMonth() + 1,
-    year: new Date().getFullYear(),
-    hour: '11',
-    minute: new Date().getMinutes(),
-    second: new Date().getSeconds(),
-    meridiem: 'PM'
-  })
+  const [estimate, setEstimate] = useState(new Date())
 
   //? Hook Form======================================
   const {
@@ -67,6 +47,8 @@ export default function CreateIssue({ closeModal }) {
     resolver: joiResolver(schema)
   })
 
+  console.log(_dataProject)
+
   const onSubmitForm = (data) => {
     dispatch(
       actCreateIssue(
@@ -74,15 +56,7 @@ export default function CreateIssue({ closeModal }) {
         {
           ...data,
           assigned: !data?.assigned ? '' : data.assigned,
-          estimate: getTimeStamp(
-            estimate.year,
-            estimate.month,
-            estimate.date,
-            estimate.hour,
-            estimate.minute,
-            estimate.second,
-            estimate.meridiem
-          )
+          estimate: estimate.getTime()
         },
         onSuccessCreate
       )
@@ -93,89 +67,21 @@ export default function CreateIssue({ closeModal }) {
     history.push(`/projects/${_dataProject._id}/${iid}`)
     closeModal()
   }
-
-  //? Picky Date time=================================
-  const onYearPicked = (res) => {
-    const { year } = res
-    setEstimate((prev) => ({ ...prev, year }))
-  }
-
-  const onMonthPicked = (res) => {
-    const { month, year } = res
-    setEstimate({ ...estimate, year, month })
-  }
-
-  const onDatePicked = (res) => {
-    const { date, month, year } = res
-    setEstimate((prev) => ({
-      ...prev,
-      year,
-      month,
-      date,
-      showPickyDateTime: prev.showPickyDateTime
-    }))
-  }
-
-  const onResetDate = (res) => {
-    const { date, month, year } = res
-    setEstimate({ ...estimate, year, month, date })
-  }
-
-  const onResetDefaultDate = (res) => {
-    const { date, month, year } = res
-    setEstimate({ ...estimate, year, month, date })
-  }
-
-  const onSecondChange = (res) => {
-    setEstimate({ ...estimate, second: res.value })
-  }
-
-  const onMinuteChange = (res) => {
-    setEstimate({ ...estimate, minute: res.value })
-  }
-
-  const onHourChange = (res) => {
-    setEstimate({ ...estimate, hour: res.value })
-  }
-
-  const onMeridiemChange = (res) => {
-    setEstimate({ ...estimate, meridiem: res })
-  }
-
-  const onResetTime = (res) => {
-    setEstimate({
-      ...estimate,
-      second: res.clockHandSecond.value,
-      minute: res.clockHandMinute.value,
-      hour: res.clockHandHour.value
-    })
-  }
-
-  const onResetDefaultTime = (res) => {
-    setEstimate({
-      ...estimate,
-      second: res.clockHandSecond.value,
-      minute: res.clockHandMinute.value,
-      hour: res.clockHandHour.value
-    })
-  }
-
-  const onClearTime = (res) => {
-    setEstimate({
-      ...estimate,
-      second: res.clockHandSecond.value,
-      minute: res.clockHandMinute.value,
-      hour: res.clockHandHour.value
-    })
-  }
-
-  const onClose = () => {
-    setEstimate((prev) => ({ ...prev, showPickyDateTime: false }))
-  }
-
-  const openPickyDateTime = () => {
-    setEstimate({ ...estimate, showPickyDateTime: true })
-  }
+  //? forward component
+  const EstimateComponent = forwardRef(({ value, onClick }, ref) => {
+    return (
+      <input
+        type='text'
+        autoComplete='none'
+        className='mt-1 block w-full rounded-md border border-neutral-300 
+        py-[7px] pl-3 shadow-sm focus:border-emerald-500 focus:outline-none 
+        focus:ring-2 focus:ring-emerald-500 sm:text-sm'
+        onClick={onClick}
+        ref={ref}
+        defaultValue={value}
+      />
+    )
+  })
 
   return (
     <div className='min-h-screen px-4 text-center'>
@@ -206,22 +112,22 @@ export default function CreateIssue({ closeModal }) {
         leaveTo='opacity-0 scale-95'
       >
         <div
-          className='relative my-8 inline-block w-4/5 max-w-5xl
-          transform rounded-md border border-neutral-800 bg-[#232323] p-6 
-          text-left align-middle shadow-xl transition-all'
+          className='relative my-8 inline-block w-full max-w-5xl transform
+          rounded-md border border-neutral-800 bg-[#232323] p-4 text-left align-middle 
+          shadow-xl transition-all md:w-4/5 md:p-6'
         >
           <Dialog.Title
             as='h3'
             className='text-lg font-bold leading-6 text-neutral-200'
           >
-            Create Issue
+            Add Issue
           </Dialog.Title>
           <div className='mt-2'>
             <form action='#' method='POST'>
               <div className=''>
                 <div className='py-5 sm:py-6'>
-                  <div className='grid grid-cols-12 gap-6'>
-                    <div className='col-span-12 sm:col-span-12'>
+                  <div className='grid grid-cols-6 gap-3 md:grid-cols-12 md:gap-6'>
+                    <div className='col-span-6 md:col-span-12'>
                       <label className='block text-sm font-medium text-neutral-200'>
                         Name
                       </label>
@@ -241,7 +147,7 @@ export default function CreateIssue({ closeModal }) {
                       )}
                     </div>
 
-                    <div className='col-span-12 md:col-span-4'>
+                    <div className='col-span-6 md:col-span-4'>
                       <label className='block text-sm font-medium text-neutral-200'>
                         Project{' '}
                         <span className='text-xs italic text-neutral-500'>
@@ -251,7 +157,8 @@ export default function CreateIssue({ closeModal }) {
                       <input
                         disabled
                         type='text'
-                        defaultValue={_dataProject.name}
+                        value={_dataProject?.name || ''}
+                        onChange={() => {}}
                         className='mt-1 block w-full rounded-md border border-neutral-300
                         p-1 py-[7px] pl-3 shadow-sm focus:outline-none 
                         disabled:border-neutral-200 disabled:bg-neutral-50 
@@ -259,7 +166,7 @@ export default function CreateIssue({ closeModal }) {
                       />
                     </div>
 
-                    <div className='col-span-12 md:col-span-4'>
+                    <div className='col-span-6 md:col-span-4'>
                       <label className='block text-sm font-medium text-neutral-200'>
                         Type
                       </label>
@@ -276,7 +183,7 @@ export default function CreateIssue({ closeModal }) {
                       )}
                     </div>
 
-                    <div className='col-span-12 md:col-span-4'>
+                    <div className='col-span-6 md:col-span-4'>
                       <label className='block text-sm font-medium text-neutral-200'>
                         Priority
                       </label>
@@ -293,7 +200,7 @@ export default function CreateIssue({ closeModal }) {
                       )}
                     </div>
 
-                    <div className='col-span-12 md:col-span-4'>
+                    <div className='col-span-6 md:col-span-4'>
                       <label className='block text-sm font-medium text-neutral-200'>
                         Assignee
                       </label>
@@ -302,7 +209,7 @@ export default function CreateIssue({ closeModal }) {
                         control={control}
                         people={[
                           { name: 'None', email: '', _id: 'none', avatar: '' },
-                          ..._dataProject.member
+                          ...(_dataProject?.member || [])
                         ]}
                       />
 
@@ -313,65 +220,23 @@ export default function CreateIssue({ closeModal }) {
                       )}
                     </div>
 
-                    <div className='col-span-12 md:col-span-8'>
+                    <div className='col-span-6 md:col-span-8'>
                       <label className='block text-sm font-medium text-neutral-200'>
                         Estimate
                       </label>
 
-                      <input
-                        type='text'
-                        autoComplete='none'
-                        className='mt-1 block w-full rounded-md border border-neutral-300 
-                        py-[7px] pl-3 shadow-sm focus:border-emerald-500 focus:outline-none 
-                        focus:ring-2 focus:ring-emerald-500 sm:text-sm'
-                        value={`${estimate.date}/${estimate.month}/${estimate.year} ${estimate.hour}:${estimate.minute}:${estimate.second} ${estimate.meridiem}`}
-                        onClick={openPickyDateTime}
-                        onChange={() => {}}
-                      />
-                      <div
-                        className={`h-max w-full duration-300 ease-linear ${
-                          estimate.showPickyDateTime
-                            ? 'max-h-full overflow-visible'
-                            : 'max-h-0 overflow-hidden'
-                        }`}
-                      >
-                        <DateTimePicker
-                          show={estimate.showPickyDateTime}
-                          def={estimate}
-                          onClose={onClose}
-                          onYearPicked={onYearPicked}
-                          onMonthPicked={onMonthPicked}
-                          onDatePicked={onDatePicked}
-                          onResetDate={onResetDate}
-                          onResetDefaultDate={onResetDefaultDate}
-                          onSecondChange={onSecondChange}
-                          onMinuteChange={onMinuteChange}
-                          onHourChange={onHourChange}
-                          onMeridiemChange={onMeridiemChange}
-                          onResetTime={onResetTime}
-                          onResetDefaultTime={onResetDefaultTime}
-                          onClearTime={onClearTime}
-                        />
-                      </div>
+                      <ReactDatePicker
+                        selected={estimate}
+                        onChange={(date) => setEstimate(date)}
+                        timeInputLabel='Time:'
+                        dateFormat='dd/MM/yyyy hh:mm aa'
+                        showTimeInput
+                        customInput={<EstimateComponent />}
+                        minDate={new Date()}
+                        maxDate={addMonths(new Date(), 5)}
+                        showDisabledMonthNavigation
+                      ></ReactDatePicker>
                     </div>
-                    {/* 
-                    <div className='col-span-12'>
-                      <label
-                        htmlFor='project-description'
-                        className='block text-sm font-medium text-neutral-200'
-                      >
-                        Description
-                      </label>
-
-                      <textarea
-                        {...register('description')}
-                        autoComplete='off'
-                        rows={3}
-                        className='mt-1 block w-full rounded-md border border-neutral-300 
-                          p-1 shadow-sm focus:border-emerald-500  focus:outline-none 
-                          focus:ring-2 focus:ring-emerald-500 sm:text-sm'
-                      />
-                    </div> */}
                   </div>
                 </div>
               </div>
@@ -459,7 +324,7 @@ function ListBoxNonMultiple({ selectList, ...props }) {
                 {({ selected }) => (
                   <>
                     <span
-                      className={`block truncate ${
+                      className={`block truncate text-sm md:text-base ${
                         selected ? 'font-medium' : 'font-normal'
                       }`}
                     >
@@ -551,7 +416,7 @@ function ListBoxImageNonMultiple({ people, ...props }) {
                 {({ selected }) => (
                   <>
                     <span
-                      className={`block truncate ${
+                      className={`block truncate text-sm md:text-base ${
                         selected ? 'font-medium' : 'font-normal'
                       }`}
                     >
@@ -565,7 +430,7 @@ function ListBoxImageNonMultiple({ people, ...props }) {
                       >
                         <img
                           src={person.avatar}
-                          className='h-8 w-8 transition-all group-hover:scale-110'
+                          className='h-8 w-8 rounded-full object-cover transition-all group-hover:scale-110'
                           alt='avatar'
                         />
                       </span>
@@ -580,48 +445,5 @@ function ListBoxImageNonMultiple({ people, ...props }) {
         </Transition>
       </div>
     </Listbox>
-  )
-}
-
-function DateTimePicker({
-  show,
-  onClose,
-  onYearPicked,
-  onMonthPicked,
-  onDatePicked,
-  onResetDate,
-  onResetDefaultDate,
-  onSecondChange,
-  onMinuteChange,
-  onHourChange,
-  onMeridiemChange,
-  onResetTime,
-  onResetDefaultTime,
-  onClearTime
-}) {
-  return (
-    <>
-      <ReactPickyDateTime
-        size='xs'
-        mode={1}
-        show={show}
-        locale='en-us'
-        onClose={onClose}
-        onYearPicked={(res) => onYearPicked(res)}
-        onMonthPicked={(res) => onMonthPicked(res)}
-        onDatePicked={(res) => onDatePicked(res)}
-        onResetDate={(res) => onResetDate(res)}
-        onResetDefaultDate={(res) => onResetDefaultDate(res)}
-        onSecondChange={(res) => onSecondChange(res)}
-        onMinuteChange={(res) => onMinuteChange(res)}
-        onHourChange={(res) => onHourChange(res)}
-        onMeridiemChange={(res) => onMeridiemChange(res)}
-        onResetTime={(res) => onResetTime(res)}
-        onResetDefaultTime={(res) => onResetDefaultTime(res)}
-        onClearTime={(res) => onClearTime(res)}
-        // markedDates={['10/19/2021']} // OPTIONAL. format: "MM/DD/YYYY"
-        // supportDateRange={[`${new Date().toLocaleDateString()}`, '22/22/2050']} // OPTIONAL. min date and max date. format: "MM/DD/YYYY"
-      />
-    </>
   )
 }

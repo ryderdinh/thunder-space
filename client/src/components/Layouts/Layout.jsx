@@ -5,10 +5,9 @@ import Sidebar from 'components/Sidebar/Sidebar'
 import { motion } from 'framer-motion'
 import { useNavigatorStatus } from 'hooks'
 import { useEffect } from 'react'
-import toast, { Toaster } from 'react-hot-toast'
+import toast from 'react-hot-toast'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory, useLocation } from 'react-router'
-import { getCookie } from 'units/cookieWeb'
 
 export default function Layout({ children }) {
   const { auth } = useSelector((state) => state._checkLogin)
@@ -18,15 +17,15 @@ export default function Layout({ children }) {
   const history = useHistory()
   const location = useLocation()
 
-  useEffect(() => {
-    if (!getCookie()?.id || !getCookie()?.token) {
-      dispatch(setCheckLogin(false))
-    }
-  })
+  // useEffect(() => {
+  //   if (!getCookie()?.id || !getCookie()?.token) {
+  //     dispatch(setCheckLogin(false))
+  //   }
+  // })
 
   useEffect(() => {
     if (auth && !isOnline) {
-      toast.error('Không có kết nối mạng')
+      toast.error('You are offline')
     }
 
     if (!auth) history.push('/login')
@@ -38,6 +37,23 @@ export default function Layout({ children }) {
       location.pathname + location.search + location.hash
     )
   }, [location])
+
+  useEffect(() => {
+    const checkUserLogin = () => {
+      if (window.localStorage.getItem('thunder-space-login') !== 'true') {
+        dispatch(setCheckLogin(false))
+      } else {
+        dispatch(setCheckLogin(true))
+      }
+      console.log(window.localStorage.getItem('thunder-space-login'))
+    }
+
+    window.addEventListener('storage', checkUserLogin)
+
+    return () => {
+      window.removeEventListener('storage', checkUserLogin)
+    }
+  }, [dispatch])
 
   return (
     <motion.div
@@ -51,7 +67,6 @@ export default function Layout({ children }) {
       ) : (
         <>
           <Sidebar />
-          <Toaster position='bottom-right' reverseOrder={true} />
           {children}
           <Dialog />
         </>

@@ -1,10 +1,11 @@
 import 'assets/css/login.css'
 import LoginForm from 'components/SignIn/LoginForm'
 import OnBoardingSlide from 'components/SignIn/OnBoardingSlide'
+import { motion } from 'framer-motion'
 import { useEffect } from 'react'
-import { Toaster } from 'react-hot-toast'
 import { useSelector } from 'react-redux'
 import { useHistory } from 'react-router'
+import variantGlobal from 'units/variantGlobal'
 
 export default function Login() {
   const { auth } = useSelector((state) => state._checkLogin)
@@ -25,10 +26,15 @@ export default function Login() {
   }, [auth, history])
 
   return (
-    <div className='login-container'>
+    <motion.div
+      className='login-container'
+      initial='initial'
+      animate='enter'
+      exit='exit'
+      variants={variantGlobal(4, 0.5)}
+    >
       <LoginForm />
       <OnBoardingSlide />
-      <Toaster position='top-right' reverseOrder={true} />
-    </div>
+    </motion.div>
   )
 }

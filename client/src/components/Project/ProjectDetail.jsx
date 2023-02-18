@@ -1,3 +1,4 @@
+import { useAutoAnimate } from '@formkit/auto-animate/react'
 import { ChevronRightIcon } from '@heroicons/react/solid'
 import { actFetchProject, actQueryProject, setInitialIssue } from 'actions'
 import 'assets/css/project.css'
@@ -36,6 +37,9 @@ export default function ProjectDetail() {
   const [defaultSearchValue, setDefaultSearchValue] = useState('')
   const [issues, setIssues] = useState(_dataProject?.issue || [])
   const [breadcumbs, setBreadcumbs] = useState([])
+
+  //? Ref
+  const [rf] = useAutoAnimate()
 
   //? Variable
   // const getListProjects = () =>
@@ -179,33 +183,33 @@ export default function ProjectDetail() {
       </Row> */}
           <Row>
             <Col className='w-full'>
-              {isLoading && (
-                <div className='flex w-full justify-center px-6 py-14'>
-                  <BallTriangle w={30} h={30} stroke={'#059669'} />
-                </div>
-              )}
+              <div ref={rf}>
+                {isLoading && (
+                  <div className='flex w-full justify-center px-6 py-14'>
+                    <BallTriangle w={30} h={30} stroke={'#059669'} />
+                  </div>
+                )}
 
-              {!isLoading && !issues?.length && (
-                <p className='w-full py-14 text-center text-xs text-neutral-500'>
-                  Nothing found
-                </p>
-              )}
-
-              {!isLoading && issues?.length > 0 && (
-                <div
-                  className='grid w-full grid-cols-1 gap-3 md:grid-cols-2
-              xl:grid-cols-3'
-                >
-                  {issues.map((item, index) => (
-                    <IssueGridItem
-                      key={item._id.toString()}
-                      pid={pid}
-                      data={item}
-                      variants={variantGlobal(3, index * 0.1)}
-                    />
-                  ))}
-                </div>
-              )}
+                {issues?.length > 0 ? (
+                  <div
+                    className='grid w-full grid-cols-1 gap-3 md:grid-cols-2
+                    xl:grid-cols-3'
+                  >
+                    {issues.map((item, index) => (
+                      <IssueGridItem
+                        key={item._id.toString()}
+                        pid={pid}
+                        data={item}
+                        variants={variantGlobal(3, index * 0.1)}
+                      />
+                    ))}
+                  </div>
+                ) : (
+                  <p className='w-full py-14 text-center text-xs text-neutral-500'>
+                    Nothing found
+                  </p>
+                )}
+              </div>
             </Col>
           </Row>
         </>
@@ -280,13 +284,6 @@ function Menu({ openDialog, dataProject }) {
       <div className='px-1 py-1'>
         <MenuItem
           type='add'
-          onClick={() => {
-            openDialog('create-issue')
-          }}
-        />
-
-        <MenuItem
-          type='edit'
           onClick={() => {
             openDialog('create-issue')
           }}

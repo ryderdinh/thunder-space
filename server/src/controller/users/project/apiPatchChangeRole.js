@@ -7,7 +7,7 @@ module.exports = async (req, res, next) => {
         const pid = req.params.pid;
         const mid = req.params.uid;
         const role = req.body.role;
-        if(!["manager", "normal"].includes(role)) return res.status(400).send(new Response(400, "you are not allowed to use this role"))
+        // if(!["manager", "normal"].includes(role)) return res.status(400).send(new Response(400, "you are not allowed to use this role"))
         const existProject = await Project.findOne({ _id: pid }).elemMatch("member",  { uid: uid, $or:[{role:  "manager"}, { role: "admin" }] });
         if(!existProject) return res.status(400).send(new Response(400, "project is not available or you are not allowed to do this action"));
         const member = await Staff.findById(mid);

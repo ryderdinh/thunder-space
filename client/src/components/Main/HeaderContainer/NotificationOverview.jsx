@@ -22,19 +22,6 @@ const NotificationOverview = () => {
 
   const [notificationListRef] = useAutoAnimate()
 
-  // const fetchData = useFetch()
-  // useEffect(() => {
-  //   const onSuccess = (data) => {
-  //     console.log(data?.message)
-  //   }
-
-  //   const onError = (error) => {
-  //     console.log(error)
-  //   }
-
-  //   fetchData(notificationApi.get, onSuccess, onError)
-  // }, [fetchData])
-
   const onClick = (link, data) => {
     console.log(data)
     if (link) {
@@ -66,8 +53,8 @@ const NotificationOverview = () => {
       leaveTo='opacity-0 translate-y-1'
     >
       <Popover.Panel
-        className='lg:max-w-3 absolute right-0 z-20 mt-1 w-screen
-        max-w-sm px-4 sm:px-0'
+        className='absolute right-0 z-20 mt-1 w-screen max-w-[320px]
+        md:max-w-sm'
       >
         <div
           className='divide-y divide-neutral-600/50 rounded-md border 
@@ -92,7 +79,7 @@ const NotificationOverview = () => {
             {isLoading && (
               <div
                 className='flex w-full items-center justify-center
-                  border-t-2 border-[#282828] py-5'
+                border-t-2 border-[#282828] py-5'
               >
                 <BallTriangle w={30} h={30} stroke={'#059669'} />
               </div>

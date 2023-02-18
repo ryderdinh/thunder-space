@@ -7,7 +7,7 @@ import BallTriangle from 'components/Loading/BallTriangle'
 import { LayoutContext } from 'context/LayoutContext'
 import { motion } from 'framer-motion'
 import queryString from 'query-string'
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect, useLayoutEffect, useState } from 'react'
 import 'react-date-range/dist/styles.css' // main css file
 import 'react-date-range/dist/theme/default.css' // theme css file
 import Avatar, { genConfig } from 'react-nice-avatar'
@@ -61,7 +61,7 @@ export default function ProjectsOverview() {
     }
   }, [history.location.search])
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     dispatch(actQueryProject())
   }, [dispatch])
 
@@ -109,9 +109,6 @@ export default function ProjectsOverview() {
       <Row>
         <Col>
           {isLoading && (
-            // <p className='w-full py-14 text-center text-xs text-neutral-500'>
-            //   Loading projects...
-            // </p>
             <div className='flex w-full justify-center px-6 py-14'>
               <BallTriangle w={30} h={30} stroke={'#059669'} />
             </div>
