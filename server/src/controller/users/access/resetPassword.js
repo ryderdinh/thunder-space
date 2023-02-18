@@ -9,7 +9,8 @@ module.exports = async (req, res, next) => {
     })
     if (!staff)
       return res.status(400).send(new Response(400, 'can not change password'))
-    staff.password = newPassword
+      staff.password = newPassword
+      staff.otpVerified = false
     await staff.save()
     return res.status(200).send(new Response(200, 'success'))
   } catch (err) {
