@@ -17,8 +17,8 @@ const successToast = toast.success
 //     </div>
 //   </div>
 // ))
-const loadingToast = (content) => {
-  toast.loading(content)
+const loadingToast = (content, id) => {
+  id ? toast.loading(content, { id }) : toast.loading(content)
 }
 const removeToast = () => toast.remove(loadingToast())
 

@@ -1427,6 +1427,11 @@ main.onblur {
   transform-origin: bottom left;
 }
 
+.otp-input input {
+  @apply outline-emerald-600 transition-all duration-200 ease-linear 
+  focus:!border-emerald-600 focus:outline-emerald-600;
+}
+
 /* ================================== */
 @media only screen and (max-width: 1440px) {
   .account-container .row .col .account_item,
