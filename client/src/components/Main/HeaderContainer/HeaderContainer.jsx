@@ -10,6 +10,10 @@ export default function HeaderContainer({ pathName }) {
   const { sidebar } = useContext(LayoutContext)
   const [name, setName] = useState('')
 
+  const toggleSidebar = () => {
+    sidebar.toggle()
+  }
+
   useEffect(() => {
     const list = {
       home: 'Home',
@@ -28,10 +32,6 @@ export default function HeaderContainer({ pathName }) {
 
     setName(list[pathName])
   }, [pathName])
-
-  const toggleSidebar = () => {
-    sidebar.toggle()
-  }
 
   return (
     <div className='view_name z-20 bg-deepdark'>
@@ -56,11 +56,22 @@ export default function HeaderContainer({ pathName }) {
           {({ open }) => (
             <>
               <Popover.Button
-                className='cursor-pointer rounded-[4px] border 
-              border-neutral-600/50 bg-neutral-600/40 px-2.5 py-1 
-              transition-all duration-75 hover:bg-neutral-600/50'
+                className='relative cursor-pointer rounded-[4px] 
+                border border-neutral-600/50 bg-neutral-600/40 px-2.5 
+                py-1 transition-all duration-75 hover:bg-neutral-600/50'
               >
                 <BellIcon className='w-4 text-neutral-50/75' />
+                {}
+                <span class='absolute -right-1 -top-1 flex h-2 w-2'>
+                  <span
+                    class='absolute inline-flex h-full w-full 
+                    animate-ping rounded-full bg-emerald-400 opacity-75'
+                  ></span>
+                  <span
+                    class='relative inline-flex h-2 w-2 rounded-full 
+                    bg-emerald-500'
+                  ></span>
+                </span>
               </Popover.Button>
               <NotificationOverview />
             </>

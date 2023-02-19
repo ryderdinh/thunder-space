@@ -1,4 +1,3 @@
-import Layout from './Layout'
 import { addOrModifiedNotificationsData } from 'actions'
 import HeaderContainer from 'components/Main/HeaderContainer/HeaderContainer'
 import Main from 'components/Main/Main'
@@ -8,6 +7,8 @@ import { createContext, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { io } from 'socket.io-client'
 import { getCookie } from 'units/cookieWeb'
+import useSound from 'use-sound'
+import Layout from './Layout'
 
 const socket = io.connect(env.socketUrl, {
   query: {
@@ -27,22 +28,28 @@ const ProtectedLayout = ({ path, children }) => {
 
 const MainProtectedLayout = ({ path, children }) => {
   const dispatch = useDispatch()
+  const [play] = useSound(
+    'https://res.cloudinary.com/pu/video/upload/v1676807198/HRMZeliosSea/tbghhkhvsdm0fdtqknsr.mp3'
+  )
 
   useEffect(() => {
     socket.on('invitation-project', (data) => {
+      play()
       dispatch(addOrModifiedNotificationsData([data]))
     })
 
     return () => {
       socket.off('invitation-project')
     }
-  }, [dispatch])
+  }, [dispatch, play])
 
   return (
     <Layout>
       <Main>
         <HeaderContainer pathName={path} />
         <ViewMain>{children}</ViewMain>
+
+        {/* <button onClick={play}>asdfsdfsdfsdfsdfsdfsdf</button> */}
       </Main>
     </Layout>
   )
