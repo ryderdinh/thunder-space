@@ -4,6 +4,8 @@ import InvitationForm from './components/InvitationForm'
 const ProjectInvitation = () => {
   const location = useLocation()
 
+  console.log(location)
+
   return (
     <div className='flex w-full items-center justify-center'>
       <InvitationForm

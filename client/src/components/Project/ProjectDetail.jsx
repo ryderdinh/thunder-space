@@ -1,5 +1,5 @@
 import { useAutoAnimate } from '@formkit/auto-animate/react'
-import { ChevronRightIcon } from '@heroicons/react/solid'
+import { ChevronRightIcon, PlusIcon } from '@heroicons/react/solid'
 import { actFetchProject, actQueryProject, setInitialIssue } from 'actions'
 import 'assets/css/project.css'
 import { Breadcumb } from 'components/Breadcumb/Breadcumb'
@@ -158,6 +158,24 @@ export default function ProjectDetail() {
                   handleSearch={handleSearch}
                   defaultValue={defaultSearchValue}
                 />
+                <button
+                  className='panel inline-flex h-9 w-max items-center 
+                  justify-center rounded-md bg-opacity-20 py-2 px-4 text-sm
+                  font-medium text-neutral-200 
+                  transition-all 
+                  duration-200
+                  ease-in-out
+                  hover:bg-opacity-30 
+                  hover:text-neutral-100
+                  focus:outline-none
+                  focus-visible:ring-2
+                  focus-visible:ring-white focus-visible:ring-opacity-75'
+                  onClick={() => {
+                    openDialog('create-issue')
+                  }}
+                >
+                  <PlusIcon className='h-5 w-5' aria-hidden='true' />
+                </button>
                 <Menu openDialog={openDialog} dataProject={_dataProject} />
               </div>
             </Col>
