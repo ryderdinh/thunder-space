@@ -14,8 +14,8 @@ const Issue = new Schema({
             }
         },
         project: { type: mongoose.Schema.Types.ObjectId, ref: "Project", required: true },
-        creator : { type : mongoose.Schema.Types.ObjectId , ref : "Staff ", required : true },
-        assign : { type : mongoose.Schema.Types.ObjectId, ref: "Staff " },
+        creator : { type : mongoose.Schema.Types.ObjectId , ref : "Staff", required : true },
+        assign : { type : mongoose.Schema.Types.ObjectId, ref: "Staff" },
         estimate : {
             start :{ type : Number }, 
             end : { type: Number}
@@ -34,7 +34,7 @@ const Issue = new Schema({
         history : [
             {
                 user: [{
-                    uid: { type: mongoose.Schema.Types.ObjectId, required: true, ref: "Staff " }
+                    uid: { type: mongoose.Schema.Types.ObjectId, required: true, ref: "Staff" }
                 }],
                 time: { type: Number, required: true },
                 action: { type: String, required: true }
@@ -45,13 +45,13 @@ const Issue = new Schema({
 })
 
 Issue.virtual('creators', {
-    ref : 'Staff ',
+    ref : 'Staff',
     localField : 'creator',
     foreignField : '_id'
 })
 
 Issue.virtual("assigns", {
-    ref : 'Staff ',
+    ref : 'Staff',
     localField : 'assign',
     foreignField : '_id'
 })
@@ -73,7 +73,7 @@ Issue.methods.getIssueDetailsWithHistory = function(creator, assign, history){
     return objectIssue
 }
 Issue.virtual("actionUsers", {
-    ref: "Staff ",
+    ref: "Staff",
     localField : "history.user.uid",
     foreignField: "_id"
 })

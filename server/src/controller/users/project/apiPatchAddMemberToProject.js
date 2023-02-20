@@ -35,7 +35,6 @@ module.exports = async(req, res, next) => {
             data: {
                 pid: pid
             },
-            time: Date.now()
         }
         const io = req.app.get("socketio")
         const notification = await Notification.create(dataNoti)

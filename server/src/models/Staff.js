@@ -113,4 +113,4 @@ Staff.pre('save', function (next) {
   })
 })
 
-module.exports = mongoose.model('Staff ', Staff)
+module.exports = mongoose.model('Staff', Staff)
