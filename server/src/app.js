@@ -7,9 +7,9 @@ const { instrument } = require('@socket.io/admin-ui')
 const whilteList = JSON.parse(process.env.WHITE_LIST_CORS);
 const io = new Server(server, {
   cors: {
-    origin: whilteList,
+    origin: '*',
     methods: ['POST', 'GET', 'PUT', 'DELETE', 'PATCH'],
-    credentials: true
+    // credentials: true
   }
 })
 instrument(io, {
