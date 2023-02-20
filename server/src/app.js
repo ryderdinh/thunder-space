@@ -3,11 +3,17 @@ const app = express()
 const server = require('http').Server(app)
 
 const { Server } = require('socket.io')
+const { instrument } = require('@socket.io/admin-ui')
 const io = new Server(server, {
   cors: {
-    origin: '*',
-    methods: ['POST', 'GET', 'PUT', 'DELETE', 'PATCH']
+    origin: ['https://admin.socket.io'],
+    methods: ['POST', 'GET', 'PUT', 'DELETE', 'PATCH'],
+    credentials: true
   }
+})
+instrument(io, {
+  auth: false,
+  mode: process.env.NODE_ENV === 'dev' ? 'development' : 'production'
 })
 app.set('socketio', io)
 const db = require('../config/db/database')
