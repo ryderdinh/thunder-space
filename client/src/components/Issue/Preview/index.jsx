@@ -1,13 +1,13 @@
-import Priority from './Priority'
 import { ClockIcon } from '@heroicons/react/solid'
 import { actUpdateIssue, setDataIssue } from 'actions'
-import ButtonNormal from 'components/Button/ButtonNormal'
+import ButtonNormalLoad from 'components/Button/ButtonNormalLoad'
 import ArrowPathIcon from 'components/Icon/ArrowPathIcon'
 import { LayoutContext } from 'context/LayoutContext'
 import { motion } from 'framer-motion'
 import { useContext, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import variantGlobal from 'units/variantGlobal'
+import Priority from './Priority'
 
 const IssuePreview = ({ dataIssue, dataProject, className = '' }) => {
   const { _data } = useSelector((state) => state._issue)
@@ -40,7 +40,7 @@ const IssuePreview = ({ dataIssue, dataProject, className = '' }) => {
   return (
     <motion.div
       className={`${className} h-max w-full rounded-md bg-[length:100%_auto] 
-      bg-no-repeat pt-2 px-5 pb-5 ${
+      bg-no-repeat px-5 pt-2 pb-5 ${
         dataIssue.type === 'task'
           ? "bg-[url('assets/images/card-issue-task.png')]  ring-[#10B99F]"
           : "bg-[url('assets/images/card-issue-bug.png')] ring-[#EA6767]"
@@ -124,10 +124,10 @@ const IssuePreview = ({ dataIssue, dataProject, className = '' }) => {
             )}
           </div>
 
-          <div className='w-full mt-3'>
-            <ButtonNormal className='py-1 text-center font-semibold text-base'>
+          <div className='mt-3 w-full'>
+            <ButtonNormalLoad className='py-1 text-center text-lg font-semibold'>
               Start
-            </ButtonNormal>
+            </ButtonNormalLoad>
           </div>
         </div>
       </div>

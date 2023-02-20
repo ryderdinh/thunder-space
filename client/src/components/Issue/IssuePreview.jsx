@@ -1,6 +1,6 @@
 import { Menu } from '@headlessui/react'
 import { ClockIcon } from '@heroicons/react/solid'
-import ButtonNormal from 'components/Button/ButtonNormal'
+import ButtonNormalLoad from 'components/Button/ButtonNormalLoad'
 import ArrowPathIcon from 'components/Icon/ArrowPathIcon'
 import { LayoutContext } from 'context/LayoutContext'
 import { motion } from 'framer-motion'
@@ -60,15 +60,15 @@ const IssuePreview = ({ dataIssue, dataProject, className = '' }) => {
                 <Menu.Button>
                   <div
                     className={`group flex cursor-pointer items-center gap-1 rounded-md 
-                  px-2 py-1
-                  ${priorityColor[dataIssue.priority]}`}
+                    px-2 py-1
+                    ${priorityColor[dataIssue.priority]}`}
                   >
                     <p className='text-sm text-neutral-50'>
                       {dataIssue.priority}
                     </p>
                     <ArrowPathIcon
                       className='w-4 text-neutral-50 transition-all duration-200 
-                    group-hover:rotate-180'
+                      group-hover:rotate-180'
                     />
                   </div>
                 </Menu.Button>
@@ -135,10 +135,10 @@ const IssuePreview = ({ dataIssue, dataProject, className = '' }) => {
             )}
           </div>
 
-          <div className='w-full mt-3'>
-            <ButtonNormal className='py-1 text-center font-semibold text-base'>
+          <div className='mt-3 w-full'>
+            <ButtonNormalLoad className='py-1 text-center text-base font-semibold'>
               Start
-            </ButtonNormal>
+            </ButtonNormalLoad>
           </div>
         </div>
       </div>
