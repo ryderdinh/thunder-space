@@ -85,7 +85,7 @@ module.exports = async (req, res, next) => {
     const io = req.app.get('socketio')
     await Notification.create(notifications)
     io.to(membersToInvite.map((e) => (e = e.uid.toString()))).emit(
-      'invitation-project',
+      'notification',
       {
         content: `you have received an invitation to join project '${name}' by ${existCreator.name}`,
         type: 'invitation-project',

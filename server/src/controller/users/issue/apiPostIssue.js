@@ -81,8 +81,11 @@ module.exports = async (req, res, next) => {
     await existProject.save()
     const io = req.app.get('socketio')
     io.to(assign.toString()).emit(
-      'assign-issue',
-      `you have received an assigning to do an issue by ${creatorName}`
+      'notification',
+      {
+        content: `you have received an assigning to do an issue by ${creatorName}`,
+        type: 'assign-issue'
+      }
     )
     return res
       .status(200)

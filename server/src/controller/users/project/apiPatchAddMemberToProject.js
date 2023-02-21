@@ -39,7 +39,7 @@ module.exports = async(req, res, next) => {
         const io = req.app.get("socketio")
         const notification = await Notification.create(dataNoti)
         if(notification){
-            io.to(newDataMember.uid).emit("invitation-project", notification)
+            io.to(newDataMember.uid).emit("notification", notification)
         }
         const updatedProject = await existProject.save();
         const members = (await updatedProject.populate("members")).members;
