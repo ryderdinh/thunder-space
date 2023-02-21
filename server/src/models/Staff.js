@@ -88,7 +88,6 @@ Staff.methods.getProfileToCreateProject = function () {
 Staff.methods.generateToken = async function (password) {
   try {
     const validPass = await bcrypt.compare(password, this.password)
-    console.log(validPass)
     if (validPass) {
       const token = await jwt.sign(
         { _id: this._id.toString() },
