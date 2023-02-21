@@ -1,45 +1,45 @@
-const { Result } = require('express-validator')
-const { object, required } = require('joi')
 const mongoose = require('mongoose')
-const { logger } = require('../../config/nodeMailer/email')
 const Schema = mongoose.Schema
 
-const Project = new Schema({
-  code: { type: String, required: true, uppercase: true },
-  seqcode: { type: Number, required: true, default: 0 },
-  name: { type: String, required: true },
-  description: { type: String },
-  member: [
-    {
-      uid: { type: mongoose.Schema.Types.ObjectId, ref: 'Staff' },
-      role: {
-        type: String,
-        enum: ['manager', 'normal', 'admin'],
-        required: true
+const Project = new Schema(
+  {
+    code: { type: String, required: true, uppercase: true },
+    seqcode: { type: Number, required: true, default: 0 },
+    name: { type: String, required: true },
+    description: { type: String },
+    member: [
+      {
+        uid: { type: mongoose.Schema.Types.ObjectId, ref: 'Staff' },
+        role: {
+          type: String,
+          enum: ['manager', 'normal', 'admin'],
+          required: true
+        }
       }
-    }
-  ],
-  guest: [
-    {
-      uid: { type: mongoose.Schema.Types.ObjectId, ref: 'Staff' },
-      role: { type: String, enum: ['manager', 'normal'], required: false }
-    }
-  ],
-  issue: [
-    {
-      iid: { type: Schema.Types.ObjectId, ref: 'Issue' }
-    }
-  ],
-  createdAt: { type: Number, default: Date.now(), required: true },
-  updateAt: { type: Number, default: Date.now(), required: true },
-  deleted: { type: Boolean, default: false, required: true }
-})
+    ],
+    guest: [
+      {
+        uid: { type: mongoose.Schema.Types.ObjectId, ref: 'Staff' },
+        role: { type: String, enum: ['manager', 'normal'], required: false }
+      }
+    ],
+    issue: [
+      {
+        iid: { type: Schema.Types.ObjectId, ref: 'Issue' }
+      }
+    ],
+    deleted: { type: Boolean, default: false, required: true }
+  },
+  {
+    timestamps: true
+  }
+)
 
-Project.pre('save', function (next) {
-  const project = this
-  project.updateAt = Date.now()
-  next()
-})
+// Project.pre('save', function (next) {
+//   const project = this
+//   project.updateAt = Date.now()
+//   next()
+// })
 
 Project.virtual('members', {
   ref: 'Staff',
@@ -65,6 +65,7 @@ Project.methods.getProjectDetailsWithIssues = async function (members, issues) {
   objectProject.member = members
   return objectProject
 }
+
 Project.methods.getProjectDetails = function (members) {
   let objectProject = this.toObject()
   if (objectProject.seqcode !== 0) {
