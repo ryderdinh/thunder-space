@@ -6,6 +6,7 @@ const apiDeleteOneIssue = require('../../controller/users/issue/apiDeleteOneIssu
 const apiUpdateOneIssue = require('../../controller/users/issue/apiUpdateOneIssue')
 const apiPostIssue = require('../../controller/users/issue/apiPostIssue')
 const apiPostFile = require('../../controller/users/issue/apiUploadFIle')
+const changeStatus = require('../../controller/users/issue/changeStatus')
 const validate = require('../../middleware/user/validate')
 const issueMiddleware = require('../../middleware/user/issue/index')
 //Get one issue
@@ -42,6 +43,15 @@ exports.apiPostIssue = router.post(
   issueMiddleware.existUserAssigned,
   apiPostIssue
 )
+
+//Assign change status
+exports.changeStatus = router.patch(
+  '/issues/:iid',
+  authenticateToken,
+  validate('issueValidation', 'changeStatus'),
+  changeStatus
+)
+
 //Upload attachment
 exports.apiPostFile = router.post(
   '/upload/file',

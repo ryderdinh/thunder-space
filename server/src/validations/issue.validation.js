@@ -30,7 +30,16 @@ const createIssue = Joi.object({
   priority: Joi.string().valid('low', 'medium', 'high', 'highest'),
   description: Joi.string()
 })
+
+const changeStatus = Joi.object({
+  status: Joi.string()
+    .valid('started', 'reject', 'done', 'pending', 'close')
+    .required(true)
+    .label('staus is not valid')
+})
+
 module.exports = {
   updateIssue,
-  createIssue
+  createIssue,
+  changeStatus
 }
