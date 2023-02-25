@@ -2,7 +2,7 @@ import { actLogout, setCheckLogin } from 'actions'
 import Puff from 'components/Loading/Puff'
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { NavLink } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 function getWindowDimensions() {
   const { innerWidth: width, innerHeight: height } = window
@@ -41,7 +41,7 @@ export default function Account(props) {
   return (
     <li>
       <div className='profile-details'>
-        <NavLink
+        <Link
           to='/account'
           className='profile-content'
           onClick={handleSidebarOnMobile}
@@ -53,15 +53,15 @@ export default function Account(props) {
               <img src={account.avatar} alt='avatar user' />
             )}
           </div>
-        </NavLink>
-        <NavLink
+        </Link>
+        <Link
           to='/account'
           className='name-job transition-all duration-500 ease-in'
           onClick={() => handleSidebarOnMobile()}
         >
           <div className='profile_name'>{account.name}</div>
           <div className='job'>{account.position}</div>
-        </NavLink>
+        </Link>
         <i className='bx bx-log-out' onClick={() => signOut()}></i>
       </div>
     </li>

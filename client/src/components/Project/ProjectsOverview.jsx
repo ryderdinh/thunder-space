@@ -1,4 +1,4 @@
-import { ChevronRightIcon } from '@heroicons/react/solid'
+import { ChevronRightIcon, PlusIcon } from '@heroicons/react/solid'
 import { actQueryProject, setInitialProject } from 'actions'
 import 'assets/css/project.css'
 import { Breadcumb } from 'components/Breadcumb/Breadcumb'
@@ -14,8 +14,6 @@ import Avatar, { genConfig } from 'react-nice-avatar'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useHistory } from 'react-router-dom'
 import variantGlobal from 'units/variantGlobal'
-import MenuComponent from './MenuComponent'
-import MenuItem from './MenuItem'
 import SearchBox from './SearchBox'
 
 export default function ProjectsOverview() {
@@ -97,12 +95,24 @@ export default function ProjectsOverview() {
               handleSearch={handleSearch}
               defaultValue={defaultSearchValue}
             />
-
-            <MenuComponent>
-              <div className='px-1 py-1'>
-                <MenuItem onClick={handleOpenDialog} type={'add'} />
-              </div>
-            </MenuComponent>
+            <button
+              className='panel inline-flex h-9 w-max items-center 
+              justify-center gap-1 rounded-md bg-opacity-20 py-2 px-4
+              text-sm font-medium text-neutral-200 outline-none
+              transition-all 
+              duration-200
+              ease-in-out
+              hover:bg-opacity-30 
+              hover:text-neutral-100
+              focus:outline-none
+              focus-visible:ring-2
+              focus-visible:ring-white 
+              focus-visible:ring-opacity-75'
+              onClick={handleOpenDialog}
+            >
+              <PlusIcon className='h-5 w-5' aria-hidden='true' />
+              <p className='truncate'>Add Project</p>
+            </button>
           </div>
         </Col>
       </Row>

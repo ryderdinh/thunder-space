@@ -8,6 +8,9 @@ module.exports = {
       ...colors,
       deepdark: 'rgb(24, 24, 24)'
     },
+    fontFamily: {
+      primary: ['Kanit', 'sans-serif']
+    },
     extend: {}
   },
   plugins: [require('@tailwindcss/line-clamp')]

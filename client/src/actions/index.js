@@ -1,5 +1,4 @@
 //* IMPORT =============================================
-import { getCookie, removeCookie, setCookie } from '../units/cookieWeb'
 import {
   authApi,
   eventApi,
@@ -10,6 +9,7 @@ import {
   userApi
 } from 'api'
 import toast from 'react-hot-toast'
+import { getCookie, removeCookie, setCookie } from '../units/cookieWeb'
 
 //? CALL API============================================
 export const actSignIn = (dataUser) => {
@@ -363,9 +363,24 @@ export const actUpdateIssue = (iid, data, onSuccess, onError) => {
       onSuccess()
     } catch (error) {
       const err = error.message
-      onError()
+      onError(err)
 
       errorToast(err)
+      dispatch(setIssueError(err))
+    }
+  }
+}
+
+export const actUpdateStatusIssue = (iid, status, onSuccess, onError) => {
+  return async (dispatch) => {
+    try {
+      await issueApi.updateStatus(iid, status)
+      onSuccess()
+    } catch (error) {
+      const err = error.message
+      onError(err)
+
+      errorToast(err, { id: 'update-issue' })
       dispatch(setIssueError(err))
     }
   }

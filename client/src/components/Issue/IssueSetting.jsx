@@ -265,11 +265,13 @@ function IssueID({ id }) {
   return (
     <SettingActionBox
       title='Issue ID'
-      description='Used to interacting'
+      description='Used for interaction'
       action={
         <>
           <span className='mr-1'>Learn more</span>
-          <a href='#fff'>Issue ID</a>
+          <a href='/' className='font-bold'>
+            Issue ID
+          </a>
         </>
       }
     >

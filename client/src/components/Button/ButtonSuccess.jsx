@@ -5,6 +5,7 @@ const ButtonSuccess = ({
   children,
   className,
   loading = false,
+  loadingChildren = '',
   disabled = false
 }) => {
   const clicked = () => {
@@ -22,7 +23,7 @@ const ButtonSuccess = ({
       ${loading || disabled ? 'bg-emerald-600/70' : ''} ${className}`}
       onClick={clicked}
     >
-      {children}
+      {loading ? (loadingChildren ? loadingChildren : children) : children}
 
       {loading && (
         <div

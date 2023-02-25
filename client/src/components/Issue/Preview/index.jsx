@@ -1,12 +1,14 @@
 import { ClockIcon } from '@heroicons/react/solid'
-import { actUpdateIssue, setDataIssue } from 'actions'
-import ButtonNormalLoad from 'components/Button/ButtonNormalLoad'
+import { actUpdateIssue, actUpdateStatusIssue, setDataIssue } from 'actions'
 import ArrowPathIcon from 'components/Icon/ArrowPathIcon'
 import { LayoutContext } from 'context/LayoutContext'
 import { motion } from 'framer-motion'
-import { useContext, useState } from 'react'
+import { useIsMe } from 'hooks'
+import { useContext, useMemo, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import variantGlobal from 'units/variantGlobal'
+import ActionStatus from './ActionStatus'
+import Mask from './Mask'
 import Priority from './Priority'
 
 const IssuePreview = ({ dataIssue, dataProject, className = '' }) => {
@@ -16,41 +18,80 @@ const IssuePreview = ({ dataIssue, dataProject, className = '' }) => {
   const { openDialog } = useContext(LayoutContext)
 
   const [loading, setLoading] = useState({
-    priority: false
+    estimate: false,
+    priority: false,
+    status: {
+      started: false,
+      reject: false,
+      done: false,
+      close: false,
+      pending: false
+    }
   })
+
+  const assignToMe = useIsMe(_data?.assign?._id)
+  const createByMe = useIsMe(_data?.creator?._id)
+
+  // @ts-check
+  /**
+   * role : 'botl'|'creator'|'assignee'
+   */
+  const role = useMemo(
+    () => (createByMe ? (assignToMe ? 'both' : 'creator') : 'assignee'),
+    [assignToMe, createByMe]
+  )
 
   const handleLoading = (key, value) => {
     setLoading((prev) => ({ ...prev, [key]: value }))
   }
 
   const onPriorityChange = (priority) => {
-    handleLoading('priority', true)
-
     const onSuccess = () => {
-      dispatch(setDataIssue({ ..._data, priority }))
       handleLoading('priority', false)
     }
     const onError = () => {
       handleLoading('priority', false)
     }
 
-    dispatch(actUpdateIssue(dataIssue?._id, { priority }, onSuccess, onError))
+    if (priority !== _data.priority) {
+      handleLoading('priority', true)
+      Promise.all([
+        dispatch(setDataIssue({ ..._data, priority })),
+        dispatch(
+          actUpdateIssue(dataIssue?._id, { priority }, onSuccess, onError)
+        )
+      ])
+    }
   }
+
+  const onStatusChange = (value) => {
+    const onSuccess = () => {
+      dispatch(setDataIssue({ ..._data, status: value }))
+      handleLoading('status', { ...loading.status, [value]: false })
+    }
+    const onError = () => {
+      handleLoading('status', { ...loading.status, [value]: false })
+    }
+
+    if (value !== _data.status) {
+      handleLoading('status', { ...loading.status, [value]: true })
+      dispatch(actUpdateStatusIssue(dataIssue?._id, value, onSuccess, onError))
+    }
+  }
+
+  console.log(loading)
 
   return (
     <motion.div
-      className={`${className} h-max w-full rounded-md bg-[length:100%_auto] 
-      bg-no-repeat px-5 pt-2 pb-5 ${
-        dataIssue.type === 'task'
-          ? "bg-[url('assets/images/card-issue-task.png')]  ring-[#10B99F]"
-          : "bg-[url('assets/images/card-issue-bug.png')] ring-[#EA6767]"
-      }`}
+      className={`${className} relative h-max w-full rounded-md 
+      border-2 bg-[#1F1F1F] bg-no-repeat px-5 pt-2 pb-5
+      ${dataIssue.type === 'task' ? 'border-[#10B99F]' : 'border-[#EA6767]'}`}
       variants={variantGlobal(3, 0.2)}
       initial='initial'
       animate='enter'
       exit='exit'
     >
-      <div className='flex w-full items-center'>
+      <div className='relative z-[2] flex w-full items-center'>
         <div className='flex w-full flex-col gap-2'>
           <h3
             className='text-xl font-bold capitalize text-neutral-50 
@@ -124,12 +165,20 @@ const IssuePreview = ({ dataIssue, dataProject, className = '' }) => {
             )}
           </div>
 
-          <div className='mt-3 w-full'>
-            <ButtonNormalLoad className='py-1 text-center text-lg font-semibold'>
-              Start
-            </ButtonNormalLoad>
-          </div>
+          <ActionStatus
+            status={_data.status}
+            role={role}
+            loading={loading.status}
+            onChange={onStatusChange}
+          />
         </div>
+      </div>
+      <div className='absolute top-0 left-0 z-[1] h-full w-full overflow-hidden'>
+        <Mask
+          stroke={dataIssue.type === 'task' ? '#10B99F' : '#EA6767'}
+          className='absolute top-1/2 left-1/2 h-full -translate-x-1/2 
+          -translate-y-1/2'
+        />
       </div>
     </motion.div>
   )
