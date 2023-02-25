@@ -15,7 +15,7 @@ module.exports = async (req, res, next) => {
       estimate,
       priority,
       description = '',
-      status
+      status = 'pending'
     } = req.body
 
     const newIssue = new Issue({

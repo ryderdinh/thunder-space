@@ -18,10 +18,6 @@ const createIssue = Joi.object({
     .valid('task', 'bug')
     .required(true)
     .label("Issue's type is not supported"),
-  status: Joi.string()
-    .valid('pending', 'started', 'reject', 'done', 'close')
-    .required(true)
-    .label("Issue's status is not supported"),
   assigned: Joi.string().email(),
   estimate: Joi.date()
     .timestamp()
