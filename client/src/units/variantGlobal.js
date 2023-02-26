@@ -32,7 +32,7 @@ const variant2 = {
   }
 }
 
-const transition = { duration: 0.5, ease: [0.43, 0.13, 0.23, 0.96], delay: 0 }
+const transition = { duration: 0.3, ease: [0.43, 0.13, 0.23, 0.96], delay: 0 }
 const variant3 = (delay) => ({
   initial: { scale: 0.8, opacity: 0 },
   enter: { scale: 1, opacity: 1, transition: { ...transition, delay } },

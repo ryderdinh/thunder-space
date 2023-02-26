@@ -6,15 +6,23 @@ const ButtonDanger = ({
   className,
   loading = false,
   loadingChildren = '',
-  disabled = false
+  disabled = false,
+  size = 'small'
 }) => {
   return (
     <div
-      className={`cursor-pointer select-none rounded-[4px] border
-      border-red-500/50 bg-red-500/90 px-2.5 py-1 
-      text-xs font-light text-neutral-50/90 transition-all 
-      duration-100 ease-in-out 
+      className={`h-max cursor-pointer select-none rounded-[4px]
+      border border-red-500/50 bg-red-500/90 px-2.5 
+      py-1 text-center font-light
+      text-neutral-50/90 transition-all duration-100 ease-in-out
       hover:bg-red-600/70 hover:text-neutral-100/90
+      ${
+        size === 'small'
+          ? 'px-2.5 py-1 text-xs'
+          : size === 'mid'
+          ? 'px-4 py-1.5 text-base'
+          : 'px-2.5 py-1 text-xs'
+      }
       ${loading || disabled ? 'bg-red-600/70' : ''} ${className}`}
       onClick={onClick}
     >

@@ -1,7 +1,7 @@
 const colors = require('tailwindcss/colors')
 
 module.exports = {
-  darkMode: 'class',
+  darkMode: 'className',
   content: ['./src/**/*.{js,jsx,ts,tsx}'],
   theme: {
     colors: {
@@ -9,7 +9,7 @@ module.exports = {
       deepdark: 'rgb(24, 24, 24)'
     },
     fontFamily: {
-      primary: ['Kanit', 'sans-serif']
+      bevn: ['"Be Vietnam Pro"', 'sans-serif']
     },
     extend: {}
   },

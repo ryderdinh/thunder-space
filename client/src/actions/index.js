@@ -243,8 +243,7 @@ export const actChangePassword = (data, onSuccess, onError) => {
   }
 }
 
-export const actCreateProject = (data, uMail, callback) => {
-  loadingToast('Processing...')
+export const actCreateProject = (data, uMail, onSuccess, onError) => {
   let sbData = data
 
   if (data?.managers)
@@ -258,17 +257,14 @@ export const actCreateProject = (data, uMail, callback) => {
     try {
       const res = await projectApi.create(sbData)
 
-      removeToast()
-
       await dispatch(
         setInitialProject({
           name: data.name
         })
       )
-      callback(res.data._id)
+      onSuccess(res.data._id)
     } catch (error) {
-      removeToast()
-      console.log(error)
+      onError(error)
     }
   }
 }
@@ -316,7 +312,10 @@ export const actQueryProject = (query = null) => {
 
     try {
       const res = await projectApi.gets(query)
-      const sortData = res.data.sort((a, b) => b.updateAt - a.updateAt)
+      const sortData = [...res.data].sort(
+        (a, b) =>
+          new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime()
+      )
 
       await dispatch(setDataProjects(sortData))
     } catch (error) {
@@ -346,8 +345,6 @@ export const actQueryIssue = (iid, callback) => {
       await dispatch(setDataIssue(res.data))
     } catch (error) {
       const err = error.message
-
-      console.log(err)
       dispatch(setIssueError(err))
     }
   }
@@ -357,15 +354,12 @@ export const actUpdateIssue = (iid, data, onSuccess, onError) => {
   return async (dispatch) => {
     try {
       const res = await issueApi.update(iid, data)
-
-      successToast('Issue updated')
       await dispatch(setDataIssue(res.data))
       onSuccess()
     } catch (error) {
       const err = error.message
       onError(err)
-
-      errorToast(err)
+      errorToast(err, { id: 'update-issue' })
       dispatch(setIssueError(err))
     }
   }
@@ -379,7 +373,6 @@ export const actUpdateStatusIssue = (iid, status, onSuccess, onError) => {
     } catch (error) {
       const err = error.message
       onError(err)
-
       errorToast(err, { id: 'update-issue' })
       dispatch(setIssueError(err))
     }

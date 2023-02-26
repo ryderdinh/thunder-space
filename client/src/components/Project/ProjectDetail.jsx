@@ -267,7 +267,7 @@ function IssueGridItem({ data, pid, variants }) {
           >
             <img
               src={data?.assign?.avatar}
-              alt=''
+              alt={data?.assign?.name}
               className='aspect-square w-full object-cover'
             />
           </div>
@@ -275,7 +275,7 @@ function IssueGridItem({ data, pid, variants }) {
         <div className='flex w-4/5 flex-col justify-between space-y-2'>
           <div className='h-2/4 space-y-2'>
             <h5
-              className='block font-medium text-neutral-200 line-clamp-2
+              className='block font-medium text-neutral-200 line-clamp-3
               first-letter:uppercase'
             >
               {data.name}
@@ -302,7 +302,7 @@ function IssueGridItem({ data, pid, variants }) {
   )
 }
 
-function Menu({ openDialog, dataProject }) {
+function Menu({ openDialog }) {
   const history = useHistory()
   const location = useLocation()
 

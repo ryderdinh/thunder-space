@@ -47,8 +47,6 @@ export default function CreateIssue({ closeModal }) {
     resolver: joiResolver(schema)
   })
 
-  console.log(_dataProject)
-
   const onSubmitForm = (data) => {
     dispatch(
       actCreateIssue(

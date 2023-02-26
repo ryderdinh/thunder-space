@@ -126,13 +126,13 @@ export default function Issue() {
     ])
   }, [pid, iid, dispatch])
 
-  useEffect(() => {
-    const interval = setInterval(() => dispatch(actQueryIssue(iid)), 60000)
+  // useEffect(() => {
+  //   const interval = setInterval(() => dispatch(actQueryIssue(iid)), 60000)
 
-    return () => {
-      clearInterval(interval)
-    }
-  }, [dispatch, iid])
+  //   return () => {
+  //     clearInterval(interval)
+  //   }
+  // }, [dispatch, iid])
 
   useEffect(() => {
     setBreadcumbs([

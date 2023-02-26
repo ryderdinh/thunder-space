@@ -5,7 +5,8 @@ const ButtonNormalLoad = ({
   children,
   className,
   loading = false,
-  loadingChildren = ''
+  loadingChildren = '',
+  size = 'small'
 }) => {
   const clicked = () => {
     !loading && onClick()
@@ -13,10 +14,18 @@ const ButtonNormalLoad = ({
 
   return (
     <div
-      className={`relative cursor-pointer select-none overflow-hidden rounded-[4px]
-      border border-neutral-50 bg-neutral-50 px-2.5 
-      py-1 text-xs font-light text-emerald-600 transition-all
-      duration-100 ease-in-out hover:text-emerald-700
+      className={`relative h-max cursor-pointer select-none overflow-hidden
+      rounded-[4px] border border-neutral-50 bg-neutral-50 
+      px-2.5 py-1 text-center text-xs font-light
+      text-emerald-600 transition-all duration-100 ease-in-out
+      hover:text-emerald-700
+       ${
+         size === 'small'
+           ? 'px-2.5 py-1 text-xs'
+           : size === 'mid'
+           ? 'px-4 py-1.5 text-base'
+           : 'px-2.5 py-1 text-xs'
+       }
       ${!loading ? 'hover:bg-neutral-50/80' : 'bg-neutral-50/80'} 
       ${className}`}
       onClick={clicked}

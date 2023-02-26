@@ -1469,7 +1469,39 @@ main.onblur {
   }
 }
 
-@media only screen and (max-width: 1016px) {
+@media only screen and (max-width: 1024px) {
+  .sidebar.close ~ main {
+    left: 0;
+    width: calc(100%);
+  }
+
+  .view-container {
+    margin: 0 auto;
+
+    width: 100%;
+    height: auto;
+  }
+
+  .view-container .view_name {
+    position: -webkit-sticky; /* Safari */
+    position: sticky;
+    top: -1;
+    left: 0;
+
+    width: 100%;
+    height: auto;
+  }
+
+  .view-container .view_main {
+    padding: 20px 20px 60px;
+
+    width: 100%;
+    height: max-content;
+    max-height: none;
+    min-height: 100vh;
+
+    overflow-y: visible;
+  }
   .report-form .row .col.choose-type {
     height: 38px;
   }
@@ -1534,38 +1566,7 @@ main.onblur {
     /* padding: 0 1%; */
     width: 100%;
   }
-  .sidebar.close ~ main {
-    left: 0;
-    width: calc(100%);
-  }
 
-  .view-container {
-    margin: 0 auto;
-
-    width: 100%;
-    height: auto;
-  }
-
-  .view-container .view_name {
-    position: -webkit-sticky; /* Safari */
-    position: sticky;
-    top: -1;
-    left: 0;
-
-    width: 100%;
-    height: auto;
-  }
-
-  .view-container .view_main {
-    padding: 20px 20px 60px;
-
-    width: 100%;
-    height: max-content;
-    max-height: none;
-    min-height: 100vh;
-
-    overflow-y: visible;
-  }
   .view-container .view_main .event_item .name {
     width: 300px;
     text-align: center;

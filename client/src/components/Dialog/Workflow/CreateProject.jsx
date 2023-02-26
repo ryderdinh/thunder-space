@@ -1,11 +1,14 @@
 import { Dialog, Listbox, Transition } from '@headlessui/react'
 import { joiResolver } from '@hookform/resolvers/joi'
 import { actCreateProject, actGetAllUsers } from 'actions'
+import ButtonDanger from 'components/Button/ButtonDanger'
+import ButtonSuccess from 'components/Button/ButtonSuccess'
 import Joi from 'joi'
 import { Fragment, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
+import { errorToast, successToast } from 'utilities/toast'
 
 const schema = Joi.object({
   name: Joi.string().min(2).max(25).required(),
@@ -34,14 +37,22 @@ export default function CreateProject({ closeModal }) {
 
   const [selectedManagers, setSelectedManagers] = useState([yourMail])
   const [selectedMembers, setSelectedMembers] = useState([])
+  const [creating, setCreating] = useState(false)
 
   const onSubmitForm = (data) => {
-    dispatch(actCreateProject(data, yourMail, handleWhenSuccessCreate))
+    const onError = (err) => {
+      errorToast(err.message, { id: 'create-project' })
+      setCreating(false)
+    }
+    setCreating(true)
+    dispatch(actCreateProject(data, yourMail, handleWhenSuccessCreate, onError))
   }
 
   const handleWhenSuccessCreate = (pid) => {
-    history.push(`/projects/${pid}`)
+    setCreating(false)
     closeModal()
+    successToast('Created new project', { id: 'create-project' })
+    history.push(`/projects/${pid}`)
   }
 
   useEffect(() => {
@@ -210,27 +221,23 @@ export default function CreateProject({ closeModal }) {
           </div>
 
           <div className='mt-4 flex justify-end gap-2'>
-            <button
-              type='submit'
-              className='inline-flex justify-center rounded-md border 
-              border-transparent bg-emerald-600 py-2 px-4 text-sm font-medium 
-              text-neutral-50 shadow-sm hover:bg-emerald-700 focus:outline-none'
+            <ButtonSuccess
+              size='mid'
+              loading={creating}
+              className='w-24'
               onClick={handleSubmit(onSubmitForm)}
             >
               Create
-            </button>
+            </ButtonSuccess>
 
-            <button
-              type='button'
-              className='inline-flex justify-center rounded-md border 
-              border-transparent px-4 py-2 text-sm font-medium
-              text-red-500 transition-all duration-300 ease-in-out 
-              hover:bg-red-500 hover:text-red-200 focus:outline-none focus-visible:ring-2 
-              focus-visible:ring-red-500 focus-visible:ring-offset-2'
+            <ButtonDanger
+              size='mid'
+              disabled={creating}
+              className='w-24'
               onClick={closeModal}
             >
               Cancel
-            </button>
+            </ButtonDanger>
           </div>
         </div>
       </Transition.Child>
@@ -376,11 +383,13 @@ function ListBoxMultipleUser({
                         </span>
                         <span
                           className='absolute inset-y-0 left-0 flex items-center
-                          pl-3'
+                          p-3 pr-0'
                         >
                           <img
                             src={Manager.avatar}
-                            className='h-5 w-5 transition-all group-hover:scale-110 md:h-8 md:w-8'
+                            className='h-5 w-5 rounded-full border-2 
+                            border-neutral-100 object-cover transition-all group-hover:scale-110
+                            md:h-8 md:w-8'
                             alt='avatar'
                           />
                         </span>

@@ -2,14 +2,17 @@ import { ClockIcon } from '@heroicons/react/solid'
 import { actUpdateIssue, actUpdateStatusIssue, setDataIssue } from 'actions'
 import ArrowPathIcon from 'components/Icon/ArrowPathIcon'
 import { LayoutContext } from 'context/LayoutContext'
+import dayjs from 'dayjs'
+import duration from 'dayjs/plugin/duration'
 import { motion } from 'framer-motion'
 import { useIsMe } from 'hooks'
-import { useContext, useMemo, useState } from 'react'
+import { useContext, useEffect, useMemo, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import variantGlobal from 'units/variantGlobal'
 import ActionStatus from './ActionStatus'
 import Mask from './Mask'
 import Priority from './Priority'
+dayjs.extend(duration)
 
 const IssuePreview = ({ dataIssue, dataProject, className = '' }) => {
   const { _data } = useSelector((state) => state._issue)
@@ -46,11 +49,13 @@ const IssuePreview = ({ dataIssue, dataProject, className = '' }) => {
   }
 
   const onPriorityChange = (priority) => {
+    const current = _data.priority
     const onSuccess = () => {
       handleLoading('priority', false)
     }
     const onError = () => {
       handleLoading('priority', false)
+      dispatch(setDataIssue({ ..._data, priority: current }))
     }
 
     if (priority !== _data.priority) {
@@ -79,7 +84,39 @@ const IssuePreview = ({ dataIssue, dataProject, className = '' }) => {
     }
   }
 
-  console.log(loading)
+  useEffect(() => {
+    let a = dayjs.duration(0, 'd')
+    let b = '1d25h30m'.split('')
+    let c = {
+      d: 0,
+      h: 0,
+      m: 0
+    }
+    let index = 0
+    let check = true
+
+    for (let e of ['d', 'h', 'm']) {
+      if (b.indexOf(e) > 0) {
+        let result = b.splice(index, b.indexOf(e) - index).join('')
+        if (isNaN(result)) {
+          check = false
+          break
+        }
+        c[e] = Number(result)
+        index = b.indexOf(e) + 1
+      }
+    }
+
+    if (!check) return
+    else {
+      console.log(c)
+    }
+
+    Object.keys(c).forEach((e) => {
+      a = a.add(c[e], e)
+    })
+    console.log(a)
+  }, [])
 
   return (
     <motion.div
