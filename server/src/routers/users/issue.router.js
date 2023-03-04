@@ -6,6 +6,7 @@ const apiDeleteOneIssue = require('../../controller/users/issue/apiDeleteOneIssu
 const apiUpdateOneIssue = require('../../controller/users/issue/apiUpdateOneIssue')
 const apiPostIssue = require('../../controller/users/issue/apiPostIssue')
 const apiPostFile = require('../../controller/users/issue/apiUploadFIle')
+const getHistory = require('../../controller/users/issue/getHistories')
 const changeStatus = require('../../controller/users/issue/changeStatus')
 const validate = require('../../middleware/user/validate')
 const issueMiddleware = require('../../middleware/user/issue/index')
@@ -50,6 +51,12 @@ exports.changeStatus = router.patch(
   authenticateToken,
   validate('issueValidation', 'changeStatus'),
   changeStatus
+)
+//Get history in issue
+exports.getHistory = router.get(
+  '/issues/:iid/history',
+  authenticateToken,
+  getHistory
 )
 
 //Upload attachment

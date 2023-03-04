@@ -3,14 +3,24 @@ const Schema = mongoose.Schema
 
 const Notification = new Schema(
   {
-    type: { type: String, enum: ['invitation-project'], required: true },
+    type: { type: String, required: true },
     content: { type: String, required: true },
-    read: { type: Boolean, required: true, enum: [true, false], default: false },
+    read: {
+      type: Boolean,
+      required: true,
+      enum: [true, false],
+      default: false
+    },
     data: {
       pid: {
         type: mongoose.Schema.Types.ObjectId,
         required: false,
         ref: 'Project'
+      },
+      iid: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: false,
+        ref: 'Issue'
       }
     },
     owner: {

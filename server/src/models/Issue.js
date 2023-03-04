@@ -1,7 +1,7 @@
 const { object } = require('joi')
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
-
+const History = require('./History')
 const Issue = new Schema(
   {
     name: {
@@ -51,21 +51,6 @@ const Issue = new Schema(
         message: '{VALUE} is not supported'
       }
     },
-    history: [
-      {
-        user: [
-          {
-            uid: {
-              type: mongoose.Schema.Types.ObjectId,
-              required: true,
-              ref: 'Staff'
-            }
-          }
-        ],
-        time: { type: Number, required: true },
-        action: { type: String, required: true }
-      }
-    ]
   },
   {
     timestamps: true
@@ -103,5 +88,19 @@ Issue.virtual('actionUsers', {
   localField: 'history.user.uid',
   foreignField: '_id'
 })
+
+// Issue.post('findOneAndUpdate', async function (result) {
+//   console.log(JSON.stringify(result));
+//   if (this.isModified('status')) {
+//     await History.create({
+//       user: [{ uid: this.uid }],
+//       action: `Change status issue to ${this.status}`,
+//       type: 'issue',
+//       iid: this._id
+//     })
+//     delete this.uid
+//     next()
+//   }
+// })
 
 module.exports = mongoose.model('Issue', Issue)

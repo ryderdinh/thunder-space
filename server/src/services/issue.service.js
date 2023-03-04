@@ -1,9 +1,9 @@
+const History = require('../models/History')
 const Issue = require('../models/Issue')
 
 const changeStatus = async function (iid, uid, status) {
   let query
-  let isAssignee = true
-  let room
+  let mustNoti = true
   const forCreator = ['pending', 'close']
   if (forCreator.includes(status)) {
     isAssignee = false
@@ -12,7 +12,7 @@ const changeStatus = async function (iid, uid, status) {
         ? {
             _id: iid,
             creator: uid,
-            status: 'reject'
+            status: { $in: ['reject', 'done', 'close'] }
           }
         : {
             _id: iid,
@@ -20,34 +20,71 @@ const changeStatus = async function (iid, uid, status) {
             status: { $ne: status }
           }
   } else {
-    query = {
-      _id: iid,
-      assign: uid,
-      status: { $ne: status }
+    if (['started', 'reject'].includes(status)) {
+      query = {
+        _id: iid,
+        assign: uid,
+        status: 'pending'
+      }
     }
-  }
-  const update = {
-    status,
-    $push: {
-      history: {
-        user: [{ uid }],
-        time: Date.now(),
-        action: `change status to "${status}"`
+    if (status === 'done') {
+      query = {
+        _id: iid,
+        assign: uid,
+        status: 'started'
       }
     }
   }
+  const update = {
+    status
+    // $push: {
+    //   history: {
+    //     user: [{ uid }],
+    //     time: Date.now(),
+    //     action: `change status to "${status}"`
+    //   }
+    // }
+  }
   const issue = await Issue.findOneAndUpdate(query, update)
-  if (!issue) return false
+  if (!issue) {
+    return false
+  }
+  if (issue.assign.toString() === issue.creator.toString()) {
+    mustNoti = false
+  }
+  await History.create({
+    user: [{ uid }],
+    action: `Change status issue to ${status}`,
+    type: 'issue',
+    iid: issue._id
+  })
   const result = {
-    room: isAssignee ? issue.creator.toString() : issue.assign.toString(),
-    message: {
+    room: uid,
+    notification: {
       content: `issue status has been changed to ${status}`,
-      type: 'change-status-issue'
-    }
+      type: 'change-status-issue',
+      data: {
+        iid: issue._id
+      },
+      owner: uid
+    },
+    mustNoti
   }
   return result
 }
 
+const userInIssue = async function (iid, uid) {
+  const issue = await Issue.findOne({
+    _id: iid,
+    $or: [{ assign: uid }, { creator: uid }]
+  })
+    .select('_id')
+    .lean()
+  if (!issue) return false
+  return true
+}
+
 module.exports = {
-  changeStatus
+  changeStatus,
+  userInIssue
 }

@@ -151,6 +151,7 @@ app.use('/api', routersIssue.apiDeleteOneIssue)
 app.use('/api', routersIssue.apiUpdateOneIssue)
 app.use('/api', routersIssue.apiPostIssue)
 app.use('/api', routersIssue.apiPostFile)
+app.use('/api', routersIssue.getHistory)
 
 /* -------------------------------------------
                         TIMEKEEPING
