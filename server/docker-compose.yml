@@ -1,0 +1,15 @@
+version: '3.1'
+
+services:
+  testnode:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: testnode
+    env_file: .env
+    environment:
+      - COMPOSE_PROJECT_NAME=hrm
+    ports:
+      - "80:3001"
+      
+    
