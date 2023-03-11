@@ -9,6 +9,8 @@ import App from './App'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { fas } from '@fortawesome/free-solid-svg-icons'
 import 'assets/css/loading.css'
+import LayoutContextProvider from 'context/LayoutContext'
+import { BrowserRouter } from 'react-router-dom'
 import { load, save } from 'redux-localstorage-simple'
 import './index.css'
 
@@ -31,6 +33,10 @@ window.store = store
 
 root.render(
   <Provider store={store}>
-    <App />
+    <BrowserRouter>
+      <LayoutContextProvider>
+        <App />
+      </LayoutContextProvider>
+    </BrowserRouter>
   </Provider>
 )

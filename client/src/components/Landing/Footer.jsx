@@ -6,7 +6,7 @@ const Footer = () => {
   return (
     <footer className='bg-neutral-900'>
       <div className='mx-auto grid max-w-screen-xl grid-cols-1 lg:grid-cols-2'>
-        <div className='border-b border-neutral-800 px-4 lg:px-12 py-16 md:border-b-0 md:border-l lg:order-last'>
+        <div className='border-b border-neutral-800 px-4 py-16 md:border-b-0 md:border-l lg:order-last lg:px-12'>
           <div className='block lg:hidden'>
             <span className='h-10 w-32 rounded-lg bg-neutral-700'>
               <Logo />
@@ -21,7 +21,7 @@ const Footer = () => {
                 Get update notifications
               </h5>
 
-              <p className='mt-1 max-w-xs text-xs text-neutral-500'>
+              <p className='mt-1 max-w-xs font-bevn text-xs text-neutral-500'>
                 You will receive the update details in your email when we
                 release a new update.
               </p>
@@ -44,7 +44,7 @@ const Footer = () => {
                   className='absolute top-1/2 right-1.5 -translate-y-1/2 rounded-md bg-emerald-600 p-3 text-neutral-50'
                   type='button'
                 >
-                  <ArrowRightIcon className='w-4 h-4 text-neutral-50' />
+                  <ArrowRightIcon className='h-4 w-4 text-neutral-50' />
                 </button>
               </div>
             </form>
@@ -61,8 +61,12 @@ const Footer = () => {
               <p className='font-bold text-white'>Helpful</p>
 
               <nav className='mt-2 flex flex-col space-y-1 text-xs text-neutral-400'>
-                <Link className='text-inherit hover:opacity-75'>Contact</Link>
-                <Link className='text-inherit hover:opacity-75'>Resources</Link>
+                <Link className='font-bevn text-inherit hover:opacity-75'>
+                  Contact
+                </Link>
+                <Link className='font-bevn text-inherit hover:opacity-75'>
+                  Resources
+                </Link>
               </nav>
             </div>
 
@@ -70,16 +74,16 @@ const Footer = () => {
               <p className='font-bold text-white'>Solutions</p>
 
               <nav className='mt-2 flex flex-col space-y-1 text-xs text-neutral-400'>
-                <Link className='text-inherit hover:opacity-75'>
+                <Link className='font-bevn text-inherit hover:opacity-75'>
                   Instant Checkout
                 </Link>
-                <Link className='text-inherit hover:opacity-75'>
+                <Link className='font-bevn text-inherit hover:opacity-75'>
                   Product Upsells
                 </Link>
-                <Link className='text-inherit hover:opacity-75'>
+                <Link className='font-bevn text-inherit hover:opacity-75'>
                   Slideout Cart
                 </Link>
-                <Link className='text-inherit hover:opacity-75'>
+                <Link className='font-bevn text-inherit hover:opacity-75'>
                   User Dashboards
                 </Link>
               </nav>
@@ -89,12 +93,18 @@ const Footer = () => {
               <p className='font-bold text-white'>About</p>
 
               <nav className='mt-2 flex flex-col space-y-1 text-xs text-neutral-400'>
-                <Link className='text-inherit hover:opacity-75'>About Us</Link>
-                <Link className='text-inherit hover:opacity-75'>
+                <Link className='font-bevn text-inherit hover:opacity-75'>
+                  About Us
+                </Link>
+                <Link className='font-bevn text-inherit hover:opacity-75'>
                   Meet the Team
                 </Link>
-                <Link className='text-inherit hover:opacity-75'>History</Link>
-                <Link className='text-inherit hover:opacity-75'>Careers</Link>
+                <Link className='font-bevn text-inherit hover:opacity-75'>
+                  History
+                </Link>
+                <Link className='font-bevn text-inherit hover:opacity-75'>
+                  Careers
+                </Link>
               </nav>
             </div>
           </div>

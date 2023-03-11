@@ -12,6 +12,8 @@ import { useController, useForm } from 'react-hook-form'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 
+import ButtonDanger from 'components/Button/ButtonDanger'
+import ButtonSuccess from 'components/Button/ButtonSuccess'
 import { addMonths } from 'date-fns'
 import 'react-datepicker/dist/react-datepicker.css'
 
@@ -28,7 +30,6 @@ const schema = Joi.object({
 export default function CreateIssue({ closeModal }) {
   //? Connect redux store============================
   const { _dataProject } = useSelector((state) => state._project)
-
   const dispatch = useDispatch()
 
   //? Router=========================================
@@ -36,6 +37,7 @@ export default function CreateIssue({ closeModal }) {
 
   //? State==========================================
   const [estimate, setEstimate] = useState(new Date())
+  const [creating, setCreating] = useState(false)
 
   //? Hook Form======================================
   const {
@@ -48,6 +50,17 @@ export default function CreateIssue({ closeModal }) {
   })
 
   const onSubmitForm = (data) => {
+    setCreating(true)
+
+    const onSuccess = (iid) => {
+      setCreating(false)
+      history.push(`/projects/${_dataProject._id}/${iid}`)
+      closeModal()
+    }
+    const onError = (err) => {
+      setCreating(false)
+    }
+
     dispatch(
       actCreateIssue(
         _dataProject._id.toString(),
@@ -56,15 +69,12 @@ export default function CreateIssue({ closeModal }) {
           assigned: !data?.assigned ? '' : data.assigned,
           estimate: estimate.getTime()
         },
-        onSuccessCreate
+        onSuccess,
+        onError
       )
     )
   }
 
-  const onSuccessCreate = (iid) => {
-    history.push(`/projects/${_dataProject._id}/${iid}`)
-    closeModal()
-  }
   //? forward component
   const EstimateComponent = forwardRef(({ value, onClick }, ref) => {
     return (
@@ -116,12 +126,18 @@ export default function CreateIssue({ closeModal }) {
         >
           <Dialog.Title
             as='h3'
-            className='text-lg font-bold leading-6 text-neutral-200'
+            className='font-primary text-lg font-bold leading-6 
+            text-neutral-200'
           >
             Add Issue
           </Dialog.Title>
-          <div className='mt-2'>
-            <form action='#' method='POST'>
+          <Dialog.Description className='font-bevn text-sm text-neutral-400'>
+            This can be an idea of a new feature or a bug encountered in the
+            project
+          </Dialog.Description>
+
+          <div>
+            <form>
               <div className=''>
                 <div className='py-5 sm:py-6'>
                   <div className='grid grid-cols-6 gap-3 md:grid-cols-12 md:gap-6'>
@@ -242,27 +258,23 @@ export default function CreateIssue({ closeModal }) {
           </div>
 
           <div className='mt-4 flex justify-end gap-2'>
-            <button
-              type='submit'
-              className='inline-flex justify-center rounded-md border 
-              border-transparent bg-emerald-600 py-2 px-4 text-sm font-medium 
-              text-white shadow-sm hover:bg-emerald-700 focus:outline-none'
+            <ButtonSuccess
+              size='mid'
+              loading={creating}
+              className='w-24'
               onClick={handleSubmit(onSubmitForm)}
             >
               Create
-            </button>
+            </ButtonSuccess>
 
-            <button
-              type='button'
-              className='inline-flex justify-center rounded-md border 
-              border-transparent px-4 py-2 text-sm font-medium
-              text-red-500 transition-all duration-300 ease-in-out 
-              hover:bg-red-500 hover:text-red-200 focus:outline-none focus-visible:ring-2 
-              focus-visible:ring-red-500 focus-visible:ring-offset-2'
+            <ButtonDanger
+              size='mid'
+              disabled={creating}
+              className='w-24'
               onClick={closeModal}
             >
               Cancel
-            </button>
+            </ButtonDanger>
           </div>
         </div>
       </Transition.Child>

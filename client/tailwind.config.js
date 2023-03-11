@@ -9,9 +9,14 @@ module.exports = {
       deepdark: 'rgb(24, 24, 24)'
     },
     fontFamily: {
+      primary: ['"Space Grotesk"', 'sans-serif'],
       bevn: ['"Be Vietnam Pro"', 'sans-serif']
     },
-    extend: {}
+    extend: {
+      screens: {
+        xs: '320px'
+      }
+    }
   },
   plugins: [require('@tailwindcss/line-clamp')]
 }

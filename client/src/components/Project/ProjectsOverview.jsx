@@ -84,7 +84,12 @@ export default function ProjectsOverview() {
 
   return (
     <div className='view-item project w-full space-y-3'>
-      <Row className='md:flex'>
+      <Row
+        className='sticky top-0 z-10 bg-deepdark p-[25px] pb-3 
+        transition-all duration-500 ease-linear before:absolute
+        before:-top-[1px] before:left-0 before:z-[9] before:h-3 
+        before:w-full before:bg-inherit md:flex'
+      >
         <Col className='mb-2 w-full md:mb-0 md:w-1/2'>
           <Breadcumb list={breadcumbs} />
         </Col>
@@ -197,7 +202,7 @@ function ProjectItemGrid({ config, projectOverview, variants }) {
               {projectOverview.member.map((member, index) =>
                 index > 5 ? null : (
                   <div
-                    className='relative z-10 inline-block h-6 w-6 
+                    className='relative z-[2] inline-block h-6 w-6 
                     overflow-hidden rounded-full ring-2 
                     ring-[color:var(--background-panel)]'
                     key={index}

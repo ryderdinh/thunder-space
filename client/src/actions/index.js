@@ -324,13 +324,14 @@ export const actQueryProject = (query = null) => {
   }
 }
 
-export const actCreateIssue = (pid, data, callback) => {
+export const actCreateIssue = (pid, data, onSuccess, onError) => {
   return async () => {
     try {
       const res = await issueApi.create(pid, data)
-      callback(res.data._id)
+      onSuccess(res.data._id)
     } catch (error) {
       errorToast(error.message)
+      onError(error.message)
     }
   }
 }
