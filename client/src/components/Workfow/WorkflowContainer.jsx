@@ -6,35 +6,35 @@ function WorkflowContainer() {
   //? Create State
   const [cards] = useState([
     {
-      title: 'Công việc của bạn',
+      title: 'Your todos',
       max: 20,
       now: 12,
       data: [
         {
-          name: 'Công việc',
+          name: 'Total',
           value: 20
         },
         {
-          name: 'Đang làm',
+          name: 'Doing',
           value: 12
         }
       ]
     },
     {
-      title: 'Dự án của bạn',
+      title: 'Your projects',
       max: 25,
       now: 10,
       data: [
         {
-          name: 'Dự án',
-          value: 20
+          name: 'Total',
+          value: 40
         },
         {
-          name: 'Công việc',
+          name: 'Assigned to you',
           value: 25
         },
         {
-          name: 'Đang làm',
+          name: 'Doing',
           value: 10
         }
       ]
@@ -47,9 +47,9 @@ function WorkflowContainer() {
 
   return (
     <div className='wf-container -wf-card'>
-      <div className='row flex-wrap gap-0'>
+      <div className='row view-row flex-wrap gap-0'>
         {cards.map((card, i) => (
-          <div className='!w-full px-3'>
+          <div className='min-w-full basis-0 md:min-w-0 md:grow'>
             <div className='card !w-full' key={i}>
               <div className='card-body'>
                 <div className='card-row'>

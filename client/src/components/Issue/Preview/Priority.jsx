@@ -14,11 +14,14 @@ const Priority = ({ className, priority, loading, onChange }) => {
   return (
     <div className={`${className}`}>
       <Menu as='div' className='relative inline-block text-left'>
-        <Menu.Button>
+        <Menu.Button disabled={loading}>
           <div
-            className={`group flex cursor-pointer items-center gap-1 rounded-md 
-            px-2 py-1
-            ${priorityColor[priority]}`}
+            className={`group flex cursor-pointer items-center gap-1 
+              rounded-md px-2 py-1 transition-all duration-200 ease-in-out
+              ${
+                loading ? 'bg-opacity-80' : 'bg-opacity-100 hover:bg-opacity-80'
+              }
+              ${priorityColor[priority]}`}
           >
             <p className='text-sm text-neutral-50'>{priority}</p>
             <ArrowPathIcon
@@ -28,6 +31,7 @@ const Priority = ({ className, priority, loading, onChange }) => {
             />
           </div>
         </Menu.Button>
+
         <Transition
           as={Fragment}
           enter='transition ease-out duration-100'
@@ -38,21 +42,22 @@ const Priority = ({ className, priority, loading, onChange }) => {
           leaveTo='transform opacity-0 scale-95'
         >
           <Menu.Items
-            className='absolute left-0 mt-2 w-32 origin-top-right divide-y 
-            divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black 
-            ring-opacity-5 focus:outline-none z-10'
+            className='absolute left-0 z-10 mt-2 w-32 origin-top-right 
+            divide-y divide-gray-100 rounded-md bg-white shadow-lg  
+            ring-1 ring-black ring-opacity-5 focus:outline-none'
           >
             <div className='px-1 py-1'>
               {['low', 'medium', 'high', 'highest'].map((item) => (
                 <Menu.Item key={item} as='div' onClick={() => onChange(item)}>
                   {({ active }) => (
                     <button
-                      className={`${
+                      className={`group flex w-full items-center justify-between 
+                      rounded-md px-2 py-2 text-sm
+                      ${
                         active
                           ? 'bg-emerald-600 text-white'
                           : 'text-neutral-900'
-                      } group flex w-full items-center justify-between rounded-md 
-                      px-2 py-2 text-sm`}
+                      } `}
                     >
                       {item}
                       <CheckIcon

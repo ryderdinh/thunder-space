@@ -5,7 +5,9 @@ const ButtonSuccess = ({
   children,
   className,
   loading = false,
-  disabled = false
+  loadingChildren = '',
+  disabled = false,
+  size = 'small'
 }) => {
   const clicked = () => {
     !loading && !disabled && onClick()
@@ -15,14 +17,23 @@ const ButtonSuccess = ({
 
   return (
     <div
-      className={`relative cursor-pointer select-none overflow-hidden rounded-[4px]
-      border border-emerald-500/50 bg-emerald-500/90 px-2.5 
-      py-1 text-xs font-light text-neutral-50/90 transition-all 
+      className={`relative h-max cursor-pointer select-none overflow-hidden
+      rounded-[4px] border border-emerald-500/50 bg-emerald-500/90 text-center 
+       font-light text-neutral-50/90 transition-all
       duration-100 ease-in-out hover:text-neutral-100/90
-      ${loading || disabled ? 'bg-emerald-600/70' : ''} ${className}`}
+      ${
+        size === 'small'
+          ? 'px-2.5 py-1 text-xs'
+          : size === 'mid'
+          ? 'px-4 py-1.5 text-base'
+          : 'px-2.5 py-1 text-xs'
+      }
+      ${
+        loading || disabled ? 'bg-emerald-600/70' : 'hover:bg-emerald-600/70'
+      } ${className}`}
       onClick={clicked}
     >
-      {children}
+      {loading ? (loadingChildren ? loadingChildren : children) : children}
 
       {loading && (
         <div

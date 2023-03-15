@@ -3,8 +3,9 @@ import { ClockIcon } from '@heroicons/react/solid'
 import ButtonNormalLoad from 'components/Button/ButtonNormalLoad'
 import ArrowPathIcon from 'components/Icon/ArrowPathIcon'
 import { LayoutContext } from 'context/LayoutContext'
+import dayjs from 'dayjs'
 import { motion } from 'framer-motion'
-import { Fragment, useContext } from 'react'
+import { Fragment, useContext, useEffect } from 'react'
 import variantGlobal from 'units/variantGlobal'
 
 const priorityColor = {
@@ -16,6 +17,8 @@ const priorityColor = {
 
 const IssuePreview = ({ dataIssue, dataProject, className = '' }) => {
   const { openDialog } = useContext(LayoutContext)
+
+
 
   return (
     <motion.div

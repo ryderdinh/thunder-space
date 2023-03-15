@@ -6,5 +6,16 @@ import Motion from './Motion'
 import Panel from './Panel'
 import ProtectedLayout from './ProtectedLayout'
 import Row from './Row'
+import Tooltip from './Tooltip'
 
-export { Col, Row, Layout, Dropdown, Panel, ProtectedLayout, Motion, Center }
+export {
+  Col,
+  Row,
+  Layout,
+  Dropdown,
+  Panel,
+  ProtectedLayout,
+  Motion,
+  Center,
+  Tooltip
+}

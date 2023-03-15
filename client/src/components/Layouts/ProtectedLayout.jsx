@@ -33,7 +33,7 @@ const MainProtectedLayout = ({ path, children }) => {
   )
 
   useEffect(() => {
-    socket.on('invitation-project', (data) => {
+    socket.on('notification', (data) => {
       play()
       dispatch(addOrModifiedNotificationsData([data]))
     })
