@@ -7,6 +7,7 @@ import { useState } from 'react'
 import toast from 'react-hot-toast'
 import { useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
+import { errorToast } from 'utilities/toast'
 
 export default function LoginForm() {
   // Create state
@@ -53,7 +54,7 @@ export default function LoginForm() {
       return
     }
 
-    toast.error('Do not leave email or password blank!')
+    errorToast('Missing user authentication information!', 'login')
   }
 
   const handleKeyUp = (event) => {
@@ -75,16 +76,20 @@ export default function LoginForm() {
         <h1 className='text-2xl font-bold'>Login</h1>
         <p className='body-text'>Join us in your space!</p>
 
-        <div className='rounded-button google-login-button'>
+        <div
+          className='rounded-button google-login-button'
+          onClick={() =>
+            toast('Comming soon ☄️', {
+              id: 'sign-in-with-google',
+              duration: 1000000,
+              className: '!font-bevn'
+            })
+          }
+        >
           <span className='google-icon'>
             <GoogleIcon />
           </span>
-          <span
-            className='select-none'
-            onClick={() => toast('Comming soon', { id: 'sign-in-with-google' })}
-          >
-            Login with Google
-          </span>
+          <span className='select-none'>Login with Google</span>
         </div>
 
         <div className='sign-in-seperator'>
@@ -149,7 +154,7 @@ export default function LoginForm() {
 
         <div className='w-full'>
           <ButtonSuccess
-            className='w-full rounded-button'
+            className='rounded-button w-full'
             onClick={handleSignIn}
           >
             Go
