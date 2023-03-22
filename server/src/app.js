@@ -4,11 +4,11 @@ const server = require('http').Server(app)
 
 const { Server } = require('socket.io')
 const { instrument } = require('@socket.io/admin-ui')
-const whilteList = JSON.parse(process.env.WHITE_LIST_CORS);
+const whilteList = JSON.parse(process.env.WHITE_LIST_CORS)
 const io = new Server(server, {
   cors: {
     origin: '*',
-    methods: ['POST', 'GET', 'PUT', 'DELETE', 'PATCH'],
+    methods: ['POST', 'GET', 'PUT', 'DELETE', 'PATCH']
     // credentials: true
   }
 })
@@ -192,6 +192,16 @@ app.use('/api', routersProject.apiPatchAddMemberToProject)
 const routersNotifications = require('./routers/users/notification.router')
 app.use('/api', routersNotifications.apiGetNotifications)
 //Event
+
+/* -------------------------------------------
+                        TASK
+---------------------------------------------*/
+
+const routersTask = require('./routers/users/task.router')
+Object.entries(routersTask).forEach((e) => {
+  app.use('/api', e[1])
+})
+// app.use('/api', routersTask.getTasks)
 
 //———————————————————————————ADMIN ROUTES—————————————————————————————//
 

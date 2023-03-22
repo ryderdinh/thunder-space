@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const { ObjectId} = mongoose.Types
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const { func } = require('joi')
@@ -13,6 +14,13 @@ const Staff = new Schema(
     position: { type: String, required: true },
     department: { type: String, required: true },
     phonenumber: { type: String, required: true },
+    tasks: [
+      {
+        tid: {
+          type: ObjectId
+        }
+      }
+    ],
     tokens: [
       {
         token: { type: String }
@@ -62,6 +70,7 @@ Staff.methods.getProfile = function () {
   delete userObject.resetTokenExpiration
   delete userObject.otp
   delete userObject.otpExpiration
+  delete userObject.tasks
   userObject.avatar = userObject.avatar.url
   return userObject
 }

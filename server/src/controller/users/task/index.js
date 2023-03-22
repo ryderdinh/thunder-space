@@ -1,0 +1,5 @@
+module.exports.createTask = require('../task/createTask')
+module.exports.getTasks = require('../task/getTasks')
+module.exports.updateTask = require('../task/updateTask')
+module.exports.changeIndex = require('../task/changeIndex')
+module.exports.deleteTasks = require('../task/deleteTasks')
