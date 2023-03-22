@@ -13,6 +13,10 @@ const issueApi = {
     const url = `/issues/${iid}`
     return axiosClient.put(url, data)
   },
+  updateStatus: (iid, status) => {
+    const url = `/issues/${iid}`
+    return axiosClient.patch(url, { status })
+  },
   delete: (iid) => {
     const url = `/issues/${iid}`
     return axiosClient.delete(url)

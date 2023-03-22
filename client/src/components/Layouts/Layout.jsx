@@ -1,5 +1,4 @@
 import { setCheckLogin } from 'actions'
-import Dialog from 'components/Dialog'
 import LoadingContainer from 'components/Loading/LoadingContainer'
 import Sidebar from 'components/Sidebar/Sidebar'
 import { motion } from 'framer-motion'
@@ -45,7 +44,6 @@ export default function Layout({ children }) {
       } else {
         dispatch(setCheckLogin(true))
       }
-      console.log(window.localStorage.getItem('thunder-space-login'))
     }
 
     window.addEventListener('storage', checkUserLogin)
@@ -68,7 +66,6 @@ export default function Layout({ children }) {
         <>
           <Sidebar />
           {children}
-          <Dialog />
         </>
       )}
     </motion.div>

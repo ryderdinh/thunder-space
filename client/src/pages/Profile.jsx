@@ -2,6 +2,7 @@ import { actFetchStaffInfomation } from 'actions'
 import { userApi } from 'api'
 import ButtonSuccess from 'components/Button/ButtonSuccess'
 import Layout from 'components/Layouts/Layout'
+import { Spinner } from 'components/Loading/Spinner'
 import HeaderContainer from 'components/Main/HeaderContainer/HeaderContainer'
 import Main from 'components/Main/Main'
 import ViewBox from 'components/Main/ViewMain/ViewBox'
@@ -23,26 +24,29 @@ export default function Profile() {
   const imageElmRef = useRef()
 
   const [selectedFiles, setSelectedFiles] = useState(undefined)
+  const [uploadingImage, setUploadingImage] = useState(false)
 
   const changeFile = () => {
     imageInputRef.current.click()
   }
 
-  const selectFile = (event) => {
+  const selectFile = async (event) => {
     setSelectedFiles(event.target.files)
     let reader = new FileReader()
 
     reader.onload = function (e) {
       imageElmRef.current.src = e.target.result
     }
-
+    // Add to image
     reader.readAsDataURL(event.target.files[0])
+    // Upload file
+    await uploadImage(event.target.files[0])
   }
 
-  const uploadImage = async () => {
+  const uploadImage = async (file) => {
     const formData = new FormData()
-    formData.append('image', selectedFiles[0])
-
+    formData.append('image', file)
+    setUploadingImage(true)
     try {
       await userApi.updateAvatar(formData)
 
@@ -50,8 +54,11 @@ export default function Profile() {
       setSelectedFiles(undefined)
     } catch (error) {
       console.log(error)
+    } finally {
+      setUploadingImage(false)
     }
   }
+
   useEffect(() => {
     dispatch(actFetchStaffInfomation())
   }, [dispatch])
@@ -78,40 +85,56 @@ export default function Profile() {
                 <form>
                   <div className='shadow sm:overflow-hidden sm:rounded-md'>
                     <div className='card-panel space-y-6 px-4 py-5 sm:p-6'>
-                      <div>
+                      <div className='flex flex-col items-center'>
                         <label className='block text-sm font-medium text-neutral-200'>
                           Photo
                         </label>
-                        <div className='mt-1 flex items-center'>
-                          <span className='inline-block h-12 w-12 overflow-hidden rounded-full bg-neutral-100'>
-                            <img
-                              src={profile.avatar}
-                              alt='staff-avatar'
-                              className='h-full w-full object-cover'
-                              ref={imageElmRef}
-                            />
-                            <input
-                              type='file'
-                              accept='image/*'
-                              ref={imageInputRef}
-                              className='hidden'
-                              onChange={selectFile}
-                            />
-                          </span>
-                          <ButtonSuccess
-                            className={'ml-2'}
+                        <span
+                          className='group relative mt-5 mb-3 inline-block 
+                          overflow-hidden rounded-full border-2 border-emerald-500
+                          bg-neutral-100'
+                        >
+                          <img
+                            src={profile.avatar}
+                            alt='staff-avatar'
+                            className='z-1 relative aspect-square h-32 cursor-pointer object-cover'
+                            ref={imageElmRef}
+                            onClick={changeFile}
+                          />
+                          <input
+                            type='file'
+                            accept='image/*'
+                            ref={imageInputRef}
+                            className='hidden'
+                            onChange={selectFile}
+                          />
+
+                          <div
+                            className={`absolute top-0 left-0 flex h-full w-full items-center 
+                            justify-center bg-emerald-500/40 transition-all duration-200 
+                            ease-linear ${
+                              !uploadingImage
+                                ? 'invisible z-[-1] opacity-0'
+                                : 'visible z-[3] opacity-100'
+                            }`}
+                          >
+                            <Spinner color='#10ffb9' w={20} border={4} />
+                          </div>
+                          <div
+                            className={`invisible absolute top-0 left-0 z-[-1] flex h-full 
+                            w-full cursor-pointer items-center justify-center bg-emerald-500/40 
+                            p-3 text-center text-xs font-bold text-neutral-100 opacity-0
+                            transition-all duration-200 ease-linear
+                            ${
+                              uploadingImage
+                                ? ''
+                                : 'group-hover:visible group-hover:z-[2] group-hover:opacity-100'
+                            }`}
                             onClick={changeFile}
                           >
-                            Choose image
-                          </ButtonSuccess>
-                          <ButtonSuccess
-                            className={'ml-2'}
-                            disabled={!selectedFiles}
-                            onClick={uploadImage}
-                          >
-                            Change
-                          </ButtonSuccess>
-                        </div>
+                            Change <br /> avatar
+                          </div>
+                        </span>
                       </div>
                     </div>
                   </div>

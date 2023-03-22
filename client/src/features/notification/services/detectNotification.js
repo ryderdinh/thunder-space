@@ -54,7 +54,7 @@ const detectNotification = (type, data) => ({
   icon: notificationIcon(type),
   link: notificationLink(data)[type],
   title: notificationTitle[type] || 'Notification',
-  content: notificationContent[type] || 'Notification content'
+  content: notificationContent[type] || ' '
 })
 
 export default detectNotification

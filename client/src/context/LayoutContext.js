@@ -9,9 +9,8 @@ export default function LayoutContextProvider({ children }) {
   )
   const [nameDialog, setNameDialog] = useState('')
   const [data, setData] = useState({})
-
-  // const [auth,setAuth] = useState(false)
   const [previousPath, setPreviousPath] = useState('/')
+  const [loading, setLoading] = useState(false)
 
   const openDialog = (nameDialog, dataDialog) => {
     setNameDialog(nameDialog)
@@ -32,6 +31,9 @@ export default function LayoutContextProvider({ children }) {
     },
     close: () => {
       setIsDialogOpen(false)
+    },
+    loading: () => {
+      openDialog('loading')
     }
   }
 
@@ -62,7 +64,9 @@ export default function LayoutContextProvider({ children }) {
         sidebar,
         data,
         previousPath,
-        setPreviousPath
+        setPreviousPath,
+        loading,
+        setLoading
       }}
     >
       {children}

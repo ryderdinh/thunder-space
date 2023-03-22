@@ -147,7 +147,12 @@ export default function ProjectDetail() {
 
       {_dataProject && (
         <>
-          <Row className='md:flex'>
+          <Row
+            className='view-row sticky top-0 z-10 bg-deepdark pb-3 
+            transition-all duration-500 ease-linear before:absolute
+            before:-top-[1px] before:left-0 before:z-[9] before:h-3 
+            before:w-full before:bg-inherit md:flex'
+          >
             <Col className='mb-2 w-full md:mb-0 md:w-1/2'>
               <Breadcumb list={breadcumbs} />
             </Col>
@@ -160,8 +165,8 @@ export default function ProjectDetail() {
                 />
                 <button
                   className='panel inline-flex h-9 w-max items-center 
-                  justify-center rounded-md bg-opacity-20 py-2 px-4 text-sm
-                  font-medium text-neutral-200 
+                  justify-center gap-1 rounded-md bg-opacity-20 py-2 px-4
+                  text-sm font-medium text-neutral-200 outline-none
                   transition-all 
                   duration-200
                   ease-in-out
@@ -169,12 +174,14 @@ export default function ProjectDetail() {
                   hover:text-neutral-100
                   focus:outline-none
                   focus-visible:ring-2
-                  focus-visible:ring-white focus-visible:ring-opacity-75'
+                  focus-visible:ring-white 
+                  focus-visible:ring-opacity-75'
                   onClick={() => {
                     openDialog('create-issue')
                   }}
                 >
                   <PlusIcon className='h-5 w-5' aria-hidden='true' />
+                  <p className='truncate'>Add Issue</p>
                 </button>
                 <Menu openDialog={openDialog} dataProject={_dataProject} />
               </div>
@@ -263,12 +270,19 @@ function IssueGridItem({ data, pid, variants }) {
             className='h-8 w-8 overflow-hidden rounded-full transition-all
             duration-100 group-hover:scale-110'
           >
-            <img src={data.creator.avatar} alt='' />
+            <img
+              src={data?.assign?.avatar}
+              alt={data?.assign?.name}
+              className='aspect-square w-full object-cover'
+            />
           </div>
         </div>
         <div className='flex w-4/5 flex-col justify-between space-y-2'>
           <div className='h-2/4 space-y-2'>
-            <h5 className='font-medium text-neutral-200 line-clamp-2'>
+            <h5
+              className='block font-medium text-neutral-200 line-clamp-3
+              first-letter:uppercase'
+            >
               {data.name}
             </h5>
           </div>
@@ -293,20 +307,12 @@ function IssueGridItem({ data, pid, variants }) {
   )
 }
 
-function Menu({ openDialog, dataProject }) {
+function Menu({ openDialog }) {
   const history = useHistory()
   const location = useLocation()
 
   return (
     <MenuComponent>
-      <div className='px-1 py-1'>
-        <MenuItem
-          type='add'
-          onClick={() => {
-            openDialog('create-issue')
-          }}
-        />
-      </div>
       <div className='px-1 py-1'>
         <MenuItem
           type='archive'

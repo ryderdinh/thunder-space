@@ -3,6 +3,7 @@ import { BellIcon } from '@heroicons/react/outline'
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/solid'
 import { LayoutContext } from 'context/LayoutContext'
 import { useContext, useEffect, useState } from 'react'
+import './HeaderContainer.css'
 import NotificationOverview from './NotificationOverview'
 import { PageName } from './PageName'
 
@@ -19,8 +20,8 @@ export default function HeaderContainer({ pathName }) {
       home: 'Home',
       timesheets: 'Timesheets',
       report: 'Report',
-      workflow: 'Mission Overview',
-      work: 'Workflow Overview',
+      spaces: 'Space Overview',
+      todos: 'Todo Overview',
       project: 'Project Overview',
       'project-setting': 'Project Setting',
       'project-invitation': 'Project Invitation',
@@ -58,10 +59,11 @@ export default function HeaderContainer({ pathName }) {
               <Popover.Button
                 className='relative cursor-pointer rounded-[4px] 
                 border border-neutral-600/50 bg-neutral-600/40 px-2.5 
-                py-1 transition-all duration-75 hover:bg-neutral-600/50'
+                py-1 outline-none transition-all duration-75
+                hover:bg-neutral-600/50'
               >
                 <BellIcon className='w-4 text-neutral-50/75' />
-                {}
+
                 <span class='absolute -right-1 -top-1 flex h-2 w-2'>
                   <span
                     class='absolute inline-flex h-full w-full 

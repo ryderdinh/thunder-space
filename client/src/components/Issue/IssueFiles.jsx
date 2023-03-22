@@ -20,7 +20,6 @@ const IssueFiles = ({
   const [filesImportRef] = useAutoAnimate()
 
   const [fileList, setFileList] = useState([])
-  console.log(fileList)
 
   const onDragEnter = (e) => {
     wrapperRef.current.classList.add('bg-neutral-600')

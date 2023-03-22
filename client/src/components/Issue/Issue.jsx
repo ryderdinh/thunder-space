@@ -1,11 +1,5 @@
-import IssueComment from './IssueComment'
-import IssueDescription from './IssueDescription'
-import IssueDetail from './IssueDetail'
-import IssueFiles from './IssueFiles'
-import IssueHistory from './IssueHistory'
-import IssuePreview from './Preview'
 import { Disclosure } from '@headlessui/react'
-import { ChevronUpIcon, PencilIcon } from '@heroicons/react/solid'
+import { ChevronUpIcon, EyeIcon, PencilIcon } from '@heroicons/react/solid'
 import {
   actDeleteIssue,
   actFetchProject,
@@ -23,6 +17,12 @@ import { useContext, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useHistory, useLocation, useParams } from 'react-router-dom'
 import variantGlobal from 'units/variantGlobal'
+import IssueComment from './IssueComment'
+import IssueDescription from './IssueDescription'
+import IssueDetail from './IssueDetail'
+import IssueFiles from './IssueFiles'
+import IssueHistory from './IssueHistory'
+import IssuePreview from './Preview'
 
 export default function Issue() {
   //? Connect redux
@@ -126,6 +126,14 @@ export default function Issue() {
     ])
   }, [pid, iid, dispatch])
 
+  // useEffect(() => {
+  //   const interval = setInterval(() => dispatch(actQueryIssue(iid)), 60000)
+
+  //   return () => {
+  //     clearInterval(interval)
+  //   }
+  // }, [dispatch, iid])
+
   useEffect(() => {
     setBreadcumbs([
       {
@@ -179,6 +187,22 @@ export default function Issue() {
 
             <Col className='w-max md:w-1/2'>
               <div className='z-10 flex w-full justify-end gap-2'>
+                <button
+                  className='panel inline-flex h-9 w-max items-center 
+                  justify-center gap-1 rounded-md bg-opacity-20 py-2 px-4
+                  text-sm font-medium text-neutral-200 outline-none
+                  transition-all 
+                  duration-200
+                  ease-in-out
+                  hover:bg-opacity-30 
+                  hover:text-neutral-100
+                  focus:outline-none
+                  focus-visible:ring-2
+                  focus-visible:ring-white 
+                  focus-visible:ring-opacity-75'
+                >
+                  <EyeIcon className='h-5 w-5' aria-hidden='true' />
+                </button>
                 <Menu dataProject={_dataIssue} deleteAction={deleteIssue} />
               </div>
             </Col>

@@ -1,4 +1,4 @@
-import { ChevronRightIcon } from '@heroicons/react/solid'
+import { ChevronRightIcon, PlusIcon } from '@heroicons/react/solid'
 import { actQueryProject, setInitialProject } from 'actions'
 import 'assets/css/project.css'
 import { Breadcumb } from 'components/Breadcumb/Breadcumb'
@@ -10,12 +10,10 @@ import queryString from 'query-string'
 import { useContext, useEffect, useLayoutEffect, useState } from 'react'
 import 'react-date-range/dist/styles.css' // main css file
 import 'react-date-range/dist/theme/default.css' // theme css file
-import Avatar, { genConfig } from 'react-nice-avatar'
+import { genConfig } from 'react-nice-avatar'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useHistory } from 'react-router-dom'
 import variantGlobal from 'units/variantGlobal'
-import MenuComponent from './MenuComponent'
-import MenuItem from './MenuItem'
 import SearchBox from './SearchBox'
 
 export default function ProjectsOverview() {
@@ -86,7 +84,12 @@ export default function ProjectsOverview() {
 
   return (
     <div className='view-item project w-full space-y-3'>
-      <Row className='md:flex'>
+      <Row
+        className='sticky top-0 z-10 bg-deepdark p-[25px] pb-3 
+        transition-all duration-500 ease-linear before:absolute
+        before:-top-[1px] before:left-0 before:z-[9] before:h-3 
+        before:w-full before:bg-inherit md:flex'
+      >
         <Col className='mb-2 w-full md:mb-0 md:w-1/2'>
           <Breadcumb list={breadcumbs} />
         </Col>
@@ -97,12 +100,24 @@ export default function ProjectsOverview() {
               handleSearch={handleSearch}
               defaultValue={defaultSearchValue}
             />
-
-            <MenuComponent>
-              <div className='px-1 py-1'>
-                <MenuItem onClick={handleOpenDialog} type={'add'} />
-              </div>
-            </MenuComponent>
+            <button
+              className='panel inline-flex h-9 w-max items-center 
+              justify-center gap-1 rounded-md bg-opacity-20 py-2 px-4
+              text-sm font-medium text-neutral-200 outline-none
+              transition-all 
+              duration-200
+              ease-in-out
+              hover:bg-opacity-30 
+              hover:text-neutral-100
+              focus:outline-none
+              focus-visible:ring-2
+              focus-visible:ring-white 
+              focus-visible:ring-opacity-75'
+              onClick={handleOpenDialog}
+            >
+              <PlusIcon className='h-5 w-5' aria-hidden='true' />
+              <p className='truncate'>Add Project</p>
+            </button>
           </div>
         </Col>
       </Row>
@@ -130,7 +145,7 @@ export default function ProjectsOverview() {
                   key={project._id}
                   config={config}
                   projectOverview={project}
-                  variants={variantGlobal(3, index * 0.1)}
+                  variants={variantGlobal(3, index * 0.05)}
                 />
               ))}
             </div>
@@ -179,11 +194,28 @@ function ProjectItemGrid({ config, projectOverview, variants }) {
           </p>
         </div>
         <div className='flex w-full p-4 pl-0'>
-          <div className='mr-4 flex flex-col'>
-            <Avatar
-              className='h-8 w-8 transition-all group-hover:scale-110'
-              {...config}
-            />
+          <div className='mr-4'>
+            <div
+              className='relative top-1 flex flex-col -space-y-1 
+              transition-all duration-100 group-hover:scale-110'
+            >
+              {projectOverview.member.map((member, index) =>
+                index > 5 ? null : (
+                  <div
+                    className='relative z-[2] inline-block h-6 w-6 
+                    overflow-hidden rounded-full ring-2 
+                    ring-[color:var(--background-panel)]'
+                    key={index}
+                  >
+                    <img
+                      className='relative h-full w-full object-cover'
+                      src={member.avatar}
+                      alt=''
+                    />
+                  </div>
+                )
+              )}
+            </div>
           </div>
 
           <div className='flex w-4/5 flex-col justify-between space-y-2'>
@@ -197,28 +229,16 @@ function ProjectItemGrid({ config, projectOverview, variants }) {
                   : 'No description'}
               </p>
             </div>
-            <div className=''>
-              <div className='relative left-1 flex -space-x-1'>
-                {projectOverview.member.map((member, index) => (
-                  <div
-                    className='relative inline-block h-6 w-6 overflow-hidden rounded-full ring-2 ring-white'
-                    key={index}
-                  >
-                    <img
-                      className='relative z-10 h-full w-full'
-                      src={member.avatar}
-                      alt=''
-                    />
-                    <div className='absolute top-0 left-0 z-0 h-full w-full bg-neutral-800'></div>
-                  </div>
-                ))}
-              </div>
+            <div className='flex items-center'>
+              <code className={`!ml-0 text-xs text-neutral-50`}>
+                {projectOverview.issue.length} issues
+              </code>
             </div>
           </div>
 
           <div
             className='absolute right-4 top-4 w-6 text-zinc-500 transition-all 
-                      duration-200 group-hover:right-3'
+            duration-200 group-hover:right-3'
           >
             <ChevronRightIcon className='' />
           </div>

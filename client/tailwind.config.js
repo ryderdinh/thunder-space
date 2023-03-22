@@ -1,14 +1,22 @@
 const colors = require('tailwindcss/colors')
 
 module.exports = {
-  darkMode: 'class',
+  darkMode: 'className',
   content: ['./src/**/*.{js,jsx,ts,tsx}'],
   theme: {
     colors: {
       ...colors,
       deepdark: 'rgb(24, 24, 24)'
     },
-    extend: {}
+    fontFamily: {
+      primary: ['"Space Grotesk"', 'sans-serif'],
+      bevn: ['"Be Vietnam Pro"', 'sans-serif']
+    },
+    extend: {
+      screens: {
+        xs: '320px'
+      }
+    }
   },
   plugins: [require('@tailwindcss/line-clamp')]
 }

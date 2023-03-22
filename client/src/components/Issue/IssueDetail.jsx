@@ -1,5 +1,7 @@
 import { Disclosure } from '@headlessui/react'
 import { ChevronUpIcon } from '@heroicons/react/solid'
+import { Tooltip } from 'components/Layouts'
+import { UserInfo } from 'components/More'
 import { motion } from 'framer-motion'
 import variantGlobal from 'units/variantGlobal'
 
@@ -84,8 +86,19 @@ const IssueDetail = ({ data }) => {
                   <div className=''>
                     <p>Creator</p>
                   </div>
-                  <div className='cursor-pointer font-bold'>
-                    <p>{data.creator?.name}</p>
+                  <div className='w-max font-bold'>
+                    <Tooltip
+                      className=''
+                      component={
+                        <UserInfo
+                          name={data?.creator?.name}
+                          avatar={data?.creator?.avatar}
+                          email={data?.creator?.email}
+                        />
+                      }
+                    >
+                      <span className='truncate'>{data.creator?.name}</span>
+                    </Tooltip>
                   </div>
                 </div>
 
@@ -93,8 +106,22 @@ const IssueDetail = ({ data }) => {
                   <div className=''>
                     <p>Assignee</p>
                   </div>
-                  <div className='cursor-pointer font-bold'>
-                    <p>{data?.assign ? data.assign.name : 'Unassigned'}</p>
+                  <div className='w-max font-bold'>
+                    <Tooltip
+                      className=''
+                      component={
+                        <UserInfo
+                          name={data?.assign?.name}
+                          avatar={data?.assign?.avatar}
+                          email={data?.assign?.email}
+                        />
+                      }
+                      disable={data?.assign ? false : true}
+                    >
+                      <span className='truncate'>
+                        {data?.assign ? data?.assign?.name : 'Unassigned'}
+                      </span>
+                    </Tooltip>
                   </div>
                 </div>
 

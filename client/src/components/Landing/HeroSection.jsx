@@ -7,16 +7,19 @@ const HeroSection = () => {
   return (
     <section className='w-full bg-neutral-900 text-neutral-50'>
       <div className='mx-auto max-w-screen-xl px-4 py-32 lg:flex lg:h-screen lg:items-center'>
-        <div className='mx-auto max-w-3xl text-center relative'>
+        <div className='relative mx-auto max-w-3xl text-center'>
           <div className='absolute -top-[100px] left-1/2 -translate-x-1/2'>
-            <Logo className='w-16 aspect-square object-contain' />
+            <Logo className='aspect-square w-16 object-contain' />
           </div>
           <h1 className='bg-gradient-to-r from-blue-500 via-emerald-500 to-blue-600 bg-clip-text text-3xl font-extrabold text-transparent sm:text-5xl'>
             Understand User Flow
             <span className='block'>Easy to manage</span>
           </h1>
 
-          <p className='mx-auto mt-4 max-w-xl sm:text-xl sm:leading-relaxed'>
+          <p
+            className='mx-auto mt-4 max-w-xl font-bevn sm:text-xl 
+            sm:leading-relaxed'
+          >
             <strong className='font-bold text-emerald-500'>
               Thunder Space
             </strong>{' '}
@@ -28,9 +31,9 @@ const HeroSection = () => {
             <div
               className='block w-full cursor-pointer rounded border 
               border-emerald-600 bg-emerald-600 px-12 py-3 text-sm 
-              font-medium text-neutral-50 hover:bg-emerald-600/60 hover:text-neutral-50 
-              focus:outline-none focus:ring active:text-opacity-75 sm:w-auto transition-all
-              duration-200 ease-linear'
+              font-medium text-neutral-50 transition-all duration-200 
+              ease-linear hover:bg-emerald-600/60 hover:text-neutral-50 focus:outline-none focus:ring
+              active:text-opacity-75 sm:w-auto'
               onClick={() => {
                 history.push('/login')
               }}

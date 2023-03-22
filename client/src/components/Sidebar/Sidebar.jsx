@@ -45,13 +45,13 @@ export default function Sidebar() {
           toggleSidebar={toggleSidebar}
         />
         <SidebarItemSubMenu
-          path='/workflow'
-          title='Workflow'
+          path='/spaces'
+          title='Spaces'
           type='sub-menu'
-          icon='bx bx-list-check'
+          icon='bx bx-analyse'
           listMenu={[
-            { path: '/workflow', name: 'Overview' },
-            { path: '/works', name: 'Tasks' },
+            { path: '/spaces', name: 'Overview' },
+            { path: '/todos', name: 'Todos' },
             { path: '/projects', name: 'Projects ' }
           ]}
           toggleSidebar={toggleSidebar}

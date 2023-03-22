@@ -1,15 +1,15 @@
-import TimesheetsHeader from './components/TimesheetsHeader'
-import TimesheetsTable from './components/TimesheetsTable'
-import { getDayEnoughTime } from './services/getDayEnoughTime'
-import { getDayListByMonth } from './services/getDayListByMonth'
-import { getHistoryFromDate } from './services/getHistoryFromDate'
-import { handleMonths } from './services/handleDate'
 import { actFetchTimesheets } from 'actions'
 import { Motion } from 'components/Layouts'
 import CheckinFeature from 'features/checkin'
 import { getCheckinHour } from 'features/checkin/services/getCheckinHour'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import TimesheetsHeader from './components/TimesheetsHeader'
+import TimesheetsTable from './components/TimesheetsTable'
+import { getDayEnoughTime } from './services/getDayEnoughTime'
+import { getDayListByMonth } from './services/getDayListByMonth'
+import { getHistoryFromDate } from './services/getHistoryFromDate'
+import { handleMonths } from './services/handleDate'
 
 const now = () => {
   let date = new Date()
@@ -67,7 +67,10 @@ const TimesheetsFeature = ({ variants }) => {
   )
 
   return (
-    <Motion variants={variants} className='space-y-3 overflow-hidden'>
+    <Motion
+      variants={variants}
+      className='view-row space-y-3 overflow-hidden pb-4'
+    >
       <TimesheetsHeader
         title={tableTitle}
         previous={previous}
