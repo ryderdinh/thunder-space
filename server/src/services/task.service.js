@@ -77,6 +77,9 @@ const getTasks = async function (uid, skip) {
     ])
     return data
   } catch (err) {
+    if (err.code === 17124) {
+      return []
+    }
     return err
   }
 }
@@ -104,12 +107,24 @@ const changeIndex = async function (uid, data) {
 
 const deleteTasks = async function (uid, data) {
   try {
-    const result = await Staff.findByIdAndUpdate(uid, {
-      $pull: {
-        tasks: { tid: { $in: data } }
+    const result = await Staff.updateOne(
+      {
+        $and: [
+          { _id: uid },
+          {
+            'tasks.tid': {
+              $all: data
+            }
+          }
+        ]
+      },
+      {
+        $pull: {
+          tasks: { tid: { $in: data } }
+        }
       }
-    })
-    if (!result.isModified()) return false
+    )
+    if (result.modifiedCount === 0) return false
     return result
   } catch (err) {
     return err
