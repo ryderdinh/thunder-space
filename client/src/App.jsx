@@ -58,8 +58,8 @@ export default function App() {
         <div
           key='modal'
           className={`pointer-events-none fixed h-screen
-            w-full select-none
-            ${loading ? 'z-50' : 'z-50'}`}
+          w-full select-none
+          ${loading ? 'z-50' : 'z-50'}`}
         >
           <Loading load={loading} />
         </div>
@@ -67,7 +67,7 @@ export default function App() {
 
       <Route
         render={({ location }) => (
-          <AnimatePresence exitBeforeEnter>
+          <AnimatePresence mode='wait'>
             <Switch location={location} key={location.pathname}>
               {/* Landing page */}
               <Route exact path='/'>
@@ -100,9 +100,12 @@ export default function App() {
               </Route>
 
               {/* Todos pages */}
-              <Route exact path='/todos'>
+              <Route path='/todos'>
                 <Todos />
               </Route>
+              {/* <Route exact path='/todos/:tdid'>
+                <TodoItem />
+              </Route> */}
 
               {/* Project pages */}
               <Route exact path='/projects'>

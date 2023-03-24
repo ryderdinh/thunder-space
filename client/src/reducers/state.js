@@ -9,6 +9,7 @@ import report from './report'
 import staffInfomation from './staffInfomation'
 import timeKeeping from './timeKeeping'
 import timesheets from './timesheets'
+import todos from './todos'
 import users from './users'
 import workflow from './workflow'
 
@@ -24,5 +25,6 @@ export default combineReducers({
   _issue: issue,
   _users: users,
   _notification: notification,
+  _todos: todos,
   loading
 })
