@@ -14,7 +14,7 @@ import {
   removeToast,
   successToast
 } from 'utilities/toast'
-import { getCookie, setCookie } from '../units/cookieWeb'
+import { getCookie, removeCookie, setCookie } from '../units/cookieWeb'
 
 //? API ACTION
 export const actSignIn = (dataUser) => {
@@ -38,19 +38,20 @@ export const actSignIn = (dataUser) => {
       successToast('Cleaning up the space...', 'login')
       try {
         const res = await authApi.authorization(token)
-        toast.dismiss('login')
 
         setCookie([
           { key: 'id', value: res.data?._id.toString() },
           { key: 'token', value: token }
         ])
 
+        toast.dismiss('login')
+
         Promise.all([
           await dispatch(setStaffData(res.data)),
           await dispatch(actFetchTimeKeeping())
           // await dispatch(actFetchEvents())
         ]).then(() => {
-          successToast('Space is ready to operate', 'login-success')
+          successToast('Space is ready to operate', 'login')
           window.localStorage.setItem('thunder-space-login', 'true')
           dispatch(setCheckLogin(true))
         })
@@ -72,6 +73,7 @@ export const actLogout = (type, onSuccess) => {
     try {
       await authApi.logout(type)
       successToast('Goodbye 🖐️', 'logout')
+      removeCookie('all')
 
       onSuccess()
     } catch (error) {
@@ -190,13 +192,13 @@ export const actSendReport = (data) => {
 export const actRefreshPage = () => {
   const { id, token } = getCookie()
 
-  id && token && loadingToast('Logging in again...')
-
   if (!id && !token) {
     return (dispatch) => {
       dispatch(setCheckLogin(false))
     }
   }
+
+  id && token && loadingToast('Logging in again...')
 
   return async (dispatch) => {
     try {
@@ -220,7 +222,7 @@ export const actRefreshPage = () => {
       window.localStorage.setItem('thunder-space-login', 'false')
       removeToast()
       await dispatch(setCheckLogin(false))
-      errorToast('Please log in again')
+      errorToast('Please log in again', 'login')
     }
   }
 }
@@ -326,7 +328,7 @@ export const actCreateIssue = (pid, data, onSuccess, onError) => {
       const res = await issueApi.create(pid, data)
       onSuccess(res.data._id)
     } catch (error) {
-      errorToast(error.message)
+      errorToast(error.message, 'issue')
       onError(error.message)
     }
   }
@@ -342,6 +344,7 @@ export const actQueryIssue = (iid, callback) => {
       await dispatch(setDataIssue(res.data))
     } catch (error) {
       const err = error.message
+      errorToast('Have issue when get data!', 'issue')
       dispatch(setIssueError(err))
     }
   }
@@ -356,7 +359,7 @@ export const actUpdateIssue = (iid, data, onSuccess, onError) => {
     } catch (error) {
       const err = error.message
       onError(err)
-      errorToast(err, { id: 'update-issue' })
+      errorToast(err, 'update-issue')
       dispatch(setIssueError(err))
     }
   }
@@ -370,7 +373,7 @@ export const actUpdateStatusIssue = (iid, status, onSuccess, onError) => {
     } catch (error) {
       const err = error.message
       onError(err)
-      errorToast(err, { id: 'update-issue' })
+      errorToast(err, 'update-issue')
       dispatch(setIssueError(err))
     }
   }
@@ -381,13 +384,13 @@ export const actDeleteIssue = (iid, callback) => {
     try {
       const res = await issueApi.delete(iid)
 
-      successToast('Issue deleted')
+      successToast('Issue deleted', 'issue')
       await dispatch(setDataIssue(res.data))
       callback()
     } catch (error) {
       const err = error.message
 
-      errorToast(err)
+      errorToast(err, 'issue')
       dispatch(setIssueError(err))
     }
   }
