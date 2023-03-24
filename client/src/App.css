@@ -262,7 +262,7 @@ main.onblur {
 }
 
 .view-row {
-  @apply px-[15px] pt-[15px] xl:px-[25px] xl:pt-[25px] xs:px-5 xs:pt-5;
+  @apply pt-[15px] xl:pt-[25px] xs:pt-5;
 }
 
 .view-container .view_main .background-texture {

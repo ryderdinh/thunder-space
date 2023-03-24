@@ -178,8 +178,8 @@ export default function Issue() {
       {error !== 'issue does not exist' && !isErr && (
         <>
           <Row
-            className='sticky top-10 z-10 flex rounded-md bg-deepdark p-2 
-            md:static md:p-0'
+            className='view-row sticky top-10 z-10 flex rounded-md bg-deepdark pb-3
+            md:static'
           >
             <Col className='mb-2 w-full md:mb-0 md:w-1/2'>
               <Breadcumb list={breadcumbs} />

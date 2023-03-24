@@ -8,9 +8,9 @@ import Main from 'components/Main/Main'
 import ViewBox from 'components/Main/ViewMain/ViewBox'
 import ViewMain from 'components/Main/ViewMain/ViewMain'
 import { LayoutContext } from 'context/LayoutContext'
-import { useContext, useEffect, useRef, useState } from 'react'
+import { useCallback, useContext, useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { successToast } from 'utilities/toast'
+import { errorToast, successToast } from 'utilities/toast'
 
 const path = 'account'
 
@@ -25,6 +25,10 @@ export default function Profile() {
 
   const [selectedFiles, setSelectedFiles] = useState(undefined)
   const [uploadingImage, setUploadingImage] = useState(false)
+
+  const fetchInformation = useCallback(() => {
+    dispatch(actFetchStaffInfomation())
+  }, [dispatch])
 
   const changeFile = () => {
     imageInputRef.current.click()
@@ -50,18 +54,20 @@ export default function Profile() {
     try {
       await userApi.updateAvatar(formData)
 
-      successToast('Success')
+      successToast('Success', 'update-avatar')
       setSelectedFiles(undefined)
     } catch (error) {
-      console.log(error)
+      console.error(error)
+      errorToast('Invalid photo!', 'update-avatar')
     } finally {
+      fetchInformation()
       setUploadingImage(false)
     }
   }
 
   useEffect(() => {
-    dispatch(actFetchStaffInfomation())
-  }, [dispatch])
+    fetchInformation()
+  }, [fetchInformation])
 
   return (
     <Layout>

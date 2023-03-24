@@ -149,9 +149,7 @@ export default function ProjectDetail() {
         <>
           <Row
             className='view-row sticky top-0 z-10 bg-deepdark pb-3 
-            transition-all duration-500 ease-linear before:absolute
-            before:-top-[1px] before:left-0 before:z-[9] before:h-3 
-            before:w-full before:bg-inherit md:flex'
+            transition-all duration-500 ease-linear md:flex'
           >
             <Col className='mb-2 w-full md:mb-0 md:w-1/2'>
               <Breadcumb list={breadcumbs} />

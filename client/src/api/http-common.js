@@ -1,6 +1,8 @@
+import { setCheckLogin } from 'actions'
 import axios from 'axios'
 import { env } from 'config/environment'
 import queryString from 'query-string'
+import store from 'store'
 import { getCookie } from 'units/cookieWeb'
 
 const API_URL = env.apiUrl
@@ -35,9 +37,8 @@ axiosClient.interceptors.response.use(
   (error) => {
     //Handle error
     const originalRequest = error.response.data
-
     if (originalRequest.message === 'jwt expired') {
-      window.localStorage.setItem('thunder-space-login', 'false')
+      store.dispatch(setCheckLogin(false))
     }
 
     throw originalRequest
