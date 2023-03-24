@@ -1704,3 +1704,8 @@ main.onblur {
     max-height: none;
   }
 }
+
+.smooth-dnd-container {
+  @apply w-full;
+  flex: 1 1 0%;
+}
