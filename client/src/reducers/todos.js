@@ -1,5 +1,7 @@
 import {
+  REMOVE_TODOS_IIEM,
   SET_TODOS_DATA,
+  SET_TODOS_DATA_IIEM,
   SET_TODOS_ERROR,
   SET_TODOS_LOADING,
   UPDATE_TODOS_DATA
@@ -66,11 +68,43 @@ export default function todoReducer(state = initState, action) {
         _data: payload
       }
     }
+    case SET_TODOS_DATA_IIEM: {
+      return {
+        isLoading: false,
+        error: '',
+        _data: {
+          ...state._data,
+          [payload.colName]: {
+            ...state._data[payload.colName],
+            cards: state._data[payload.colName].cards.map((card) =>
+              card._id === payload.id ? { ...card, ...payload.data } : card
+            )
+          }
+        }
+      }
+    }
     case UPDATE_TODOS_DATA: {
       return {
         isLoading: false,
         error: '',
         _data: { ...state._data, [payload.colName]: payload.data }
+      }
+    }
+    case REMOVE_TODOS_IIEM: {
+      return {
+        isLoading: false,
+        error: '',
+        _data: {
+          ...state._data,
+          [payload.colName]: {
+            cards: state._data[payload.colName].cards.filter(
+              (card) => card._id !== payload.id
+            ),
+            cardOrder: state._data[payload.colName].cardOrder.filter(
+              (id) => id !== payload.id
+            )
+          }
+        }
       }
     }
     default:
