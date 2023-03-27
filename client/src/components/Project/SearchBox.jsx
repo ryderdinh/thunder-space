@@ -21,8 +21,8 @@ function SearchBox({ defaultValue, placeholder, handleSearch, inputProps }) {
           placeholder={placeholder}
           type='text'
           className='text-scale-1200 focus:border-scale-900 focus:ring-scale-400 
-          placeholder-scale-800 bg-scaleA-200 border-scale-700 box-border block 
-          h-9 w-full rounded-md border px-2.5 py-2 pl-10 text-xs shadow-sm
+          placeholder-scale-800 bg-scaleA-200 border-scale-700 rounded-md box-border 
+          block h-9 w-full border px-2.5 py-2 pl-10 text-xs shadow-sm
           outline-none transition-all focus:shadow-md focus:ring-2 focus:ring-current'
           value={defaultValue}
           {...bind}
@@ -36,7 +36,7 @@ function SearchBox({ defaultValue, placeholder, handleSearch, inputProps }) {
           items-center pl-3 '
         >
           <div className='text-scale-900'>
-            <SearchIcon />
+            <MagnifyingGlassIcon />
           </div>
         </div>
       </form>
@@ -46,7 +46,7 @@ function SearchBox({ defaultValue, placeholder, handleSearch, inputProps }) {
 
 export default SearchBox
 
-function SearchIcon() {
+function MagnifyingGlassIcon() {
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'

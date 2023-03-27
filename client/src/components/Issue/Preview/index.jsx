@@ -1,4 +1,4 @@
-import { ClockIcon } from '@heroicons/react/solid'
+import { ClockIcon } from '@heroicons/react/24/solid'
 import { actUpdateIssue, actUpdateStatusIssue, setDataIssue } from 'actions'
 import ArrowPathIcon from 'components/Icon/ArrowPathIcon'
 import { LayoutContext } from 'context/LayoutContext'
@@ -120,7 +120,7 @@ const IssuePreview = ({ dataIssue, dataProject, className = '' }) => {
 
   return (
     <motion.div
-      className={`${className} relative h-max w-full rounded-md 
+      className={`${className} rounded-md relative h-max w-full 
       border-2 bg-[#1F1F1F] bg-no-repeat px-5 pt-2 pb-5
       ${dataIssue.type === 'task' ? 'border-[#10B99F]' : 'border-[#EA6767]'}`}
       variants={variantGlobal(3, 0.2)}
@@ -141,7 +141,7 @@ const IssuePreview = ({ dataIssue, dataProject, className = '' }) => {
 
           <div className='mt-3 flex w-full items-center gap-2'>
             <div
-              className='flex items-center gap-2 rounded-md bg-neutral-50/40 
+              className='rounded-md flex items-center gap-2 bg-neutral-50/40 
               px-2 py-1'
             >
               <div className='flex items-center gap-1'>
@@ -180,7 +180,7 @@ const IssuePreview = ({ dataIssue, dataProject, className = '' }) => {
                 }}
               >
                 <div
-                  className='relative h-5 w-5 overflow-hidden rounded-full 
+                  className='rounded-full relative h-5 w-5 overflow-hidden 
                   ring-2 ring-neutral-50'
                 >
                   <img

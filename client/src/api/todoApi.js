@@ -1,11 +1,16 @@
 import axiosClient from './http-common'
 
 const todoApi = {
+  createTodo: (data) => {
+    const url = '/tasks'
+    return axiosClient.post(url, data)
+  },
   getTodos: () => {
     const url = '/tasks'
     return axiosClient.get(url)
   },
   updateIndexTodo: (data) => {
+    console.log(true)
     const url = '/tasks'
     return axiosClient.patch(url, data)
   },

@@ -10,39 +10,8 @@ import {
 const initState = {
   _data: {
     todo: {
-      cards: [
-        {
-          numTask: 2,
-          _id: '1',
-          title: 'task1',
-          status: 'doing',
-          pin: false,
-          description: 'abc',
-          createdAt: '2023-03-22T08:34:13.797Z',
-          updatedAt: '2023-03-22T08:34:13.797Z'
-        },
-        {
-          numTask: 2,
-          _id: '2',
-          title: 'task2',
-          status: 'doing',
-          pin: false,
-          description: 'abc',
-          createdAt: '2023-03-22T08:34:13.797Z',
-          updatedAt: '2023-03-22T08:34:13.797Z'
-        },
-        {
-          numTask: 2,
-          _id: '3',
-          title: 'task3',
-          status: 'doing',
-          pin: false,
-          description: 'abc',
-          createdAt: '2023-03-22T08:34:13.797Z',
-          updatedAt: '2023-03-22T08:34:13.797Z'
-        }
-      ],
-      cardOrder: ['1', '2', '3']
+      cards: [],
+      cardOrder: []
     },
     doing: { cards: [], cardOrder: [] },
     completed: { cards: [], cardOrder: [] }

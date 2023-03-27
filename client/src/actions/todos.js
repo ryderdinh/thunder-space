@@ -10,6 +10,31 @@ import {
 import { convertTodoDataByStatus } from 'utilities/convert'
 
 //? Action
+export const actCreateTodo = (
+  title,
+  description,
+  pin = false,
+  status = 'todo',
+  onSuccess
+) => {
+  return async (dispatch) => {
+    await dispatch(setTodosLoading())
+
+    try {
+      await todoApi.createTodo({
+        title,
+        description,
+        pin,
+        status
+      })
+      onSuccess && onSuccess()
+    } catch (error) {
+      console.error(error)
+      await dispatch(setTodosError(error.message))
+    }
+  }
+}
+
 export const actFetchTodos = () => {
   return async (dispatch) => {
     await dispatch(setTodosLoading())
@@ -18,16 +43,14 @@ export const actFetchTodos = () => {
       const res = await todoApi.getTodos()
       await dispatch(
         setTodosData({
-          data: {
-            todos: {
-              ...convertTodoDataByStatus(res.data, 'todo')
-            },
-            doing: {
-              ...convertTodoDataByStatus(res.data, 'doing')
-            },
-            completed: {
-              ...convertTodoDataByStatus(res.data, 'completed')
-            }
+          todo: {
+            ...convertTodoDataByStatus(res.data, 'todo')
+          },
+          doing: {
+            ...convertTodoDataByStatus(res.data, 'doing')
+          },
+          completed: {
+            ...convertTodoDataByStatus(res.data, 'completed')
           }
         })
       )
@@ -37,34 +60,69 @@ export const actFetchTodos = () => {
   }
 }
 
-export const actUpdateIndexTodos = (type, data) => {
+export const actUpdateIndexTodosLocal = (type, data, onSuccess) => {
   return async (dispatch) => {
-    await dispatch(setTodosLoading())
-
     try {
-      await todoApi.updateIndexTodo()
-      await dispatch(updateTodosData({ colName: type, data }))
+      await dispatch(
+        updateTodosData({
+          colName: type,
+          data
+        })
+      )
+      onSuccess && onSuccess()
     } catch (error) {
-      await dispatch(setTodosError(error.message))
+      console.error(error)
     }
   }
 }
 
-export const actUpdateTodoItem = (type, id, data) => {
+export const actUpdateIndexTodos = (data, currentData) => {
   return async (dispatch) => {
     await dispatch(setTodosLoading())
+    try {
+      await todoApi.updateIndexTodo(data.map((item) => ({ tid: item })))
+    } catch (error) {
+      console.error(error)
+      await dispatch(setTodosError(error.message))
+      Promise.all([
+        await dispatch(
+          updateTodosData({ colName: 'todo', data: currentData['todo'] })
+        ),
+        await dispatch(
+          updateTodosData({ colName: 'doing', data: currentData['doing'] })
+        ),
+        await dispatch(
+          updateTodosData({
+            colName: 'completed',
+            data: currentData['completed']
+          })
+        )
+      ])
+    }
+  }
+}
+
+export const actUpdateTodoItem = (type, id, data, oldData) => {
+  return async (dispatch) => {
+    await dispatch(
+      setTodosDataItems({
+        colName: type,
+        id,
+        data
+      })
+    )
 
     try {
       await todoApi.updateTodoItem(id, data)
+    } catch (error) {
+      await dispatch(setTodosError(error.message))
       await dispatch(
         setTodosDataItems({
           colName: type,
           id,
-          data
+          oldData
         })
       )
-    } catch (error) {
-      await dispatch(setTodosError(error.message))
     }
   }
 }

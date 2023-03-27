@@ -28,7 +28,8 @@
   margin: 0;
   box-sizing: border-box;
 
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: 'Be Vietnam Pro', sans-serif;
+  /* font-family: 'Space Grotesk', sans-serif; */
 
   scroll-behavior: smooth;
 }

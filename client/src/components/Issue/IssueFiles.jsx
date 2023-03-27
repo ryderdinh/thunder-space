@@ -1,5 +1,5 @@
 import { useAutoAnimate } from '@formkit/auto-animate/react'
-import { CloudUploadIcon, XIcon } from '@heroicons/react/solid'
+import { CloudArrowUpIcon, XMarkIcon } from '@heroicons/react/24/solid'
 import ButtonSuccess from 'components/Button/ButtonSuccess'
 import { getClassWithColor } from 'file-icons-js'
 import 'file-icons-js/css/style.css'
@@ -58,8 +58,8 @@ const IssueFiles = ({
 
       <div
         ref={wrapperRef}
-        className={`relative mt-1 flex w-full justify-center 
-        rounded-md border-2 border-dashed border-neutral-500 px-6 
+        className={`rounded-md relative mt-1 flex w-full 
+        justify-center border-2 border-dashed border-neutral-500 px-6 
         pt-5 pb-6 transition-all duration-200 ease-in-out hover:bg-neutral-600`}
         onDragEnter={onDragEnter}
         onDragLeave={onDragLeave}
@@ -75,11 +75,11 @@ const IssueFiles = ({
           ref={fileRef}
         />
         <div className='relative space-y-1 text-center'>
-          <CloudUploadIcon className='m-auto h-10 w-10 text-neutral-300' />
+          <CloudArrowUpIcon className='m-auto h-10 w-10 text-neutral-300' />
           <div className='flex text-sm text-neutral-500'>
             <label
               htmlFor='file-upload'
-              className='relative cursor-pointer rounded-md
+              className='rounded-md relative cursor-pointer
               font-medium text-emerald-600 focus-within:outline-none
               hover:text-emerald-500'
             >
@@ -101,7 +101,7 @@ const IssueFiles = ({
             {fileList.map(({ file, id }, index) => (
               <div
                 key={id}
-                className='relative col-span-1 rounded-md bg-neutral-700 
+                className='rounded-md relative col-span-1 bg-neutral-700 
                 py-3 px-3'
               >
                 <div className='flex items-center space-x-2'>
@@ -141,12 +141,12 @@ const IssueFiles = ({
                   justify-center'
                 >
                   <div
-                    className='group flex h-8 w-8 cursor-pointer items-center 
-                    justify-center rounded-full bg-neutral-600 transition-all 
+                    className='rounded-full group flex h-8 w-8 cursor-pointer 
+                    items-center justify-center bg-neutral-600 transition-all 
                     duration-200 ease-linear hover:bg-neutral-400'
                     onClick={() => removeFile(index)}
                   >
-                    <XIcon
+                    <XMarkIcon
                       className='h-4 w-4 text-neutral-300 
                       transition-all duration-200 ease-linear 
                       group-hover:text-neutral-50'

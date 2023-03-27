@@ -1,5 +1,5 @@
-import { Transition } from '@headlessui/react'
-import { Fragment, useCallback, useMemo, useState } from 'react'
+import { AnimatePresence, motion } from 'framer-motion'
+import { useCallback, useMemo, useState } from 'react'
 
 const Tooltip = ({
   children,
@@ -41,47 +41,43 @@ const Tooltip = ({
           {children}
         </div>
 
-        <Transition
-          as={Fragment}
-          show={open}
-          enter='transition ease-out duration-200'
-          enterFrom='opacity-0 translate-y-1'
-          enterTo='opacity-100 translate-y-0'
-          leave='transition ease-in duration-150 delay-200'
-          leaveFrom='opacity-100 translate-y-0'
-          leaveTo='opacity-0 translate-y-1'
-        >
-          <div
-            className={`absolute bottom-[calc(100%_+_10px)] left-1/2 z-10 w-max max-w-[300px] 
-            -translate-x-1/2 transform px-4`}
-          >
-            <div
-              className='space-y-4 overflow-hidden rounded-md shadow-lg 
-              ring-1 ring-neutral-600 ring-opacity-5'
+        <AnimatePresence mode={'wait'}>
+          {open ? (
+            <motion.div
+              className={`absolute left-1/2 bottom-[calc(100%+5px)] z-50 w-max
+              max-w-[300px] -translate-x-1/2 transform px-4`}
             >
-              <div className='bg-white px-2 py-2'>
-                {/* Tooltop title */}
-                {title ? (
-                  <div className='flex items-center gap-3'>
-                    {showIconTitle ? (
-                      <div
-                        className='flex h-7 w-7 flex-shrink-0 items-center 
-                      justify-center text-white'
-                      >
-                        <IconThree aria-hidden='true' />
-                      </div>
-                    ) : null}
+              <motion.div
+                className='space-y-4
+                shadow-lg'
+                initial={{ opacity: 0, y: 0 }}
+                animate={{ opacity: 100, y: -1 }}
+                exit={{ opacity: 0, y: 0 }}
+              >
+                <div className='rounded-md border-2 border-gray-400 bg-gray-800 px-2 py-1 '>
+                  {/* Tooltop title */}
+                  {title ? (
+                    <div className='flex items-center gap-3'>
+                      {showIconTitle ? (
+                        <div
+                          className='flex h-7 w-7 flex-shrink-0 items-center 
+                          justify-center text-white'
+                        >
+                          <IconThree aria-hidden='true' />
+                        </div>
+                      ) : null}
 
-                    <p className='text-sm font-medium text-gray-900'>{title}</p>
-                  </div>
-                ) : null}
+                      <p className='text-sm font-medium text-white'>{title}</p>
+                    </div>
+                  ) : null}
 
-                {/* Main content */}
-                <div>{component}</div>
-              </div>
-            </div>
-          </div>
-        </Transition>
+                  {/* Main content */}
+                  <div>{component}</div>
+                </div>
+              </motion.div>
+            </motion.div>
+          ) : null}
+        </AnimatePresence>
       </div>
     </div>
   )

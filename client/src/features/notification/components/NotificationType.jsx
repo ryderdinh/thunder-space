@@ -1,5 +1,5 @@
 import { Listbox, Transition } from '@headlessui/react'
-import { CheckIcon, SelectorIcon } from '@heroicons/react/solid'
+import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/24/solid'
 import { Fragment } from 'react'
 
 export default function NotificationType({
@@ -12,10 +12,10 @@ export default function NotificationType({
     <div className={`w-36 ${className} `}>
       <Listbox value={currentTag} onChange={setCurrentTag}>
         <div className='relative mt-1'>
-          <Listbox.Button className='relative w-full cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm'>
+          <Listbox.Button className='rounded-lg relative w-full cursor-default bg-white py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm'>
             <span className='block truncate'>{currentTag}</span>
             <span className='pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2'>
-              <SelectorIcon
+              <ChevronUpDownIcon
                 className='h-5 w-5 text-gray-400'
                 aria-hidden='true'
               />
@@ -27,7 +27,7 @@ export default function NotificationType({
             leaveFrom='opacity-100'
             leaveTo='opacity-0'
           >
-            <Listbox.Options className='absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm'>
+            <Listbox.Options className='rounded-md absolute mt-1 max-h-60 w-full overflow-auto bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm'>
               {tags.map((tag, idx) => (
                 <Listbox.Option
                   key={idx}

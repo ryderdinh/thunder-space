@@ -1,4 +1,4 @@
-import { ChevronRightIcon, PlusIcon } from '@heroicons/react/solid'
+import { ChevronRightIcon, PlusIcon } from '@heroicons/react/24/solid'
 import { actQueryProject, setInitialProject } from 'actions'
 import 'assets/css/project.css'
 import { Breadcumb } from 'components/Breadcumb/Breadcumb'
@@ -99,8 +99,8 @@ export default function ProjectsOverview() {
               defaultValue={defaultSearchValue}
             />
             <button
-              className='panel inline-flex h-9 w-max items-center 
-              justify-center gap-1 rounded-md bg-opacity-20 py-2 px-4
+              className='panel rounded-md inline-flex h-9 w-max 
+              items-center justify-center gap-1 bg-opacity-20 py-2 px-4
               text-sm font-medium text-neutral-200 outline-none
               transition-all 
               duration-200
@@ -172,8 +172,8 @@ function ProjectItemGrid({ config, projectOverview, variants }) {
       onClick={initDataPreviewProject}
     >
       <motion.div
-        className='card-panel-a group relative flex h-36 w-full 
-        cursor-pointer overflow-hidden rounded-md border
+        className='card-panel-a rounded-md group relative flex h-36 
+        w-full cursor-pointer overflow-hidden border
         duration-150 ease-in-out'
         variants={variants}
         initial='initial'
@@ -200,8 +200,8 @@ function ProjectItemGrid({ config, projectOverview, variants }) {
               {projectOverview.member.map((member, index) =>
                 index > 5 ? null : (
                   <div
-                    className='relative z-[2] inline-block h-6 w-6 
-                    overflow-hidden rounded-full ring-2 
+                    className='rounded-full relative z-[2] inline-block h-6 
+                    w-6 overflow-hidden ring-2 
                     ring-[color:var(--background-panel)]'
                     key={index}
                   >

@@ -1,5 +1,5 @@
 import { Disclosure } from '@headlessui/react'
-import { ChevronUpIcon, EyeIcon, PencilIcon } from '@heroicons/react/solid'
+import { ChevronUpIcon, EyeIcon, PencilIcon } from '@heroicons/react/24/solid'
 import {
   actDeleteIssue,
   actFetchProject,
@@ -165,8 +165,8 @@ export default function Issue() {
           </p>
           <Link to={'/projects'}>
             <button
-              className='m-auto block 
-              rounded-md bg-emerald-500 px-4 py-2 text-sm font-semibold 
+              className='rounded-md m-auto 
+              block bg-emerald-500 px-4 py-2 text-sm font-semibold 
               leading-6 text-neutral-50 shadow'
             >
               Return to projects
@@ -178,7 +178,7 @@ export default function Issue() {
       {error !== 'issue does not exist' && !isErr && (
         <>
           <Row
-            className='view-row sticky top-10 z-10 flex rounded-md bg-deepdark pb-3
+            className='view-row rounded-md sticky top-10 z-10 flex bg-deepdark pb-3
             md:static'
           >
             <Col className='mb-2 w-full md:mb-0 md:w-1/2'>
@@ -188,8 +188,8 @@ export default function Issue() {
             <Col className='w-max md:w-1/2'>
               <div className='z-10 flex w-full justify-end gap-2'>
                 <button
-                  className='panel inline-flex h-9 w-max items-center 
-                  justify-center gap-1 rounded-md bg-opacity-20 py-2 px-4
+                  className='panel rounded-md inline-flex h-9 w-max 
+                  items-center justify-center gap-1 bg-opacity-20 py-2 px-4
                   text-sm font-medium text-neutral-200 outline-none
                   transition-all 
                   duration-200
@@ -247,9 +247,9 @@ export default function Issue() {
 
                     {!descriptionPanel.edit && (
                       <div
-                        className='absolute top-0 left-0 -z-10 flex h-full 
-                        w-full items-center justify-center space-x-1 
-                        rounded-lg bg-neutral-500/50 opacity-0
+                        className='rounded-lg absolute top-0 left-0 -z-10 flex 
+                        h-full w-full items-center justify-center 
+                        space-x-1 bg-neutral-500/50 opacity-0
                         transition-all duration-300 ease-linear 
                         group-hover:z-[1] group-hover:cursor-pointer 
                         group-hover:opacity-100'
@@ -343,7 +343,7 @@ function DisclosureCustom({
 }) {
   return (
     <motion.div
-      className='group relative w-full rounded-lg border 
+      className='rounded-lg group relative w-full border 
       border-[#282828] bg-[#1f1f1f]'
       variants={variantGlobal(4, delayShow)}
       initial='initial'
@@ -354,7 +354,7 @@ function DisclosureCustom({
         {({ open }) => (
           <>
             <Disclosure.Button
-              className='flex w-full justify-between rounded-lg px-4 py-2 
+              className='rounded-lg flex w-full justify-between px-4 py-2 
               text-left text-sm font-medium'
             >
               <TitlePanel name={title}>

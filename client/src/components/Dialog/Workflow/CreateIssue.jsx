@@ -1,5 +1,5 @@
 import { Dialog, Listbox, Transition } from '@headlessui/react'
-import { CheckIcon, ChevronDownIcon } from '@heroicons/react/solid'
+import { CheckIcon, ChevronDownIcon } from '@heroicons/react/24/solid'
 import { joiResolver } from '@hookform/resolvers/joi'
 import { actCreateIssue } from 'actions'
 import 'assets/css/pickydatetime.css'
@@ -81,7 +81,7 @@ export default function CreateIssue({ closeModal }) {
       <input
         type='text'
         autoComplete='none'
-        className='mt-1 block w-full rounded-md border border-neutral-300 
+        className='rounded-md mt-1 block w-full border border-neutral-300 
         py-[7px] pl-3 shadow-sm focus:border-emerald-500 focus:outline-none 
         focus:ring-2 focus:ring-emerald-500 sm:text-sm'
         onClick={onClick}
@@ -120,8 +120,8 @@ export default function CreateIssue({ closeModal }) {
         leaveTo='opacity-0 scale-95'
       >
         <div
-          className='relative my-8 inline-block w-full max-w-5xl transform
-          rounded-md border border-neutral-800 bg-[#232323] p-4 text-left align-middle 
+          className='rounded-md relative my-8 inline-block w-full max-w-5xl
+          transform border border-neutral-800 bg-[#232323] p-4 text-left align-middle 
           shadow-xl transition-all md:w-4/5 md:p-6'
         >
           <Dialog.Title
@@ -149,7 +149,7 @@ export default function CreateIssue({ closeModal }) {
                         {...register('name')}
                         type='text'
                         autoComplete='none'
-                        className='mt-1 block w-full rounded-md border border-neutral-300 
+                        className='rounded-md mt-1 block w-full border border-neutral-300 
                         py-[7px] pl-3 shadow-sm focus:border-emerald-500 focus:outline-none 
                         focus:ring-2 focus:ring-emerald-500 sm:text-sm'
                       />
@@ -173,7 +173,7 @@ export default function CreateIssue({ closeModal }) {
                         type='text'
                         value={_dataProject?.name || ''}
                         onChange={() => {}}
-                        className='mt-1 block w-full rounded-md border border-neutral-300
+                        className='rounded-md mt-1 block w-full border border-neutral-300
                         p-1 py-[7px] pl-3 shadow-sm focus:outline-none 
                         disabled:border-neutral-200 disabled:bg-neutral-50 
                         disabled:text-neutral-500 sm:text-sm'
@@ -291,7 +291,7 @@ function ListBoxNonMultiple({ selectList, ...props }) {
     <Listbox value={value} onChange={onChange}>
       <div className='relative mt-1 w-full'>
         <Listbox.Button
-          className='relative w-full cursor-default rounded-lg
+          className='rounded-lg relative w-full cursor-default
           bg-white py-2 pl-3 pr-10 text-left shadow-md focus:outline-none
           focus-visible:border-emerald-500 focus-visible:ring-2 
           focus-visible:ring-white focus-visible:ring-opacity-75 
@@ -317,8 +317,8 @@ function ListBoxNonMultiple({ selectList, ...props }) {
           leaveTo='opacity-0'
         >
           <Listbox.Options
-            className='absolute z-10 mt-1 max-h-60 w-full
-            overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1
+            className='rounded-md absolute z-10 mt-1 max-h-60
+            w-full overflow-auto bg-white py-1 text-base shadow-lg ring-1
             ring-neutral-900 ring-opacity-5 focus:outline-none sm:text-sm'
           >
             {selectList.map((item, index) => (
@@ -382,7 +382,7 @@ function ListBoxImageNonMultiple({ people, ...props }) {
     >
       <div className='relative mt-1 w-full'>
         <Listbox.Button
-          className='relative w-full cursor-default rounded-lg
+          className='rounded-lg relative w-full cursor-default
           bg-white py-2 pl-3 pr-10 text-left shadow-md focus:outline-none
           focus-visible:border-emerald-500 focus-visible:ring-2 
           focus-visible:ring-white focus-visible:ring-opacity-75 
@@ -409,8 +409,8 @@ function ListBoxImageNonMultiple({ people, ...props }) {
           leaveTo='opacity-0'
         >
           <Listbox.Options
-            className='absolute z-10 mt-1 max-h-60 w-full overflow-auto
-            rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-neutral-900
+            className='rounded-md absolute z-10 mt-1 max-h-60 w-full
+            overflow-auto bg-white py-1 text-base shadow-lg ring-1 ring-neutral-900
             ring-opacity-5 focus:outline-none sm:text-sm'
           >
             {people.map((person) => (
@@ -440,7 +440,7 @@ function ListBoxImageNonMultiple({ people, ...props }) {
                       >
                         <img
                           src={person.avatar}
-                          className='h-8 w-8 rounded-full object-cover transition-all group-hover:scale-110'
+                          className='rounded-full h-8 w-8 object-cover transition-all group-hover:scale-110'
                           alt='avatar'
                         />
                       </span>

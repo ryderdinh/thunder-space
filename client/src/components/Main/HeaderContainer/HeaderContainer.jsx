@@ -1,6 +1,6 @@
 import { Popover } from '@headlessui/react'
-import { BellIcon } from '@heroicons/react/outline'
-import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/solid'
+import { BellIcon } from '@heroicons/react/24/outline'
+import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid'
 import { LayoutContext } from 'context/LayoutContext'
 import { useContext, useEffect, useState } from 'react'
 import './HeaderContainer.css'
@@ -64,13 +64,13 @@ export default function HeaderContainer({ pathName }) {
               >
                 <BellIcon className='w-4 text-neutral-50/75' />
 
-                <span class='absolute -right-1 -top-1 flex h-2 w-2'>
+                <span className='absolute -right-1 -top-1 flex h-2 w-2'>
                   <span
-                    class='absolute inline-flex h-full w-full 
-                    animate-ping rounded-full bg-emerald-400 opacity-75'
+                    className='rounded-full absolute inline-flex h-full 
+                    w-full animate-ping bg-emerald-400 opacity-75'
                   ></span>
                   <span
-                    class='relative inline-flex h-2 w-2 rounded-full 
+                    className='rounded-full relative inline-flex h-2 w-2 
                     bg-emerald-500'
                   ></span>
                 </span>

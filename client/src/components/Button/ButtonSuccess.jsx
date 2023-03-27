@@ -13,8 +13,6 @@ const ButtonSuccess = ({
     !loading && !disabled && onClick()
   }
 
-  console.log(loading, disabled)
-
   return (
     <div
       className={`relative h-max cursor-pointer select-none overflow-hidden

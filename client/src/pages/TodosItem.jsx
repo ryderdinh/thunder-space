@@ -23,7 +23,6 @@ export default function TodoItem({ todoId }) {
   const data = useMemo(
     () =>
       items.filter((item) => {
-        console.log(item, todoId)
         return item.id === Number(todoId)
       })[0] || {},
     [todoId]

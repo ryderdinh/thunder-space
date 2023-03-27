@@ -38,8 +38,6 @@ export default function App() {
     dispatch(actRefreshPage())
   }, [dispatch])
 
-  console.log(1, loading)
-
   return (
     <>
       <Toaster position='top-center' reverseOrder={true} />
