@@ -1,5 +1,7 @@
 const History = require('../models/History')
 const Issue = require('../models/Issue')
+const service = require('../services/index')
+const { ObjectId } = require('mongoose').Types
 
 const changeStatus = async function (iid, uid, status) {
   let query
@@ -84,7 +86,114 @@ const userInIssue = async function (iid, uid) {
   return true
 }
 
+const createIssue = async function ({
+  assign,
+  uid,
+  pid,
+  code,
+  name,
+  type,
+  estimate,
+  priority,
+  description = '',
+  status = 'pending'
+}) {
+  try {
+    const newIssue = new Issue({
+      name,
+      code,
+      type,
+      creator: uid,
+      assign,
+      estimate: {
+        start: Date.now(),
+        end: estimate
+      },
+      description,
+      priority,
+      project: pid,
+      status
+    })
+    const err = newIssue.validateSync()
+    await newIssue.save()
+    if (err) return err
+    return newIssue
+  } catch (err) {
+    return err
+  }
+}
+
+const getDetailsIssueById = async function (iid) {
+  try {
+    const issue = await Issue.aggregate([
+      {
+        $match: {
+          _id: new ObjectId(`${iid}`)
+        }
+      },
+      {
+        $lookup: {
+          from: 'staffs',
+          localField: 'creator',
+          foreignField: '_id',
+          as: 'creator'
+        }
+      },
+      {
+        $lookup: {
+          from: 'staffs',
+          localField: 'assign',
+          foreignField: '_id',
+          as: 'assign'
+        }
+      },
+      {
+        $unwind: {
+          path: '$creator'
+        }
+      },
+      {
+        $unwind: {
+          path: '$assign'
+        }
+      },
+      {
+        $project: {
+          _id: 1,
+          name: 1,
+          code: 1,
+          type: 1,
+          project: 1,
+          creator: {
+            name: 1,
+            'avatar.url': 1,
+            _id: 1
+          },
+          assign: {
+            name: 1,
+            'avatar.url': 1,
+            _id: 1
+          },
+          estimate: 1,
+          description: 1,
+          priority: 1,
+          attachment: 1,
+          status: 1,
+          createdAt: 1,
+          updatedAt: 1
+        }
+      }
+    ])
+    const { history } = await service.history.getInIssue(iid)
+    return { ...issue, history }
+  } catch (err) {
+    console.log(err)
+    return err
+  }
+}
 module.exports = {
   changeStatus,
-  userInIssue
+  userInIssue,
+  createIssue,
+  getDetailsIssueById
 }

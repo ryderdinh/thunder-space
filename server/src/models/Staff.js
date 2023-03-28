@@ -102,7 +102,7 @@ Staff.methods.generateToken = async function (password) {
         { _id: this._id.toString() },
         process.env.ACCESS_TOKEN_SECRET,
         {
-          expiresIn: '60m'
+          expiresIn: process.env.TOKEN_EXPIRE_TIME
         }
       )
       return token

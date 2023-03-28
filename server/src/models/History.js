@@ -3,7 +3,7 @@ const Schema = mongoose.Schema
 
 const History = new Schema(
   {
-    user: [
+    users: [
       {
         uid: {
           type: mongoose.Schema.Types.ObjectId,

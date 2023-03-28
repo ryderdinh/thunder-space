@@ -65,15 +65,15 @@ const getTasks = async function (uid, skip) {
           description: '$tasks.description',
           createdAt: '$tasks.createdAt',
           updatedAt: '$tasks.updatedAt',
-          numTask: 1
+          // numTask: 1
         }
       },
-      {
-        $skip: +skip || 0
-      },
-      {
-        $limit: 10
-      }
+      // {
+      //   $skip: +skip || 0
+      // },
+      // {
+      //   $limit: 10
+      // }
     ])
     return data
   } catch (err) {

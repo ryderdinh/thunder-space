@@ -26,6 +26,6 @@ module.exports = async function (req, res, next) {
     next()
   } catch (err) {
     logger.error(err.message)
-    return res.status(400).send(new Response(400, 'something went wrong !'))
+    return res.status(400).send(new Response(400, 'something went wrong'))
   }
 }

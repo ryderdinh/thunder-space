@@ -4,7 +4,7 @@ const apiGetOneIssueInProject = require('../../controller/users/issue/apiGetOneI
 const apiGetAllIssueInProject = require('../../controller/users/issue/apiGetAllIssueInProject')
 const apiDeleteOneIssue = require('../../controller/users/issue/apiDeleteOneIssue')
 const apiUpdateOneIssue = require('../../controller/users/issue/apiUpdateOneIssue')
-const apiPostIssue = require('../../controller/users/issue/apiPostIssue')
+const createIssue = require('../../controller/users/issue/createIssue')
 const apiPostFile = require('../../controller/users/issue/apiUploadFIle')
 const getHistory = require('../../controller/users/issue/getHistories')
 const changeStatus = require('../../controller/users/issue/changeStatus')
@@ -14,6 +14,7 @@ const issueMiddleware = require('../../middleware/user/issue/index')
 exports.apiGetOneIssueInProject = router.get(
   '/issues/:iid',
   authenticateToken,
+  issueMiddleware.existProjectToGetOne,
   apiGetOneIssueInProject
 )
 //Get all issues in a project
@@ -36,13 +37,13 @@ exports.apiUpdateOneIssue = router.put(
   apiUpdateOneIssue
 )
 //Assign a issue for a member in project
-exports.apiPostIssue = router.post(
+exports.createIssue = router.post(
   '/projects/:pid/issues/create',
   authenticateToken,
   validate('issueValidation', 'createIssue'),
-  issueMiddleware.existProject,
+  issueMiddleware.existProjectToCreate,
   issueMiddleware.existUserAssigned,
-  apiPostIssue
+  createIssue
 )
 
 //Assign change status
