@@ -102,7 +102,15 @@ export const actUpdateIndexTodos = (data, currentData) => {
   }
 }
 
-export const actUpdateTodoItem = (type, id, data, oldData) => {
+export const actUpdateTodoItem = (
+  type,
+  id,
+  data,
+  oldData,
+  onPending,
+  onSuccess,
+  onError
+) => {
   return async (dispatch) => {
     await dispatch(
       setTodosDataItems({
@@ -112,9 +120,13 @@ export const actUpdateTodoItem = (type, id, data, oldData) => {
       })
     )
 
+    onPending && onPending()
+
     try {
       await todoApi.updateTodoItem(id, data)
+      onSuccess && onSuccess()
     } catch (error) {
+      onError && onError(error.message)
       await dispatch(setTodosError(error.message))
       await dispatch(
         setTodosDataItems({

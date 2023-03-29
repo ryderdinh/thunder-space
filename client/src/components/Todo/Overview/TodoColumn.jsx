@@ -1,7 +1,7 @@
 import { PencilIcon } from '@heroicons/react/24/solid'
 import { actUpdateIndexTodosLocal, actUpdateTodoItem } from 'actions/todos'
 import ButtonSuccess from 'components/Button/ButtonSuccess'
-import { motion } from 'framer-motion'
+import { LayoutGroup, motion } from 'framer-motion'
 import { useMemo } from 'react'
 import { useDispatch } from 'react-redux'
 import { Container, Draggable } from 'react-smooth-dnd'
@@ -78,7 +78,7 @@ const TodoColumn = ({ type, cards = [], cardOrder = [], whenDrop }) => {
   }
 
   return (
-    <div className='card-list w-1/3 snap-end space-y-[30px]'>
+    <div className='card-list w-1/3 min-w-[406px] snap-end space-y-[30px]'>
       <div
         className='rounded-5 border border-gray-500 
         bg-gray-800 py-3 px-5'
@@ -141,11 +141,18 @@ const TodoColumn = ({ type, cards = [], cardOrder = [], whenDrop }) => {
           }}
           // dropPlaceholderAnimationDuration={300}
         >
-          {cardsSorted.map((card, idx) => (
-            <Draggable key={card._id}>
-              <TodoCard data={card} variant={variantGlobal(4, idx * 0.1)} />
-            </Draggable>
-          ))}
+          <LayoutGroup id={`todo-layout-${type}`}>
+            {cardsSorted.map((card, idx) => (
+              <Draggable key={card._id}>
+                <TodoCard
+                  colType={type}
+                  data={card}
+                  variant={variantGlobal(4, idx * 0.1)}
+                  key={`component-${card._id}`}
+                />
+              </Draggable>
+            ))}
+          </LayoutGroup>
         </Container>
       </motion.div>
     </div>

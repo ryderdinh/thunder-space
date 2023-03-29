@@ -10,7 +10,6 @@ import ButtonSuccess from 'components/Button/ButtonSuccess'
 import ProtectedLayout from 'components/Layouts/ProtectedLayout'
 import ViewBox from 'components/Main/ViewMain/ViewBox'
 import TodoColumn from 'components/Todo/Overview/TodoColumn'
-import { LayoutGroup, motion } from 'framer-motion'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory, useRouteMatch } from 'react-router-dom'
@@ -100,8 +99,8 @@ export default function Todos() {
 
   return (
     <ProtectedLayout path={path}>
-      <ViewBox>
-        {items.map((item, idx) => (
+      <ViewBox className='pb-10'>
+        {/* {items.map((item, idx) => (
           <LayoutGroup id='a' key={`todo-group-${idx}`}>
             <motion.div
               className='border border-black bg-slate-400'
@@ -116,7 +115,7 @@ export default function Todos() {
               <motion.h2>{item.title}</motion.h2>
             </motion.div>
           </LayoutGroup>
-        ))}
+        ))} */}
 
         <TodoItem todoId={selectedId} />
         <div className=''>
@@ -136,7 +135,7 @@ export default function Todos() {
             Add Todo
           </ButtonSuccess>
         </div>
-        <div className='flex min-w-[80rem] snap-x gap-[30px] overflow-x-auto'>
+        <div className='flex max-w-full snap-x gap-[30px] overflow-x-scroll xl:overflow-x-auto'>
           <TodoColumn
             type={'todo'}
             cards={_data.todo.cards}

@@ -1,6 +1,6 @@
 import { FlagIcon } from '@heroicons/react/24/solid'
 
-const FlagButton = ({ className, isFlag, onClick }) => {
+const FlagButton = ({ className, isFlag, loading, onClick }) => {
   return (
     <button
       className={`flex items-center gap-2 rounded py-1.5 px-2.5
