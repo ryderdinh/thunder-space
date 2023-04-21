@@ -8,6 +8,7 @@ import AddMemberToProject from './Workflow/AddMemberToProject'
 import AssignIssue from './Workflow/AssignIssue'
 import CreateIssue from './Workflow/CreateIssue'
 import CreateProject from './Workflow/CreateProject'
+import CreateTodo from './Workflow/CreateTodo'
 import DeleteIssue from './Workflow/DeleteIssue'
 import DeleteProject from './Workflow/DeleteProject'
 import KickOffMember from './Workflow/KickOffMember'
@@ -62,6 +63,10 @@ function Dialog() {
 
         {nameDialog === 'change-password' && (
           <ChangePassword closeModal={closeDialog} />
+        )}
+
+        {nameDialog === 'create-todo' && (
+          <CreateTodo closeModal={closeDialog} data={data} />
         )}
 
         {nameDialog === 'loading' && <Loading closeModal={closeDialog} />}

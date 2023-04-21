@@ -32,53 +32,53 @@ const Tooltip = ({
 
   return (
     <div className='relative'>
-      <div>
-        <div
-          className='cursor-pointer'
-          onMouseEnter={onMouseEnter}
-          onMouseLeave={onMouseLeave}
-        >
-          {children}
-        </div>
-
-        <AnimatePresence mode={'wait'}>
-          {open ? (
-            <motion.div
-              className={`absolute left-1/2 bottom-[calc(100%+5px)] z-50 w-max
-              max-w-[300px] -translate-x-1/2 transform px-4`}
-            >
-              <motion.div
-                className='space-y-4
-                shadow-lg'
-                initial={{ opacity: 0, y: 0 }}
-                animate={{ opacity: 100, y: -1 }}
-                exit={{ opacity: 0, y: 0 }}
-              >
-                <div className='rounded-md border-2 border-gray-400 bg-gray-800 px-2 py-1 '>
-                  {/* Tooltop title */}
-                  {title ? (
-                    <div className='flex items-center gap-3'>
-                      {showIconTitle ? (
-                        <div
-                          className='flex h-7 w-7 flex-shrink-0 items-center 
-                          justify-center text-white'
-                        >
-                          <IconThree aria-hidden='true' />
-                        </div>
-                      ) : null}
-
-                      <p className='text-sm font-medium text-white'>{title}</p>
-                    </div>
-                  ) : null}
-
-                  {/* Main content */}
-                  <div>{component}</div>
-                </div>
-              </motion.div>
-            </motion.div>
-          ) : null}
-        </AnimatePresence>
+      <div
+        className='cursor-pointer'
+        onMouseEnter={onMouseEnter}
+        onMouseLeave={onMouseLeave}
+      >
+        {children}
       </div>
+
+      <AnimatePresence mode={'wait'}>
+        {open ? (
+          <motion.div
+            className={`absolute left-1/2 bottom-[calc(100%+5px)] z-50 w-max
+              max-w-[300px] -translate-x-1/2 ${className}`}
+          >
+            <motion.div
+              className='space-y-4 shadow-lg'
+              initial={{ opacity: 0, y: 0 }}
+              animate={{ opacity: 100, y: -3 }}
+              exit={{ opacity: 0, y: 0 }}
+            >
+              <div
+                className='rounded-md border-2 border-gray-400 bg-gray-800 
+                  px-2 py-1'
+              >
+                {/* Tooltop title */}
+                {title ? (
+                  <div className='flex items-center gap-3'>
+                    {showIconTitle ? (
+                      <div
+                        className='flex h-7 w-7 flex-shrink-0 items-center 
+                          justify-center text-white'
+                      >
+                        <IconThree aria-hidden='true' />
+                      </div>
+                    ) : null}
+
+                    <p className='text-sm font-medium text-white'>{title}</p>
+                  </div>
+                ) : null}
+
+                {/* Main content */}
+                <div>{component}</div>
+              </div>
+            </motion.div>
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
     </div>
   )
 }

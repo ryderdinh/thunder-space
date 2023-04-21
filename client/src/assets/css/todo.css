@@ -12,6 +12,14 @@
   font-weight: 600;
 }
 
+.card-ghost .group-card {
+  border-color: #464646;
+}
+
+.card-ghost .card-drag-handle {
+  background-color: #059669;
+}
+
 .card-ghost-drop {
   transition: transform 0.18s ease-in-out;
   transform: rotateZ(0deg);

@@ -1,4 +1,4 @@
-import { createContext, useState } from 'react'
+import { createContext, useContext, useState } from 'react'
 
 export const LayoutContext = createContext()
 
@@ -73,3 +73,5 @@ export default function LayoutContextProvider({ children }) {
     </LayoutContext.Provider>
   )
 }
+
+export const useLayoutContext = () => useContext(LayoutContext)

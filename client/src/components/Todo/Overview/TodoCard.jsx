@@ -1,9 +1,9 @@
 import { EllipsisVerticalIcon } from '@heroicons/react/24/outline'
 import { ViewfinderCircleIcon } from '@heroicons/react/24/solid'
-import DialogForm from 'components/Dialog/DialogForm'
 import { Tooltip } from 'components/Layouts'
 import { AnimatePresence, motion } from 'framer-motion'
 import useTodo from 'hooks/useTodo'
+import moment from 'moment'
 import queryString from 'query-string'
 import { memo, useCallback, useMemo, useState } from 'react'
 import { useHistory, useLocation } from 'react-router-dom'
@@ -44,22 +44,26 @@ const TodoCard = ({ colType, data, variant }) => {
   }, [colType, data._id, toggleLoading, updateFlag])
 
   return (
-    <AnimatePresence mode='wait'>
+    <AnimatePresence mode='sync'>
       <motion.div
-        className={`mt-5 flex 
+        className={`group-card group/card mt-5 flex 
         rounded-5 border border-gray-500 bg-gray-700 font-bevn
-        text-gray-200`}
+        text-gray-200 hover:border-gray-400`}
         initial='initial'
         animate='enter'
         exit='exit'
         variants={variant}
-        layoutId={`todo-layout-item-${data._id}`}
+        layout
       >
         <div
-          className='card-drag-handle flex w-[15px] cursor-pointer 
-        items-center justify-center bg-gray-500'
+          className='card-drag-handle 
+          group-hover/card:bg-gray-400 
+          group-hover/card:text-white flex 
+          w-[15px] cursor-pointer items-center justify-center rounded-tl
+          rounded-bl bg-gray-500 text-gray-50 
+          transition duration-300 ease-linear'
         >
-          <EllipsisVerticalIcon className='text-gray-50' />
+          <EllipsisVerticalIcon className='' />
         </div>
         <div className='w-[calc(100%-15px)] p-5'>
           {data?.cover ? (
@@ -75,16 +79,22 @@ const TodoCard = ({ colType, data, variant }) => {
             >
               {data.title}
             </h5>
-            <div className='w-6 cursor-pointer'>
-              <Tooltip component={<p className='text-xs'>View</p>}>
+            <Tooltip
+              className='left-full -translate-x-full'
+              component={<p className='text-xs'>Click to View</p>}
+            >
+              <div
+                className='w-6 cursor-pointer transition-transform duration-300 
+                ease-in-out hover:scale-150'
+              >
                 <ViewfinderCircleIcon
                   className={`w-6 transition duration-200 hover:text-white`}
                   onClick={() => {
                     history.replace(`/todos?todoId=${data._id}`)
                   }}
                 />
-              </Tooltip>
-            </div>
+              </div>
+            </Tooltip>
           </div>
           <div
             className='mt-2 mb-[30px] text-justify text-sm
@@ -102,12 +112,13 @@ const TodoCard = ({ colType, data, variant }) => {
               loading={loading.flag}
             />
             <span className='font-primary text-xs italic'>
-              updated 22 min ago
+              updated {moment(data.updatedAt).startOf('hour').fromNow()}
             </span>
           </div>
         </div>
       </motion.div>
-      <AnimatePresence>
+
+      {/* <AnimatePresence mode=''>
         <DialogForm
           isDialogOpen={isOpenDetail}
           onClose={() => history.replace('/todos')}
@@ -115,7 +126,7 @@ const TodoCard = ({ colType, data, variant }) => {
           <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'>
             <motion.div
               className={`mt-5 flex min-w-[400px] rounded-5 border border-gray-500
-            bg-gray-700 font-bevn text-gray-200`}
+              bg-gray-700 font-bevn text-gray-200`}
               variants={variant}
               layoutId={`todo-layout-item-${data._id}`}
             >
@@ -129,7 +140,7 @@ const TodoCard = ({ colType, data, variant }) => {
                 <div className='flex w-full justify-between'>
                   <h5
                     className='w-[calc(100%-1.5rem-10px)] text-justify text-base 
-                font-normal leading-[20px] text-white line-clamp-3'
+                    font-normal leading-[20px] text-white line-clamp-3'
                   >
                     {data.title}
                   </h5>
@@ -149,7 +160,7 @@ const TodoCard = ({ colType, data, variant }) => {
                 </div>
                 <div
                   className='flex w-full items-center justify-between 
-                gap-1'
+                  gap-1'
                 >
                   <FlagButton
                     isFlag={data.pin}
@@ -157,14 +168,14 @@ const TodoCard = ({ colType, data, variant }) => {
                     loading={loading.flag}
                   />
                   <span className='font-primary text-xs italic'>
-                    updated 22 min ago
+                    updated {moment().startOf('hour').fromNow()}
                   </span>
                 </div>
               </div>
             </motion.div>
           </div>
         </DialogForm>
-      </AnimatePresence>
+      </AnimatePresence> */}
     </AnimatePresence>
   )
 }

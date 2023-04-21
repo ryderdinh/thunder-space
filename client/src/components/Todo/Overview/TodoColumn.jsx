@@ -1,16 +1,22 @@
-import { PencilIcon } from '@heroicons/react/24/solid'
+import { ArrowLongDownIcon } from '@heroicons/react/24/outline'
 import { actUpdateIndexTodosLocal, actUpdateTodoItem } from 'actions/todos'
-import ButtonSuccess from 'components/Button/ButtonSuccess'
-import { LayoutGroup, motion } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
 import { useMemo } from 'react'
 import { useDispatch } from 'react-redux'
 import { Container, Draggable } from 'react-smooth-dnd'
 import variantGlobal from 'units/variantGlobal'
 import { applyDrag } from 'utilities/applyDrag'
 import { mapOrder } from 'utilities/sort'
+import CreateTodoButton from '../CreateTodoButton'
 import TodoCard from './TodoCard'
 
-const TodoColumn = ({ type, cards = [], cardOrder = [], whenDrop }) => {
+const TodoColumn = ({
+  type,
+  cards = [],
+  cardOrder = [],
+  whenDrop,
+  onCreateTodo
+}) => {
   const dispatch = useDispatch()
 
   const cardsSorted = useMemo(
@@ -83,6 +89,7 @@ const TodoColumn = ({ type, cards = [], cardOrder = [], whenDrop }) => {
         className='rounded-5 border border-gray-500 
         bg-gray-800 py-3 px-5'
       >
+        {/* Add Create Button if Column is Todo Column */}
         {type === 'todo' ? (
           <div className='flex w-full items-center justify-between'>
             <div className='space-y-2.5'>
@@ -96,12 +103,7 @@ const TodoColumn = ({ type, cards = [], cardOrder = [], whenDrop }) => {
                 {cardOrder.length} cards variable
               </p>
             </div>
-            <ButtonSuccess
-              className='flex aspect-square h-full items-center 
-              justify-center'
-            >
-              <PencilIcon className='w-6 text-gray-900' />
-            </ButtonSuccess>
+            <CreateTodoButton onClick={onCreateTodo} />
           </div>
         ) : (
           <div className='flex w-full flex-col items-center space-y-2.5'>
@@ -117,44 +119,66 @@ const TodoColumn = ({ type, cards = [], cardOrder = [], whenDrop }) => {
           </div>
         )}
       </div>
-      <motion.div
-        className='rounded-5 border 
-        border-gray-500 bg-gray-800 px-5 pb-5'
-      >
-        <div
-          className='mt-5 hidden w-full border border-dashed border-gray-200
-          bg-gray-500 opacity-90'
-        ></div>
-        <div className='opacity-100'></div>
-        <Container
-          groupName='col'
-          onDrop={onDrop}
-          getChildPayload={(index) => cardsSorted[index]}
-          dragClass='card-ghost opacity-90'
-          dropClass='card-ghost-drop opacity-100'
-          dragHandleSelector='.card-drag-handle'
-          dropPlaceholder={{
-            animationDuration: 150,
-            showOnTop: true,
-            className:
-              'cards-drop-preview border border-dashed border-gray-200 bg-gray-500 rounded-5 mt-5 w-full'
-          }}
-          // dropPlaceholderAnimationDuration={300}
+      <AnimatePresence mode='wait'>
+        <motion.div
+          className='rounded-5 border 
+          border-gray-500 bg-gray-800 px-5 pb-5'
         >
-          <LayoutGroup id={`todo-layout-${type}`}>
-            {cardsSorted.map((card, idx) => (
-              <Draggable key={card._id}>
-                <TodoCard
-                  colType={type}
-                  data={card}
-                  variant={variantGlobal(4, idx * 0.1)}
-                  key={`component-${card._id}`}
-                />
-              </Draggable>
-            ))}
-          </LayoutGroup>
-        </Container>
-      </motion.div>
+          <AnimatePresence mode='wait'>
+            {!cardsSorted.length ? (
+              <motion.div
+                className='mt-5 flex w-full flex-col items-center 
+                justify-center gap-2 rounded-5 border border-gray-500
+                bg-gray-700 py-5 text-center text-gray-200 opacity-90'
+                key={`ap-card-1-${type}`}
+                initial={{ opacity: 0, scale: 0 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0 }}
+                layout
+              >
+                <p className='text-sm'>No card, you can drop card here</p>
+                <motion.div
+                  className=''
+                  initial={{ y: 0 }}
+                  animate={{ y: -5 }}
+                  transition={{ repeat: Infinity, duration: 1, type: 'just' }}
+                >
+                  <ArrowLongDownIcon className='h-5' />
+                </motion.div>
+              </motion.div>
+            ) : null}
+          </AnimatePresence>
+          <AnimatePresence mode='popLayout'>
+            <Container
+              key={`ap-card-2-${type}`}
+              groupName='col'
+              onDrop={onDrop}
+              getChildPayload={(index) => cardsSorted[index]}
+              dragClass='card-ghost opacity-90'
+              dropClass='card-ghost-drop opacity-100'
+              dragHandleSelector='.card-drag-handle'
+              dropPlaceholder={{
+                animationDuration: 150,
+                showOnTop: true,
+                className:
+                  'cards-drop-preview border border-dashed border-gray-200 bg-gray-500 rounded-5 mt-5 w-full'
+              }}
+              dropPlaceholderAnimationDuration={300}
+              autoScrollEnabled
+            >
+              {cardsSorted.map((card, idx) => (
+                <Draggable key={card._id}>
+                  <TodoCard
+                    colType={type}
+                    data={card}
+                    variant={variantGlobal(4, idx * 0.1)}
+                  />
+                </Draggable>
+              ))}
+            </Container>
+          </AnimatePresence>
+        </motion.div>
+      </AnimatePresence>
     </div>
   )
 }

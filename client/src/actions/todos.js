@@ -13,9 +13,10 @@ import { convertTodoDataByStatus } from 'utilities/convert'
 export const actCreateTodo = (
   title,
   description,
-  pin = false,
   status = 'todo',
-  onSuccess
+  pin = false,
+  onSuccess,
+  onError
 ) => {
   return async (dispatch) => {
     await dispatch(setTodosLoading())
@@ -30,7 +31,7 @@ export const actCreateTodo = (
       onSuccess && onSuccess()
     } catch (error) {
       console.error(error)
-      await dispatch(setTodosError(error.message))
+      onError && onError(error)
     }
   }
 }

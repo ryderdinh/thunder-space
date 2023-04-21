@@ -1,44 +1,21 @@
 import 'assets/css/todo.css'
 
-import {
-  actCreateTodo,
-  actFetchTodos,
-  actUpdateIndexTodos
-} from 'actions/todos'
+import { actFetchTodos, actUpdateIndexTodos } from 'actions/todos'
 import 'assets/css/Wf.css'
-import ButtonSuccess from 'components/Button/ButtonSuccess'
 import ProtectedLayout from 'components/Layouts/ProtectedLayout'
 import ViewBox from 'components/Main/ViewMain/ViewBox'
 import TodoColumn from 'components/Todo/Overview/TodoColumn'
+import { useLayoutContext } from 'context/LayoutContext'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useHistory, useRouteMatch } from 'react-router-dom'
-import TodoItem from './TodosItem'
-
-const items = [
-  {
-    id: 1,
-    subtitle: 'aaa',
-    title: 'hiasdasda'
-  },
-  {
-    id: 2,
-    subtitle: 'bbb',
-    title: 'hhahahas'
-  }
-]
 
 export default function Todos() {
-  const match = useRouteMatch()
-
   const path = 'todos'
-  const [selectedId, setSelectedId] = useState(null)
-  const [item, setItem] = useState({})
-
-  const history = useHistory()
+  const [selectedId] = useState(null)
 
   const { _data } = useSelector((state) => state._todos)
   const dispatch = useDispatch()
+  const { dialog } = useLayoutContext()
 
   const dropTypeUpdatedRef = useRef([])
   const dropCardsUpdatedRef = useRef([])
@@ -99,7 +76,7 @@ export default function Todos() {
 
   return (
     <ProtectedLayout path={path}>
-      <ViewBox className='pb-10'>
+      <ViewBox className='py-10'>
         {/* {items.map((item, idx) => (
           <LayoutGroup id='a' key={`todo-group-${idx}`}>
             <motion.div
@@ -117,30 +94,15 @@ export default function Todos() {
           </LayoutGroup>
         ))} */}
 
-        <TodoItem todoId={selectedId} />
-        <div className=''>
-          <ButtonSuccess
-            onClick={() =>
-              dispatch(
-                actCreateTodo(
-                  `task${new Date().getTime()}`,
-                  'Action move card outside column',
-                  true,
-                  'todo',
-                  () => dispatch(actFetchTodos())
-                )
-              )
-            }
-          >
-            Add Todo
-          </ButtonSuccess>
-        </div>
         <div className='flex max-w-full snap-x gap-[30px] overflow-x-scroll xl:overflow-x-auto'>
           <TodoColumn
             type={'todo'}
             cards={_data.todo.cards}
             cardOrder={_data.todo.cardOrder}
             whenDrop={whenDrop}
+            onCreateTodo={() =>
+              dialog.open('create-todo', { onSuccess: () => {} })
+            }
           />
           <TodoColumn
             type={'doing'}

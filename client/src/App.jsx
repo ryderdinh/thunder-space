@@ -1,8 +1,6 @@
-import { Transition } from '@headlessui/react'
 import { actRefreshPage } from 'actions'
 import 'animate.css'
 import Dialog from 'components/Dialog'
-import Loading from 'components/Dialog/Loading'
 import { LayoutContext } from 'context/LayoutContext'
 import { AnimatePresence } from 'framer-motion'
 import NotFound from 'pages/404'
@@ -19,7 +17,7 @@ import Report from 'pages/Report'
 import Space from 'pages/Space'
 import TimeSheets from 'pages/TimeSheets'
 import Todos from 'pages/Todos'
-import { Fragment, useContext, useEffect } from 'react'
+import { useContext, useEffect } from 'react'
 import { Toaster } from 'react-hot-toast'
 import { useDispatch } from 'react-redux'
 import { Route, Switch } from 'react-router-dom'
@@ -42,7 +40,7 @@ export default function App() {
     <>
       <Toaster position='top-center' reverseOrder={true} />
       <Dialog />
-      <Transition
+      {/* <Transition
         appear={true}
         show={loading}
         as={Fragment}
@@ -61,7 +59,7 @@ export default function App() {
         >
           <Loading load={loading} />
         </div>
-      </Transition>
+      </Transition> */}
 
       <Route
         render={({ location }) => (
