@@ -27,6 +27,7 @@
     "apexcharts": "^3.33.2",
     "axios": "^0.26.1",
     "chokidar": "^3.5.3",
+    "clsx": "^1.2.1",
     "confetti-js": "^0.0.18",
     "date-fns": "^2.28.0",
     "dayjs": "^1.11.7",

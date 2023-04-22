@@ -19,8 +19,8 @@ const todoApi = {
     return axiosClient.patch(url, data)
   },
   removeTodoItem: (id) => {
-    const url = `/tasks/${id}`
-    return axiosClient.delete(url)
+    const url = `/tasks`
+    return axiosClient.delete(url, { data: [id] })
   }
 }
 

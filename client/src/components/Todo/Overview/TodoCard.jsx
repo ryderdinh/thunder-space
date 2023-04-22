@@ -1,23 +1,17 @@
 import { EllipsisVerticalIcon } from '@heroicons/react/24/outline'
 import { ViewfinderCircleIcon } from '@heroicons/react/24/solid'
 import { Tooltip } from 'components/Layouts'
+import { useLayoutContext } from 'context/LayoutContext'
 import { AnimatePresence, motion } from 'framer-motion'
 import useTodo from 'hooks/useTodo'
 import moment from 'moment'
-import queryString from 'query-string'
-import { memo, useCallback, useMemo, useState } from 'react'
+import { memo, useCallback, useState } from 'react'
 import { useHistory, useLocation } from 'react-router-dom'
 import FlagButton from '../FlagButton'
 
 const TodoCard = ({ colType, data, variant }) => {
   const history = useHistory()
-  const location = useLocation()
-
-  const isOpenDetail = useMemo(
-    () => queryString.parse(location.search)?.todoId === data._id,
-    [data._id, location.search]
-  )
-
+  
   const [loading, setLoading] = useState({
     flag: false
   })
@@ -80,7 +74,7 @@ const TodoCard = ({ colType, data, variant }) => {
               {data.title}
             </h5>
             <Tooltip
-              className='left-full -translate-x-full'
+              className='left-full top-[calc(100%+10px)] -translate-x-full'
               component={<p className='text-xs'>Click to View</p>}
             >
               <div
@@ -90,7 +84,7 @@ const TodoCard = ({ colType, data, variant }) => {
                 <ViewfinderCircleIcon
                   className={`w-6 transition duration-200 hover:text-white`}
                   onClick={() => {
-                    history.replace(`/todos?todoId=${data._id}`)
+                    history.push(`/todos?todoId=${data._id}`, { ...data })
                   }}
                 />
               </div>
@@ -98,7 +92,7 @@ const TodoCard = ({ colType, data, variant }) => {
           </div>
           <div
             className='mt-2 mb-[30px] text-justify text-sm
-          font-light leading-[15px] line-clamp-3'
+            font-light leading-[15px] line-clamp-3'
           >
             {data.description}
           </div>

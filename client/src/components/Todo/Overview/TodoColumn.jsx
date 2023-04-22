@@ -34,7 +34,6 @@ const TodoColumn = ({
     /* Get new card list and card id list  */
     const newCards = applyDrag(cardsSorted, dropResult)
     const newOrder = applyDrag(cardsSorted, dropResult).map((item) => item._id)
-    console.log(type, newCards, newOrder, dropResult)
 
     /* Assign value to colType if current column is the column to be added data */
     let colType = null
@@ -87,7 +86,7 @@ const TodoColumn = ({
     <div className='card-list w-1/3 min-w-[406px] snap-end space-y-[30px]'>
       <div
         className='rounded-5 border border-gray-500 
-        bg-gray-800 py-3 px-5'
+        bg-gray-800/50 py-3 px-5'
       >
         {/* Add Create Button if Column is Todo Column */}
         {type === 'todo' ? (
@@ -122,14 +121,14 @@ const TodoColumn = ({
       <AnimatePresence mode='wait'>
         <motion.div
           className='rounded-5 border 
-          border-gray-500 bg-gray-800 px-5 pb-5'
+          border-gray-500 bg-gray-800/50 px-5 pb-5'
         >
           <AnimatePresence mode='wait'>
             {!cardsSorted.length ? (
               <motion.div
                 className='mt-5 flex w-full flex-col items-center 
                 justify-center gap-2 rounded-5 border border-gray-500
-                bg-gray-700 py-5 text-center text-gray-200 opacity-90'
+                bg-gray-700/90 py-5 text-center text-gray-200 opacity-90'
                 key={`ap-card-1-${type}`}
                 initial={{ opacity: 0, scale: 0 }}
                 animate={{ opacity: 1, scale: 1 }}

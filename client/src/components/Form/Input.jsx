@@ -1,3 +1,5 @@
+import CopyButton from 'components/Button/CopyButton'
+
 const Input = ({
   label,
   className,
@@ -5,26 +7,43 @@ const Input = ({
   readOnly = false,
   value = '',
   placeholder = '',
+  autoFocus = false,
+  copy = false,
   onChange
 }) => {
   return (
     <div className='w-full'>
-      <label
-        htmlFor={label}
-        className='block text-sm font-medium text-neutral-300'
-      >
-        {label}
-      </label>
-      <input
-        id={label}
-        name={label}
-        disabled={disabled}
-        readOnly={readOnly}
-        className={`input-default ${className}`}
-        placeholder={placeholder}
-        value={value}
-        onChange={onChange}
-      />
+      <form onSubmit={(e) => e.preventDefault()}>
+        {label ? (
+          <label
+            htmlFor={label}
+            className='mb-1 block text-sm font-medium text-gray-50'
+          >
+            {label}
+          </label>
+        ) : null}
+
+        <div className='relative'>
+          <input
+            id={label}
+            name={label}
+            disabled={disabled}
+            readOnly={readOnly}
+            className={`input-default z-[1] ${className} ${
+              copy ? '!pr-20' : ''
+            }`}
+            placeholder={placeholder}
+            value={value}
+            autoFocus={autoFocus}
+            onChange={onChange}
+          />
+          {copy ? (
+            <div className='absolute-y-center right-1.5 z-[2] flex items-center'>
+              <CopyButton value={value} />
+            </div>
+          ) : null}
+        </div>
+      </form>
     </div>
   )
 }

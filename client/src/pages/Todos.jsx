@@ -2,24 +2,49 @@ import 'assets/css/todo.css'
 
 import { actFetchTodos, actUpdateIndexTodos } from 'actions/todos'
 import 'assets/css/Wf.css'
+import SearchInput from 'components/Form/SearchInput'
 import ProtectedLayout from 'components/Layouts/ProtectedLayout'
 import ViewBox from 'components/Main/ViewMain/ViewBox'
 import TodoColumn from 'components/Todo/Overview/TodoColumn'
 import { useLayoutContext } from 'context/LayoutContext'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useInput } from 'hooks'
+import queryString from 'query-string'
+import { useCallback, useEffect, useMemo, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { useHistory, useLocation } from 'react-router-dom'
+
+const path = 'todos'
 
 export default function Todos() {
-  const path = 'todos'
-  const [selectedId] = useState(null)
+  const history = useHistory()
+  const location = useLocation()
 
   const { _data } = useSelector((state) => state._todos)
   const dispatch = useDispatch()
-  const { dialog } = useLayoutContext()
+  const { nameDialog, dialog } = useLayoutContext()
 
   const dropTypeUpdatedRef = useRef([])
   const dropCardsUpdatedRef = useRef([])
   const dropCurrentDataUpdatedRef = useRef({})
+
+  const searchInput = useInput('')
+
+  const isOpenDetail = useMemo(
+    () => queryString.parse(location.search)?.todoId,
+    [location.search]
+  )
+
+  const itemDetail = useMemo(
+    () =>
+      location.state ||
+      [
+        ..._data.todo.cards,
+        ..._data.doing.cards,
+        ..._data.completed.cards
+      ]?.find((x) => x._id === queryString.parse(location.search)?.todoId) ||
+      {},
+    [_data, location.search, location.state]
+  )
 
   /*
    * to avoid calling api 3 times when drag and drop because there
@@ -66,6 +91,23 @@ export default function Todos() {
     [dispatch]
   )
 
+  const onSearch = useCallback(() => {
+    console.log(searchInput.value)
+  }, [searchInput.value])
+
+  /*
+   * after created todo, re-fetch todo data and redirect to todo item route (have todoId)
+   */
+  const onCreateSuccess = useCallback(
+    (id) => {
+      const onSuccess = () => {
+        history.push(`/todos?todoId=${id}`)
+      }
+      dispatch(actFetchTodos(onSuccess))
+    },
+    [dispatch, history]
+  )
+
   useEffect(() => {
     document.title = 'Todos'
   }, [])
@@ -74,9 +116,24 @@ export default function Todos() {
     dispatch(actFetchTodos())
   }, [dispatch])
 
+  useEffect(() => {
+    if (Object.keys(itemDetail).length && isOpenDetail) {
+      dialog.open('todo-detail', {
+        ...itemDetail,
+        onClose: () => history.push('/todos')
+      })
+    }
+
+    if (nameDialog === 'todo-detail') {
+      if ((!Object.keys(itemDetail).length && !isOpenDetail) || !isOpenDetail) {
+        dialog.close()
+      }
+    }
+  }, [dialog, history, isOpenDetail, itemDetail, nameDialog])
+
   return (
     <ProtectedLayout path={path}>
-      <ViewBox className='py-10'>
+      <ViewBox className='z-[2] py-10' classNameCol='space-y-[30px]'>
         {/* {items.map((item, idx) => (
           <LayoutGroup id='a' key={`todo-group-${idx}`}>
             <motion.div
@@ -94,6 +151,15 @@ export default function Todos() {
           </LayoutGroup>
         ))} */}
 
+        <div className='flex w-full flex-wrap'>
+          <SearchInput
+            className='w-[309px] max-w-full'
+            placeholder='Enter text'
+            onSubmit={onSearch}
+            {...searchInput.bind}
+          />
+        </div>
+
         <div className='flex max-w-full snap-x gap-[30px] overflow-x-scroll xl:overflow-x-auto'>
           <TodoColumn
             type={'todo'}
@@ -101,7 +167,9 @@ export default function Todos() {
             cardOrder={_data.todo.cardOrder}
             whenDrop={whenDrop}
             onCreateTodo={() =>
-              dialog.open('create-todo', { onSuccess: () => {} })
+              dialog.open('create-todo', {
+                onSuccess: onCreateSuccess
+              })
             }
           />
           <TodoColumn

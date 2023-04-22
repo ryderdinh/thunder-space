@@ -7,9 +7,12 @@ import Textarea from 'components/Form/Textarea'
 import { useInput } from 'hooks'
 import { Fragment, useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { errorToast } from 'utilities/toast'
+import { errorToast, successToast } from 'utilities/toast'
 
-export default function CreateTodo({ closeModal, data: { onSuccess } }) {
+export default function CreateTodo({
+  closeModal,
+  data: { onSuccess: onSuccessCreate }
+}) {
   const [creating, setCreating] = useState(false)
 
   const dispatch = useDispatch()
@@ -19,10 +22,11 @@ export default function CreateTodo({ closeModal, data: { onSuccess } }) {
   const onSubmit = async () => {
     setCreating(true)
 
-    const onSuccess = () => {
+    const onSuccess = (id) => {
       // dispatch(actFetchTodos())
       closeModal()
-      onSuccess()
+      successToast('Added new task!', 'create-todo')
+      onSuccessCreate && onSuccessCreate(id)
     }
 
     const onError = (err) => {

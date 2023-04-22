@@ -20,9 +20,9 @@ export default function HeaderContainer({ pathName }) {
       home: 'Home',
       timesheets: 'Timesheets',
       report: 'Report',
-      spaces: 'Space Overview',
-      todos: 'Todo Overview',
-      project: 'Project Overview',
+      spaces: 'Spaces Overview',
+      todos: 'Todos Space',
+      project: 'Projects Space',
       'project-setting': 'Project Setting',
       'project-invitation': 'Project Invitation',
       issue: 'Issue Overview',
@@ -35,7 +35,7 @@ export default function HeaderContainer({ pathName }) {
   }, [pathName])
 
   return (
-    <div className='view_name z-20 bg-deepdark'>
+    <div className='view_name relative z-[3] !border-none !bg-none'>
       <div className='flex'>
         {sidebar.active ? (
           <ChevronLeftIcon
@@ -66,11 +66,11 @@ export default function HeaderContainer({ pathName }) {
 
                 <span className='absolute -right-1 -top-1 flex h-2 w-2'>
                   <span
-                    className='rounded-full absolute inline-flex h-full 
-                    w-full animate-ping bg-emerald-400 opacity-75'
+                    className='absolute inline-flex h-full w-full 
+                    animate-ping rounded-full bg-emerald-400 opacity-75'
                   ></span>
                   <span
-                    className='rounded-full relative inline-flex h-2 w-2 
+                    className='relative inline-flex h-2 w-2 rounded-full 
                     bg-emerald-500'
                   ></span>
                 </span>

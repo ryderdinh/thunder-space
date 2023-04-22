@@ -1,7 +1,8 @@
 import {
-  REMOVE_TODOS_IIEM,
+  ADD_TODOS_ITEM,
+  REMOVE_TODOS_ITEM,
   SET_TODOS_DATA,
-  SET_TODOS_DATA_IIEM,
+  SET_TODOS_DATA_ITEM,
   SET_TODOS_ERROR,
   SET_TODOS_LOADING,
   UPDATE_TODOS_DATA
@@ -37,7 +38,7 @@ export default function todoReducer(state = initState, action) {
         _data: payload
       }
     }
-    case SET_TODOS_DATA_IIEM: {
+    case SET_TODOS_DATA_ITEM: {
       return {
         isLoading: false,
         error: '',
@@ -52,6 +53,22 @@ export default function todoReducer(state = initState, action) {
         }
       }
     }
+    case ADD_TODOS_ITEM: {
+      return {
+        isLoading: false,
+        error: '',
+        _data: {
+          ...state._data,
+          [payload.colName]: {
+            cards: [...state._data[payload.colName].cards, payload.data],
+            cardOrder: [
+              ...state._data[payload.colName].cardOrder,
+              payload.data._id
+            ]
+          }
+        }
+      }
+    }
     case UPDATE_TODOS_DATA: {
       return {
         isLoading: false,
@@ -59,7 +76,7 @@ export default function todoReducer(state = initState, action) {
         _data: { ...state._data, [payload.colName]: payload.data }
       }
     }
-    case REMOVE_TODOS_IIEM: {
+    case REMOVE_TODOS_ITEM: {
       return {
         isLoading: false,
         error: '',

@@ -1,8 +1,9 @@
 import todoApi from 'api/todoApi'
 import {
-  REMOVE_TODOS_IIEM,
+  ADD_TODOS_ITEM,
+  REMOVE_TODOS_ITEM,
   SET_TODOS_DATA,
-  SET_TODOS_DATA_IIEM,
+  SET_TODOS_DATA_ITEM,
   SET_TODOS_ERROR,
   SET_TODOS_LOADING,
   UPDATE_TODOS_DATA
@@ -18,17 +19,15 @@ export const actCreateTodo = (
   onSuccess,
   onError
 ) => {
-  return async (dispatch) => {
-    await dispatch(setTodosLoading())
-
+  return async () => {
     try {
-      await todoApi.createTodo({
+      const res = await todoApi.createTodo({
         title,
         description,
         pin,
         status
       })
-      onSuccess && onSuccess()
+      onSuccess && onSuccess(res.data._id)
     } catch (error) {
       console.error(error)
       onError && onError(error)
@@ -36,7 +35,7 @@ export const actCreateTodo = (
   }
 }
 
-export const actFetchTodos = () => {
+export const actFetchTodos = (onSuccess) => {
   return async (dispatch) => {
     await dispatch(setTodosLoading())
 
@@ -55,6 +54,7 @@ export const actFetchTodos = () => {
           }
         })
       )
+      onSuccess && onSuccess(res.data)
     } catch (error) {
       await dispatch(setTodosError(error.message))
     }
@@ -113,14 +113,23 @@ export const actUpdateTodoItem = (
   onError
 ) => {
   return async (dispatch) => {
-    await dispatch(
-      setTodosDataItems({
-        colName: type,
-        id,
-        data
-      })
-    )
-
+    if (type !== data?.status) {
+      await dispatch(
+        removeTodosItems({
+          colName: type,
+          id
+        })
+      )
+      await dispatch(addTodosItems({ colName: data?.status, data }))
+    } else {
+      await dispatch(
+        setTodosDataItems({
+          colName: type,
+          id,
+          data
+        })
+      )
+    }
     onPending && onPending()
 
     try {
@@ -136,11 +145,12 @@ export const actUpdateTodoItem = (
           oldData
         })
       )
+      await dispatch(actFetchTodos())
     }
   }
 }
 
-export const actDeleteTodoItem = (type, id) => {
+export const actDeleteTodoItem = (type, id, onSuccess, onError) => {
   return async (dispatch) => {
     await dispatch(setTodosLoading())
 
@@ -152,8 +162,10 @@ export const actDeleteTodoItem = (type, id) => {
           id
         })
       )
+      onSuccess && onSuccess()
     } catch (error) {
       await dispatch(setTodosError(error.message))
+      onError && onError(error)
     }
   }
 }
@@ -167,11 +179,15 @@ export const updateTodosData = (payload) => ({
   payload
 })
 export const setTodosDataItems = (payload) => ({
-  type: SET_TODOS_DATA_IIEM,
+  type: SET_TODOS_DATA_ITEM,
   payload
 })
+export const addTodosItems = ({ colName, data }) => ({
+  type: ADD_TODOS_ITEM,
+  payload: { colName, data }
+})
 export const removeTodosItems = (payload) => ({
-  type: REMOVE_TODOS_IIEM,
+  type: REMOVE_TODOS_ITEM,
   payload
 })
 export const setTodosLoading = (payload) => ({

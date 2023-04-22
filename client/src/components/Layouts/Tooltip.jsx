@@ -9,7 +9,6 @@ const Tooltip = ({
   showIconTitle = false,
   disable = false
 }) => {
-  const timeoutDuration = useMemo(() => 200, [])
   let timeout = useMemo(() => null, [])
 
   const [open, setOpen] = useState(false)

@@ -1,3 +1,5 @@
 export default function ViewMain({ children }) {
-  return <div className='view_main custom-scrollbar'>{children}</div>
+  return (
+    <div className='view_main custom-scrollbar relative z-[2]'>{children}</div>
+  )
 }
