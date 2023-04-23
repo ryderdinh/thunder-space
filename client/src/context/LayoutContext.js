@@ -1,4 +1,10 @@
-import { createContext, useState } from 'react'
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useMemo,
+  useState
+} from 'react'
 
 export const LayoutContext = createContext()
 
@@ -12,46 +18,52 @@ export default function LayoutContextProvider({ children }) {
   const [previousPath, setPreviousPath] = useState('/')
   const [loading, setLoading] = useState(false)
 
-  const openDialog = (nameDialog, dataDialog) => {
+  const openDialog = useCallback((nameDialog, dataDialog) => {
     setNameDialog(nameDialog)
     setData(dataDialog)
     setIsDialogOpen(true)
-  }
+  }, [])
 
-  const closeDialog = () => {
+  const closeDialog = useCallback(() => {
     setIsDialogOpen(false)
-  }
+  }, [])
 
-  const dialog = {
-    active: isDialogOpen,
-    open: (nameDialog, dataDialog) => {
-      setNameDialog(nameDialog)
-      setData(dataDialog)
-      setIsDialogOpen(true)
-    },
-    close: () => {
-      setIsDialogOpen(false)
-    },
-    loading: () => {
-      openDialog('loading')
-    }
-  }
+  const dialog = useMemo(
+    () => ({
+      active: isDialogOpen,
+      open: (nameDialog, dataDialog) => {
+        setNameDialog(nameDialog)
+        setData(dataDialog)
+        setIsDialogOpen(true)
+      },
+      close: () => {
+        setIsDialogOpen(false)
+      },
+      loading: () => {
+        openDialog('loading')
+      }
+    }),
+    [isDialogOpen, openDialog]
+  )
 
-  const sidebar = {
-    active: isOpenSidebar,
-    open: () => {
-      setIsOpenSidebar(true)
-      localStorage.setItem('sidebar-x', true)
-    },
-    close: () => {
-      setIsOpenSidebar(false)
-      localStorage.setItem('sidebar-x', false)
-    },
-    toggle: () => {
-      setIsOpenSidebar(!isOpenSidebar)
-      localStorage.setItem('sidebar-x', !isOpenSidebar)
-    }
-  }
+  const sidebar = useMemo(
+    () => ({
+      active: isOpenSidebar,
+      open: () => {
+        setIsOpenSidebar(true)
+        localStorage.setItem('sidebar-x', true)
+      },
+      close: () => {
+        setIsOpenSidebar(false)
+        localStorage.setItem('sidebar-x', false)
+      },
+      toggle: () => {
+        setIsOpenSidebar(!isOpenSidebar)
+        localStorage.setItem('sidebar-x', !isOpenSidebar)
+      }
+    }),
+    [isOpenSidebar]
+  )
 
   return (
     <LayoutContext.Provider
@@ -73,3 +85,5 @@ export default function LayoutContextProvider({ children }) {
     </LayoutContext.Provider>
   )
 }
+
+export const useLayoutContext = () => useContext(LayoutContext)

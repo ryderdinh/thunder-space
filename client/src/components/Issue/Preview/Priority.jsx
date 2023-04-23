@@ -1,5 +1,5 @@
 import { Menu, Transition } from '@headlessui/react'
-import { CheckIcon } from '@heroicons/react/solid'
+import { CheckIcon } from '@heroicons/react/24/solid'
 import ArrowPathIcon from 'components/Icon/ArrowPathIcon'
 import { Fragment } from 'react'
 
@@ -16,8 +16,8 @@ const Priority = ({ className, priority, loading, onChange }) => {
       <Menu as='div' className='relative inline-block text-left'>
         <Menu.Button disabled={loading}>
           <div
-            className={`group flex cursor-pointer items-center gap-1 
-              rounded-md px-2 py-1 transition-all duration-200 ease-in-out
+            className={`rounded-md group flex cursor-pointer items-center 
+              gap-1 px-2 py-1 transition-all duration-200 ease-in-out
               ${
                 loading ? 'bg-opacity-80' : 'bg-opacity-100 hover:bg-opacity-80'
               }
@@ -42,8 +42,8 @@ const Priority = ({ className, priority, loading, onChange }) => {
           leaveTo='transform opacity-0 scale-95'
         >
           <Menu.Items
-            className='absolute left-0 z-10 mt-2 w-32 origin-top-right 
-            divide-y divide-gray-100 rounded-md bg-white shadow-lg  
+            className='rounded-md absolute left-0 z-10 mt-2 w-32 
+            origin-top-right divide-y divide-gray-100 bg-white shadow-lg  
             ring-1 ring-black ring-opacity-5 focus:outline-none'
           >
             <div className='px-1 py-1'>
@@ -51,8 +51,8 @@ const Priority = ({ className, priority, loading, onChange }) => {
                 <Menu.Item key={item} as='div' onClick={() => onChange(item)}>
                   {({ active }) => (
                     <button
-                      className={`group flex w-full items-center justify-between 
-                      rounded-md px-2 py-2 text-sm
+                      className={`rounded-md group flex w-full items-center 
+                      justify-between px-2 py-2 text-sm
                       ${
                         active
                           ? 'bg-emerald-600 text-white'

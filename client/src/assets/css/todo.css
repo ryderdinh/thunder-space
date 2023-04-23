@@ -1,0 +1,31 @@
+.smooth-dnd-container {
+  padding: 0;
+}
+
+.card-ghost {
+  transition: transform 0.18s ease;
+  transform: rotateZ(2deg);
+  -webkit-transform: rotateZ(2deg);
+  -moz-transform: rotateZ(2deg);
+  -ms-transform: rotateZ(2deg);
+  -o-transform: rotateZ(2deg);
+  font-weight: 600;
+}
+
+.card-ghost .group-card {
+  border-color: #464646;
+}
+
+.card-ghost .card-drag-handle {
+  background-color: #059669;
+}
+
+.card-ghost-drop {
+  transition: transform 0.18s ease-in-out;
+  transform: rotateZ(0deg);
+  -webkit-transform: rotateZ(0deg);
+  -moz-transform: rotateZ(0deg);
+  -ms-transform: rotateZ(0deg);
+  -o-transform: rotateZ(0deg);
+  font-weight: 600;
+}

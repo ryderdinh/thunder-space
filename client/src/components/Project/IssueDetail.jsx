@@ -1,5 +1,5 @@
 import { Disclosure } from '@headlessui/react'
-import { ChevronUpIcon } from '@heroicons/react/solid'
+import { ChevronUpIcon } from '@heroicons/react/24/solid'
 import { motion } from 'framer-motion'
 import variantGlobal from 'units/variantGlobal'
 
@@ -20,7 +20,7 @@ const IssueDetail = ({ data }) => {
       exit='exit'
     >
       <div
-        className='mx-0 w-full rounded-md border border-[#282828] bg-[#1f1f1f] 
+        className='rounded-md mx-0 w-full border border-[#282828] bg-[#1f1f1f] 
         p-2 md:mx-auto md:max-w-md'
       >
         <Disclosure as='div'>
@@ -29,7 +29,7 @@ const IssueDetail = ({ data }) => {
               <Disclosure.Button
                 className={`
                 ${open ? 'bg-[#282828]' : 'bg-[#1f1f1f]'}
-                flex w-full justify-between rounded-md border-0 
+                rounded-md flex w-full justify-between border-0 
                 px-4 py-2 text-left text-sm font-medium text-neutral-300 
                 ring-transparent transition-all duration-300 ease-in-out 
                 hover:bg-[#282828] focus:outline-none focus-visible:ring 

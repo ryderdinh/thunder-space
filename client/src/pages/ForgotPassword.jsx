@@ -30,7 +30,7 @@ const ForgotPassword = () => {
   }, [step, setParams, getParams])
 
   return (
-    <AnimatePresence exitBeforeEnter>
+    <AnimatePresence mode='wait'>
       <motion.div
         className='flex min-h-full w-full flex-col items-center 
         justify-center gap-5'
@@ -52,7 +52,7 @@ const ForgotPassword = () => {
           className='flex h-max w-full flex-col items-center 
           justify-center gap-5'
         >
-          <AnimatePresence exitBeforeEnter>
+          <AnimatePresence mode='wait'>
             {Number(step) < 3 && (
               <Step1
                 handleStep={handleStep}

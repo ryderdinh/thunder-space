@@ -1,5 +1,5 @@
 import { Combobox, Transition } from '@headlessui/react'
-import { CheckIcon, SearchIcon } from '@heroicons/react/solid'
+import { CheckIcon, MagnifyingGlassIcon } from '@heroicons/react/24/solid'
 import { Fragment, useEffect } from 'react'
 
 export default function ProjectSelector({
@@ -27,7 +27,7 @@ export default function ProjectSelector({
     <Combobox value={selected} onChange={setSelected}>
       <div className='relative z-10 mt-1'>
         <div
-          className='relative w-52 cursor-default overflow-hidden rounded-lg 
+          className='rounded-lg relative w-52 cursor-default overflow-hidden 
           bg-transparent text-left focus:outline-none focus-visible:ring-2 
           focus-visible:ring-white focus-visible:ring-opacity-75 
           focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm'
@@ -49,7 +49,7 @@ export default function ProjectSelector({
           afterLeave={() => setQuery('')}
         >
           <Combobox.Options
-            className='absolute mt-1 max-h-60 w-full overflow-auto rounded-md 
+            className='rounded-md absolute mt-1 max-h-60 w-full overflow-auto 
             bg-neutral-900 py-1 text-base shadow-lg ring-1 ring-black 
             ring-opacity-5 focus:outline-none sm:text-sm'
           >
@@ -57,13 +57,13 @@ export default function ProjectSelector({
               <label className='relative block'>
                 <span className='sr-only'>Search</span>
                 <span className='absolute inset-y-0 left-0 flex items-center pl-2'>
-                  <SearchIcon
+                  <MagnifyingGlassIcon
                     className='h-5 w-5 text-neutral-300'
                     aria-hidden='true'
                   />
                 </span>
                 <Combobox.Input
-                  className='block w-full rounded-md border-none
+                  className='rounded-md block w-full border-none
                   bg-white py-2 pl-10 pr-3 shadow-sm placeholder:italic 
                   placeholder:text-neutral-400 focus:border-none focus:outline-none
                   sm:text-sm'

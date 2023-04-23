@@ -3,7 +3,7 @@ import { applyMiddleware, compose, createStore } from 'redux'
 import { load, save } from 'redux-localstorage-simple'
 import thunk from 'redux-thunk'
 const reduxLocalStorageConfig = {
-  ignoreStates: ['_timeOfAttendance'],
+  ignoreStates: ['_timeOfAttendance', '_todos'],
   debounce: 500,
   namespace: 'thunderspace-redux-state'
 }

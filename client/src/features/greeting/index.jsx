@@ -1,4 +1,4 @@
-import { LocationMarkerIcon } from '@heroicons/react/outline'
+import { MapPinIcon } from '@heroicons/react/24/outline'
 import { OutApisContext } from 'context/OutApisContext'
 import { motion } from 'framer-motion'
 import { useContext, useEffect, useState } from 'react'
@@ -60,7 +60,7 @@ const GreetingFeature = ({ variants }) => {
         {now},{' '}
         {region && (
           <div className='flex items-center'>
-            <LocationMarkerIcon className='w-5 text-emerald-500' />
+            <MapPinIcon className='w-5 text-emerald-500' />
             {region}
           </div>
         )}

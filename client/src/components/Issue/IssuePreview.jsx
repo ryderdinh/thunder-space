@@ -1,11 +1,10 @@
 import { Menu } from '@headlessui/react'
-import { ClockIcon } from '@heroicons/react/solid'
+import { ClockIcon } from '@heroicons/react/24/solid'
 import ButtonNormalLoad from 'components/Button/ButtonNormalLoad'
 import ArrowPathIcon from 'components/Icon/ArrowPathIcon'
 import { LayoutContext } from 'context/LayoutContext'
-import dayjs from 'dayjs'
 import { motion } from 'framer-motion'
-import { Fragment, useContext, useEffect } from 'react'
+import { Fragment, useContext } from 'react'
 import variantGlobal from 'units/variantGlobal'
 
 const priorityColor = {
@@ -18,11 +17,9 @@ const priorityColor = {
 const IssuePreview = ({ dataIssue, dataProject, className = '' }) => {
   const { openDialog } = useContext(LayoutContext)
 
-
-
   return (
     <motion.div
-      className={`${className} h-max w-full rounded-md bg-[length:100%_auto] 
+      className={`${className} rounded-md h-max w-full bg-[length:100%_auto] 
       bg-no-repeat py-2 px-5 ${
         dataIssue.type === 'task'
           ? "bg-[url('assets/images/card-issue-task.png')]  ring-[#10B99F]"
@@ -46,7 +43,7 @@ const IssuePreview = ({ dataIssue, dataProject, className = '' }) => {
 
           <div className='mt-3 flex w-full items-center gap-2'>
             <div
-              className='flex items-center gap-2 rounded-md bg-neutral-50/40 
+              className='rounded-md flex items-center gap-2 bg-neutral-50/40 
               px-2 py-1'
             >
               <div className='flex items-center gap-1'>
@@ -62,7 +59,7 @@ const IssuePreview = ({ dataIssue, dataProject, className = '' }) => {
               <Menu>
                 <Menu.Button>
                   <div
-                    className={`group flex cursor-pointer items-center gap-1 rounded-md 
+                    className={`rounded-md group flex cursor-pointer items-center gap-1 
                     px-2 py-1
                     ${priorityColor[dataIssue.priority]}`}
                   >
@@ -116,7 +113,7 @@ const IssuePreview = ({ dataIssue, dataProject, className = '' }) => {
                 }}
               >
                 <div
-                  className='relative h-5 w-5 overflow-hidden rounded-full 
+                  className='rounded-full relative h-5 w-5 overflow-hidden 
                   ring-2 ring-neutral-50'
                 >
                   <img

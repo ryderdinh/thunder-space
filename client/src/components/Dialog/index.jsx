@@ -8,9 +8,11 @@ import AddMemberToProject from './Workflow/AddMemberToProject'
 import AssignIssue from './Workflow/AssignIssue'
 import CreateIssue from './Workflow/CreateIssue'
 import CreateProject from './Workflow/CreateProject'
+import CreateTodo from './Workflow/CreateTodo'
 import DeleteIssue from './Workflow/DeleteIssue'
 import DeleteProject from './Workflow/DeleteProject'
 import KickOffMember from './Workflow/KickOffMember'
+import TodoDetail from './Workflow/TodoDetail'
 
 function Dialog() {
   const { nameDialog, isDialogOpen, closeDialog, data } =
@@ -21,7 +23,10 @@ function Dialog() {
       <DialogHeadlessui
         as='div'
         className='fixed inset-0 z-10 overflow-y-auto'
-        onClose={closeDialog}
+        onClose={() => {
+          data?.onClose()
+          closeDialog()
+        }}
       >
         <DialogHeadlessui.Overlay
           className='absolute top-0 h-full w-full 
@@ -62,6 +67,19 @@ function Dialog() {
 
         {nameDialog === 'change-password' && (
           <ChangePassword closeModal={closeDialog} />
+        )}
+
+        {nameDialog === 'create-todo' && (
+          <CreateTodo closeModal={closeDialog} data={data} />
+        )}
+
+        {nameDialog === 'todo-detail' && (
+          <TodoDetail
+            closeModal={() => {
+              data?.onClose && data.onClose()
+            }}
+            data={data}
+          />
         )}
 
         {nameDialog === 'loading' && <Loading closeModal={closeDialog} />}

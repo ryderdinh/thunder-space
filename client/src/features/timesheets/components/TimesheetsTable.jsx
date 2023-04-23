@@ -1,5 +1,5 @@
 import { useAutoAnimate } from '@formkit/auto-animate/react'
-import { BadgeCheckIcon } from '@heroicons/react/solid'
+import { CheckBadgeIcon } from '@heroicons/react/24/solid'
 import { Center, Panel } from 'components/Layouts'
 
 const dayLabel = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
@@ -44,7 +44,7 @@ const TimesheetsTable = ({
         {days.map((item) => (
           <Center
             key={item}
-            className={`mx-1 select-none rounded border border-transparent 
+            className={`rounded mx-1 select-none border border-transparent 
             py-2 text-neutral-300 transition-all duration-200 sm:py-5
             ${item > 0 ? 'cursor-pointer hover:bg-neutral-600' : ''} 
             ${isToday(item) ? 'border-dashed border-neutral-600' : ''}
@@ -54,7 +54,7 @@ const TimesheetsTable = ({
             <div className='relative text-sm md:text-base'>
               {item > 0 ? item : ' '}
               {daysComplete.includes(item) && (
-                <BadgeCheckIcon
+                <CheckBadgeIcon
                   className='absolute -top-1 -right-3 w-3 text-emerald-600 
                   sm:-right-4 sm:w-4'
                 />

@@ -1,8 +1,6 @@
-import { Transition } from '@headlessui/react'
 import { actRefreshPage } from 'actions'
 import 'animate.css'
 import Dialog from 'components/Dialog'
-import Loading from 'components/Dialog/Loading'
 import { LayoutContext } from 'context/LayoutContext'
 import { AnimatePresence } from 'framer-motion'
 import NotFound from 'pages/404'
@@ -19,7 +17,7 @@ import Report from 'pages/Report'
 import Space from 'pages/Space'
 import TimeSheets from 'pages/TimeSheets'
 import Todos from 'pages/Todos'
-import { Fragment, useContext, useEffect } from 'react'
+import { useContext, useEffect } from 'react'
 import { Toaster } from 'react-hot-toast'
 import { useDispatch } from 'react-redux'
 import { Route, Switch } from 'react-router-dom'
@@ -38,13 +36,11 @@ export default function App() {
     dispatch(actRefreshPage())
   }, [dispatch])
 
-  console.log(1, loading)
-
   return (
     <>
       <Toaster position='top-center' reverseOrder={true} />
       <Dialog />
-      <Transition
+      {/* <Transition
         appear={true}
         show={loading}
         as={Fragment}
@@ -58,16 +54,16 @@ export default function App() {
         <div
           key='modal'
           className={`pointer-events-none fixed h-screen
-            w-full select-none
-            ${loading ? 'z-50' : 'z-50'}`}
+          w-full select-none
+          ${loading ? 'z-50' : 'z-50'}`}
         >
           <Loading load={loading} />
         </div>
-      </Transition>
+      </Transition> */}
 
       <Route
         render={({ location }) => (
-          <AnimatePresence exitBeforeEnter>
+          <AnimatePresence mode='wait'>
             <Switch location={location} key={location.pathname}>
               {/* Landing page */}
               <Route exact path='/'>
@@ -100,9 +96,12 @@ export default function App() {
               </Route>
 
               {/* Todos pages */}
-              <Route exact path='/todos'>
+              <Route path='/todos'>
                 <Todos />
               </Route>
+              {/* <Route exact path='/todos/:tdid'>
+                <TodoItem />
+              </Route> */}
 
               {/* Project pages */}
               <Route exact path='/projects'>

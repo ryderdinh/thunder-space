@@ -1,5 +1,5 @@
 import { useAutoAnimate } from '@formkit/auto-animate/react'
-import { ChevronRightIcon, PlusIcon } from '@heroicons/react/solid'
+import { ChevronRightIcon, PlusIcon } from '@heroicons/react/24/solid'
 import { actFetchProject, actQueryProject, setInitialIssue } from 'actions'
 import 'assets/css/project.css'
 import { Breadcumb } from 'components/Breadcumb/Breadcumb'
@@ -135,8 +135,8 @@ export default function ProjectDetail() {
           </p>
           <Link to={'/projects'}>
             <button
-              className='m-auto block 
-              rounded-md bg-emerald-500 px-4 py-2 text-sm font-semibold 
+              className='rounded-md m-auto 
+              block bg-emerald-500 px-4 py-2 text-sm font-semibold 
               leading-6 text-neutral-50 shadow'
             >
               Return to projects
@@ -162,8 +162,8 @@ export default function ProjectDetail() {
                   defaultValue={defaultSearchValue}
                 />
                 <button
-                  className='panel inline-flex h-9 w-max items-center 
-                  justify-center gap-1 rounded-md bg-opacity-20 py-2 px-4
+                  className='panel rounded-md inline-flex h-9 w-max 
+                  items-center justify-center gap-1 bg-opacity-20 py-2 px-4
                   text-sm font-medium text-neutral-200 outline-none
                   transition-all 
                   duration-200
@@ -256,8 +256,8 @@ function IssueGridItem({ data, pid, variants }) {
   return (
     <Link to={`/projects/${pid}/${data._id}`} onClick={initDataPreviewIssue}>
       <motion.div
-        className='card-panel group relative flex h-36 w-full 
-        cursor-pointer rounded-md border duration-150 ease-in-out'
+        className='card-panel rounded-md group relative flex h-36 
+        w-full cursor-pointer border duration-150 ease-in-out'
         variants={variants}
         initial='initial'
         animate='enter'
@@ -265,7 +265,7 @@ function IssueGridItem({ data, pid, variants }) {
       >
         <div className='mr-4 flex flex-col'>
           <div
-            className='h-8 w-8 overflow-hidden rounded-full transition-all
+            className='rounded-full h-8 w-8 overflow-hidden transition-all
             duration-100 group-hover:scale-110'
           >
             <img

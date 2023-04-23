@@ -13,13 +13,11 @@ const ButtonSuccess = ({
     !loading && !disabled && onClick()
   }
 
-  console.log(loading, disabled)
-
   return (
     <div
       className={`relative h-max cursor-pointer select-none overflow-hidden
       rounded-[4px] border border-emerald-500/50 bg-emerald-500/90 text-center 
-       font-light text-neutral-50/90 transition-all
+      font-light text-neutral-50/90 transition-all
       duration-100 ease-in-out hover:text-neutral-100/90
       ${
         size === 'small'
