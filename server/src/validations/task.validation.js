@@ -2,8 +2,8 @@ const Joi = require('joi')
 const { ObjectId } = require('mongoose').Types
 
 const createTask = Joi.object({
-  title: Joi.string().min(1).required(),
-  description: Joi.string().min(1),
+  title: Joi.string().trim().min(1).required(),
+  description: Joi.string().trim().min(1),
   status: Joi.string().valid('todo', 'doing', 'completed').required(),
   pin: Joi.bool().required()
 })
