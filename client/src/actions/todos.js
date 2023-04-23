@@ -6,6 +6,7 @@ import {
   SET_TODOS_DATA_ITEM,
   SET_TODOS_ERROR,
   SET_TODOS_LOADING,
+  SWITCH_TODOS_ITEM,
   UPDATE_TODOS_DATA
 } from 'constants/action'
 import { convertTodoDataByStatus } from 'utilities/convert'
@@ -113,27 +114,38 @@ export const actUpdateTodoItem = (
   onError
 ) => {
   return async (dispatch) => {
+    onPending && onPending()
+
     if (type !== data?.status) {
+      console.log(12, type, data?.status, id)
+
       await dispatch(
-        removeTodosItems({
-          colName: type,
+        switchTodosItems({
+          currentCol: type,
+          newCol: data?.status,
           id
         })
       )
-      await dispatch(addTodosItems({ colName: data?.status, data }))
-    } else {
-      await dispatch(
-        setTodosDataItems({
-          colName: type,
-          id,
-          data
-        })
-      )
+      // await dispatch(
+      //   removeTodosItems({
+      //     colName: type,
+      //     id
+      //   })
+      // )
+      // await dispatch(addTodosItems({ colName: data?.status, data }))
     }
-    onPending && onPending()
+
+    await dispatch(
+      setTodosDataItems({
+        colName: type,
+        id,
+        data
+      })
+    )
 
     try {
       await todoApi.updateTodoItem(id, data)
+      await dispatch(actFetchTodos())
       onSuccess && onSuccess()
     } catch (error) {
       onError && onError(error.message)
@@ -189,6 +201,10 @@ export const addTodosItems = ({ colName, data }) => ({
 export const removeTodosItems = (payload) => ({
   type: REMOVE_TODOS_ITEM,
   payload
+})
+export const switchTodosItems = ({ currentCol, newCol, id }) => ({
+  type: SWITCH_TODOS_ITEM,
+  payload: { currentCol, newCol, id }
 })
 export const setTodosLoading = (payload) => ({
   type: SET_TODOS_LOADING,

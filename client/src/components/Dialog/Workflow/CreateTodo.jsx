@@ -23,20 +23,21 @@ export default function CreateTodo({
     setCreating(true)
 
     const onSuccess = (id) => {
-      // dispatch(actFetchTodos())
       closeModal()
+      setCreating(false)
       successToast('Added new task!', 'create-todo')
       onSuccessCreate && onSuccessCreate(id)
     }
 
     const onError = (err) => {
+      setCreating(false)
       errorToast(err.message, 'create-todo')
     }
 
     dispatch(
       actCreateTodo(
-        titleInput.value,
-        descriptionInput.value,
+        titleInput.value.trim(),
+        descriptionInput.value.trim(),
         'todo',
         false,
         onSuccess,
@@ -104,7 +105,7 @@ export default function CreateTodo({
             <ButtonSuccess
               size='mid'
               loading={creating}
-              className='w-20'
+              className='w-24'
               onClick={onSubmit}
             >
               Add
@@ -113,7 +114,7 @@ export default function CreateTodo({
             <ButtonDanger
               size='mid'
               disabled={creating}
-              className='w-20'
+              className='w-24'
               onClick={closeModal}
             >
               Cancel
