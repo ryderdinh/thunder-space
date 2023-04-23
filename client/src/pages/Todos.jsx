@@ -153,7 +153,7 @@ export default function Todos() {
 
         <div className='flex w-full flex-wrap'>
           <SearchInput
-            className='w-[309px] max-w-full'
+            className='!w-[309px] max-w-full'
             placeholder='Enter text'
             onSubmit={onSearch}
             {...searchInput.bind}
