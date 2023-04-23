@@ -59,7 +59,7 @@ export default function TodoDetail({
     const onSuccess = () => {
       setUpdating(false)
       successToast(`Removed! You won't find it anymore`)
-      onClose()
+      closeModal()
     }
 
     const onError = (err) => {
