@@ -1,9 +1,11 @@
 import { actRefreshPage } from 'actions'
 import 'animate.css'
 import Dialog from 'components/Dialog'
+import CookieNotification from 'components/More/CookieNotification'
 import { LayoutContext } from 'context/LayoutContext'
-import { AnimatePresence } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
 import NotFound from 'pages/404'
+import CookiePolicy from 'pages/CookiePolicy'
 import Documentation from 'pages/Documentation'
 import ForgotPassword from 'pages/ForgotPassword'
 import Home from 'pages/Home'
@@ -19,17 +21,16 @@ import TimeSheets from 'pages/TimeSheets'
 import Todos from 'pages/Todos'
 import { useContext, useEffect } from 'react'
 import { Toaster } from 'react-hot-toast'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Route, Switch } from 'react-router-dom'
 
 export default function App() {
   //? Redux
   const dispatch = useDispatch()
 
-  //? Context
-  const { loading } = useContext(LayoutContext)
-
   //? State
+  const { loading } = useContext(LayoutContext)
+  const { cookie } = useSelector((state) => state._app)
 
   //? Effect
   useEffect(() => {
@@ -40,6 +41,18 @@ export default function App() {
     <>
       <Toaster position='top-center' reverseOrder={true} />
       <Dialog />
+
+      <AnimatePresence mode='wait'>
+        {!cookie ? (
+          <motion.div
+            className='fixed bottom-5 right-5 z-10 bg-deepdark'
+            key={'cookie-noti'}
+          >
+            <CookieNotification />
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
+
       {/* <Transition
         appear={true}
         show={loading}
@@ -60,7 +73,6 @@ export default function App() {
           <Loading load={loading} />
         </div>
       </Transition> */}
-
       <Route
         render={({ location }) => (
           <AnimatePresence mode='wait'>
@@ -142,7 +154,10 @@ export default function App() {
               <Route exact path='/forgot-password'>
                 <ForgotPassword />
               </Route>
-
+              {/* Legal */}
+              <Route exact path='/legal/cookie-policy'>
+                <CookiePolicy />
+              </Route>
               {/* 404 */}
               <Route component={NotFound} />
             </Switch>

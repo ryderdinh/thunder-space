@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux'
+import app from './app'
 import checkLogin from './checkLogin'
 import events from './events'
 import issue from './issue'
@@ -14,6 +15,7 @@ import users from './users'
 import workflow from './workflow'
 
 export default combineReducers({
+  _app: app,
   _timesheets: timesheets,
   _timeOfAttendance: timeKeeping,
   _checkLogin: checkLogin,

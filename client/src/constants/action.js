@@ -6,3 +6,5 @@ export const REMOVE_TODOS_ITEM = 'todos/removeItem'
 export const SWITCH_TODOS_ITEM = 'todos/switchItem'
 export const SET_TODOS_LOADING = 'todos/setLoading'
 export const SET_TODOS_ERROR = 'todos/setError'
+
+export const SET_COOKIE = 'app/setCookie'

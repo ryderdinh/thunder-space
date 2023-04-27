@@ -1,5 +1,6 @@
 import Footer from 'components/Landing/Footer'
 import HeroSection from 'components/Landing/HeroSection'
+import MarketingNotification from 'components/More/MarketingNotification'
 import { motion } from 'framer-motion'
 import { useEffect } from 'react'
 import variantGlobal from 'units/variantGlobal'
@@ -17,6 +18,7 @@ export default function Landing() {
       exit='exit'
       variants={variantGlobal(4, 0.5)}
     >
+      <MarketingNotification />
       <div className='flex w-full flex-col'>
         <HeroSection />
         <Footer />
