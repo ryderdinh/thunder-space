@@ -1,6 +1,9 @@
 import { Dialog, Transition } from '@headlessui/react'
+import { XMarkIcon } from '@heroicons/react/24/solid'
 import { joiResolver } from '@hookform/resolvers/joi'
 import { actChangePassword } from 'actions'
+import ButtonSuccess from 'components/Button/ButtonSuccess'
+import { Tooltip } from 'components/Layouts'
 import { useInput } from 'hooks'
 import Joi from 'joi'
 import { Fragment, useEffect, useState } from 'react'
@@ -28,15 +31,20 @@ const ChangePassword = ({ closeModal }) => {
   const dispatch = useDispatch()
 
   const [rePassError, setRePassError] = useState('')
+  const [updating, setUpdating] = useState(false)
 
   const onSubmit = (data) => {
+    setUpdating(true)
     const onSuccess = () => {
       closeModal()
+      setUpdating(false)
       setTimeout(() => {
         window.location.reload()
       }, 2000)
     }
     const onError = (message) => {
+      setUpdating(false)
+
       if (['current password is incorrect'].includes(message)) {
         setError('currentPassword', {
           type: 'custom',
@@ -119,6 +127,17 @@ const ChangePassword = ({ closeModal }) => {
           rounded-md border border-neutral-800 bg-[#232323] p-6 text-left 
           align-middle shadow-xl transition-all'
         >
+          <div className='absolute right-6 top-6 h-6 w-6' onClick={closeModal}>
+            <Tooltip title={'Close'}>
+              <div
+                className='transition-default flex h-6 w-6 cursor-pointer
+                items-center justify-center rounded-5 border border-gray-400 
+                bg-gray-600 hover:bg-gray-400'
+              >
+                <XMarkIcon className='text-gray-50' />
+              </div>
+            </Tooltip>
+          </div>
           <Dialog.Title
             as='h3'
             className='text-center text-lg font-bold leading-6 text-neutral-200'
@@ -128,11 +147,11 @@ const ChangePassword = ({ closeModal }) => {
           <div className='mt-5'>
             <form>
               <div className=''>
-                <div className='py-5 sm:py-6'>
+                <div className='space-y-3 py-5 sm:py-6'>
                   <div className='col-span-12'>
                     <label
                       htmlFor='currentPassword'
-                      className='block text-sm font-medium text-neutral-200'
+                      className='mb-1 block text-sm font-medium text-gray-50'
                     >
                       Current password
                     </label>
@@ -140,10 +159,7 @@ const ChangePassword = ({ closeModal }) => {
                       {...register('currentPassword')}
                       type='password'
                       autoComplete='off'
-                      className='mt-1 mb-2 block w-full rounded-md border 
-                      border-gray-300 p-1 shadow-sm focus:border-emerald-500
-                      focus:outline-none focus:ring-2 focus:ring-emerald-500
-                      sm:text-sm'
+                      className='input-default z-[1]'
                     />
                     {errors.currentPassword && (
                       <span className='text-xs italic text-red-500'>
@@ -154,7 +170,7 @@ const ChangePassword = ({ closeModal }) => {
                   <div className='col-span-12'>
                     <label
                       htmlFor='newPassword'
-                      className='block text-sm font-medium text-neutral-200'
+                      className='mb-1 block text-sm font-medium text-gray-50'
                     >
                       New password
                     </label>
@@ -162,10 +178,7 @@ const ChangePassword = ({ closeModal }) => {
                       {...register('newPassword')}
                       type='password'
                       autoComplete='off'
-                      className='mt-1 mb-2 block w-full rounded-md border 
-                      border-gray-300 p-1 shadow-sm focus:border-emerald-500
-                      focus:outline-none focus:ring-2 focus:ring-emerald-500
-                      sm:text-sm'
+                      className='input-default z-[1]'
                     />
                     {errors.newPassword && (
                       <span className='text-xs italic text-red-500'>
@@ -176,7 +189,7 @@ const ChangePassword = ({ closeModal }) => {
                   <div className='col-span-12'>
                     <label
                       htmlFor='rePassword'
-                      className='block text-sm font-medium text-neutral-200'
+                      className='mb-1 block text-sm font-medium text-gray-50'
                     >
                       Re password
                     </label>
@@ -185,10 +198,7 @@ const ChangePassword = ({ closeModal }) => {
                       name='rePassword'
                       type='password'
                       autoComplete='off'
-                      className='mt-1 mb-2 block w-full rounded-md border 
-                      border-gray-300 p-1 shadow-sm focus:border-emerald-500
-                      focus:outline-none focus:ring-2 focus:ring-emerald-500
-                      sm:text-sm'
+                      className='input-default z-[1]'
                     />
                     {rePassError && (
                       <span className='text-xs italic text-red-500'>
@@ -202,29 +212,14 @@ const ChangePassword = ({ closeModal }) => {
           </div>
 
           <div className='mt-4 flex justify-end gap-2'>
-            <button
-              type='submit'
-              className={`inline-flex cursor-pointer justify-center rounded-md 
-              border border-transparent bg-emerald-600 py-2 px-4 text-sm 
-              font-medium text-white shadow-sm 
-              hover:bg-emerald-700 focus:outline-none`}
+            <ButtonSuccess
+              size='mid'
+              loading={updating}
+              className=''
               onClick={handleSubmit(onSubmit)}
             >
               Change
-            </button>
-
-            <button
-              type='button'
-              className='inline-flex justify-center rounded-md border 
-              border-transparent px-4 py-2 text-sm font-medium
-              text-neutral-400 transition-all duration-300 ease-in-out 
-              hover:bg-neutral-500 hover:text-neutral-200 focus:outline-none 
-              focus-visible:ring-2 focus-visible:ring-neutral-500 
-              focus-visible:ring-offset-2'
-              onClick={closeModal}
-            >
-              Cancel
-            </button>
+            </ButtonSuccess>
           </div>
         </div>
       </Transition.Child>

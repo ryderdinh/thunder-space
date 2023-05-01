@@ -1,9 +1,10 @@
 import { Dialog, Transition } from '@headlessui/react'
+import { XMarkIcon } from '@heroicons/react/24/solid'
 import { actCreateTodo } from 'actions/todos'
-import ButtonDanger from 'components/Button/ButtonDanger'
 import ButtonSuccess from 'components/Button/ButtonSuccess'
 import Input from 'components/Form/Input'
 import Textarea from 'components/Form/Textarea'
+import { Tooltip } from 'components/Layouts'
 import { useInput } from 'hooks'
 import { Fragment, useState } from 'react'
 import { useDispatch } from 'react-redux'
@@ -85,10 +86,30 @@ export default function CreateTodo({
             Add New Todo
           </Dialog.Title>
 
+          <div className='absolute right-6 top-6 h-6 w-6' onClick={closeModal}>
+            <Tooltip title={'Close'}>
+              <div
+                className='transition-default flex h-6 w-6 cursor-pointer
+                items-center justify-center rounded-5 border border-gray-400 
+                bg-gray-600 hover:bg-gray-400'
+              >
+                <XMarkIcon className='text-gray-50' />
+              </div>
+            </Tooltip>
+          </div>
+
           <div className='mt-5'>
             <div className='grid grid-cols-6 gap-5'>
               <div className='col-span-6'>
                 <Input label='Title' {...titleInput.bind} />
+              </div>
+              <div className='col-span-6'>
+                <Textarea
+                  label='Description'
+                  rows={5}
+                  className='resize-none'
+                  {...descriptionInput.bind}
+                />
               </div>
               <div className='col-span-6'>
                 <Textarea
@@ -110,15 +131,6 @@ export default function CreateTodo({
             >
               Add
             </ButtonSuccess>
-
-            <ButtonDanger
-              size='mid'
-              disabled={creating}
-              className='w-24'
-              onClick={closeModal}
-            >
-              Cancel
-            </ButtonDanger>
           </div>
         </div>
       </Transition.Child>
