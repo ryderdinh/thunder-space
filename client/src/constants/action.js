@@ -3,5 +3,8 @@ export const UPDATE_TODOS_DATA = 'todos/updateData'
 export const SET_TODOS_DATA_ITEM = 'todos/setDataItem'
 export const ADD_TODOS_ITEM = 'todos/addItem'
 export const REMOVE_TODOS_ITEM = 'todos/removeItem'
+export const SWITCH_TODOS_ITEM = 'todos/switchItem'
 export const SET_TODOS_LOADING = 'todos/setLoading'
 export const SET_TODOS_ERROR = 'todos/setError'
+
+export const SET_COOKIE = 'app/setCookie'

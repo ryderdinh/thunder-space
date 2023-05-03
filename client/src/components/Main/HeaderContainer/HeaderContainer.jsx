@@ -1,6 +1,6 @@
 import { Popover } from '@headlessui/react'
 import { BellIcon } from '@heroicons/react/24/outline'
-import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid'
+import { ChevronLeftIcon } from '@heroicons/react/24/solid'
 import { LayoutContext } from 'context/LayoutContext'
 import { useContext, useEffect, useState } from 'react'
 import './HeaderContainer.css'
@@ -36,18 +36,13 @@ export default function HeaderContainer({ pathName }) {
 
   return (
     <div className='view_name relative z-[3] !border-none !bg-none'>
-      <div className='flex'>
-        {sidebar.active ? (
-          <ChevronLeftIcon
-            className='relative -left-3 h-8 w-8 cursor-pointer'
-            onClick={toggleSidebar}
-          />
-        ) : (
-          <ChevronRightIcon
-            className='relative -left-3 h-8 w-8 cursor-pointer'
-            onClick={toggleSidebar}
-          />
-        )}
+      <div className='flex items-center'>
+        <ChevronLeftIcon
+          className={`relative -left-3 h-6 w-6 cursor-pointer
+            transition-all duration-300 ease-linear
+            ${!sidebar.active ? 'rotate-180' : 'rotate-0'}`}
+          onClick={toggleSidebar}
+        />
         <PageName name={name} />
       </div>
 

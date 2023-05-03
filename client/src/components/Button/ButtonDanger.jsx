@@ -11,7 +11,7 @@ const ButtonDanger = ({
 }) => {
   return (
     <div
-      className={`h-max cursor-pointer select-none rounded-[4px]
+      className={`relative h-max cursor-pointer select-none rounded-[4px]
       border border-red-500/50 bg-red-500/90 px-2.5 
       py-1 text-center font-light
       text-neutral-50/90 transition-all duration-100 ease-in-out

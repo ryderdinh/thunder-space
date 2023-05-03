@@ -1,27 +1,31 @@
 import { Dialog, RadioGroup, Transition } from '@headlessui/react'
+import { XMarkIcon } from '@heroicons/react/24/solid'
 import ButtonDanger from 'components/Button/ButtonDanger'
 import ButtonSuccess from 'components/Button/ButtonSuccess'
 import Input from 'components/Form/Input'
 import Textarea from 'components/Form/Textarea'
+import { Tooltip } from 'components/Layouts'
 import FlagButton from 'components/Todo/FlagButton'
 import { useInput } from 'hooks'
 import useTodo from 'hooks/useTodo'
-import { Fragment, useEffect, useState } from 'react'
+import { Fragment, useEffect, useMemo, useState } from 'react'
 import { errorToast, successToast } from 'utilities/toast'
 
 const statusList = ['todo', 'doing', 'completed']
 
-export default function TodoDetail({
-  closeModal,
-  data: { _id, title, description, status, pin, onClose }
-}) {
+export default function TodoDetail({ closeModal, data: { id, onClose } }) {
+  const { findCardById, updateTodo, deleteTodo } = useTodo()
+  const { _id, title, description, status, pin } = useMemo(() =>
+    findCardById(id)
+  )
+
   const [updating, setUpdating] = useState(false)
   const [statusSelected, setStatusSelected] = useState(status)
   const [pinValue, setPinValue] = useState(pin)
+  const [checkLoad, setCheckLoad] = useState(false)
 
   const titleInput = useInput(title)
   const descriptionInput = useInput(description)
-  const { updateTodo, deleteTodo } = useTodo()
 
   const onUpdate = () => {
     const onPending = () => {
@@ -30,7 +34,7 @@ export default function TodoDetail({
 
     const onSuccess = () => {
       setUpdating(false)
-      successToast('Updated')
+      successToast('Updated', 'update-todo')
     }
 
     const onError = (err) => {
@@ -78,6 +82,12 @@ export default function TodoDetail({
     setPinValue(pin)
   }, [pin])
 
+  useEffect(() => {
+    titleInput.setValue(title)
+    descriptionInput.setValue(description)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [description, title])
+
   return (
     <div className='min-h-screen px-4 text-center'>
       <Transition.Child
@@ -110,6 +120,18 @@ export default function TodoDetail({
           rounded-md border border-neutral-800 bg-[#232323] p-6 text-left 
           align-middle shadow-xl transition-all'
         >
+          <div className='absolute right-6 top-6 h-6 w-6' onClick={closeModal}>
+            <Tooltip title={'Close'}>
+              <div
+                className='transition-default flex h-6 w-6 cursor-pointer
+                items-center justify-center rounded-5 border border-gray-400 
+                bg-gray-600 hover:bg-gray-400'
+              >
+                <XMarkIcon className='text-gray-50' />
+              </div>
+            </Tooltip>
+          </div>
+
           <Dialog.Title
             as='h3'
             className='text-center text-lg font-bold leading-6 text-neutral-200'
@@ -183,7 +205,7 @@ export default function TodoDetail({
                 </div>
                 <div className=''>
                   <FlagButton
-                    className='py-[10.5px]'
+                    className='w-full justify-center py-[10.5px]'
                     isFlag={pinValue}
                     onClick={() => setPinValue(!pinValue)}
                   />
@@ -192,19 +214,19 @@ export default function TodoDetail({
             </div>
           </div>
 
-          <div className='mt-4 flex justify-end gap-2'>
+          <div className='mt-8 grid grid-cols-2 gap-2'>
             <ButtonSuccess
               size='mid'
-              disabled={updating}
-              className='w-24'
+              loading={updating}
+              className=''
               onClick={onUpdate}
             >
               Update
             </ButtonSuccess>
             <ButtonDanger
               size='mid'
-              disabled={updating}
-              className='w-24'
+              loading={updating}
+              className=''
               onClick={onDelete}
             >
               Remove

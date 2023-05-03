@@ -119,7 +119,7 @@ export default function Todos() {
   useEffect(() => {
     if (Object.keys(itemDetail).length && isOpenDetail) {
       dialog.open('todo-detail', {
-        ...itemDetail,
+        id: itemDetail._id,
         onClose: () => history.push('/todos')
       })
     }

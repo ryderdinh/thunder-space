@@ -1,10 +1,14 @@
 import { Dialog, Listbox, Transition } from '@headlessui/react'
-import { CheckIcon, ChevronDownIcon } from '@heroicons/react/24/solid'
+import {
+  CheckIcon,
+  ChevronDownIcon,
+  XMarkIcon
+} from '@heroicons/react/24/solid'
 import { joiResolver } from '@hookform/resolvers/joi'
 import { actCreateIssue } from 'actions'
 import 'assets/css/pickydatetime.css'
 import Joi from 'joi'
-import { forwardRef, Fragment, useState } from 'react'
+import { Fragment, forwardRef, useState } from 'react'
 import 'react-date-range/dist/styles.css' // main css file
 import 'react-date-range/dist/theme/default.css' // theme css file
 import ReactDatePicker from 'react-datepicker'
@@ -12,8 +16,9 @@ import { useController, useForm } from 'react-hook-form'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 
-import ButtonDanger from 'components/Button/ButtonDanger'
 import ButtonSuccess from 'components/Button/ButtonSuccess'
+import Input from 'components/Form/Input'
+import { Tooltip } from 'components/Layouts'
 import { addMonths } from 'date-fns'
 import 'react-datepicker/dist/react-datepicker.css'
 
@@ -81,9 +86,7 @@ export default function CreateIssue({ closeModal }) {
       <input
         type='text'
         autoComplete='none'
-        className='rounded-md mt-1 block w-full border border-neutral-300 
-        py-[7px] pl-3 shadow-sm focus:border-emerald-500 focus:outline-none 
-        focus:ring-2 focus:ring-emerald-500 sm:text-sm'
+        className='input-default'
         onClick={onClick}
         ref={ref}
         defaultValue={value}
@@ -120,8 +123,8 @@ export default function CreateIssue({ closeModal }) {
         leaveTo='opacity-0 scale-95'
       >
         <div
-          className='rounded-md relative my-8 inline-block w-full max-w-5xl
-          transform border border-neutral-800 bg-[#232323] p-4 text-left align-middle 
+          className='relative my-8 inline-block w-full max-w-5xl transform
+          rounded-md border border-neutral-800 bg-[#232323] p-4 text-left align-middle 
           shadow-xl transition-all md:w-4/5 md:p-6'
         >
           <Dialog.Title
@@ -136,22 +139,32 @@ export default function CreateIssue({ closeModal }) {
             project
           </Dialog.Description>
 
+          <div className='absolute right-6 top-6 h-6 w-6' onClick={closeModal}>
+            <Tooltip title={'Close'}>
+              <div
+                className='transition-default flex h-6 w-6 cursor-pointer
+                items-center justify-center rounded-5 border border-gray-400 
+                bg-gray-600 hover:bg-gray-400'
+              >
+                <XMarkIcon className='text-gray-50' />
+              </div>
+            </Tooltip>
+          </div>
+
           <div>
             <form>
               <div className=''>
                 <div className='py-5 sm:py-6'>
                   <div className='grid grid-cols-6 gap-3 md:grid-cols-12 md:gap-6'>
                     <div className='col-span-6 md:col-span-12'>
-                      <label className='block text-sm font-medium text-neutral-200'>
+                      <label className='mb-1 block text-sm font-medium text-gray-50'>
                         Name
                       </label>
                       <input
                         {...register('name')}
                         type='text'
                         autoComplete='none'
-                        className='rounded-md mt-1 block w-full border border-neutral-300 
-                        py-[7px] pl-3 shadow-sm focus:border-emerald-500 focus:outline-none 
-                        focus:ring-2 focus:ring-emerald-500 sm:text-sm'
+                        className='input-default'
                       />
 
                       {errors.name && (
@@ -162,26 +175,24 @@ export default function CreateIssue({ closeModal }) {
                     </div>
 
                     <div className='col-span-6 md:col-span-4'>
-                      <label className='block text-sm font-medium text-neutral-200'>
-                        Project{' '}
-                        <span className='text-xs italic text-neutral-500'>
-                          (current)
-                        </span>
-                      </label>
-                      <input
-                        disabled
-                        type='text'
+                      <Input
+                        label={
+                          <>
+                            {' '}
+                            Project{' '}
+                            <span className='text-xs italic text-neutral-500'>
+                              (current)
+                            </span>
+                          </>
+                        }
                         value={_dataProject?.name || ''}
                         onChange={() => {}}
-                        className='rounded-md mt-1 block w-full border border-neutral-300
-                        p-1 py-[7px] pl-3 shadow-sm focus:outline-none 
-                        disabled:border-neutral-200 disabled:bg-neutral-50 
-                        disabled:text-neutral-500 sm:text-sm'
+                        disabled
                       />
                     </div>
 
                     <div className='col-span-6 md:col-span-4'>
-                      <label className='block text-sm font-medium text-neutral-200'>
+                      <label className='mb-1 block text-sm font-medium text-gray-50'>
                         Type
                       </label>
                       <ListBoxNonMultiple
@@ -198,7 +209,7 @@ export default function CreateIssue({ closeModal }) {
                     </div>
 
                     <div className='col-span-6 md:col-span-4'>
-                      <label className='block text-sm font-medium text-neutral-200'>
+                      <label className='mb-1 block text-sm font-medium text-gray-50'>
                         Priority
                       </label>
                       <ListBoxNonMultiple
@@ -215,7 +226,7 @@ export default function CreateIssue({ closeModal }) {
                     </div>
 
                     <div className='col-span-6 md:col-span-4'>
-                      <label className='block text-sm font-medium text-neutral-200'>
+                      <label className='mb-1 block text-sm font-medium text-gray-50'>
                         Assignee
                       </label>
                       <ListBoxImageNonMultiple
@@ -235,7 +246,7 @@ export default function CreateIssue({ closeModal }) {
                     </div>
 
                     <div className='col-span-6 md:col-span-8'>
-                      <label className='block text-sm font-medium text-neutral-200'>
+                      <label className='mb-1 block text-sm font-medium text-gray-50'>
                         Estimate
                       </label>
 
@@ -261,20 +272,11 @@ export default function CreateIssue({ closeModal }) {
             <ButtonSuccess
               size='mid'
               loading={creating}
-              className='w-24'
+              className=''
               onClick={handleSubmit(onSubmitForm)}
             >
-              Create
+              Request add
             </ButtonSuccess>
-
-            <ButtonDanger
-              size='mid'
-              disabled={creating}
-              className='w-24'
-              onClick={closeModal}
-            >
-              Cancel
-            </ButtonDanger>
           </div>
         </div>
       </Transition.Child>
@@ -290,14 +292,7 @@ function ListBoxNonMultiple({ selectList, ...props }) {
   return (
     <Listbox value={value} onChange={onChange}>
       <div className='relative mt-1 w-full'>
-        <Listbox.Button
-          className='rounded-lg relative w-full cursor-default
-          bg-white py-2 pl-3 pr-10 text-left shadow-md focus:outline-none
-          focus-visible:border-emerald-500 focus-visible:ring-2 
-          focus-visible:ring-white focus-visible:ring-opacity-75 
-          focus-visible:ring-offset-2 focus-visible:ring-offset-emerald-300 
-          sm:text-sm'
-        >
+        <Listbox.Button className='input-default'>
           <span className='block truncate'>{value ? value : 'Select'}</span>
           <span
             className='pointer-events-none absolute inset-y-0 right-0 flex 
@@ -317,33 +312,32 @@ function ListBoxNonMultiple({ selectList, ...props }) {
           leaveTo='opacity-0'
         >
           <Listbox.Options
-            className='rounded-md absolute z-10 mt-1 max-h-60
-            w-full overflow-auto bg-white py-1 text-base shadow-lg ring-1
-            ring-neutral-900 ring-opacity-5 focus:outline-none sm:text-sm'
+            className='custom-scrollbar absolute z-10 mt-1 w-full
+            overflow-auto rounded-5 border border-gray-500 bg-gray-800
+            py-1 text-base ring-1 ring-neutral-900
+            ring-opacity-5 focus:outline-none sm:text-sm'
           >
             {selectList.map((item, index) => (
               <Listbox.Option
                 key={index}
                 className={({ active }) =>
-                  `relative cursor-default select-none py-2 pl-10 pr-4 ${
-                    active ? 'bg-emerald-600 text-white' : 'text-neutral-900'
-                  }`
+                  `relative cursor-default select-none py-2 pl-10 pr-4 
+                  ${active ? 'bg-emerald-600 text-white' : 'text-gray-50'}`
                 }
                 value={item}
               >
                 {({ selected }) => (
                   <>
                     <span
-                      className={`block truncate text-sm md:text-base ${
-                        selected ? 'font-medium' : 'font-normal'
-                      }`}
+                      className={`block truncate text-sm md:text-base 
+                      ${selected ? 'font-medium' : 'font-normal'}`}
                     >
                       {item}
                     </span>
                     {selected ? (
                       <span
                         className='absolute inset-y-0 left-0 flex items-center
-                        pl-3 text-emerald-600'
+                        pl-3 text-emerald-400'
                       >
                         <CheckIcon className='h-5 w-5' aria-hidden='true' />
                       </span>
@@ -381,14 +375,7 @@ function ListBoxImageNonMultiple({ people, ...props }) {
       }}
     >
       <div className='relative mt-1 w-full'>
-        <Listbox.Button
-          className='rounded-lg relative w-full cursor-default
-          bg-white py-2 pl-3 pr-10 text-left shadow-md focus:outline-none
-          focus-visible:border-emerald-500 focus-visible:ring-2 
-          focus-visible:ring-white focus-visible:ring-opacity-75 
-          focus-visible:ring-offset-2 focus-visible:ring-offset-emerald-300 
-          sm:text-sm'
-        >
+        <Listbox.Button className='input-default'>
           <span className='block truncate'>
             {isSelected(value)?.name ? isSelected(value).name : 'Select'}
           </span>
@@ -409,17 +396,17 @@ function ListBoxImageNonMultiple({ people, ...props }) {
           leaveTo='opacity-0'
         >
           <Listbox.Options
-            className='rounded-md absolute z-10 mt-1 max-h-60 w-full
-            overflow-auto bg-white py-1 text-base shadow-lg ring-1 ring-neutral-900
+            className='custom-scrollbar absolute z-10 mt-1 w-full
+            overflow-auto rounded-5 border border-gray-500 bg-gray-800
+            py-1 text-base ring-1 ring-neutral-900
             ring-opacity-5 focus:outline-none sm:text-sm'
           >
             {people.map((person) => (
               <Listbox.Option
                 key={person._id.toString()}
                 className={({ active }) =>
-                  `relative cursor-default select-none py-2 pl-14 pr-4 ${
-                    active ? 'bg-emerald-600 text-white' : 'text-neutral-900'
-                  }`
+                  `relative cursor-default select-none py-2 pl-14 pr-4 
+                  ${active ? 'bg-emerald-600 text-white' : 'text-gray-50'} `
                 }
                 value={person.email}
               >
@@ -440,7 +427,7 @@ function ListBoxImageNonMultiple({ people, ...props }) {
                       >
                         <img
                           src={person.avatar}
-                          className='rounded-full h-8 w-8 object-cover transition-all group-hover:scale-110'
+                          className='h-8 w-8 rounded-full object-cover transition-all group-hover:scale-110'
                           alt='avatar'
                         />
                       </span>

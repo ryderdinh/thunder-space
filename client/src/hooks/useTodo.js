@@ -6,9 +6,25 @@ const useTodo = () => {
   const { _data } = useSelector((state) => state._todos)
   const dispatch = useDispatch()
 
-  const findCardById = useCallback(
+  const findCard = useCallback(
     (colType, todoId) =>
       _data[colType].cards.find((card) => card._id === todoId) || {},
+    [_data]
+  )
+
+  const findCardById = useCallback(
+    (todoId) =>
+      [
+        ..._data.todo.cards,
+        ..._data.doing.cards,
+        ..._data.completed.cards
+      ].find((card) => card._id === todoId) || {
+        _id: '',
+        title: '',
+        description: '',
+        status: '',
+        pin: false
+      },
     [_data]
   )
 
@@ -19,16 +35,17 @@ const useTodo = () => {
           colType,
           todoId,
           {
-            pin: !findCardById(colType, todoId).pin
+            status: findCard(colType, todoId).status,
+            pin: !findCard(colType, todoId).pin
           },
           {
-            pin: findCardById(colType, todoId).pin
+            pin: findCard(colType, todoId).pin
           },
           ...props
         )
       )
     },
-    [dispatch, findCardById]
+    [dispatch, findCard]
   )
 
   const deleteTodo = useCallback(
@@ -45,15 +62,15 @@ const useTodo = () => {
           colType,
           todoId,
           newData,
-          findCardById(colType, todoId),
+          findCard(colType, todoId),
           ...props
         )
       )
     },
-    [dispatch, findCardById]
+    [dispatch, findCard]
   )
 
-  return { findCardById, updateFlag, updateTodo, deleteTodo }
+  return { findCard, findCardById, updateFlag, updateTodo, deleteTodo }
 }
 
 export default useTodo

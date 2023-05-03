@@ -58,11 +58,11 @@ button {
 @layer base {
 }
 @layer components {
-  input.input-default,
-  textarea.textarea-default {
+  .input-default,
+  .textarea-default {
     @apply relative block w-full rounded-md border 
-    border-gray-500 bg-gray-800 p-2 text-sm 
-    text-white shadow-sm
+    border-gray-500 bg-gray-800 p-2 text-left 
+    text-sm text-white shadow-sm
     placeholder:text-gray-200 
     focus:border-emerald-500 
     focus:outline-none 
@@ -302,7 +302,7 @@ main.onblur {
 }
 
 .view-row {
-  @apply pt-[15px] xl:pt-[25px] xs:pt-5;
+  @apply pt-[15px] xs:pt-5 xl:pt-[25px];
 }
 
 .view-container .view_main .background-texture {
