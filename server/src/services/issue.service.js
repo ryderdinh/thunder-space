@@ -167,11 +167,13 @@ const getDetailsIssueById = async function (iid) {
           creator: {
             name: 1,
             'avatar.url': 1,
+            email:1,
             _id: 1
           },
           assign: {
             name: 1,
             'avatar.url': 1,
+            email:1,
             _id: 1
           },
           estimate: 1,
