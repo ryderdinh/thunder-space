@@ -17,6 +17,7 @@ import { useContext, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useHistory, useLocation, useParams } from 'react-router-dom'
 import variantGlobal from 'units/variantGlobal'
+import { errorToast } from 'utilities/toast'
 import IssueComment from './IssueComment'
 import IssueDescription from './IssueDescription'
 import IssueDetail from './IssueDetail'
@@ -65,7 +66,9 @@ export default function Issue() {
     setAttachments([...attachments, newFile])
   }
 
-  const uploadAttachments = () => {}
+  const uploadAttachments = () => {
+    errorToast('Maintainance feature!', 'issue')
+  }
 
   const handleDescriptionPanel = (type) => {
     !type &&
@@ -152,7 +155,7 @@ export default function Issue() {
   }, [_dataProject?.code, _dataIssue?.code, pid, iid])
 
   return (
-    <div className='relative h-full w-full space-y-5'>
+    <div className='view-item project w-full space-y-3 py-3'>
       {(error === 'issue does not exist' || isErr) && (
         <motion.div
           variants={variantGlobal(4, 0.1)}
@@ -160,13 +163,13 @@ export default function Issue() {
           animate='enter'
           exit='exit'
         >
-          <p className='w-full pt-14 pb-5 text-center text-lg text-neutral-500'>
+          <p className='w-full pb-5 pt-14 text-center text-lg text-neutral-500'>
             The issue does not exist.
           </p>
           <Link to={'/projects'}>
             <button
-              className='rounded-md m-auto 
-              block bg-emerald-500 px-4 py-2 text-sm font-semibold 
+              className='m-auto block 
+              rounded-md bg-emerald-500 px-4 py-2 text-sm font-semibold 
               leading-6 text-neutral-50 shadow'
             >
               Return to projects
@@ -178,8 +181,9 @@ export default function Issue() {
       {error !== 'issue does not exist' && !isErr && (
         <>
           <Row
-            className='view-row rounded-md sticky top-10 z-10 flex bg-deepdark pb-3
-            md:static'
+            className='sticky top-3 z-10 block items-center rounded-5 border
+            border-gray-600 bg-gray-800 p-[21.74px] drop-shadow-xl transition-all
+            duration-500 ease-linear md:flex'
           >
             <Col className='mb-2 w-full md:mb-0 md:w-1/2'>
               <Breadcumb list={breadcumbs} />
@@ -188,8 +192,8 @@ export default function Issue() {
             <Col className='w-max md:w-1/2'>
               <div className='z-10 flex w-full justify-end gap-2'>
                 <button
-                  className='panel rounded-md inline-flex h-9 w-max 
-                  items-center justify-center gap-1 bg-opacity-20 py-2 px-4
+                  className='panel inline-flex h-9 w-max items-center 
+                  justify-center gap-1 rounded-md bg-opacity-20 px-4 py-2
                   text-sm font-medium text-neutral-200 outline-none
                   transition-all 
                   duration-200
@@ -225,10 +229,7 @@ export default function Issue() {
 
               {!isLoading && <IssueDetail data={_dataIssue} />}
             </Col>
-            <Col
-              className='custom-scrollbar col-span-3 block h-full overflow-auto pr-0 
-              md:col-span-2 md:overflow-y-scroll md:pr-2'
-            >
+            <Col className='col-span-3 block h-full md:col-span-2'>
               {isLoading && (
                 <p className='w-full py-14 text-center text-xs text-neutral-500'>
                   Loading panels...
@@ -247,9 +248,9 @@ export default function Issue() {
 
                     {!descriptionPanel.edit && (
                       <div
-                        className='rounded-lg absolute top-0 left-0 -z-10 flex 
-                        h-full w-full items-center justify-center 
-                        space-x-1 bg-neutral-500/50 opacity-0
+                        className='absolute left-0 top-0 -z-10 flex h-full 
+                        w-full items-center justify-center space-x-1 
+                        rounded-lg bg-neutral-500/50 opacity-0
                         transition-all duration-300 ease-linear 
                         group-hover:z-[1] group-hover:cursor-pointer 
                         group-hover:opacity-100'
@@ -343,7 +344,7 @@ function DisclosureCustom({
 }) {
   return (
     <motion.div
-      className='rounded-lg group relative w-full border 
+      className='group relative w-full rounded-lg border 
       border-[#282828] bg-[#1f1f1f]'
       variants={variantGlobal(4, delayShow)}
       initial='initial'
@@ -354,7 +355,7 @@ function DisclosureCustom({
         {({ open }) => (
           <>
             <Disclosure.Button
-              className='rounded-lg flex w-full justify-between px-4 py-2 
+              className='flex w-full justify-between rounded-lg px-4 py-2 
               text-left text-sm font-medium'
             >
               <TitlePanel name={title}>

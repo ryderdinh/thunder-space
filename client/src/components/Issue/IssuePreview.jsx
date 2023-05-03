@@ -16,11 +16,12 @@ const priorityColor = {
 
 const IssuePreview = ({ dataIssue, dataProject, className = '' }) => {
   const { openDialog } = useContext(LayoutContext)
+  console.log(1, dataIssue?.assign)
 
   return (
     <motion.div
-      className={`${className} rounded-md h-max w-full bg-[length:100%_auto] 
-      bg-no-repeat py-2 px-5 ${
+      className={`${className} h-max w-full rounded-md bg-[length:100%_auto] 
+      bg-no-repeat px-5 py-2 ${
         dataIssue.type === 'task'
           ? "bg-[url('assets/images/card-issue-task.png')]  ring-[#10B99F]"
           : "bg-[url('assets/images/card-issue-bug.png')] ring-[#EA6767]"
@@ -43,7 +44,7 @@ const IssuePreview = ({ dataIssue, dataProject, className = '' }) => {
 
           <div className='mt-3 flex w-full items-center gap-2'>
             <div
-              className='rounded-md flex items-center gap-2 bg-neutral-50/40 
+              className='flex items-center gap-2 rounded-md bg-neutral-50/40 
               px-2 py-1'
             >
               <div className='flex items-center gap-1'>
@@ -59,7 +60,7 @@ const IssuePreview = ({ dataIssue, dataProject, className = '' }) => {
               <Menu>
                 <Menu.Button>
                   <div
-                    className={`rounded-md group flex cursor-pointer items-center gap-1 
+                    className={`group flex cursor-pointer items-center gap-1 rounded-md 
                     px-2 py-1
                     ${priorityColor[dataIssue.priority]}`}
                   >
@@ -113,11 +114,11 @@ const IssuePreview = ({ dataIssue, dataProject, className = '' }) => {
                 }}
               >
                 <div
-                  className='rounded-full relative h-5 w-5 overflow-hidden 
+                  className='relative h-5 w-5 overflow-hidden rounded-full 
                   ring-2 ring-neutral-50'
                 >
                   <img
-                    src={dataIssue?.assign?.avatar}
+                    src={dataIssue?.assign?.avatar?.url}
                     alt='Avatar user'
                     className='relative z-10 h-full w-full object-cover'
                   />

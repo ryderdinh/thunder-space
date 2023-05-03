@@ -22,7 +22,7 @@ const IssueDetail = ({ data }) => {
       exit='exit'
     >
       <div
-        className='rounded-md mx-0 w-full border border-[#282828] bg-[#1f1f1f] 
+        className='mx-0 w-full rounded-md border border-[#282828] bg-[#1f1f1f] 
         p-2 md:mx-auto md:max-w-md'
       >
         <Disclosure as='div' defaultOpen={true}>
@@ -31,7 +31,7 @@ const IssueDetail = ({ data }) => {
               <Disclosure.Button
                 className={`
                 ${open ? 'bg-[#282828]' : 'bg-[#1f1f1f]'}
-                rounded-md flex w-full justify-between border-0 
+                flex w-full justify-between rounded-md border-0 
                 px-4 py-2 text-left text-sm font-medium text-neutral-300 
                 ring-transparent transition-all duration-300 ease-in-out 
                 hover:bg-[#282828] focus:outline-none focus-visible:ring 
@@ -44,7 +44,7 @@ const IssueDetail = ({ data }) => {
                   } h-5 w-5 text-neutral-300`}
                 />
               </Disclosure.Button>
-              <Disclosure.Panel className='space-y-2 px-4 pt-4 pb-2 text-sm'>
+              <Disclosure.Panel className='space-y-2 px-4 pb-2 pt-4 text-sm'>
                 <div className='grid grid-cols-2 text-neutral-500'>
                   <div className=''>
                     <p>Type</p>
@@ -92,7 +92,7 @@ const IssueDetail = ({ data }) => {
                       component={
                         <UserInfo
                           name={data?.creator?.name}
-                          avatar={data?.creator?.avatar}
+                          avatar={data?.creator?.avatar?.url}
                           email={data?.creator?.email}
                         />
                       }
@@ -112,7 +112,7 @@ const IssueDetail = ({ data }) => {
                       component={
                         <UserInfo
                           name={data?.assign?.name}
-                          avatar={data?.assign?.avatar}
+                          avatar={data?.assign?.avatar?.url}
                           email={data?.assign?.email}
                         />
                       }

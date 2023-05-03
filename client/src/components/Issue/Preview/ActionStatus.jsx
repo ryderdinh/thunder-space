@@ -12,6 +12,7 @@ const ActionStatus = ({ status, role, loading, onChange }) => {
         className='shrink grow basis-0 py-1 text-center 
         text-lg font-semibold'
         loading={loading.pending}
+        size='mid'
         onClick={() => onChange('pending')}
       >
         Re open
@@ -26,6 +27,7 @@ const ActionStatus = ({ status, role, loading, onChange }) => {
         className='shrink grow basis-0 py-1 text-center 
         text-lg font-semibold'
         loading={loading.started}
+        size='mid'
         onClick={() => onChange('started')}
       >
         Start
@@ -40,6 +42,7 @@ const ActionStatus = ({ status, role, loading, onChange }) => {
         className='shrink grow basis-0 py-1 text-center 
         text-lg font-semibold'
         loading={loading.reject}
+        size='mid'
         onClick={() => onChange('reject')}
       >
         Reject
@@ -54,6 +57,7 @@ const ActionStatus = ({ status, role, loading, onChange }) => {
         className='shrink grow basis-0 py-1 text-center 
         text-lg font-semibold'
         loading={loading.close}
+        size='mid'
         onClick={() => onChange('done')}
       >
         Done
@@ -68,6 +72,7 @@ const ActionStatus = ({ status, role, loading, onChange }) => {
         className='shrink grow basis-0 py-1 text-center 
         text-lg font-semibold'
         loading={loading.closed}
+        size='mid'
         onClick={() => onChange('close')}
       >
         Close
