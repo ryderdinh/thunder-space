@@ -770,7 +770,7 @@ function SettingActionBox({
   return (
     <div
       className={`overflow-hidden rounded-lg border-2 border-[#282828]
-      bg-[#1f1f1f] ${className}`}
+      bg-gray-800 ${className}`}
     >
       <div className='space-y-2 p-6'>
         <h5 className='text-xl font-bold text-neutral-100'>{title}</h5>
@@ -860,12 +860,7 @@ function ProjectName({ data: _dataProject, isLoading }) {
             required: true
           })}
           type='text'
-          className='mt-1 block w-full rounded-md border 
-          border-neutral-300 py-[7px] pl-3 text-neutral-700 
-          shadow-sm focus:border-emerald-500 focus:outline-none 
-          focus:ring-2 focus:ring-emerald-500 
-          disabled:cursor-not-allowed 
-          disabled:opacity-70 sm:text-sm'
+          className='input-default mt-1'
           placeholder='Project name...'
           disabled={isLoading}
         />
@@ -904,9 +899,7 @@ function ProjectID({ id }) {
       <div className='relative'>
         <input
           type='text'
-          className='mt-1 block w-full rounded-md border border-neutral-300
-          bg-neutral-50 py-[7px] pl-3 text-neutral-700 
-          shadow-sm sm:text-sm'
+          className='input-default mt-1'
           placeholder='Issue id'
           disabled={true}
           defaultValue={id}
