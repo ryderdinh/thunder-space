@@ -155,9 +155,7 @@ export default function Profile() {
                 <h3 className='text-lg font-medium leading-6 text-neutral-200'>
                   Personal Information
                 </h3>
-                <p className='mt-1 text-sm text-neutral-300'>
-                  Use a permanent address where you can receive mail.
-                </p>
+                <p className='mt-1 text-sm text-neutral-300'></p>
               </div>
             </div>
 

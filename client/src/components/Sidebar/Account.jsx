@@ -2,7 +2,7 @@ import { actLogout, setCheckLogin } from 'actions'
 import Puff from 'components/Loading/Puff'
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 
 function getWindowDimensions() {
   const { innerWidth: width, innerHeight: height } = window
@@ -13,6 +13,9 @@ function getWindowDimensions() {
 }
 
 export default function Account(props) {
+  //? Router
+  const history = useHistory()
+
   //? Create state
   // eslint-disable-next-line no-unused-vars
   const [windowDimensions] = useState(getWindowDimensions())
@@ -40,7 +43,7 @@ export default function Account(props) {
 
   return (
     <li>
-      <div className='profile-details'>
+      <div className='profile-details' onClick={() => history.push('/account')}>
         <Link
           to='/account'
           className='profile-content'

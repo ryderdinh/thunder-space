@@ -8,6 +8,7 @@ import {
   userApi
 } from 'api'
 import toast from 'react-hot-toast'
+import runFunction from 'utilities/runFunction'
 import {
   errorToast,
   loadingToast,
@@ -293,12 +294,13 @@ export const actFetchProject = (pid, onSuccess, onError) => {
   }
 }
 
-export const actDeleteProject = (pid, callback) => {
+export const actDeleteProject = (pid, onSuccess, onError) => {
   return async () => {
     try {
       await projectApi.delete(pid)
-      callback()
+      runFunction(onSuccess)
     } catch (error) {
+      runFunction(onError, error.message)
       errorToast(error.message)
     }
   }
@@ -318,6 +320,21 @@ export const actQueryProject = (query = null) => {
       await dispatch(setDataProjects(sortData))
     } catch (error) {
       await dispatch(setProjectError(error.message))
+    }
+  }
+}
+
+export const actUpdateProject = (pid, data, onSuccess, onError) => {
+  return async (dispatch) => {
+    try {
+      const res = await projectApi.update(pid, data)
+      await dispatch(setDataProject(res.data))
+      runFunction(onSuccess)
+    } catch (error) {
+      const err = error.message
+      runFunction(onError, err)
+      errorToast(err, 'update-project')
+      dispatch(setProjectError(err))
     }
   }
 }

@@ -10,7 +10,10 @@ const Textarea = ({
 }) => {
   return (
     <div className='w-full'>
-      <label htmlFor={label} className='block text-sm font-medium text-gray-50'>
+      <label
+        htmlFor={label}
+        className='mb-1 block text-sm font-medium text-gray-50'
+      >
         {label}
       </label>
       <textarea

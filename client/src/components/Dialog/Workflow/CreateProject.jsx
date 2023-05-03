@@ -304,7 +304,7 @@ function ListBoxMultipleUser({
       <div
         className='relative mt-1 w-full'
         onClick={() => {
-          setIsOpen(!isOpen)
+          setIsOpen(true)
         }}
       >
         <Listbox.Button className='input-default' open={isOpen}>

@@ -111,14 +111,6 @@ export default function CreateTodo({
                   {...descriptionInput.bind}
                 />
               </div>
-              <div className='col-span-6'>
-                <Textarea
-                  label='Description'
-                  rows={5}
-                  className='resize-none'
-                  {...descriptionInput.bind}
-                />
-              </div>
             </div>
           </div>
 

@@ -160,7 +160,10 @@ export default function Todos() {
           />
         </div>
 
-        <div className='flex max-w-full snap-x gap-[30px] overflow-x-scroll xl:overflow-x-auto'>
+        <div
+          className='custom-scrollbar flex w-full snap-x gap-[30px] 
+          overflow-x-scroll md:max-w-full xl:overflow-x-scroll'
+        >
           <TodoColumn
             type={'todo'}
             cards={_data.todo.cards}

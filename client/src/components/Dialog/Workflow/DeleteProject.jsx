@@ -1,6 +1,9 @@
 import { Dialog, Transition } from '@headlessui/react'
+import { XMarkIcon } from '@heroicons/react/24/solid'
 import { joiResolver } from '@hookform/resolvers/joi'
 import { actDeleteProject } from 'actions'
+import ButtonSuccess from 'components/Button/ButtonSuccess'
+import { Tooltip } from 'components/Layouts'
 import Joi from 'joi'
 import { Fragment, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
@@ -24,14 +27,23 @@ export default function DeleteProject({
   })
 
   const [allowDelete, setAllowDelete] = useState(false)
-
-  const handleDeleteSuccessfully = () => {
-    closeModal()
-    history.push('/projects')
-  }
+  const [updating, setUpdating] = useState(false)
 
   const onSubmit = (data) => {
-    allowDelete && dispatch(actDeleteProject(pid, handleDeleteSuccessfully))
+    const onSuccess = () => {
+      closeModal()
+      setUpdating(false)
+      history.push('/projects')
+    }
+
+    const onError = (err) => {
+      console.error(err)
+    }
+
+    if (allowDelete) {
+      setUpdating(true)
+      dispatch(actDeleteProject(pid, onSuccess, onError))
+    }
   }
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -75,14 +87,30 @@ export default function DeleteProject({
             as='h3'
             className='text-center text-lg font-bold leading-6 text-neutral-200'
           >
-            Remove project
+            Delete project
           </Dialog.Title>
+
+          <div className='absolute right-6 top-6 h-6 w-6' onClick={closeModal}>
+            <Tooltip title={'Close'}>
+              <div
+                className='transition-default flex h-6 w-6 cursor-pointer
+                items-center justify-center rounded-5 border border-gray-400 
+                bg-gray-600 hover:bg-gray-400'
+              >
+                <XMarkIcon className='text-gray-50' />
+              </div>
+            </Tooltip>
+          </div>
+
           <div className='mt-5'>
             <div className='mt-2 space-y-6'>
               <p className='space-y-2 text-sm text-neutral-200'>
                 <span className='block'>
                   Are you absolutely sure you want to delete{' '}
-                  <span className='font-bold'>{projectName}</span>?
+                  <span className='font-bold text-emerald-600'>
+                    {projectName}
+                  </span>{' '}
+                  ?
                 </span>
                 <span className='block'>
                   If you have submitted a support request about this site, it
@@ -91,7 +119,7 @@ export default function DeleteProject({
                 </span>
               </p>
 
-              <p className='rounded-lg bg-red-600 p-3 md:p-4 text-sm text-neutral-50'>
+              <p className='rounded-lg bg-red-600 p-3 text-sm text-neutral-50 md:p-4'>
                 <span className='font-bold'>Warning:</span> This action is not
                 reversible. Please be certain.
               </p>
@@ -105,14 +133,11 @@ export default function DeleteProject({
                       type='text'
                       autoComplete='off'
                       placeholder='Type in the name of the project'
-                      className='mt-1 mb-2 block w-full rounded-md border 
-                      border-neutral-300 p-1 shadow-sm focus:border-emerald-500
-                      focus:outline-none focus:ring-2 focus:ring-emerald-500
-                      text-sm placeholder:text-sm'
+                      className='input-default mb-2'
                     />
                     <div className='flex gap-1'>
-                      <p className='text-base'>👉</p>
-                      <code className='m-0 text-sm italic text-neutral-50'>
+                      <p className='text-sm'>👉</p>
+                      <code className='m-0 text-xs italic text-neutral-50'>
                         {projectName}
                       </code>
                     </div>
@@ -123,33 +148,14 @@ export default function DeleteProject({
           </div>
 
           <div className='mt-4 flex justify-end gap-2'>
-            <button
-              type='submit'
-              className={`inline-flex justify-center rounded-md border 
-              border-transparent bg-emerald-600 py-2 px-4 text-sm font-medium 
-              text-neutral-50 shadow-sm focus:outline-none 
-              ${
-                !allowDelete
-                  ? 'cursor-not-allowed opacity-50'
-                  : 'cursor-pointer hover:bg-emerald-700'
-              }`}
+            <ButtonSuccess
+              size='mid'
+              loading={updating}
               onClick={handleSubmit(onSubmit)}
+              disabled={!allowDelete}
             >
-              Remove
-            </button>
-
-            <button
-              type='button'
-              className='inline-flex justify-center rounded-md border 
-              border-transparent px-4 py-2 text-sm font-medium
-              text-neutral-400 transition-all duration-300 ease-in-out 
-              hover:bg-neutral-500 hover:text-neutral-200 focus:outline-none 
-              focus-visible:ring-2 focus-visible:ring-neutral-500 
-              focus-visible:ring-offset-2'
-              onClick={closeModal}
-            >
-              Cancel
-            </button>
+              Delete
+            </ButtonSuccess>
           </div>
         </div>
       </Transition.Child>

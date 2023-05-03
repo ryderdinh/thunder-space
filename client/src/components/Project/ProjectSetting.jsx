@@ -8,7 +8,7 @@ import {
   MagnifyingGlassIcon
 } from '@heroicons/react/24/solid'
 import { joiResolver } from '@hookform/resolvers/joi'
-import { actFetchProject, actUpdateIssue, setDataProject } from 'actions'
+import { actFetchProject, actUpdateProject, setDataProject } from 'actions'
 import { projectApi, userApi } from 'api'
 import { Col, Dropdown, Row } from 'components/Layouts'
 import BallTriangle from 'components/Loading/BallTriangle'
@@ -32,9 +32,9 @@ const permissions = {
 
 const subTabs = [
   { name: 'General', tab: 'general' },
-  { name: 'Collaborators', tab: 'collaborator' },
-  { name: 'Security', tab: 'security' },
-  { name: 'Advanced', tab: 'advanced' }
+  { name: 'Collaborators', tab: 'collaborator' }
+  // { name: 'Security', tab: 'security' },
+  // { name: 'Advanced', tab: 'advanced' }
 ]
 
 const schemaName = Joi.object({
@@ -102,22 +102,7 @@ export const ProjectSetting = () => {
   }, [_dataProject?.member, ownId])
 
   return (
-    <div className='h-full w-full space-y-5'>
-      <Row className='max-h-10 md:flex'>
-        <Col className='mb-2 w-full md:mb-0 md:w-1/2'>
-          <button
-            className='panel rounded-md inline-flex h-9 w-max 
-            items-center justify-center bg-opacity-20 py-2 px-4 text-sm
-            font-medium text-neutral-100 hover:bg-opacity-30 focus:outline-none
-            focus-visible:ring-2 focus-visible:ring-neutral-100
-            focus-visible:ring-opacity-75'
-            onClick={returnIssuePage}
-          >
-            <ArrowLongLeftIcon className='h-6 w-10' />
-          </button>
-        </Col>
-      </Row>
-
+    <div className='relative h-full w-full space-y-5'>
       <Row className='h-[calc(100%-40px)] '>
         <Col className='h-full'>
           <>
@@ -139,10 +124,25 @@ export const ProjectSetting = () => {
                 </div>
               </div>
 
-              <section className='h-full pt-3'>
-                <div className='grid h-full grid-cols-1 grid-rows-1 gap-x-8 gap-y-10 lg:grid-cols-4'>
-                  <form className='hidden lg:row-span-1 lg:block'>
-                    <h3 className='sr-only'>Tab</h3>
+              <section className=''>
+                <div
+                  className='relative grid h-full grid-cols-1 grid-rows-1 
+                  gap-x-8 gap-y-10 lg:grid-cols-4'
+                >
+                  <div
+                    className='sticky left-0 top-10 hidden 
+                    h-max space-y-5 lg:block'
+                  >
+                    <button
+                      className='panel inline-flex h-9 w-max items-center 
+                      justify-center rounded-md bg-opacity-20 px-4 py-2 text-sm
+                      font-medium text-neutral-100 hover:bg-opacity-30 focus:outline-none
+                      focus-visible:ring-2 focus-visible:ring-neutral-100
+                      focus-visible:ring-opacity-75'
+                      onClick={returnIssuePage}
+                    >
+                      <ArrowLongLeftIcon className='h-6 w-10' />
+                    </button>
                     <ul
                       className='space-y-1 pb-6 text-sm 
                       font-medium text-gray-900'
@@ -171,13 +171,14 @@ export const ProjectSetting = () => {
                         </li>
                       ))}
                     </ul>
-                  </form>
+                    <h3 className='sr-only'>Tab</h3>
+                  </div>
 
                   <div
-                    className='custom-scrollbar overflow-y-auto pr-0 text-neutral-400 md:overflow-y-scroll 
+                    className='pr-0 text-neutral-400
                     md:pr-2 lg:col-span-3 lg:row-span-1'
                   >
-                    <div className='h-full space-y-10'>
+                    <div className='h-full space-y-10 py-10'>
                       {(tab === 'general' || tab === '') && (
                         <GeneralTab
                           dataProject={_dataProject}
@@ -212,6 +213,10 @@ export const ProjectSetting = () => {
 function GeneralTab({ dataProject, isLoading, error, permissions }) {
   return (
     <>
+      <div className='space-y-2'>
+        <h5 className='text-xl font-bold text-neutral-100'>Generals</h5>
+        <p className='text-sm'>Display and edit project information</p>
+      </div>
       <ProjectName
         data={dataProject}
         isLoading={isLoading}
@@ -443,7 +448,7 @@ function CollaboratorTab({
 
   return (
     <div className='h-full'>
-      <div className='space-y-7 p-6 pb-0 pr-0'>
+      <div className='space-y-7 pb-0 pr-0'>
         <div className='space-y-3'>
           <div className='space-y-2'>
             <h5 className='text-xl font-bold text-neutral-100'>
@@ -457,7 +462,7 @@ function CollaboratorTab({
 
           <div className='grid grid-cols-3 gap-6'>
             <div
-              className='rounded-lg col-span-1 space-y-2 border-2
+              className='col-span-1 space-y-2 rounded-lg border-2
               border-[#282828] bg-[#1f1f1f] px-6 py-3'
             >
               <h6 className='text-base font-bold text-neutral-100'>Admin</h6>
@@ -467,7 +472,7 @@ function CollaboratorTab({
               </p>
             </div>
             <div
-              className='rounded-lg col-span-1 space-y-2 border-2
+              className='col-span-1 space-y-2 rounded-lg border-2
               border-[#282828] bg-[#1f1f1f] px-6 py-3'
             >
               <h6 className='text-base font-bold text-neutral-100'>Manager</h6>
@@ -477,7 +482,7 @@ function CollaboratorTab({
               </p>
             </div>
             <div
-              className='rounded-lg col-span-1 space-y-2 border-2
+              className='col-span-1 space-y-2 rounded-lg border-2
               border-[#282828] bg-[#1f1f1f] px-6 py-3'
             >
               <h6 className='text-base font-bold text-neutral-100'>Member</h6>
@@ -490,7 +495,7 @@ function CollaboratorTab({
           <div className='relative flex items-center gap-3'>
             <input
               type='email'
-              className='rounded-md block w-full border 
+              className='block w-full rounded-md border 
               border-neutral-300 py-[7px] pl-3 text-sm 
               text-neutral-700 shadow-sm focus:border-emerald-500 
               focus:outline-none focus:ring-2 focus:ring-emerald-500'
@@ -500,7 +505,7 @@ function CollaboratorTab({
 
             <button
               type='submit'
-              className='rounded-md min-w-[100px] border 
+              className='min-w-[100px] rounded-md border 
               border-emerald-600 bg-emerald-600 px-3 py-[7px]
               text-sm text-neutral-100 transition-all 
               duration-150 
@@ -520,8 +525,8 @@ function CollaboratorTab({
           {valueAddUser !== '' &&
             valueAddUser !== previousSearchAddMember.current && (
               <div
-                className='rounded-md absolute z-10 max-h-60 
-              w-full overflow-y-auto bg-neutral-800 py-4
+                className='absolute z-10 max-h-60 w-full 
+              overflow-y-auto rounded-md bg-neutral-800 py-4
               text-sm drop-shadow-lg'
               >
                 {searchFuncAddUser.isLoading && (
@@ -550,7 +555,7 @@ function CollaboratorTab({
                       <img
                         src={user.avatar}
                         alt='user avatar'
-                        className='rounded-full h-9 w-9 object-cover'
+                        className='h-9 w-9 rounded-full object-cover'
                       />
 
                       <div className='space-y-1'>
@@ -575,13 +580,13 @@ function CollaboratorTab({
           bg-[#1f1f1f]'
         >
           <div
-            className='rounded-lg rounded-b-none flex w-full 
-            items-center justify-between bg-[#282828] px-6 py-4'
+            className='flex w-full items-center justify-between 
+            rounded-lg rounded-b-none bg-[#282828] px-6 py-4'
           >
             <div className='relative flex w-60 items-center'>
               <input
                 type='text'
-                className='rounded-md block w-full border 
+                className='block w-full rounded-md border 
                 border-neutral-300 py-[5px] pl-10 pr-3
                 text-xs text-neutral-700 shadow-sm 
                 focus:border-emerald-500 focus:outline-none focus:ring-2 
@@ -590,9 +595,9 @@ function CollaboratorTab({
                 {...bind}
               />
               <div
-                className='rounded-md group absolute left-0 top-1/2 flex 
-                aspect-square h-4 max-h-full -translate-y-1/2
-                transform items-center justify-center px-3 
+                className='group absolute left-0 top-1/2 flex aspect-square 
+                h-4 max-h-full -translate-y-1/2 transform
+                items-center justify-center rounded-md px-3 
                 transition-all duration-150 ease-linear'
               >
                 <MagnifyingGlassIcon className='h-5 w-5 text-neutral-700' />
@@ -625,8 +630,8 @@ function CollaboratorTab({
                   leaveTo='opacity-0'
                 >
                   <Listbox.Options
-                    className='rounded-md absolute right-0 mt-1 max-h-60
-                    w-max overflow-auto bg-neutral-50 py-1 text-base 
+                    className='absolute right-0 mt-1 max-h-60 w-max
+                    overflow-auto rounded-md bg-neutral-50 py-1 text-base 
                     shadow-lg ring-1 ring-neutral-900 ring-opacity-5 
                     focus:outline-none sm:text-sm'
                   >
@@ -714,7 +719,7 @@ function CollaboratorTab({
                       <img
                         src={member.avatar}
                         alt='user avatar'
-                        className='rounded-full h-10 w-10 object-cover'
+                        className='h-10 w-10 rounded-full object-cover'
                       />
 
                       <div className='space-y-1'>
@@ -764,7 +769,7 @@ function SettingActionBox({
 }) {
   return (
     <div
-      className={`rounded-lg overflow-hidden border-2 border-[#282828]
+      className={`overflow-hidden rounded-lg border-2 border-[#282828]
       bg-[#1f1f1f] ${className}`}
     >
       <div className='space-y-2 p-6'>
@@ -807,7 +812,7 @@ function ProjectName({ data: _dataProject, isLoading }) {
 
   const onSaveName = (data) => {
     !allowActionForm.projectName &&
-      dispatch(actUpdateIssue(pid, { name: data.projectName }))
+      dispatch(actUpdateProject(pid, { name: data.projectName }))
   }
 
   //? Effect
@@ -855,7 +860,7 @@ function ProjectName({ data: _dataProject, isLoading }) {
             required: true
           })}
           type='text'
-          className='rounded-md mt-1 block w-full border 
+          className='mt-1 block w-full rounded-md border 
           border-neutral-300 py-[7px] pl-3 text-neutral-700 
           shadow-sm focus:border-emerald-500 focus:outline-none 
           focus:ring-2 focus:ring-emerald-500 
@@ -899,7 +904,7 @@ function ProjectID({ id }) {
       <div className='relative'>
         <input
           type='text'
-          className='rounded-md mt-1 block w-full border border-neutral-300
+          className='mt-1 block w-full rounded-md border border-neutral-300
           bg-neutral-50 py-[7px] pl-3 text-neutral-700 
           shadow-sm sm:text-sm'
           placeholder='Issue id'
@@ -907,9 +912,9 @@ function ProjectID({ id }) {
           defaultValue={id}
         />
         <div
-          className='rounded-md group absolute right-[2px] top-1/2 flex 
-          aspect-square h-8 max-h-full -translate-y-1/2 
-          transform cursor-pointer items-center justify-center 
+          className='group absolute right-[2px] top-1/2 flex aspect-square 
+          h-8 max-h-full -translate-y-1/2 transform 
+          cursor-pointer items-center justify-center rounded-md 
           transition-all duration-150 ease-linear
           hover:bg-neutral-700'
           onClick={copyToClipboard}

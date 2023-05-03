@@ -83,10 +83,13 @@ const TodoColumn = ({
   }
 
   return (
-    <div className='card-list w-1/3 min-w-[406px] snap-end space-y-[30px]'>
+    <div
+      className='card-list w-1/3 min-w-[380px] snap-end 
+      space-y-[30px]'
+    >
       <div
         className='rounded-5 border border-gray-500 
-        bg-gray-800/50 py-3 px-5'
+        bg-gray-800/50 px-5 py-3'
       >
         {/* Add Create Button if Column is Todo Column */}
         {type === 'todo' ? (

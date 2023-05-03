@@ -6,7 +6,7 @@ const SearchInput = ({ className, value, placeholder, onChange, onSubmit }) => {
 
   return (
     <form
-      className={`relative h-9 w-full bg-gray-800
+      className={`relative h-9 w-full rounded-5 bg-gray-800
       ${className}`}
       onSubmit={(e) => {
         e.preventDefault()
