@@ -185,7 +185,6 @@ const getDetailsIssueById = async function (iid) {
       }
     ])
     const { history } = await service.history.getInIssue(iid)
-    console.log(issue);
     return { ...issue[0], history }
   } catch (err) {
     console.log(err)
