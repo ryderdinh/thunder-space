@@ -1,6 +1,7 @@
 import { Editor } from '@tinymce/tinymce-react'
+import 'assets/css/re-tiny.css'
 import { env } from 'config/environment'
-import React, { useMemo, useRef } from 'react'
+import { useMemo, useRef } from 'react'
 
 const image_upload_handler = (blobInfo, progress) =>
   new Promise((resolve, reject) => {
@@ -63,6 +64,7 @@ export default function TinyEditor({
       // 	'https://api.imgbb.com/1/upload?key=f30a19f586acf7f1a7989330c143b14d',
       height: 500,
       menubar: false,
+      icons: 'small',
       plugins: [
         'advlist',
         'autolink',

@@ -7,6 +7,7 @@ import {
   actUpdateIssue
 } from 'actions'
 import { Breadcumb } from 'components/Breadcumb/Breadcumb'
+import ButtonNormalLoad from 'components/Button/ButtonNormalLoad'
 import ButtonSuccess from 'components/Button/ButtonSuccess'
 import { Col, Row } from 'components/Layouts'
 import MenuComponent from 'components/Project/MenuComponent'
@@ -249,26 +250,39 @@ export default function Issue() {
                     {!descriptionPanel.edit && (
                       <div
                         className='absolute left-0 top-0 -z-10 flex h-full 
-                        w-full items-center justify-center space-x-1 
-                        rounded-lg bg-neutral-500/50 opacity-0
-                        transition-all duration-300 ease-linear 
-                        group-hover:z-[1] group-hover:cursor-pointer 
+                        w-full cursor-pointer items-center justify-center 
+                        space-x-1 rounded-b-lg bg-neutral-500/50
+                        opacity-0 transition-all duration-100
+                        ease-linear group-hover:z-[1] 
                         group-hover:opacity-100'
                         onClick={() => handleDescriptionPanel(false)}
                       >
-                        <PencilIcon className='h-6 w-6 text-neutral-200' />
-                        <span className='text-neutral-200'>Edit</span>
+                        <div className='flex items-center justify-center gap-2 rounded-5 bg-gray-800 p-2'>
+                          <PencilIcon className='h-4 w-4 text-gray-50' />
+                          <span className='text-gray-50'>Edit</span>
+                        </div>
                       </div>
                     )}
 
                     {descriptionPanel.edit && (
-                      <div className='flex items-center justify-end pt-3'>
+                      <div className='flex items-center justify-end gap-2 pt-3'>
                         <ButtonSuccess
                           loading={loadingDescription}
                           onClick={() => handleDescriptionPanel(true)}
                         >
                           <p className='select-none'>Update</p>
                         </ButtonSuccess>
+                        <ButtonNormalLoad
+                          loading={loadingDescription}
+                          onClick={() =>
+                            setDescriptionPanel({
+                              ...descriptionPanel,
+                              edit: false
+                            })
+                          }
+                        >
+                          <p className='select-none'>Cancel</p>
+                        </ButtonNormalLoad>
                       </div>
                     )}
                   </DisclosureCustom>
