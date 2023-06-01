@@ -221,7 +221,7 @@ button {
   width: 100%;
 }
 /* =========================================== */
-main {
+main.ryder-main {
   position: relative;
   left: 260px;
 
@@ -242,7 +242,7 @@ main.onblur {
   filter: blur(20px);
 }
 
-.sidebar.close ~ main {
+.sidebar.close ~ main.ryder-main {
   left: 65px;
   width: calc(100% - 65px);
 }
@@ -1519,7 +1519,7 @@ main.onblur {
 }
 
 @media only screen and (max-width: 1024px) {
-  .sidebar.close ~ main {
+  .sidebar.close ~ main.ryder-main {
     left: 0;
     width: calc(100%);
   }
@@ -1611,7 +1611,7 @@ main.onblur {
   /* .navigation {
     display: block;
   } */
-  main {
+  main.ryder-main {
     /* padding: 0 1%; */
     width: 100%;
   }
@@ -1720,7 +1720,7 @@ main.onblur {
 }
 
 @media only screen and (max-width: 320px) {
-  main {
+  main.ryder-main {
     width: 100%;
     /* padding: 0 1% 85px; */
     padding: 0 0 85px;

@@ -3,7 +3,7 @@ import Footer from './Footer'
 
 export default function Main({ children }) {
   return (
-    <main>
+    <main className='ryder-main'>
       <div className='view-container relative'>
         {children}
         <Footer />

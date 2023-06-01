@@ -5,6 +5,7 @@ import CookieNotification from 'components/More/CookieNotification'
 import { LayoutContext } from 'context/LayoutContext'
 import { AnimatePresence, motion } from 'framer-motion'
 import NotFound from 'pages/404'
+import Boards from 'pages/Board'
 import CookiePolicy from 'pages/CookiePolicy'
 import Documentation from 'pages/Documentation'
 import ForgotPassword from 'pages/ForgotPassword'
@@ -105,6 +106,11 @@ export default function App() {
               {/* Overview works and projects */}
               <Route path='/spaces'>
                 <Route component={Space} />
+              </Route>
+
+              {/* Todos pages */}
+              <Route path='/boards'>
+                <Boards />
               </Route>
 
               {/* Todos pages */}
