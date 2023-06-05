@@ -28,7 +28,6 @@
   margin: 0;
   box-sizing: border-box;
 
-  font-family: 'Be Vietnam Pro', sans-serif;
   /* font-family: 'Space Grotesk', sans-serif; */
 
   scroll-behavior: smooth;
@@ -42,6 +41,7 @@ body {
   padding: 0;
 
   background: var(--background);
+  font-family: 'Be Vietnam Pro', sans-serif;
 
   font-weight: 300;
   -webkit-font-smoothing: antialiased;
