@@ -1,11 +1,5 @@
-import IssueComment from './IssueComment'
-import IssueDescription from './IssueDescription'
-import IssueDetail from './IssueDetail'
-import IssueFiles from './IssueFiles'
-import IssueHistory from './IssueHistory'
-import IssuePreview from './Preview'
 import { Disclosure } from '@headlessui/react'
-import { ChevronUpIcon, PencilIcon } from '@heroicons/react/solid'
+import { ChevronUpIcon, EyeIcon, PencilIcon } from '@heroicons/react/24/solid'
 import {
   actDeleteIssue,
   actFetchProject,
@@ -13,6 +7,7 @@ import {
   actUpdateIssue
 } from 'actions'
 import { Breadcumb } from 'components/Breadcumb/Breadcumb'
+import ButtonNormalLoad from 'components/Button/ButtonNormalLoad'
 import ButtonSuccess from 'components/Button/ButtonSuccess'
 import { Col, Row } from 'components/Layouts'
 import MenuComponent from 'components/Project/MenuComponent'
@@ -23,6 +18,13 @@ import { useContext, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useHistory, useLocation, useParams } from 'react-router-dom'
 import variantGlobal from 'units/variantGlobal'
+import { errorToast } from 'utilities/toast'
+import IssueComment from './IssueComment'
+import IssueDescription from './IssueDescription'
+import IssueDetail from './IssueDetail'
+import IssueFiles from './IssueFiles'
+import IssueHistory from './IssueHistory'
+import IssuePreview from './Preview'
 
 export default function Issue() {
   //? Connect redux
@@ -65,7 +67,9 @@ export default function Issue() {
     setAttachments([...attachments, newFile])
   }
 
-  const uploadAttachments = () => {}
+  const uploadAttachments = () => {
+    errorToast('Maintainance feature!', 'issue')
+  }
 
   const handleDescriptionPanel = (type) => {
     !type &&
@@ -126,6 +130,14 @@ export default function Issue() {
     ])
   }, [pid, iid, dispatch])
 
+  // useEffect(() => {
+  //   const interval = setInterval(() => dispatch(actQueryIssue(iid)), 60000)
+
+  //   return () => {
+  //     clearInterval(interval)
+  //   }
+  // }, [dispatch, iid])
+
   useEffect(() => {
     setBreadcumbs([
       {
@@ -144,7 +156,7 @@ export default function Issue() {
   }, [_dataProject?.code, _dataIssue?.code, pid, iid])
 
   return (
-    <div className='relative h-full w-full space-y-5'>
+    <div className='view-item project w-full space-y-3 py-3'>
       {(error === 'issue does not exist' || isErr) && (
         <motion.div
           variants={variantGlobal(4, 0.1)}
@@ -152,7 +164,7 @@ export default function Issue() {
           animate='enter'
           exit='exit'
         >
-          <p className='w-full pt-14 pb-5 text-center text-lg text-neutral-500'>
+          <p className='w-full pb-5 pt-14 text-center text-lg text-neutral-500'>
             The issue does not exist.
           </p>
           <Link to={'/projects'}>
@@ -170,8 +182,9 @@ export default function Issue() {
       {error !== 'issue does not exist' && !isErr && (
         <>
           <Row
-            className='sticky top-10 z-10 flex rounded-md bg-deepdark p-2 
-            md:static md:p-0'
+            className='sticky top-3 z-10 block items-center rounded-5 border
+            border-gray-600 bg-gray-800 p-[21.74px] drop-shadow-xl transition-all
+            duration-500 ease-linear md:flex'
           >
             <Col className='mb-2 w-full md:mb-0 md:w-1/2'>
               <Breadcumb list={breadcumbs} />
@@ -179,6 +192,22 @@ export default function Issue() {
 
             <Col className='w-max md:w-1/2'>
               <div className='z-10 flex w-full justify-end gap-2'>
+                <button
+                  className='panel inline-flex h-9 w-max items-center 
+                  justify-center gap-1 rounded-md bg-opacity-20 px-4 py-2
+                  text-sm font-medium text-neutral-200 outline-none
+                  transition-all 
+                  duration-200
+                  ease-in-out
+                  hover:bg-opacity-30 
+                  hover:text-neutral-100
+                  focus:outline-none
+                  focus-visible:ring-2
+                  focus-visible:ring-white 
+                  focus-visible:ring-opacity-75'
+                >
+                  <EyeIcon className='h-5 w-5' aria-hidden='true' />
+                </button>
                 <Menu dataProject={_dataIssue} deleteAction={deleteIssue} />
               </div>
             </Col>
@@ -201,10 +230,7 @@ export default function Issue() {
 
               {!isLoading && <IssueDetail data={_dataIssue} />}
             </Col>
-            <Col
-              className='custom-scrollbar col-span-3 block h-full overflow-auto pr-0 
-              md:col-span-2 md:overflow-y-scroll md:pr-2'
-            >
+            <Col className='col-span-3 block h-full md:col-span-2'>
               {isLoading && (
                 <p className='w-full py-14 text-center text-xs text-neutral-500'>
                   Loading panels...
@@ -223,27 +249,40 @@ export default function Issue() {
 
                     {!descriptionPanel.edit && (
                       <div
-                        className='absolute top-0 left-0 -z-10 flex h-full 
-                        w-full items-center justify-center space-x-1 
-                        rounded-lg bg-neutral-500/50 opacity-0
-                        transition-all duration-300 ease-linear 
-                        group-hover:z-[1] group-hover:cursor-pointer 
+                        className='absolute left-0 top-0 -z-10 flex h-full 
+                        w-full cursor-pointer items-center justify-center 
+                        space-x-1 rounded-b-lg bg-neutral-500/50
+                        opacity-0 transition-all duration-100
+                        ease-linear group-hover:z-[1] 
                         group-hover:opacity-100'
                         onClick={() => handleDescriptionPanel(false)}
                       >
-                        <PencilIcon className='h-6 w-6 text-neutral-200' />
-                        <span className='text-neutral-200'>Edit</span>
+                        <div className='flex items-center justify-center gap-2 rounded-5 bg-gray-800 p-2'>
+                          <PencilIcon className='h-4 w-4 text-gray-50' />
+                          <span className='text-gray-50'>Edit</span>
+                        </div>
                       </div>
                     )}
 
                     {descriptionPanel.edit && (
-                      <div className='flex items-center justify-end pt-3'>
+                      <div className='flex items-center justify-end gap-2 pt-3'>
                         <ButtonSuccess
                           loading={loadingDescription}
                           onClick={() => handleDescriptionPanel(true)}
                         >
                           <p className='select-none'>Update</p>
                         </ButtonSuccess>
+                        <ButtonNormalLoad
+                          loading={loadingDescription}
+                          onClick={() =>
+                            setDescriptionPanel({
+                              ...descriptionPanel,
+                              edit: false
+                            })
+                          }
+                        >
+                          <p className='select-none'>Cancel</p>
+                        </ButtonNormalLoad>
                       </div>
                     )}
                   </DisclosureCustom>

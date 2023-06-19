@@ -24,8 +24,8 @@ export default function Home() {
   return (
     <OutApisProvider>
       <ProtectedLayout path={path}>
-        <ViewBox classNameCol='space-x-2'>
-          <div className='mx-auto w-full max-w-3xl space-y-12'>
+        <ViewBox classNameCol='space-x-2 pb-4'>
+          <div className='view-row mx-auto w-full max-w-3xl space-y-12'>
             <GreetingFeature variants={variantGlobal(1, 0)} />
             <CheckinFeature
               variants={variantGlobal(1, 0.2)}

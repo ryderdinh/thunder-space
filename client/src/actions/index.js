@@ -1,5 +1,3 @@
-//* IMPORT =============================================
-import { getCookie, removeCookie, setCookie } from '../units/cookieWeb'
 import {
   authApi,
   eventApi,
@@ -10,11 +8,18 @@ import {
   userApi
 } from 'api'
 import toast from 'react-hot-toast'
+import runFunction from 'utilities/runFunction'
+import {
+  errorToast,
+  loadingToast,
+  removeToast,
+  successToast
+} from 'utilities/toast'
+import { getCookie, removeCookie, setCookie } from '../units/cookieWeb'
 
-//? CALL API============================================
+//? API ACTION
 export const actSignIn = (dataUser) => {
-  removeToast()
-  loadingToast('Checking account...')
+  loadingToast('Verifying...', 'login')
 
   return async (dispatch) => {
     let token = ''
@@ -23,63 +28,57 @@ export const actSignIn = (dataUser) => {
       const res = await authApi.authentication(dataUser)
       res?.data?.accessToken && (token = res.data.accessToken)
     } catch (error) {
-      removeToast()
-      toast.error('Failed, try again later!')
+      errorToast('The system is busy, please try again later!', 'login')
       await dispatch(setCheckLogin(false))
     }
 
     if (token) {
       setCookie([{ key: 'token', value: token }])
 
+      //? Login success
+      successToast('Cleaning up the space...', 'login')
       try {
         const res = await authApi.authorization(token)
-
-        removeToast()
-
-        //? Login success
-        successToast('Cleaning up the space...')
 
         setCookie([
           { key: 'id', value: res.data?._id.toString() },
           { key: 'token', value: token }
         ])
 
+        toast.dismiss('login')
+
         Promise.all([
           await dispatch(setStaffData(res.data)),
           await dispatch(actFetchTimeKeeping())
           // await dispatch(actFetchEvents())
         ]).then(() => {
+          successToast('Space is ready to operate', 'login')
           window.localStorage.setItem('thunder-space-login', 'true')
           dispatch(setCheckLogin(true))
         })
       } catch (error) {
         window.localStorage.setItem('thunder-space-login', 'false')
-        removeToast()
-        errorToast('Failed, double-check your login information')
+        errorToast('User verification failed', 'login')
       }
     } else {
       window.localStorage.setItem('thunder-space-login', 'false')
-      removeToast()
-      errorToast('Failed, double-check your login information')
+      errorToast('User verification failed', 'login')
     }
   }
 }
 
 export const actLogout = (type, onSuccess) => {
-  loadingToast('Logging out...')
+  loadingToast('Leaving the space...', 'logout')
 
   return async () => {
     try {
       await authApi.logout(type)
-
-      removeToast()
+      successToast('Goodbye 🖐️', 'logout')
       removeCookie('all')
-      successToast('Successful logout!')
 
       onSuccess()
     } catch (error) {
-      removeToast()
-      errorToast('Failed, logout failed!')
+      console.error(error)
     }
   }
 }
@@ -194,13 +193,13 @@ export const actSendReport = (data) => {
 export const actRefreshPage = () => {
   const { id, token } = getCookie()
 
-  id && token && loadingToast('Logging in again...')
-
   if (!id && !token) {
     return (dispatch) => {
       dispatch(setCheckLogin(false))
     }
   }
+
+  id && token && loadingToast('Logging in again...')
 
   return async (dispatch) => {
     try {
@@ -220,11 +219,11 @@ export const actRefreshPage = () => {
         successToast('Welcome to back')
       })
     } catch (error) {
-      console.log(error)
+      console.error(error)
       window.localStorage.setItem('thunder-space-login', 'false')
       removeToast()
       await dispatch(setCheckLogin(false))
-      errorToast('Please log in again')
+      errorToast('Please log in again', 'login')
     }
   }
 }
@@ -243,8 +242,7 @@ export const actChangePassword = (data, onSuccess, onError) => {
   }
 }
 
-export const actCreateProject = (data, uMail, callback) => {
-  loadingToast('Processing...')
+export const actCreateProject = (data, uMail, onSuccess, onError) => {
   let sbData = data
 
   if (data?.managers)
@@ -258,17 +256,14 @@ export const actCreateProject = (data, uMail, callback) => {
     try {
       const res = await projectApi.create(sbData)
 
-      removeToast()
-
       await dispatch(
         setInitialProject({
           name: data.name
         })
       )
-      callback(res.data._id)
+      onSuccess(res.data._id)
     } catch (error) {
-      removeToast()
-      console.log(error)
+      onError(error)
     }
   }
 }
@@ -299,12 +294,13 @@ export const actFetchProject = (pid, onSuccess, onError) => {
   }
 }
 
-export const actDeleteProject = (pid, callback) => {
+export const actDeleteProject = (pid, onSuccess, onError) => {
   return async () => {
     try {
       await projectApi.delete(pid)
-      callback()
+      runFunction(onSuccess)
     } catch (error) {
+      runFunction(onError, error.message)
       errorToast(error.message)
     }
   }
@@ -316,7 +312,10 @@ export const actQueryProject = (query = null) => {
 
     try {
       const res = await projectApi.gets(query)
-      const sortData = res.data.sort((a, b) => b.updateAt - a.updateAt)
+      const sortData = [...res.data].sort(
+        (a, b) =>
+          new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime()
+      )
 
       await dispatch(setDataProjects(sortData))
     } catch (error) {
@@ -325,13 +324,29 @@ export const actQueryProject = (query = null) => {
   }
 }
 
-export const actCreateIssue = (pid, data, callback) => {
+export const actUpdateProject = (pid, data, onSuccess, onError) => {
+  return async (dispatch) => {
+    try {
+      const res = await projectApi.update(pid, data)
+      await dispatch(setDataProject(res.data))
+      runFunction(onSuccess)
+    } catch (error) {
+      const err = error.message
+      runFunction(onError, err)
+      errorToast(err, 'update-project')
+      dispatch(setProjectError(err))
+    }
+  }
+}
+
+export const actCreateIssue = (pid, data, onSuccess, onError) => {
   return async () => {
     try {
       const res = await issueApi.create(pid, data)
-      callback(res.data._id)
+      onSuccess(res.data._id)
     } catch (error) {
-      errorToast(error.message)
+      errorToast(error.message, 'issue')
+      onError(error.message)
     }
   }
 }
@@ -346,8 +361,7 @@ export const actQueryIssue = (iid, callback) => {
       await dispatch(setDataIssue(res.data))
     } catch (error) {
       const err = error.message
-
-      console.log(err)
+      errorToast('Have issue when get data!', 'issue')
       dispatch(setIssueError(err))
     }
   }
@@ -357,15 +371,26 @@ export const actUpdateIssue = (iid, data, onSuccess, onError) => {
   return async (dispatch) => {
     try {
       const res = await issueApi.update(iid, data)
-
-      successToast('Issue updated')
       await dispatch(setDataIssue(res.data))
       onSuccess()
     } catch (error) {
       const err = error.message
-      onError()
+      onError(err)
+      errorToast(err, 'update-issue')
+      dispatch(setIssueError(err))
+    }
+  }
+}
 
-      errorToast(err)
+export const actUpdateStatusIssue = (iid, status, onSuccess, onError) => {
+  return async (dispatch) => {
+    try {
+      await issueApi.updateStatus(iid, status)
+      onSuccess()
+    } catch (error) {
+      const err = error.message
+      onError(err)
+      errorToast(err, 'update-issue')
       dispatch(setIssueError(err))
     }
   }
@@ -376,13 +401,13 @@ export const actDeleteIssue = (iid, callback) => {
     try {
       const res = await issueApi.delete(iid)
 
-      successToast('Issue deleted')
+      successToast('Issue deleted', 'issue')
       await dispatch(setDataIssue(res.data))
       callback()
     } catch (error) {
       const err = error.message
 
-      errorToast(err)
+      errorToast(err, 'issue')
       dispatch(setIssueError(err))
     }
   }
@@ -417,21 +442,6 @@ export const actGetNotification = (p, onSuccess, onError) => {
     }
   }
 }
-
-// export const toggleTest = () => {
-//   return (dispatch) => {
-//     dispatch(toggleActiveSidebar())
-//   }
-// }
-
-//? TOAST
-const errorToast = toast.error
-const successToast = toast.success
-
-const loadingToast = (content) => {
-  toast.loading(content)
-}
-const removeToast = () => toast.remove(loadingToast())
 
 //TODO: ACTION TO REDUCER ================================
 export const setLoadingTimesheets = (payload) => ({

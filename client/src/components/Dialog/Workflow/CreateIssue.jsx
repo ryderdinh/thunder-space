@@ -1,10 +1,14 @@
 import { Dialog, Listbox, Transition } from '@headlessui/react'
-import { CheckIcon, ChevronDownIcon } from '@heroicons/react/solid'
+import {
+  CheckIcon,
+  ChevronDownIcon,
+  XMarkIcon
+} from '@heroicons/react/24/solid'
 import { joiResolver } from '@hookform/resolvers/joi'
 import { actCreateIssue } from 'actions'
 import 'assets/css/pickydatetime.css'
 import Joi from 'joi'
-import { forwardRef, Fragment, useState } from 'react'
+import { Fragment, forwardRef, useState } from 'react'
 import 'react-date-range/dist/styles.css' // main css file
 import 'react-date-range/dist/theme/default.css' // theme css file
 import ReactDatePicker from 'react-datepicker'
@@ -12,6 +16,9 @@ import { useController, useForm } from 'react-hook-form'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 
+import ButtonSuccess from 'components/Button/ButtonSuccess'
+import Input from 'components/Form/Input'
+import { Tooltip } from 'components/Layouts'
 import { addMonths } from 'date-fns'
 import 'react-datepicker/dist/react-datepicker.css'
 
@@ -28,7 +35,6 @@ const schema = Joi.object({
 export default function CreateIssue({ closeModal }) {
   //? Connect redux store============================
   const { _dataProject } = useSelector((state) => state._project)
-
   const dispatch = useDispatch()
 
   //? Router=========================================
@@ -36,6 +42,7 @@ export default function CreateIssue({ closeModal }) {
 
   //? State==========================================
   const [estimate, setEstimate] = useState(new Date())
+  const [creating, setCreating] = useState(false)
 
   //? Hook Form======================================
   const {
@@ -47,9 +54,18 @@ export default function CreateIssue({ closeModal }) {
     resolver: joiResolver(schema)
   })
 
-  console.log(_dataProject)
-
   const onSubmitForm = (data) => {
+    setCreating(true)
+
+    const onSuccess = (iid) => {
+      setCreating(false)
+      history.push(`/projects/${_dataProject._id}/${iid}`)
+      closeModal()
+    }
+    const onError = (err) => {
+      setCreating(false)
+    }
+
     dispatch(
       actCreateIssue(
         _dataProject._id.toString(),
@@ -58,24 +74,19 @@ export default function CreateIssue({ closeModal }) {
           assigned: !data?.assigned ? '' : data.assigned,
           estimate: estimate.getTime()
         },
-        onSuccessCreate
+        onSuccess,
+        onError
       )
     )
   }
 
-  const onSuccessCreate = (iid) => {
-    history.push(`/projects/${_dataProject._id}/${iid}`)
-    closeModal()
-  }
   //? forward component
   const EstimateComponent = forwardRef(({ value, onClick }, ref) => {
     return (
       <input
         type='text'
         autoComplete='none'
-        className='mt-1 block w-full rounded-md border border-neutral-300 
-        py-[7px] pl-3 shadow-sm focus:border-emerald-500 focus:outline-none 
-        focus:ring-2 focus:ring-emerald-500 sm:text-sm'
+        className='input-default'
         onClick={onClick}
         ref={ref}
         defaultValue={value}
@@ -118,26 +129,42 @@ export default function CreateIssue({ closeModal }) {
         >
           <Dialog.Title
             as='h3'
-            className='text-lg font-bold leading-6 text-neutral-200'
+            className='font-primary text-lg font-bold leading-6 
+            text-neutral-200'
           >
             Add Issue
           </Dialog.Title>
-          <div className='mt-2'>
-            <form action='#' method='POST'>
+          <Dialog.Description className='font-bevn text-sm text-neutral-400'>
+            This can be an idea of a new feature or a bug encountered in the
+            project
+          </Dialog.Description>
+
+          <div className='absolute right-6 top-6 h-6 w-6' onClick={closeModal}>
+            <Tooltip title={'Close'}>
+              <div
+                className='transition-default flex h-6 w-6 cursor-pointer
+                items-center justify-center rounded-5 border border-gray-400 
+                bg-gray-600 hover:bg-gray-400'
+              >
+                <XMarkIcon className='text-gray-50' />
+              </div>
+            </Tooltip>
+          </div>
+
+          <div>
+            <form>
               <div className=''>
                 <div className='py-5 sm:py-6'>
                   <div className='grid grid-cols-6 gap-3 md:grid-cols-12 md:gap-6'>
                     <div className='col-span-6 md:col-span-12'>
-                      <label className='block text-sm font-medium text-neutral-200'>
+                      <label className='mb-1 block text-sm font-medium text-gray-50'>
                         Name
                       </label>
                       <input
                         {...register('name')}
                         type='text'
                         autoComplete='none'
-                        className='mt-1 block w-full rounded-md border border-neutral-300 
-                        py-[7px] pl-3 shadow-sm focus:border-emerald-500 focus:outline-none 
-                        focus:ring-2 focus:ring-emerald-500 sm:text-sm'
+                        className='input-default'
                       />
 
                       {errors.name && (
@@ -148,26 +175,24 @@ export default function CreateIssue({ closeModal }) {
                     </div>
 
                     <div className='col-span-6 md:col-span-4'>
-                      <label className='block text-sm font-medium text-neutral-200'>
-                        Project{' '}
-                        <span className='text-xs italic text-neutral-500'>
-                          (current)
-                        </span>
-                      </label>
-                      <input
-                        disabled
-                        type='text'
+                      <Input
+                        label={
+                          <>
+                            {' '}
+                            Project{' '}
+                            <span className='text-xs italic text-neutral-500'>
+                              (current)
+                            </span>
+                          </>
+                        }
                         value={_dataProject?.name || ''}
                         onChange={() => {}}
-                        className='mt-1 block w-full rounded-md border border-neutral-300
-                        p-1 py-[7px] pl-3 shadow-sm focus:outline-none 
-                        disabled:border-neutral-200 disabled:bg-neutral-50 
-                        disabled:text-neutral-500 sm:text-sm'
+                        disabled
                       />
                     </div>
 
                     <div className='col-span-6 md:col-span-4'>
-                      <label className='block text-sm font-medium text-neutral-200'>
+                      <label className='mb-1 block text-sm font-medium text-gray-50'>
                         Type
                       </label>
                       <ListBoxNonMultiple
@@ -184,7 +209,7 @@ export default function CreateIssue({ closeModal }) {
                     </div>
 
                     <div className='col-span-6 md:col-span-4'>
-                      <label className='block text-sm font-medium text-neutral-200'>
+                      <label className='mb-1 block text-sm font-medium text-gray-50'>
                         Priority
                       </label>
                       <ListBoxNonMultiple
@@ -201,7 +226,7 @@ export default function CreateIssue({ closeModal }) {
                     </div>
 
                     <div className='col-span-6 md:col-span-4'>
-                      <label className='block text-sm font-medium text-neutral-200'>
+                      <label className='mb-1 block text-sm font-medium text-gray-50'>
                         Assignee
                       </label>
                       <ListBoxImageNonMultiple
@@ -221,7 +246,7 @@ export default function CreateIssue({ closeModal }) {
                     </div>
 
                     <div className='col-span-6 md:col-span-8'>
-                      <label className='block text-sm font-medium text-neutral-200'>
+                      <label className='mb-1 block text-sm font-medium text-gray-50'>
                         Estimate
                       </label>
 
@@ -244,27 +269,14 @@ export default function CreateIssue({ closeModal }) {
           </div>
 
           <div className='mt-4 flex justify-end gap-2'>
-            <button
-              type='submit'
-              className='inline-flex justify-center rounded-md border 
-              border-transparent bg-emerald-600 py-2 px-4 text-sm font-medium 
-              text-white shadow-sm hover:bg-emerald-700 focus:outline-none'
+            <ButtonSuccess
+              size='mid'
+              loading={creating}
+              className=''
               onClick={handleSubmit(onSubmitForm)}
             >
-              Create
-            </button>
-
-            <button
-              type='button'
-              className='inline-flex justify-center rounded-md border 
-              border-transparent px-4 py-2 text-sm font-medium
-              text-red-500 transition-all duration-300 ease-in-out 
-              hover:bg-red-500 hover:text-red-200 focus:outline-none focus-visible:ring-2 
-              focus-visible:ring-red-500 focus-visible:ring-offset-2'
-              onClick={closeModal}
-            >
-              Cancel
-            </button>
+              Request add
+            </ButtonSuccess>
           </div>
         </div>
       </Transition.Child>
@@ -280,14 +292,7 @@ function ListBoxNonMultiple({ selectList, ...props }) {
   return (
     <Listbox value={value} onChange={onChange}>
       <div className='relative mt-1 w-full'>
-        <Listbox.Button
-          className='relative w-full cursor-default rounded-lg
-          bg-white py-2 pl-3 pr-10 text-left shadow-md focus:outline-none
-          focus-visible:border-emerald-500 focus-visible:ring-2 
-          focus-visible:ring-white focus-visible:ring-opacity-75 
-          focus-visible:ring-offset-2 focus-visible:ring-offset-emerald-300 
-          sm:text-sm'
-        >
+        <Listbox.Button className='input-default'>
           <span className='block truncate'>{value ? value : 'Select'}</span>
           <span
             className='pointer-events-none absolute inset-y-0 right-0 flex 
@@ -307,33 +312,32 @@ function ListBoxNonMultiple({ selectList, ...props }) {
           leaveTo='opacity-0'
         >
           <Listbox.Options
-            className='absolute z-10 mt-1 max-h-60 w-full
-            overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1
-            ring-neutral-900 ring-opacity-5 focus:outline-none sm:text-sm'
+            className='custom-scrollbar absolute z-10 mt-1 w-full
+            overflow-auto rounded-5 border border-gray-500 bg-gray-800
+            py-1 text-base ring-1 ring-neutral-900
+            ring-opacity-5 focus:outline-none sm:text-sm'
           >
             {selectList.map((item, index) => (
               <Listbox.Option
                 key={index}
                 className={({ active }) =>
-                  `relative cursor-default select-none py-2 pl-10 pr-4 ${
-                    active ? 'bg-emerald-600 text-white' : 'text-neutral-900'
-                  }`
+                  `relative cursor-default select-none py-2 pl-10 pr-4 
+                  ${active ? 'bg-emerald-600 text-white' : 'text-gray-50'}`
                 }
                 value={item}
               >
                 {({ selected }) => (
                   <>
                     <span
-                      className={`block truncate text-sm md:text-base ${
-                        selected ? 'font-medium' : 'font-normal'
-                      }`}
+                      className={`block truncate text-sm md:text-base 
+                      ${selected ? 'font-medium' : 'font-normal'}`}
                     >
                       {item}
                     </span>
                     {selected ? (
                       <span
                         className='absolute inset-y-0 left-0 flex items-center
-                        pl-3 text-emerald-600'
+                        pl-3 text-emerald-400'
                       >
                         <CheckIcon className='h-5 w-5' aria-hidden='true' />
                       </span>
@@ -371,14 +375,7 @@ function ListBoxImageNonMultiple({ people, ...props }) {
       }}
     >
       <div className='relative mt-1 w-full'>
-        <Listbox.Button
-          className='relative w-full cursor-default rounded-lg
-          bg-white py-2 pl-3 pr-10 text-left shadow-md focus:outline-none
-          focus-visible:border-emerald-500 focus-visible:ring-2 
-          focus-visible:ring-white focus-visible:ring-opacity-75 
-          focus-visible:ring-offset-2 focus-visible:ring-offset-emerald-300 
-          sm:text-sm'
-        >
+        <Listbox.Button className='input-default'>
           <span className='block truncate'>
             {isSelected(value)?.name ? isSelected(value).name : 'Select'}
           </span>
@@ -399,17 +396,17 @@ function ListBoxImageNonMultiple({ people, ...props }) {
           leaveTo='opacity-0'
         >
           <Listbox.Options
-            className='absolute z-10 mt-1 max-h-60 w-full overflow-auto
-            rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-neutral-900
+            className='custom-scrollbar absolute z-10 mt-1 w-full
+            overflow-auto rounded-5 border border-gray-500 bg-gray-800
+            py-1 text-base ring-1 ring-neutral-900
             ring-opacity-5 focus:outline-none sm:text-sm'
           >
             {people.map((person) => (
               <Listbox.Option
                 key={person._id.toString()}
                 className={({ active }) =>
-                  `relative cursor-default select-none py-2 pl-14 pr-4 ${
-                    active ? 'bg-emerald-600 text-white' : 'text-neutral-900'
-                  }`
+                  `relative cursor-default select-none py-2 pl-14 pr-4 
+                  ${active ? 'bg-emerald-600 text-white' : 'text-gray-50'} `
                 }
                 value={person.email}
               >

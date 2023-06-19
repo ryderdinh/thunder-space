@@ -16,20 +16,20 @@ const IssueHistory = ({ className = '', data = [] }) => {
             key={index}
           >
             <div className='col-span-4 flex items-center font-bold md:col-span-1'>
-              <p>{`${new Date(item.time).toLocaleString()} `}</p>
+              <p>{`${new Date(item.createdAt).toLocaleString()} `}</p>
             </div>
             <div className='col-span-4 flex items-center gap-2 md:col-span-3'>
               <div className='aspect-square h-[28px] rounded-full border-2'>
                 <img
-                  src={item.user[0].avatar}
+                  src={item.users[0].avatar.url}
                   alt='user avatar'
                   className='h-full w-full rounded-full border-neutral-50 object-cover'
                 />
               </div>
-              <p className='hidden md:block'>{`${item.user[0].name}:`}</p>
+              <p className='hidden md:block'>{`${item.users[0].name}:`}</p>
               <div className='flex max-w-[calc(100%-28px)] flex-wrap gap-1 font-bold'>
                 <p>{`${item.action} 
-                ${item.user[1] ? item.user[1].name : ''}`}</p>
+                ${item.users[1] ? item.users[1].name : ''}`}</p>
               </div>
             </div>
           </div>

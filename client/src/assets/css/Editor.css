@@ -5,26 +5,36 @@
 .editor-preview-ryder-app h5,
 .editor-preview-ryder-app h6 {
   font-weight: bold;
+  line-height: normal;
+  margin-block-start: 0.5rem;
+  margin-block-end: 0.5rem;
+}
+
+.editor-preview-ryder-app ul,
+.editor-preview-ryder-app ol,
+.editor-preview-ryder-app p {
+  margin-block-start: 0.5rem;
+  margin-block-end: 0.5rem;
 }
 
 .editor-preview-ryder-app h1 {
-  font-size: 2.5rem;
-}
-
-.editor-preview-ryder-app h2 {
   font-size: 2rem;
 }
 
-.editor-preview-ryder-app h3 {
+.editor-preview-ryder-app h2 {
   font-size: 1.5rem;
 }
 
-.editor-preview-ryder-app h4 {
+.editor-preview-ryder-app h3 {
   font-size: 1.25rem;
 }
 
-.editor-preview-ryder-app h5 {
+.editor-preview-ryder-app h4 {
   font-size: 1rem;
+}
+
+.editor-preview-ryder-app h5 {
+  font-size: 0.75rem;
 }
 
 .editor-preview-ryder-app h6 {

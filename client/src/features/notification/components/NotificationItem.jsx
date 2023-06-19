@@ -1,4 +1,4 @@
-import { BellIcon } from '@heroicons/react/solid'
+import { BellIcon } from '@heroicons/react/24/solid'
 import ButtonSuccess from 'components/Button/ButtonSuccess'
 import moment from 'moment'
 import { useEffect, useState } from 'react'

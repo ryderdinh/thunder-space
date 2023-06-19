@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const { ObjectId} = mongoose.Types
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const { func } = require('joi')
@@ -13,6 +14,13 @@ const Staff = new Schema(
     position: { type: String, required: true },
     department: { type: String, required: true },
     phonenumber: { type: String, required: true },
+    tasks: [
+      {
+        tid: {
+          type: ObjectId
+        }
+      }
+    ],
     tokens: [
       {
         token: { type: String }
@@ -62,6 +70,7 @@ Staff.methods.getProfile = function () {
   delete userObject.resetTokenExpiration
   delete userObject.otp
   delete userObject.otpExpiration
+  delete userObject.tasks
   userObject.avatar = userObject.avatar.url
   return userObject
 }
@@ -88,13 +97,12 @@ Staff.methods.getProfileToCreateProject = function () {
 Staff.methods.generateToken = async function (password) {
   try {
     const validPass = await bcrypt.compare(password, this.password)
-    console.log(validPass)
     if (validPass) {
       const token = await jwt.sign(
         { _id: this._id.toString() },
         process.env.ACCESS_TOKEN_SECRET,
         {
-          expiresIn: '60m'
+          expiresIn: process.env.TOKEN_EXPIRE_TIME
         }
       )
       return token
@@ -113,4 +121,4 @@ Staff.pre('save', function (next) {
   })
 })
 
-module.exports = mongoose.model('Staff ', Staff)
+module.exports = mongoose.model('Staff', Staff)

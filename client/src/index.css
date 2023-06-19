@@ -5,6 +5,7 @@ a {
 
 .custom-scrollbar::-webkit-scrollbar {
   width: 5px;
+  height: 5px;
   display: block !important;
   background: transparent;
   border-radius: 5px;
@@ -16,7 +17,7 @@ a {
   -ms-border-radius: 5px;
   -o-border-radius: 5px;
 }
-.custom-scrollbar::-webkit-scrollbar-thumb {
+.custom-scrollbar::-webkit-scrollbar-thumb:vertical {
   border-radius: 5px;
   background: #fff;
   -moz-border-radius: 5px;
@@ -24,6 +25,16 @@ a {
   -o-border-radius: 5px;
   -webkit-border-radius: 5px;
   width: 100%;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:horizontal {
+  border-radius: 5px;
+  background: #fff;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  height: 100%;
 }
 
 @keyframes loading {

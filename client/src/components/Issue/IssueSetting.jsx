@@ -1,5 +1,5 @@
-import { ArrowNarrowLeftIcon } from '@heroicons/react/outline'
-import { DuplicateIcon, FilterIcon } from '@heroicons/react/solid'
+import { ArrowLongLeftIcon } from '@heroicons/react/24/outline'
+import { ClipboardDocumentIcon, FunnelIcon } from '@heroicons/react/24/solid'
 import { joiResolver } from '@hookform/resolvers/joi'
 import { actFetchProject, actQueryIssue, actUpdateIssue } from 'actions'
 import { Col, Row } from 'components/Layouts'
@@ -107,14 +107,14 @@ export const IssueSetting = () => {
       <Row className='max-h-10 md:flex'>
         <Col className='mb-2 w-full md:mb-0 md:w-1/2'>
           <button
-            className='panel inline-flex h-9 w-max items-center 
-            justify-center rounded-md bg-opacity-20 py-2 px-4 text-sm
+            className='panel rounded-md inline-flex h-9 w-max 
+            items-center justify-center bg-opacity-20 py-2 px-4 text-sm
             font-medium text-neutral-100 hover:bg-opacity-30 focus:outline-none
             focus-visible:ring-2 focus-visible:ring-neutral-100
             focus-visible:ring-opacity-75'
             onClick={returnIssuePage}
           >
-            <ArrowNarrowLeftIcon className='h-6 w-10' />
+            <ArrowLongLeftIcon className='h-6 w-10' />
           </button>
         </Col>
       </Row>
@@ -135,7 +135,7 @@ export const IssueSetting = () => {
                     onClick={() => setMobileFiltersOpen(true)}
                   >
                     <span className='sr-only'>Filters</span>
-                    <FilterIcon className='h-5 w-5' aria-hidden='true' />
+                    <FunnelIcon className='h-5 w-5' aria-hidden='true' />
                   </button>
                 </div>
               </div>
@@ -182,7 +182,7 @@ export const IssueSetting = () => {
                       {(tab === 'general' || tab === '') && (
                         <>
                           <div
-                            className='overflow-hidden rounded-lg border-[#282828]
+                            className='rounded-lg overflow-hidden border-[#282828]
                             bg-[#1f1f1f]'
                           >
                             <div className='space-y-2 p-6'>
@@ -201,7 +201,7 @@ export const IssueSetting = () => {
                                     required: true
                                   })}
                                   type='text'
-                                  className='mt-1 block w-full rounded-md border 
+                                  className='rounded-md mt-1 block w-full border 
                                   border-neutral-300 py-[7px] pl-3 text-neutral-700 
                                   shadow-sm focus:border-emerald-500 focus:outline-none 
                                   focus:ring-2 focus:ring-emerald-500 
@@ -265,18 +265,20 @@ function IssueID({ id }) {
   return (
     <SettingActionBox
       title='Issue ID'
-      description='Used to interacting'
+      description='Used for interaction'
       action={
         <>
           <span className='mr-1'>Learn more</span>
-          <a href='#fff'>Issue ID</a>
+          <a href='/' className='font-bold'>
+            Issue ID
+          </a>
         </>
       }
     >
       <div className='relative '>
         <input
           type='text'
-          className='mt-1 block w-full rounded-md border border-neutral-300
+          className='rounded-md mt-1 block w-full border border-neutral-300
           bg-neutral-50 py-[7px] pl-3 text-neutral-700 
           shadow-sm sm:text-sm'
           placeholder='Issue id'
@@ -284,14 +286,14 @@ function IssueID({ id }) {
           defaultValue={id}
         />
         <div
-          className='group absolute right-[2px] top-1/2 flex aspect-square 
-          h-8 max-h-full -translate-y-1/2 transform 
-          cursor-pointer items-center justify-center rounded-md 
+          className='rounded-md group absolute right-[2px] top-1/2 flex 
+          aspect-square h-8 max-h-full -translate-y-1/2 
+          transform cursor-pointer items-center justify-center 
           transition-all duration-150 ease-linear
           hover:bg-neutral-700'
           onClick={copyToClipboard}
         >
-          <DuplicateIcon
+          <ClipboardDocumentIcon
             className='h-6 w-6 text-neutral-700 transition-all
             duration-150 ease-linear group-hover:text-neutral-50'
           />
@@ -338,7 +340,7 @@ function SettingActionBox({
 }) {
   return (
     <div
-      className={`overflow-hidden rounded-lg border-2 border-[#282828]
+      className={`rounded-lg overflow-hidden border-2 border-[#282828]
       bg-[#1f1f1f] ${className}`}
     >
       <div className='space-y-2 p-6'>

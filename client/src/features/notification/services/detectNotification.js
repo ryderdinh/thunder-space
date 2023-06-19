@@ -1,9 +1,9 @@
 import {
-  AnnotationIcon,
+  ArrowsRightLeftIcon,
   BellIcon,
-  SwitchVerticalIcon,
+  ChatBubbleBottomCenterTextIcon,
   UserGroupIcon
-} from '@heroicons/react/solid'
+} from '@heroicons/react/24/solid'
 
 const notificationLink = (data) => ({
   'invitation-project': `/projects/invitation?pid=${data?.pid}`,
@@ -37,12 +37,12 @@ const notificationIcon = (type) => {
     }
 
     case 'assign-to-issue': {
-      return <AnnotationIcon {...iconProps} />
+      return <ChatBubbleBottomCenterTextIcon {...iconProps} />
     }
 
     case 'change-project':
     case 'change-issue': {
-      return <SwitchVerticalIcon {...iconProps} />
+      return <ArrowsRightLeftIcon {...iconProps} />
     }
 
     default:
@@ -54,7 +54,7 @@ const detectNotification = (type, data) => ({
   icon: notificationIcon(type),
   link: notificationLink(data)[type],
   title: notificationTitle[type] || 'Notification',
-  content: notificationContent[type] || 'Notification content'
+  content: notificationContent[type] || ' '
 })
 
 export default detectNotification

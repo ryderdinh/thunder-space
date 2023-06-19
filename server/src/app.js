@@ -3,11 +3,18 @@ const app = express()
 const server = require('http').Server(app)
 
 const { Server } = require('socket.io')
+const { instrument } = require('@socket.io/admin-ui')
+const whilteList = JSON.parse(process.env.WHITE_LIST_CORS)
 const io = new Server(server, {
   cors: {
     origin: '*',
     methods: ['POST', 'GET', 'PUT', 'DELETE', 'PATCH']
+    // credentials: true
   }
+})
+instrument(io, {
+  auth: false,
+  mode: process.env.NODE_ENV === 'dev' ? 'development' : 'production'
 })
 app.set('socketio', io)
 const db = require('../config/db/database')
@@ -137,13 +144,9 @@ app.use('/api', routersEvent.apiGetEvent)
                         ISSUE
 ---------------------------------------------*/
 const routersIssue = require('./routers/users/issue.router')
-
-app.use('/api', routersIssue.apiGetAllIssueInProject)
-app.use('/api', routersIssue.apiGetOneIssueInProject)
-app.use('/api', routersIssue.apiDeleteOneIssue)
-app.use('/api', routersIssue.apiUpdateOneIssue)
-app.use('/api', routersIssue.apiPostIssue)
-app.use('/api', routersIssue.apiPostFile)
+Object.entries(routersIssue).forEach((e) => {
+  app.use('/api', e[1])
+})
 
 /* -------------------------------------------
                         TIMEKEEPING
@@ -184,6 +187,16 @@ app.use('/api', routersProject.apiPatchAddMemberToProject)
 const routersNotifications = require('./routers/users/notification.router')
 app.use('/api', routersNotifications.apiGetNotifications)
 //Event
+
+/* -------------------------------------------
+                        TASK
+---------------------------------------------*/
+
+const routersTask = require('./routers/users/task.router')
+Object.entries(routersTask).forEach((e) => {
+  app.use('/api', e[1])
+})
+// app.use('/api', routersTask.getTasks)
 
 //———————————————————————————ADMIN ROUTES—————————————————————————————//
 

@@ -1,5 +1,5 @@
 import { Menu, Transition } from '@headlessui/react'
-import { ChevronDownIcon } from '@heroicons/react/solid'
+import { ChevronDownIcon } from '@heroicons/react/24/solid'
 import { Fragment } from 'react'
 
 export default function MenuComponent({ children }) {
@@ -7,9 +7,9 @@ export default function MenuComponent({ children }) {
     <Menu as='div' className='relative z-10 inline-block text-left'>
       <div className='flex justify-end'>
         <Menu.Button
-          className='panel inline-flex h-9 w-max items-center 
-          justify-center rounded-md bg-opacity-20 py-2 px-4 text-sm
-          font-medium text-white hover:bg-opacity-30 focus:outline-none
+          className='inline-flex h-9 w-max items-center justify-center 
+          rounded-md border border-gray-400 bg-gray-600 bg-opacity-80 p-2 text-sm
+          font-medium text-white hover:bg-opacity-100 focus:outline-none
           focus-visible:ring-2 focus-visible:ring-white
           focus-visible:ring-opacity-75'
         >

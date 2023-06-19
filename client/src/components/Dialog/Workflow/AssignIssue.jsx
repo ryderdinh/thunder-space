@@ -1,8 +1,11 @@
 import { Dialog, RadioGroup, Transition } from '@headlessui/react'
 import { actUpdateIssue, setDataIssue } from 'actions'
+import ButtonDanger from 'components/Button/ButtonDanger'
+import ButtonSuccess from 'components/Button/ButtonSuccess'
 import SearchBox from 'components/Project/SearchBox'
 import { Fragment, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { errorToast } from 'utilities/toast'
 
 export default function AssignIssue({
   closeModal,
@@ -12,22 +15,33 @@ export default function AssignIssue({
   const dispatch = useDispatch()
 
   const [selected, setSelected] = useState({})
+  const [updating, setUpdating] = useState(false)
 
   const onSubmit = () => {
+    setUpdating(true)
+
     const onSuccess = () => {
       const { name, _id, email, avatar } = selected
       dispatch(setDataIssue({ ..._data, assign: { name, _id, email, avatar } }))
+      setUpdating(false)
       closeModal()
+    }
+    const onError = (err) => {
+      setUpdating(false)
+      errorToast(err.message, { id: 'update-issue' })
     }
 
     dispatch(
-      actUpdateIssue(iid, { assigned: selected?.email || '' }, onSuccess)
+      actUpdateIssue(
+        iid,
+        { assigned: selected?.email || '' },
+        onSuccess,
+        onError
+      )
     )
   }
 
   const handleSearch = () => {}
-
-  console.log(currentAssignee, members)
 
   useEffect(() => {
     setSelected(
@@ -64,8 +78,8 @@ export default function AssignIssue({
       >
         <div
           className='my-8 inline-block w-full max-w-xl transform
-          rounded-md border border-neutral-800 bg-[#232323] p-4 md:p-6 text-left 
-          align-middle shadow-xl transition-all'
+          rounded-md border border-neutral-800 bg-[#232323] p-4 text-left align-middle 
+          shadow-xl transition-all md:p-6'
         >
           <Dialog.Title
             as='h3'
@@ -139,29 +153,23 @@ export default function AssignIssue({
           </div>
 
           <div className='mt-4 flex justify-end gap-2'>
-            <button
-              type='submit'
-              className='cursor-pointer justify-center rounded-md border 
-              border-transparent bg-emerald-600 py-2 px-4 text-sm font-medium 
-              text-white shadow-sm selection:inline-flex 
-              hover:bg-emerald-700 focus:outline-none'
+            <ButtonSuccess
+              size='mid'
+              loading={updating}
+              className='w-24'
               onClick={onSubmit}
             >
               Update
-            </button>
+            </ButtonSuccess>
 
-            <button
-              type='button'
-              className='inline-flex justify-center rounded-md border 
-              border-transparent px-4 py-2 text-sm font-medium
-              text-neutral-400 transition-all duration-300 ease-in-out 
-              hover:bg-neutral-500 hover:text-neutral-200 focus:outline-none 
-              focus-visible:ring-2 focus-visible:ring-neutral-500 
-              focus-visible:ring-offset-2'
+            <ButtonDanger
+              size='mid'
+              disabled={updating}
+              className='w-24'
               onClick={closeModal}
             >
               Cancel
-            </button>
+            </ButtonDanger>
           </div>
         </div>
       </Transition.Child>

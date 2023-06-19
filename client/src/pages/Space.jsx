@@ -4,11 +4,11 @@ import ViewBox from 'components/Main/ViewMain/ViewBox'
 import WorkflowContainer from 'components/Workfow/WorkflowContainer'
 import { useEffect } from 'react'
 
-export default function Workflow() {
-  const path = 'workflow'
+export default function Space() {
+  const path = 'spaces'
 
   useEffect(() => {
-    document.title = 'Workflow'
+    document.title = 'Spaces'
   }, [])
 
   return (

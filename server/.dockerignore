@@ -1,0 +1,8 @@
+dev.env
+test.env
+**/node_modules
+.vscode
+README.md
+.gitignore
+yarn.lock
+package-lock.json

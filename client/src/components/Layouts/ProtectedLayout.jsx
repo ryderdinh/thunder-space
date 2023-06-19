@@ -8,6 +8,7 @@ import { useDispatch } from 'react-redux'
 import { io } from 'socket.io-client'
 import { getCookie } from 'units/cookieWeb'
 import useSound from 'use-sound'
+import HeroPattern from './HeroPattern'
 import Layout from './Layout'
 
 const socket = io.connect(env.socketUrl, {
@@ -33,7 +34,7 @@ const MainProtectedLayout = ({ path, children }) => {
   )
 
   useEffect(() => {
-    socket.on('invitation-project', (data) => {
+    socket.on('notification', (data) => {
       play()
       dispatch(addOrModifiedNotificationsData([data]))
     })
@@ -46,7 +47,11 @@ const MainProtectedLayout = ({ path, children }) => {
   return (
     <Layout>
       <Main>
+        <div className='view_name absolute left-0 z-[1] w-full bg-deepdark backdrop-blur-xl'></div>
         <HeaderContainer pathName={path} />
+        <div className='absolute top-0 z-[1] h-full w-full'>
+          <HeroPattern />
+        </div>
         <ViewMain>{children}</ViewMain>
 
         {/* <button onClick={play}>asdfsdfsdfsdfsdfsdfsdf</button> */}

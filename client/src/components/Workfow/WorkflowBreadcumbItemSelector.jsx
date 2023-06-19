@@ -1,5 +1,5 @@
 import { Combobox, Transition } from '@headlessui/react'
-import { CheckIcon, SearchIcon } from '@heroicons/react/solid'
+import { CheckIcon, MagnifyingGlassIcon } from '@heroicons/react/24/solid'
 import { Fragment } from 'react'
 
 export default function WorkflowBreadcumbItemSelector({
@@ -28,7 +28,7 @@ export default function WorkflowBreadcumbItemSelector({
           focus-visible:ring-white focus-visible:ring-opacity-75 
           focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm'
         >
-          <Combobox.Button className='flex items-center rounded-md bg-neutral-800'>
+          <Combobox.Button className='rounded-md flex items-center bg-neutral-800'>
             <p
               className='w-full border-none bg-transparent p-2 text-lg 
               leading-5 text-neutral-50 focus:ring-0'
@@ -45,7 +45,7 @@ export default function WorkflowBreadcumbItemSelector({
           afterLeave={() => setQuery('')}
         >
           <Combobox.Options
-            className='absolute mt-1 max-h-60 w-full overflow-auto rounded-md 
+            className='rounded-md absolute mt-1 max-h-60 w-full overflow-auto 
             bg-neutral-900 py-1 text-base shadow-lg ring-1 ring-black 
             ring-opacity-5 focus:outline-none sm:text-sm'
           >
@@ -53,13 +53,13 @@ export default function WorkflowBreadcumbItemSelector({
               <label className='relative block'>
                 <span className='sr-only'>Search</span>
                 <span className='absolute inset-y-0 left-0 flex items-center pl-2'>
-                  <SearchIcon
+                  <MagnifyingGlassIcon
                     className='h-5 w-5 text-neutral-300'
                     aria-hidden='true'
                   />
                 </span>
                 <Combobox.Input
-                  className='block w-full rounded-md border-none
+                  className='rounded-md block w-full border-none
                   bg-white py-2 pl-10 pr-3 shadow-sm placeholder:italic 
                   placeholder:text-neutral-400 focus:border-none focus:outline-none
                   sm:text-sm'

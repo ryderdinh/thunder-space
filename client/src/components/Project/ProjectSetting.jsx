@@ -1,14 +1,14 @@
 import { Listbox, Transition } from '@headlessui/react'
-import { ArrowNarrowLeftIcon } from '@heroicons/react/outline'
+import { ArrowLongLeftIcon } from '@heroicons/react/24/outline'
 import {
   CheckIcon,
   ChevronDownIcon,
-  DuplicateIcon,
-  FilterIcon,
-  SearchIcon
-} from '@heroicons/react/solid'
+  ClipboardDocumentIcon,
+  FunnelIcon,
+  MagnifyingGlassIcon
+} from '@heroicons/react/24/solid'
 import { joiResolver } from '@hookform/resolvers/joi'
-import { actFetchProject, actUpdateIssue, setDataProject } from 'actions'
+import { actFetchProject, actUpdateProject, setDataProject } from 'actions'
 import { projectApi, userApi } from 'api'
 import { Col, Dropdown, Row } from 'components/Layouts'
 import BallTriangle from 'components/Loading/BallTriangle'
@@ -32,9 +32,9 @@ const permissions = {
 
 const subTabs = [
   { name: 'General', tab: 'general' },
-  { name: 'Collaborators', tab: 'collaborator' },
-  { name: 'Security', tab: 'security' },
-  { name: 'Advanced', tab: 'advanced' }
+  { name: 'Collaborators', tab: 'collaborator' }
+  // { name: 'Security', tab: 'security' },
+  // { name: 'Advanced', tab: 'advanced' }
 ]
 
 const schemaName = Joi.object({
@@ -102,22 +102,7 @@ export const ProjectSetting = () => {
   }, [_dataProject?.member, ownId])
 
   return (
-    <div className='h-full w-full space-y-5'>
-      <Row className='max-h-10 md:flex'>
-        <Col className='mb-2 w-full md:mb-0 md:w-1/2'>
-          <button
-            className='panel inline-flex h-9 w-max items-center 
-            justify-center rounded-md bg-opacity-20 py-2 px-4 text-sm
-            font-medium text-neutral-100 hover:bg-opacity-30 focus:outline-none
-            focus-visible:ring-2 focus-visible:ring-neutral-100
-            focus-visible:ring-opacity-75'
-            onClick={returnIssuePage}
-          >
-            <ArrowNarrowLeftIcon className='h-6 w-10' />
-          </button>
-        </Col>
-      </Row>
-
+    <div className='relative h-full w-full space-y-5'>
       <Row className='h-[calc(100%-40px)] '>
         <Col className='h-full'>
           <>
@@ -129,20 +114,35 @@ export const ProjectSetting = () => {
                 <div className='flex items-center'>
                   <button
                     type='button'
-                    className='p-2 text-neutral-50 hover:text-neitra-500 
+                    className='hover:text-neitra-500 p-2 text-neutral-50 
                     sm:ml-6 md:hidden'
                     onClick={() => setMobileFiltersOpen(true)}
                   >
                     <span className='sr-only'>Filters</span>
-                    <FilterIcon className='h-5 w-5' aria-hidden='true' />
+                    <FunnelIcon className='h-5 w-5' aria-hidden='true' />
                   </button>
                 </div>
               </div>
 
-              <section className='h-full pt-3'>
-                <div className='grid h-full grid-cols-1 grid-rows-1 gap-x-8 gap-y-10 lg:grid-cols-4'>
-                  <form className='hidden lg:row-span-1 lg:block'>
-                    <h3 className='sr-only'>Tab</h3>
+              <section className=''>
+                <div
+                  className='relative grid h-full grid-cols-1 grid-rows-1 
+                  gap-x-8 gap-y-10 lg:grid-cols-4'
+                >
+                  <div
+                    className='sticky left-0 top-10 hidden 
+                    h-max space-y-5 lg:block'
+                  >
+                    <button
+                      className='panel inline-flex h-9 w-max items-center 
+                      justify-center rounded-md bg-opacity-20 px-4 py-2 text-sm
+                      font-medium text-neutral-100 hover:bg-opacity-30 focus:outline-none
+                      focus-visible:ring-2 focus-visible:ring-neutral-100
+                      focus-visible:ring-opacity-75'
+                      onClick={returnIssuePage}
+                    >
+                      <ArrowLongLeftIcon className='h-6 w-10' />
+                    </button>
                     <ul
                       className='space-y-1 pb-6 text-sm 
                       font-medium text-gray-900'
@@ -171,13 +171,14 @@ export const ProjectSetting = () => {
                         </li>
                       ))}
                     </ul>
-                  </form>
+                    <h3 className='sr-only'>Tab</h3>
+                  </div>
 
                   <div
-                    className='custom-scrollbar overflow-y-auto md:overflow-y-scroll pr-0 md:pr-2 
-                    text-neutral-400 lg:col-span-3 lg:row-span-1'
+                    className='pr-0 text-neutral-400
+                    md:pr-2 lg:col-span-3 lg:row-span-1'
                   >
-                    <div className='h-full space-y-10'>
+                    <div className='h-full space-y-10 py-10'>
                       {(tab === 'general' || tab === '') && (
                         <GeneralTab
                           dataProject={_dataProject}
@@ -212,6 +213,10 @@ export const ProjectSetting = () => {
 function GeneralTab({ dataProject, isLoading, error, permissions }) {
   return (
     <>
+      <div className='space-y-2'>
+        <h5 className='text-xl font-bold text-neutral-100'>Generals</h5>
+        <p className='text-sm'>Display and edit project information</p>
+      </div>
       <ProjectName
         data={dataProject}
         isLoading={isLoading}
@@ -443,7 +448,7 @@ function CollaboratorTab({
 
   return (
     <div className='h-full'>
-      <div className='space-y-7 p-6 pb-0 pr-0'>
+      <div className='space-y-7 pb-0 pr-0'>
         <div className='space-y-3'>
           <div className='space-y-2'>
             <h5 className='text-xl font-bold text-neutral-100'>
@@ -595,7 +600,7 @@ function CollaboratorTab({
                 items-center justify-center rounded-md px-3 
                 transition-all duration-150 ease-linear'
               >
-                <SearchIcon className='h-5 w-5 text-neutral-700' />
+                <MagnifyingGlassIcon className='h-5 w-5 text-neutral-700' />
               </div>
             </div>
 
@@ -765,7 +770,7 @@ function SettingActionBox({
   return (
     <div
       className={`overflow-hidden rounded-lg border-2 border-[#282828]
-      bg-[#1f1f1f] ${className}`}
+      bg-gray-800 ${className}`}
     >
       <div className='space-y-2 p-6'>
         <h5 className='text-xl font-bold text-neutral-100'>{title}</h5>
@@ -807,7 +812,7 @@ function ProjectName({ data: _dataProject, isLoading }) {
 
   const onSaveName = (data) => {
     !allowActionForm.projectName &&
-      dispatch(actUpdateIssue(pid, { name: data.projectName }))
+      dispatch(actUpdateProject(pid, { name: data.projectName }))
   }
 
   //? Effect
@@ -855,12 +860,7 @@ function ProjectName({ data: _dataProject, isLoading }) {
             required: true
           })}
           type='text'
-          className='mt-1 block w-full rounded-md border 
-          border-neutral-300 py-[7px] pl-3 text-neutral-700 
-          shadow-sm focus:border-emerald-500 focus:outline-none 
-          focus:ring-2 focus:ring-emerald-500 
-          disabled:cursor-not-allowed 
-          disabled:opacity-70 sm:text-sm'
+          className='input-default mt-1'
           placeholder='Project name...'
           disabled={isLoading}
         />
@@ -899,9 +899,7 @@ function ProjectID({ id }) {
       <div className='relative'>
         <input
           type='text'
-          className='mt-1 block w-full rounded-md border border-neutral-300
-          bg-neutral-50 py-[7px] pl-3 text-neutral-700 
-          shadow-sm sm:text-sm'
+          className='input-default mt-1'
           placeholder='Issue id'
           disabled={true}
           defaultValue={id}
@@ -914,7 +912,7 @@ function ProjectID({ id }) {
           hover:bg-neutral-700'
           onClick={copyToClipboard}
         >
-          <DuplicateIcon
+          <ClipboardDocumentIcon
             className='h-6 w-6 text-neutral-700 transition-all
             duration-150 ease-linear group-hover:text-neutral-50'
           />

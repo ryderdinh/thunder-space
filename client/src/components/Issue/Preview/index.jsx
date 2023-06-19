@@ -1,13 +1,18 @@
-import Priority from './Priority'
-import { ClockIcon } from '@heroicons/react/solid'
-import { actUpdateIssue, setDataIssue } from 'actions'
-import ButtonNormal from 'components/Button/ButtonNormal'
+import { ClockIcon } from '@heroicons/react/24/solid'
+import { actUpdateIssue, actUpdateStatusIssue, setDataIssue } from 'actions'
 import ArrowPathIcon from 'components/Icon/ArrowPathIcon'
 import { LayoutContext } from 'context/LayoutContext'
+import dayjs from 'dayjs'
+import duration from 'dayjs/plugin/duration'
 import { motion } from 'framer-motion'
-import { useContext, useState } from 'react'
+import { useIsMe } from 'hooks'
+import { useContext, useEffect, useMemo, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import variantGlobal from 'units/variantGlobal'
+import ActionStatus from './ActionStatus'
+import Mask from './Mask'
+import Priority from './Priority'
+dayjs.extend(duration)
 
 const IssuePreview = ({ dataIssue, dataProject, className = '' }) => {
   const { _data } = useSelector((state) => state._issue)
@@ -16,41 +21,114 @@ const IssuePreview = ({ dataIssue, dataProject, className = '' }) => {
   const { openDialog } = useContext(LayoutContext)
 
   const [loading, setLoading] = useState({
-    priority: false
+    estimate: false,
+    priority: false,
+    status: {
+      started: false,
+      reject: false,
+      done: false,
+      close: false,
+      pending: false
+    }
   })
+
+  const assignToMe = useIsMe(_data?.assign?._id)
+  const createByMe = useIsMe(_data?.creator?._id)
+
+  // @ts-check
+  /**
+   * role : 'botl'|'creator'|'assignee'
+   */
+  const role = useMemo(
+    () => (createByMe ? (assignToMe ? 'both' : 'creator') : 'assignee'),
+    [assignToMe, createByMe]
+  )
 
   const handleLoading = (key, value) => {
     setLoading((prev) => ({ ...prev, [key]: value }))
   }
 
   const onPriorityChange = (priority) => {
-    handleLoading('priority', true)
-
+    const current = _data.priority
     const onSuccess = () => {
-      dispatch(setDataIssue({ ..._data, priority }))
       handleLoading('priority', false)
     }
     const onError = () => {
       handleLoading('priority', false)
+      dispatch(setDataIssue({ ..._data, priority: current }))
     }
 
-    dispatch(actUpdateIssue(dataIssue?._id, { priority }, onSuccess, onError))
+    if (priority !== _data.priority) {
+      handleLoading('priority', true)
+      Promise.all([
+        dispatch(setDataIssue({ ..._data, priority })),
+        dispatch(
+          actUpdateIssue(dataIssue?._id, { priority }, onSuccess, onError)
+        )
+      ])
+    }
   }
+
+  const onStatusChange = (value) => {
+    const onSuccess = () => {
+      dispatch(setDataIssue({ ..._data, status: value }))
+      handleLoading('status', { ...loading.status, [value]: false })
+    }
+    const onError = () => {
+      handleLoading('status', { ...loading.status, [value]: false })
+    }
+
+    if (value !== _data.status) {
+      handleLoading('status', { ...loading.status, [value]: true })
+      dispatch(actUpdateStatusIssue(dataIssue?._id, value, onSuccess, onError))
+    }
+  }
+
+  useEffect(() => {
+    let a = dayjs.duration(0, 'd')
+    let b = '1d25h30m'.split('')
+    let c = {
+      d: 0,
+      h: 0,
+      m: 0
+    }
+    let index = 0
+    let check = true
+
+    for (let e of ['d', 'h', 'm']) {
+      if (b.indexOf(e) > 0) {
+        let result = b.splice(index, b.indexOf(e) - index).join('')
+        if (isNaN(result)) {
+          check = false
+          break
+        }
+        c[e] = Number(result)
+        index = b.indexOf(e) + 1
+      }
+    }
+
+    if (!check) return
+    else {
+      console.log(c)
+    }
+
+    Object.keys(c).forEach((e) => {
+      a = a.add(c[e], e)
+    })
+    console.log(a)
+  }, [])
 
   return (
     <motion.div
-      className={`${className} h-max w-full rounded-md bg-[length:100%_auto] 
-      bg-no-repeat pt-2 px-5 pb-5 ${
-        dataIssue.type === 'task'
-          ? "bg-[url('assets/images/card-issue-task.png')]  ring-[#10B99F]"
-          : "bg-[url('assets/images/card-issue-bug.png')] ring-[#EA6767]"
-      }`}
+      className={`${className} relative h-max w-full rounded-md 
+      border-2 bg-[#1F1F1F] bg-no-repeat px-5 pb-5 pt-2
+      ${dataIssue.type === 'task' ? 'border-[#10B99F]' : 'border-[#EA6767]'}`}
       variants={variantGlobal(3, 0.2)}
       initial='initial'
       animate='enter'
       exit='exit'
     >
-      <div className='flex w-full items-center'>
+      <div className='relative z-[2] flex w-full items-center'>
         <div className='flex w-full flex-col gap-2'>
           <h3
             className='text-xl font-bold capitalize text-neutral-50 
@@ -106,7 +184,7 @@ const IssuePreview = ({ dataIssue, dataProject, className = '' }) => {
                   ring-2 ring-neutral-50'
                 >
                   <img
-                    src={dataIssue?.assign?.avatar}
+                    src={dataIssue?.assign?.avatar?.url}
                     alt='Avatar user'
                     className='relative z-[2] h-full w-full object-cover'
                   />
@@ -124,12 +202,20 @@ const IssuePreview = ({ dataIssue, dataProject, className = '' }) => {
             )}
           </div>
 
-          <div className='w-full mt-3'>
-            <ButtonNormal className='py-1 text-center font-semibold text-base'>
-              Start
-            </ButtonNormal>
-          </div>
+          <ActionStatus
+            status={_data.status}
+            role={role}
+            loading={loading.status}
+            onChange={onStatusChange}
+          />
         </div>
+      </div>
+      <div className='absolute left-0 top-0 z-[1] h-full w-full overflow-hidden'>
+        <Mask
+          stroke={dataIssue.type === 'task' ? '#10B99F' : '#EA6767'}
+          className='absolute left-1/2 top-1/2 h-full -translate-x-1/2 
+          -translate-y-1/2'
+        />
       </div>
     </motion.div>
   )

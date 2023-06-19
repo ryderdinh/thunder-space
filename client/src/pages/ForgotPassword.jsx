@@ -30,7 +30,7 @@ const ForgotPassword = () => {
   }, [step, setParams, getParams])
 
   return (
-    <AnimatePresence exitBeforeEnter>
+    <AnimatePresence mode='wait'>
       <motion.div
         className='flex min-h-full w-full flex-col items-center 
         justify-center gap-5'
@@ -52,7 +52,7 @@ const ForgotPassword = () => {
           className='flex h-max w-full flex-col items-center 
           justify-center gap-5'
         >
-          <AnimatePresence exitBeforeEnter>
+          <AnimatePresence mode='wait'>
             {Number(step) < 3 && (
               <Step1
                 handleStep={handleStep}
@@ -185,7 +185,7 @@ const Step1 = ({ handleStep, step }) => {
     }
 
     const onSuccess = async () => {
-      successToast('Sent OTP to your email', { id: 'get-otp-forgot-password' })
+      successToast('Sent OTP to your email', 'noti-forgot-password')
       setError(null)
       setBtnDisable(true)
       startCowndown()
@@ -193,10 +193,10 @@ const Step1 = ({ handleStep, step }) => {
     }
 
     const onError = (error) => {
-      errorToast(error.message, { id: 'noti-forgot-password' })
+      errorToast(error.message, 'noti-forgot-password')
     }
 
-    loadingToast('Sending', 'get-otp-forgot-password')
+    loadingToast('Sending', 'noti-forgot-password')
     setLoading(true)
     await getOtp(onSuccess, onError)
   }
@@ -206,7 +206,10 @@ const Step1 = ({ handleStep, step }) => {
   }, [step])
 
   return (
-    <StepForm title='Forgot your password?'>
+    <StepForm
+      title='Forgot your password?'
+      onSubmit={(e) => e.preventDefault()}
+    >
       <div className='flex w-full flex-col space-y-3'>
         <label htmlFor='email' className='text-sm text-neutral-50'>
           Email <span className='text-md text-emerald-600'>*</span>
@@ -271,11 +274,11 @@ const Step2 = ({ handleStep }) => {
   const verifyOtp = async () => {
     const onSuccess = () => {
       handleStep(3, { mail: getParams()?.mail })
-      successToast('Verified', { id: 'noti-forgot-password' })
+      successToast('Verified', 'noti-forgot-password')
     }
 
     const onError = (error) => {
-      errorToast(error.message, { id: 'noti-forgot-password' })
+      errorToast(error.message, 'noti-forgot-password')
     }
 
     loadingToast('Verifying...', 'noti-forgot-password')
@@ -377,14 +380,12 @@ const Step3 = ({ handleStep }) => {
     loadingToast('Reseting...', 'noti-forgot-password')
 
     const onSuccess = () => {
-      successToast('Success', { id: 'noti-forgot-password' })
+      successToast('Success', 'noti-forgot-password')
       handleStep(4, {})
     }
 
     const onError = (error) => {
-      errorToast(error.message, {
-        id: 'noti-forgot-password'
-      })
+      errorToast(error.message, 'noti-forgot-password')
     }
 
     try {

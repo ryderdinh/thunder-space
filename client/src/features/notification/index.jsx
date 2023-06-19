@@ -9,7 +9,7 @@ import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useLocation } from 'react-router-dom'
 
-import { TagIcon } from '@heroicons/react/solid'
+import { TagIcon } from '@heroicons/react/24/solid'
 import {
   NotificationAction,
   NotificationList,

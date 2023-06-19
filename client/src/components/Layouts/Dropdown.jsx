@@ -1,5 +1,5 @@
 import { Listbox, Transition } from '@headlessui/react'
-import { CheckIcon, ChevronDownIcon } from '@heroicons/react/solid'
+import { CheckIcon, ChevronDownIcon } from '@heroicons/react/24/solid'
 import { Fragment } from 'react'
 
 export default function Dropdown({
@@ -36,8 +36,8 @@ export default function Dropdown({
             leaveTo='opacity-0'
           >
             <Listbox.Options
-              className='absolute left-0 z-[2] mt-1 max-h-60
-              w-max overflow-auto rounded-md bg-neutral-50 py-1 
+              className='rounded-md absolute left-0 z-[2] mt-1
+              max-h-60 w-max overflow-auto bg-neutral-50 py-1 
               text-base shadow-lg ring-1 ring-neutral-900 
               ring-opacity-5 focus:outline-none sm:text-sm'
               onClick={onClickOption}
