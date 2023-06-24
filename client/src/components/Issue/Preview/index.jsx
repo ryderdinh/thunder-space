@@ -120,8 +120,8 @@ const IssuePreview = ({ dataIssue, dataProject, className = '' }) => {
 
   return (
     <motion.div
-      className={`${className} rounded-md relative h-max w-full 
-      border-2 bg-[#1F1F1F] bg-no-repeat px-5 pt-2 pb-5
+      className={`${className} relative h-max w-full rounded-md 
+      border-2 bg-[#1F1F1F] bg-no-repeat px-5 pb-5 pt-2
       ${dataIssue.type === 'task' ? 'border-[#10B99F]' : 'border-[#EA6767]'}`}
       variants={variantGlobal(3, 0.2)}
       initial='initial'
@@ -141,7 +141,7 @@ const IssuePreview = ({ dataIssue, dataProject, className = '' }) => {
 
           <div className='mt-3 flex w-full items-center gap-2'>
             <div
-              className='rounded-md flex items-center gap-2 bg-neutral-50/40 
+              className='flex items-center gap-2 rounded-md bg-neutral-50/40 
               px-2 py-1'
             >
               <div className='flex items-center gap-1'>
@@ -180,11 +180,11 @@ const IssuePreview = ({ dataIssue, dataProject, className = '' }) => {
                 }}
               >
                 <div
-                  className='rounded-full relative h-5 w-5 overflow-hidden 
+                  className='relative h-5 w-5 overflow-hidden rounded-full 
                   ring-2 ring-neutral-50'
                 >
                   <img
-                    src={dataIssue?.assign?.avatar}
+                    src={dataIssue?.assign?.avatar?.url}
                     alt='Avatar user'
                     className='relative z-[2] h-full w-full object-cover'
                   />
@@ -210,10 +210,10 @@ const IssuePreview = ({ dataIssue, dataProject, className = '' }) => {
           />
         </div>
       </div>
-      <div className='absolute top-0 left-0 z-[1] h-full w-full overflow-hidden'>
+      <div className='absolute left-0 top-0 z-[1] h-full w-full overflow-hidden'>
         <Mask
           stroke={dataIssue.type === 'task' ? '#10B99F' : '#EA6767'}
-          className='absolute top-1/2 left-1/2 h-full -translate-x-1/2 
+          className='absolute left-1/2 top-1/2 h-full -translate-x-1/2 
           -translate-y-1/2'
         />
       </div>
