@@ -51,7 +51,8 @@ module.exports = async (req, res, next) => {
         //     const assign = (await updatedIssue.populate("assigns")).assigns
         //     const creatorToView = creator.map(creator => creator.getProfileToCreateProject())
         //     const assignToView = assign.map(assign => assign.getProfileToCreateProject())
-            return res.status(200).send(new Response(200, 'success'))
+        const updatedIssue = await Service.issue.getDetailsIssueById(iid);
+        return res.status(200).send(new Response(200, 'success', updatedIssue))
     } catch (err) {
         return res.status(400).send(new Response(400, err.message))
     }
