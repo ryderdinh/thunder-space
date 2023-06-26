@@ -15,6 +15,7 @@ const statusList = ['todo', 'doing', 'completed']
 
 export default function TodoDetail({ closeModal, data: { id, onClose } }) {
   const { findCardById, updateTodo, deleteTodo } = useTodo()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const { _id, title, description, status, pin } = useMemo(() =>
     findCardById(id)
   )
