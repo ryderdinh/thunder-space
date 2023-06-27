@@ -118,6 +118,8 @@ const IssuePreview = ({ dataIssue, dataProject, className = '' }) => {
     console.log(a)
   }, [])
 
+  console.log(1, dataIssue?.assign)
+
   return (
     <motion.div
       className={`${className} relative h-max w-full rounded-md 
@@ -184,7 +186,10 @@ const IssuePreview = ({ dataIssue, dataProject, className = '' }) => {
                   ring-2 ring-neutral-50'
                 >
                   <img
-                    src={dataIssue?.assign?.avatar?.url}
+                    src={
+                      dataIssue?.assign?.avatar?.url ||
+                      dataIssue?.assign?.avatar
+                    }
                     alt='Avatar user'
                     className='relative z-[2] h-full w-full object-cover'
                   />

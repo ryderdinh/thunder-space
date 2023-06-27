@@ -89,7 +89,20 @@ const getInIssue = async function (iid, skip) {
   }
 }
 
-const createForIssue = async function (iid, users, action, type) {
+const createForIssue = async function (iid, users, action, type = "issue") {
+  /* 
+  Expect users argument
+  [
+    [{uid: uid}],
+    [{uid: uid}],
+    ....
+  ]
+*/
+  
+/*
+  Expect action argument
+  ['actions1', 'action2', ...]
+*/
   try {
     const data = users.map(
       (e, idx) =>

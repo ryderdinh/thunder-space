@@ -1,8 +1,10 @@
 import reportApi from 'api/reportApi'
+import ButtonNormalLoad from 'components/Button/ButtonNormalLoad'
 import { motion } from 'framer-motion'
 import moment from 'moment'
 import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
+import { errorToast } from 'utilities/toast'
 
 //? Create Variable
 const transition = { duration: 0.5, ease: [0.43, 0.13, 0.23, 0.96] }
@@ -111,8 +113,12 @@ const ReportForm = () => {
 
   const handleSubmit = () => {
     if (state.reportContent === '') {
-      toast.error('Không được để trống!')
+      errorToast('Không được để trống!', 'report-form')
     } else {
+      toast('Maintainance feature!', { id: 'report-form' })
+      return
+
+      // eslint-disable-next-line no-unreachable
       if (state.act1 === '') {
         reportApi({
           typeReport: 'true',
@@ -136,7 +142,7 @@ const ReportForm = () => {
 
   return (
     <motion.div
-      className='report-form'
+      className='report-form rounded-5 bg-gray-800 p-4 lg:px-10 lg:py-7'
       variants={variants}
       initial='initial'
       animate='enter'
@@ -147,19 +153,19 @@ const ReportForm = () => {
           <input
             className={state.act1}
             type='button'
-            value='Nửa ngày'
+            value='Half day'
             onClick={() => setTypeReport(true)}
           />
           <input
             className={state.act2}
             type='button'
-            value='Dài ngày'
+            value='Longs day'
             onClick={() => setTypeReport(false)}
           />
         </div>
         <div className={state.severalDays}>
           <label>
-            <p>Từ</p>
+            <p className='font-semibold'>From</p>
             <input
               type='date'
               value={state.start}
@@ -167,13 +173,13 @@ const ReportForm = () => {
             />
           </label>
           <label>
-            <p>Đến</p>
+            <p className='font-semibold'>To</p>
             <input type='date' value={state.end} onChange={handleChangeEnd} />
           </label>
         </div>
         <div className={state.halfDay}>
           <label>
-            <p>Ngày</p>
+            <p className='font-semibold'>Date</p>
             <input type='date' value={state.date} onChange={handleChangeDate} />
           </label>
         </div>
@@ -182,7 +188,7 @@ const ReportForm = () => {
         <div className='col'>
           <textarea
             rows='10'
-            placeholder='Nhập lí do của bạn vào đây...'
+            placeholder='Enter your reason...'
             value={state.reportContent}
             onChange={handleTextarea}
             required
@@ -191,9 +197,9 @@ const ReportForm = () => {
       </div>
       <div className='row'>
         <div className='col'>
-          <div className='btn btn-submit-report' onClick={handleSubmit}>
-            Gửi
-          </div>
+          <ButtonNormalLoad size='mid' onClick={handleSubmit}>
+            Send request
+          </ButtonNormalLoad>
         </div>
       </div>
     </motion.div>
